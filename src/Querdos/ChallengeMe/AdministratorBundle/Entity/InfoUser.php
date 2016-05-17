@@ -2,6 +2,7 @@
 
 namespace Querdos\ChallengeMe\AdministratorBundle\Entity;
 
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -42,6 +43,12 @@ class InfoUser
      */
     private $birthday;
 
+    public function __construct()
+    {
+        $this->firstname    = "";
+        $this->lastName     = "";
+        $this->birthday     = new DateTime();
+    }
 
     /**
      * Get id

@@ -19,17 +19,28 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\ConfirmationQuestion;
 use Symfony\Component\Console\Question\Question;
+use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Form\Exception\RuntimeException;
 use Symfony\Component\Security\Core\Encoder\EncoderFactory;
 
 class CreateAdminCommand extends ContainerAwareCommand
 {
+    /**
+     * @var Adminstrator
+     */
+    private $admin;
+
     private $username   = "";
     private $firstname  = "";
     private $lastname   = "";
     private $email      = "";
     private $backemail  = "";
     private $birthday   = "";
+
+    public function initialize(InputInterface $input, OutputInterface $output)
+    {
+        $this->admin = new Adminstrator();
+    }
 
     public function configure()
     {
@@ -50,9 +61,6 @@ class CreateAdminCommand extends ContainerAwareCommand
     {
         $helper = $this->getHelper('question');
 
-        /** @var Adminstrator $admin */
-        $admin = new Adminstrator();
-
         /** @var EncoderFactory $encoderFactory */
         $encoderFactory = $this->getContainer()->get('security.encoder_factory');
 
@@ -70,22 +78,28 @@ class CreateAdminCommand extends ContainerAwareCommand
 
     public function interact(InputInterface $input, OutputInterface $output)
     {
+        $io = new SymfonyStyle($input, $output);
+
+        $io->title("Welcome to the ChallengeMe Administrator Generator");
+        $io->text("This command let you generate from the command line an administrator automatically.");
+        $io->newLine();
+
         /** @var QuestionHelper $helper */
         $helper = $this->getHelper('question');
 
         // Username
-        $question = new Question("Username [$this->username]: ", null);
+        $this->admin->setUsername("hamza");
+        $question = new Question("<info>Username</info> [<comment>" . $this->admin->getUsername() . "</comment>]: ", null);
         $question
             ->setValidator(function($answer) {
                 if (null === $answer) { throw new \RuntimeException("Username is mandatory"); }
                 return $answer;
             })
             ->setMaxAttempts(2);
-        $this->username = $helper->ask($input, $output, $question);
-        $input->setArgument('username', $this->username);
+        $this->admin->setUsername($helper->ask($input, $output, $question));
 
         // Password
-        $question = new Question("Password: ", null);
+        $question = new Question("<info>Password: </info>", null);
         $question
             ->setValidator(function($answer) {
                 if (trim($answer) == '') { throw new \RuntimeException("Password can not be empty");}
@@ -94,37 +108,34 @@ class CreateAdminCommand extends ContainerAwareCommand
             ->setHiddenFallback(false)
             ->setHidden(true)
             ->setMaxAttempts(2);
-        $plainPassword = $helper->ask($input, $output, $question);
-        $input->setArgument('password', $plainPassword);
+        $this->admin->setPlainPassword($helper->ask($input, $output, $question));
 
         // Email
-        $question = new Question("Email [$this->email]: ", null);
+        $question = new Question("<info>Email</info> [<comment>" . $this->admin->getEmail() ."</comment>]: ", null);
         $question
             ->setValidator(function($answer) {
                 if (null === $answer) { throw new \RuntimeException("Email is mandatory"); }
                 return $answer;
             })
             ->setMaxAttempts(2);
-        $this->email = $helper->ask($input, $output, $question);
-        $input->setArgument('email', $this->email);
+        $this->admin->setEmail($helper->ask($input, $output, $question));
 
         // Firstname
-        $question = new Question("Firstname [$this->firstname]: ", null);
-        $this->firstname = $helper->ask($input, $output, $question);
-        $input->setOption('firstname', $this->firstname);
+        $question = new Question("<info>Firstname</info> [<comment>" . $this->admin->getInfoUser()->getFirstname() . "</comment>]: ", null);
+        $this->admin->getInfoUser()->setFirstname($helper->ask($input, $output, $question));
 
         // Lastname
-        $question = new Question("Lastname [$this->lastname]: ", null);
-        $this->lastname = $helper->ask($input, $output, $question);
-        $input->setOption('lastname', $this->lastname);
+        $question = new Question("<info>Lastname</info> [<comment>" . $this->admin->getInfoUser()->getLastName() . "</comment>]: ", null);
+        $this->admin->getInfoUser()->setLastName($helper->ask($input, $output, $question));
 
         // Email back
-        $question = new Question("Back email [$this->backemail]: ", null);
-        $this->backemail = $helper->ask($input, $output, $question);
-        $input->setOption('emailback', $this->backemail);
+        $question = new Question("<info>Back email</info> [<comment>" . $this->admin->getEmailBack() ."</comment>]: ", null);
+        $this->admin->setEmailBack($helper->ask($input, $output, $question));
 
         // Birthday
-        $output->writeln("Birthday [$this->birthday]: ");
+        $tempBirthday = $this->admin->getInfoUser()->getBirthday() == null ?
+            $this->admin->getInfoUser()->getBirthday()->format('d-m-Y') : "";
+        $output->writeln("<question>Birthday [" . $tempBirthday . "</comment>]: ");
 
         $question = new Question("\tBirthday year: ", null);
         $year = $helper->ask($input, $output, $question);
@@ -136,8 +147,11 @@ class CreateAdminCommand extends ContainerAwareCommand
         $day = $helper->ask($input, $output, $question);
 
         if (null !== $year || null !== $month || null !== $day) {
-            $this->birthday = new \DateTime("$year-$month-$day");
+            $this->admin->getInfoUser()->setBirthday(new \DateTime("$year-$month-$day"));
         }
-        $input->setOption('birthday', $this->birthday);
+
+        $input->setArgument("username", $this->admin->getUsername());
+        $input->setArgument("password", $this->admin->getPlainPassword());
+        $input->setArgument("email", $this->admin->getEmail());
     }
 }

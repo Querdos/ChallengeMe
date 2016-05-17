@@ -3,6 +3,7 @@
 namespace Querdos\ChallengeMe\AdministratorBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Querdos\ChallengeMe\AdministratorBundle\Entity\InfoUser;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
@@ -28,6 +29,11 @@ class Adminstrator implements UserInterface, \Serializable
      * @ORM\Column(name="username", type="string", length=255)
      */
     private $username;
+
+    /**
+     * @var string
+     */
+    private $plainPassword;
 
     /**
      * @var string
@@ -58,6 +64,14 @@ class Adminstrator implements UserInterface, \Serializable
      */
     private $infoUser;
 
+    public function __construct()
+    {
+        $this->username     = "";
+        $this->email        = "";
+        $this->emailBack    = "";
+
+        $this->infoUser = new InfoUser();
+    }
 
     /**
      * Get id
@@ -72,11 +86,11 @@ class Adminstrator implements UserInterface, \Serializable
     /**
      * Set infoUser
      *
-     * @param \Querdos\ChallengeMe\AdministratorBundle\Entity\InfoUser $infoUser
+     * @param InfoUser $infoUser
      *
      * @return Adminstrator
      */
-    public function setInfoUser(\Querdos\ChallengeMe\AdministratorBundle\Entity\InfoUser $infoUser)
+    public function setInfoUser(InfoUser $infoUser)
     {
         $this->infoUser = $infoUser;
 
@@ -86,7 +100,7 @@ class Adminstrator implements UserInterface, \Serializable
     /**
      * Get infoUser
      *
-     * @return \Querdos\ChallengeMe\AdministratorBundle\Entity\InfoUser
+     * @return InfoUser
      */
     public function getInfoUser()
     {
@@ -271,4 +285,22 @@ class Adminstrator implements UserInterface, \Serializable
 
         return $this;
     }
+
+    /**
+     * @return string
+     */
+    public function getPlainPassword()
+    {
+        return $this->plainPassword;
+    }
+
+    /**
+     * @param string $plainPassword
+     */
+    public function setPlainPassword($plainPassword)
+    {
+        $this->plainPassword = $plainPassword;
+    }
+
+
 }
