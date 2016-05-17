@@ -1,0 +1,22 @@
+security:
+    encoders:
+        Querdos\ChallengeMe\AdministratorBundle\Entity\Adminstrator:
+            algorithm:  bcrypt
+            cost:       12
+
+    providers:
+        administrator_provider:
+            entity:
+                class: Querdos\ChallengeMe\AdministratorBundle\Entity\Administrator
+                property: username
+
+    firewalls:
+        # disables authentication for assets and the profiler, adapt it according to your needs
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+
+        admin:
+            pattern: ^/admin
+            http_basic: ~
+            provider: administrator_provider
