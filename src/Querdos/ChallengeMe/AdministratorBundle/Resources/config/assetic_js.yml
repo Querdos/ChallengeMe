@@ -1,0 +1,82 @@
+assetic:
+    assets:
+        jquery_js:
+            inputs:
+                - 'assets/vendor/jquery/dist/jquery.min.js'
+            output: 'assets/js/jquery.js'
+
+        bootstrap_js:
+            inputs:
+                - 'assets/vendor/bootstrap/dist/js/bootstrap.min.js'
+            output: 'assets/js/bootstrap.js'
+
+        fastclick_js:
+            inputs:
+                - 'assets/vendor/fastclick/lib/fastclick.js'
+            output: 'assets/js/fastclick.js'
+
+        nprogress_js:
+            inputs:
+                - 'assets/vendor/nprogress/nprogress.js'
+            output: 'assets/js/nprogress.js'
+
+        charts_js:
+            inputs:
+                - 'assets/vendor/Chart.js/dist/Chart.min.js'
+            output: 'assets/js/chart.js'
+
+        gauge_js:
+            inputs:
+                - 'assets/vendor/gauge.js/dist/gauge.min.js'
+            ouput: 'assets/js/gauge.js'
+
+        bootstrap_progressbar_js:
+            inputs:
+                - 'assets/vendor/bootstrap-progressbar/bootstrap-progressbar.min.js'
+            output: 'assets/js/progressbar.js'
+
+        iCheck_js:
+            inputs:
+                - 'assets/vendor/iCheck/icheck.min.js'
+            output: 'assets/js/icheck.js'
+
+        skycons_js:
+            inputs:
+                - 'assets/vendor/skycons/skycons.js'
+            output: 'assets/js/skycons.js'
+
+        flot_js:
+            inputs:
+                - 'assets/vendor/Flot/jquery.flot.js'
+                - 'assets/vendor/Flot/jquery.flot.pie.js'
+                - 'assets/vendor/Flot/jquery.flot.time.js'
+                - 'assets/vendor/Flot/jquery.flot.stack.js'
+                - 'assets/vendor/Flot/jquery.flot.resize.js'
+            output: 'assets/js/flot.js'
+
+        flot_plugin_js:
+            inputs:
+                - '@AdminBundle/Resources/public/js/flot/jquery.flot.orderBars.js'
+                - '@AdminBundle/Resources/public/js/flot/date.js'
+                - '@AdminBundle/Resources/public/js/flot/jquery.flot.spline.js'
+                - '@AdminBundle/Resources/public/js/flot/curvedLines.js'
+            output: 'assets/js/flot_plugin.js'
+
+        jVectorMap_js:
+            inputs:
+                - '@AdminBundle/Resources/public/js/maps/jquery-jvectormap-2.0.3.min.js'
+                - '@AdminBundle/Resources/public/js/maps/jquery-jvectormap-world-mill-en.js'
+                - '@AdminBundle/Resources/public/js/maps/jquery-jvectormap-us-aea-en.js'
+                - '@AdminBundle/Resources/public/js/maps/gdp-data.js'
+            output: 'assets/js/jvectormap.js'
+
+        bootstrapDateRangePicker_js:
+            inputs:
+                - '@AdminBundle/Resources/public/js/moment/moment.min.js'
+                - '@AdminBundle/Resources/public/js/datepicker/daterangepicker.js'
+            output: 'assets/js/bootstrapdaterangepicker.js'
+
+        customTheme_js:
+            inputs:
+                - '@AdminBundle/Resources/public/js/custom.js'
+            output: 'assets/js/customTheme.js'

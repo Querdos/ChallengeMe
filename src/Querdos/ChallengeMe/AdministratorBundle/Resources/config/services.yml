@@ -1,2 +1,4 @@
 imports:
     - { resource: managers.yml }
+    - { resource: assetic_js.yml }
+    - { resource: assetic_css.yml }
