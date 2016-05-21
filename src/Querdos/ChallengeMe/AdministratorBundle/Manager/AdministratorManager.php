@@ -10,30 +10,32 @@ namespace Querdos\ChallengeMe\AdministratorBundle\Manager;
 
 
 use Doctrine\Common\Persistence\ObjectManager;
-use Doctrine\ORM\EntityManager;
-use Querdos\ChallengeMe\AdministratorBundle\Entity\Adminstrator;
-use Querdos\ChallengeMe\AdministratorBundle\Repository\AdminstratorRepository;
+use Querdos\ChallengeMe\AdministratorBundle\Entity\Administrator;
+use Querdos\ChallengeMe\AdministratorBundle\Repository\AdministratorRepository;
 
 class AdministratorManager implements AdministratorManagerInterface
 {
+    /**
+     * @var AdministratorRepository $repository
+     */
     private $repository;
 
     public function __construct(ObjectManager $objectManager)
     {
-        $this->repository = $objectManager->getRepository('AdminBundle:Adminstrator');
+        $this->repository = $objectManager->getRepository('AdminBundle:Administrator');
     }
 
-    public function create(Adminstrator $admin)
+    public function create(Administrator $admin)
     {
         $this->repository->create($admin);
     }
 
-    public function update(Adminstrator $admin)
+    public function update(Administrator $admin)
     {
         // TODO: Implement update() method.
     }
 
-    public function delete(Adminstrator $admin)
+    public function delete(Administrator $admin)
     {
         // TODO: Implement delete() method.
     }

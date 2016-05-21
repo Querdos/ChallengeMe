@@ -1,6 +1,6 @@
 security:
     encoders:
-        Querdos\ChallengeMe\AdministratorBundle\Entity\Adminstrator:
+        Querdos\ChallengeMe\AdministratorBundle\Entity\Administrator:
             algorithm: bcrypt
             cost: 12
 
@@ -11,7 +11,7 @@ security:
     providers:
         administrator_provider:
             entity:
-                class: Querdos\ChallengeMe\AdministratorBundle\Entity\Adminstrator
+                class: Querdos\ChallengeMe\AdministratorBundle\Entity\Administrator
                 property: username
 
     role_hierarchy:

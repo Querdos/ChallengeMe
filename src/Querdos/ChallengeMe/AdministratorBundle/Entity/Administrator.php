@@ -10,9 +10,9 @@ use Symfony\Component\Security\Core\User\UserInterface;
  * Adminstrator
  *
  * @ORM\Table(name="adminstrator")
- * @ORM\Entity(repositoryClass="Querdos\ChallengeMe\AdministratorBundle\Repository\AdminstratorRepository")
+ * @ORM\Entity(repositoryClass="Querdos\ChallengeMe\AdministratorBundle\Repository\AdministratorRepository")
  */
-class Adminstrator implements UserInterface, \Serializable
+class Administrator implements UserInterface, \Serializable
 {
     /**
      * @var int
@@ -88,7 +88,7 @@ class Adminstrator implements UserInterface, \Serializable
      *
      * @param InfoUser $infoUser
      *
-     * @return Adminstrator
+     * @return Administrator
      */
     public function setInfoUser(InfoUser $infoUser)
     {
@@ -112,7 +112,7 @@ class Adminstrator implements UserInterface, \Serializable
      *
      * @param string $username
      *
-     * @return Adminstrator
+     * @return Administrator
      */
     public function setUsername($username)
     {
@@ -136,7 +136,7 @@ class Adminstrator implements UserInterface, \Serializable
      *
      * @param string $email
      *
-     * @return Adminstrator
+     * @return Administrator
      */
     public function setEmail($email)
     {
@@ -160,7 +160,7 @@ class Adminstrator implements UserInterface, \Serializable
      *
      * @param string $emailBack
      *
-     * @return Adminstrator
+     * @return Administrator
      */
     public function setEmailBack($emailBack)
     {
@@ -254,10 +254,7 @@ class Adminstrator implements UserInterface, \Serializable
      *
      * @return string|null The salt
      */
-    public function getSalt()
-    {
-        // TODO: Implement getSalt() method.
-    }
+    public function getSalt() {}
 
     /**
      * Removes sensitive data from the user.
@@ -267,7 +264,7 @@ class Adminstrator implements UserInterface, \Serializable
      */
     public function eraseCredentials()
     {
-        // TODO: Implement eraseCredentials() method.
+        $this->plainPassword = "";
     }
 
     /**
@@ -275,7 +272,7 @@ class Adminstrator implements UserInterface, \Serializable
      *
      * @param string $password
      *
-     * @return Adminstrator
+     * @return Administrator
      */
     public function setPassword($password)
     {

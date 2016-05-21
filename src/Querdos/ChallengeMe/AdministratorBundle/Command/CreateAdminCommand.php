@@ -8,7 +8,7 @@
 
 namespace Querdos\ChallengeMe\AdministratorBundle\Command;
 
-use Querdos\ChallengeMe\AdministratorBundle\Entity\Adminstrator;
+use Querdos\ChallengeMe\AdministratorBundle\Entity\Administrator;
 use Querdos\ChallengeMe\AdministratorBundle\Manager\AdministratorManager;
 use Sensio\Bundle\GeneratorBundle\Command\GeneratorCommand;
 use Sensio\Bundle\GeneratorBundle\Command\Helper\QuestionHelper;
@@ -81,7 +81,7 @@ EOT
             $this->interact($input, $output);
         }
 
-        $admin = new Adminstrator();
+        $admin = new Administrator();
 
         /*
          * Mandatory informations

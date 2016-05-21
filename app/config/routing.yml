@@ -1,9 +1,4 @@
-console:
-    resource: "@ConsoleBundle/Controller/"
-    type:     annotation
-    prefix:   /
-
 admin:
     resource: "@AdminBundle/Controller/"
     type:     annotation
-    prefix:   /
+    prefix:   /admin
