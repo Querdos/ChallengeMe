@@ -8,150 +8,233 @@
 
 namespace Querdos\ChallengeMe\AdministratorBundle\Command;
 
-
 use Querdos\ChallengeMe\AdministratorBundle\Entity\Adminstrator;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Querdos\ChallengeMe\AdministratorBundle\Manager\AdministratorManager;
+use Sensio\Bundle\GeneratorBundle\Command\GeneratorCommand;
 use Sensio\Bundle\GeneratorBundle\Command\Helper\QuestionHelper;
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
-use Symfony\Component\Config\Definition\Exception\Exception;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\ConfirmationQuestion;
 use Symfony\Component\Console\Question\Question;
-use Symfony\Component\Console\Style\SymfonyStyle;
-use Symfony\Component\Form\Exception\RuntimeException;
 use Symfony\Component\Security\Core\Encoder\EncoderFactory;
 
-class CreateAdminCommand extends ContainerAwareCommand
+class CreateAdminCommand extends GeneratorCommand
 {
-    /**
-     * @var Adminstrator
-     */
-    private $admin;
-
-    private $username   = "";
-    private $firstname  = "";
-    private $lastname   = "";
-    private $email      = "";
-    private $backemail  = "";
-    private $birthday   = "";
-
-    public function initialize(InputInterface $input, OutputInterface $output)
-    {
-        $this->admin = new Adminstrator();
-    }
-
     public function configure()
     {
-        $this->setName("challengeme:generate:admin")
-            ->setDescription("Generate administrator user to persist in the database")
+        $this
+            ->setName("challengeme:generate:admin")
+            ->setDescription("Generate administrator")
 
-            ->addArgument("username", InputArgument::REQUIRED, "Username for the administrator")
-            ->addArgument("password", InputArgument::REQUIRED, "Password for the administrator")
-            ->addArgument("email", InputArgument::REQUIRED, "Email for the administrator")
+            ->setDefinition(array(
+                new InputOption("username", '', InputOption::VALUE_REQUIRED, "The username of the admin to create"),
+                new InputOption("password", '', InputOption::VALUE_REQUIRED, "The password of the admin to create"),
+                new InputOption("email",    '', InputOption::VALUE_REQUIRED, "The email of the admin to create"),
 
-            ->addOption("firstname", "fn", null, "Firstname for the administrator", null)
-            ->addOption("lastname", "ln", null, "Lastname for the administrator")
-            ->addOption("emailback", "emb", null, "Back email for the administrator")
-            ->addOption("birthday", "b", null, "Birthday of the administrator");
+                new InputOption("firstname", '', InputOption::VALUE_OPTIONAL, "The firstname of the admin to create"),
+                new InputOption("lastname",  '', InputOption::VALUE_OPTIONAL, "The lastname of the admin to create"),
+                new InputOption("emailback", '', InputOption::VALUE_OPTIONAL, "An additionnal email for the admin to create"),
+                new InputOption("birthday",  '', InputOption::VALUE_OPTIONAL, "The birthday of the admin to create")
+            ))
+            ->setHelp(<<<EOT
+The <info>%command.name%</info> command helps you generates new admins.
+
+By default, the command intereacts with the developer to tweak the generation.
+Any passed option will be used as a default value for the interaction.
+
+If you want to disable any user interaction, use <comment>--no-interaction</comment> but don't forget to pass all needed options:
+<info>php %command.full_name% --username=root --password=toor --email=admin@challengeme.com
+EOT
+);
     }
 
+    /**
+     * @param InputInterface $input
+     * @param OutputInterface $output
+     * 
+     * @return int|null|void
+     */
     public function execute(InputInterface $input, OutputInterface $output)
     {
-        $helper = $this->getHelper('question');
+        /** @var QuestionHelper $questionHelper */
+        $questionHelper = $this->getQuestionHelper();
 
         /** @var EncoderFactory $encoderFactory */
         $encoderFactory = $this->getContainer()->get('security.encoder_factory');
 
-        /*$encoder = $encoderFactory->getEncoder($admin);
-        $output->write($encoder->encodePassword('test', $admin->getSalt()));*/
+        /** @var AdministratorManager $adminManager */
+        $adminManager = $this->getContainer()->get('challengeme.manager.administrator');
+        
+        /*
+         * Summary before generation
+         */
+        $questionHelper->writeSection($output, "Summary before generation");
 
-        $question = new ConfirmationQuestion("Continue ? [Y/n] ", true);
-        $continue = $helper->ask($input, $output, $question);
-        if ($continue) {
-            $output->writeln("Finished !");
-        } else {
+        $output->writeln("Firstname:\t<info>" . $input->getOption('firstname') . "</info>");
+        $output->writeln("Lastname:\t<info>" . $input->getOption('lastname') . "</info>");
+        $output->writeln("Username:\t<info>" . $input->getOption('username') . "</info>");
+        $output->writeln("Email:\t\t<info>" . $input->getOption('email') . "</info>");
+        $output->writeln("Email (2):\t<info>" . $input->getOption('emailback') . "</info>");
+        $output->writeln("Birthday:\t<info>" . $input->getOption('birthday') . "</info>");
+        $output->writeln("");
+
+        $question = new ConfirmationQuestion("Continue ? (y|n)", true);
+        if (!$questionHelper->ask($input, $output, $question)) {
             $this->interact($input, $output);
         }
+
+        $admin = new Adminstrator();
+
+        /*
+         * Mandatory informations
+         */
+        $admin->setUsername($input->getOption('username'));
+        $admin->setPlainPassword($input->getOption('password'));
+        $admin->setEmail($input->getOption('email'));
+        $admin->setEmailBack($input->getOption('emailback'));
+
+        /*
+         * Optional informations
+         */
+        $admin->getInfoUser()->setFirstname($input->getOption('firstname'));
+        $admin->getInfoUser()->setLastName($input->getOption('lastname'));
+        $admin->getInfoUser()->setBirthday(\DateTime::createFromFormat('m/d/Y', $input->getOption('birthday')));
+
+        /*
+         * Encoding the password
+         */
+        $admin->setPassword(
+            $encoderFactory
+                ->getEncoder($admin)
+                ->encodePassword(
+                    $admin->getPlainPassword(),
+                    $admin->getSalt()
+                )
+        );
+
+        /*
+         * Persisting the admin
+         */
+        $adminManager->create($admin);
+
+        $questionHelper->writeGeneratorSummary($output, "Everything ok !");
     }
 
-    public function interact(InputInterface $input, OutputInterface $output)
+    protected function interact(InputInterface $input, OutputInterface $output)
     {
-        $io = new SymfonyStyle($input, $output);
+        $questionHelper = $this->getQuestionHelper();
+        $questionHelper->writeSection($output, "Welcome to the ChallengeMe Admin generator");
 
-        $io->title("Welcome to the ChallengeMe Administrator Generator");
-        $io->text("This command let you generate from the command line an administrator automatically.");
-        $io->newLine();
-
-        /** @var QuestionHelper $helper */
-        $helper = $this->getHelper('question');
-
-        // Username
-        $this->admin->setUsername("hamza");
-        $question = new Question("<info>Username</info> [<comment>" . $this->admin->getUsername() . "</comment>]: ", null);
+        /*
+         * Username
+         */
+        $username = $input->getOption('username');
+        $question = new Question($questionHelper->getQuestion(
+            'Username',
+            $username
+        ), $username);
         $question
-            ->setValidator(function($answer) {
-                if (null === $answer) { throw new \RuntimeException("Username is mandatory"); }
-                return $answer;
-            })
-            ->setMaxAttempts(2);
-        $this->admin->setUsername($helper->ask($input, $output, $question));
+            ->setValidator(function($inputUsername) {
+            return Validators::usernameValidator($inputUsername);
+        });
+        $username = $questionHelper->ask($input, $output, $question);
+        $input->setOption('username', $username);
 
-        // Password
-        $question = new Question("<info>Password: </info>", null);
+        /*
+         * Password
+         */
+        $plainPassword = $input->getOption('password');
+        $question = new Question($questionHelper->getQuestion(
+            'Password',
+            $plainPassword
+        ), $plainPassword);
+
         $question
-            ->setValidator(function($answer) {
-                if (trim($answer) == '') { throw new \RuntimeException("Password can not be empty");}
-                return $answer;
-            })
-            ->setHiddenFallback(false)
             ->setHidden(true)
-            ->setMaxAttempts(2);
-        $this->admin->setPlainPassword($helper->ask($input, $output, $question));
+            ->setHiddenFallback(false)
+            ->setValidator(function($inputPassword) {
+                return Validators::passwordValidator($inputPassword);
+            });
 
-        // Email
-        $question = new Question("<info>Email</info> [<comment>" . $this->admin->getEmail() ."</comment>]: ", null);
+        $plainPassword = $questionHelper->ask($input, $output, $question);
+        $input->setOption('password', $plainPassword);
+
+        /*
+         * Email
+         */
+        $email = $input->getOption('email');
+        $question = new Question($questionHelper->getQuestion(
+            'Email',
+            $email
+        ), $email);
         $question
-            ->setValidator(function($answer) {
-                if (null === $answer) { throw new \RuntimeException("Email is mandatory"); }
-                return $answer;
-            })
-            ->setMaxAttempts(2);
-        $this->admin->setEmail($helper->ask($input, $output, $question));
+            ->setValidator(function($inputEmail) {
+                return Validators::emailValidator($inputEmail);
+            });
+        $email = $questionHelper->ask($input, $output, $question);
+        $input->setOption('email', $email);
 
-        // Firstname
-        $question = new Question("<info>Firstname</info> [<comment>" . $this->admin->getInfoUser()->getFirstname() . "</comment>]: ", null);
-        $this->admin->getInfoUser()->setFirstname($helper->ask($input, $output, $question));
+        /*
+         * Firstname
+         */
+        $firstName = $input->getOption('firstname');
+        $question = new Question($questionHelper->getQuestion(
+            'Firstname',
+            $firstName
+        ), $firstName);
+        $question->setValidator(function($inputFirstName) {
 
-        // Lastname
-        $question = new Question("<info>Lastname</info> [<comment>" . $this->admin->getInfoUser()->getLastName() . "</comment>]: ", null);
-        $this->admin->getInfoUser()->setLastName($helper->ask($input, $output, $question));
+            return Validators::noWhiteSpaceValidator($inputFirstName);
+        });
+        $firstName = $questionHelper->ask($input, $output, $question);
+        $input->setOption('firstname', $firstName);
 
-        // Email back
-        $question = new Question("<info>Back email</info> [<comment>" . $this->admin->getEmailBack() ."</comment>]: ", null);
-        $this->admin->setEmailBack($helper->ask($input, $output, $question));
+        /*
+         * LastName
+         */
+        $lastName = $input->getOption('lastname');
+        $question = new Question($questionHelper->getQuestion(
+            'Lastname',
+            $lastName
+        ), $lastName);
+        $question
+            ->setValidator(function($inputLastname) {
+                return Validators::noWhiteSpaceValidator($inputLastname);
+            });
+        $lastName = $questionHelper->ask($input, $output, $question);
+        $input->setOption('lastname', $lastName);
 
-        // Birthday
-        $tempBirthday = $this->admin->getInfoUser()->getBirthday() == null ?
-            $this->admin->getInfoUser()->getBirthday()->format('d-m-Y') : "";
-        $output->writeln("<question>Birthday [" . $tempBirthday . "</comment>]: ");
+        /*
+         * Additionnal email
+         */
+        $emailBack = $input->getOption('emailback');
+        $question = new Question($questionHelper->getQuestion(
+            'Additionnal email',
+            $emailBack
+        ), $emailBack);
+        $question
+            ->setValidator(function($inputEmail) {
+                return Validators::emailValidator($inputEmail);
+            });
+        $emailBack = $questionHelper->ask($input, $output, $question);
+        $input->setOption('emailback', $emailBack);
 
-        $question = new Question("\tBirthday year: ", null);
-        $year = $helper->ask($input, $output, $question);
+        /*
+         * Birthday
+         */
+        $birthday = $input->getOption('birthday');
+        $question = new Question($questionHelper->getQuestion(
+            'Birthday (m/d/y)',
+            $birthday
+        ), $birthday);
 
-        $question = new Question("\tBirthday month: ", null);
-        $month = $helper->ask($input, $output, $question);
+        $birthday = $questionHelper->ask($input, $output, $question);
+        $input->setOption('birthday', $birthday);
+    }
 
-        $question = new Question("\tBirthday month: ", null);
-        $day = $helper->ask($input, $output, $question);
-
-        if (null !== $year || null !== $month || null !== $day) {
-            $this->admin->getInfoUser()->setBirthday(new \DateTime("$year-$month-$day"));
-        }
-
-        $input->setArgument("username", $this->admin->getUsername());
-        $input->setArgument("password", $this->admin->getPlainPassword());
-        $input->setArgument("email", $this->admin->getEmail());
+    protected function createGenerator()
+    {
+        // TODO: Implement createGenerator() method.
     }
 }
