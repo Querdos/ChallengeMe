@@ -190,9 +190,7 @@ class Adminstrator implements UserInterface, \Serializable
         return serialize(array(
             $this->id,
             $this->username,
-            $this->password,
-            // see section on salt below
-            // $this->salt,
+            $this->password
         ));
     }
 
@@ -246,7 +244,7 @@ class Adminstrator implements UserInterface, \Serializable
      */
     public function getPassword()
     {
-        // TODO: Implement getPassword() method.
+        return $this->password;
     }
 
     /**
@@ -282,8 +280,6 @@ class Adminstrator implements UserInterface, \Serializable
     public function setPassword($password)
     {
         $this->password = $password;
-
-        return $this;
     }
 
     /**

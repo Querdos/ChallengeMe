@@ -1,14 +1,22 @@
 security:
     encoders:
         Querdos\ChallengeMe\AdministratorBundle\Entity\Adminstrator:
-            algorithm:  bcrypt
-            cost:       12
+            algorithm: bcrypt
+            cost: 12
+
+        Symfony\Component\Security\Core\User\User:
+            algorithm: bcrypt
+            cost: 12
 
     providers:
         administrator_provider:
             entity:
-                class: Querdos\ChallengeMe\AdministratorBundle\Entity\Administrator
+                class: Querdos\ChallengeMe\AdministratorBundle\Entity\Adminstrator
                 property: username
+
+    role_hierarchy:
+        ROLE_ADMIN:       ROLE_USER
+        ROLE_SUPER_ADMIN: [ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
 
     firewalls:
         # disables authentication for assets and the profiler, adapt it according to your needs
@@ -20,3 +28,6 @@ security:
             pattern: ^/admin
             http_basic: ~
             provider: administrator_provider
+
+    access_control:
+        - { path: ^/admin, roles: ROLE_ADMIN }

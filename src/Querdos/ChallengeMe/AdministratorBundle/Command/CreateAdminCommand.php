@@ -60,9 +60,6 @@ EOT
         /** @var QuestionHelper $questionHelper */
         $questionHelper = $this->getQuestionHelper();
 
-        /** @var EncoderFactory $encoderFactory */
-        $encoderFactory = $this->getContainer()->get('security.encoder_factory');
-
         /** @var AdministratorManager $adminManager */
         $adminManager = $this->getContainer()->get('challengeme.manager.administrator');
         
@@ -104,21 +101,15 @@ EOT
         /*
          * Encoding the password
          */
-        $admin->setPassword(
-            $encoderFactory
-                ->getEncoder($admin)
-                ->encodePassword(
-                    $admin->getPlainPassword(),
-                    $admin->getSalt()
-                )
-        );
+        $encoder = $this->getContainer()->get('security.password_encoder');
+        $admin->setPassword($encoder->encodePassword($admin, $admin->getPlainPassword()));
 
         /*
          * Persisting the admin
          */
         $adminManager->create($admin);
 
-        $questionHelper->writeGeneratorSummary($output, "Everything ok !");
+//        $questionHelper->writeGeneratorSummary($output, "Everything ok !");
     }
 
     protected function interact(InputInterface $input, OutputInterface $output)

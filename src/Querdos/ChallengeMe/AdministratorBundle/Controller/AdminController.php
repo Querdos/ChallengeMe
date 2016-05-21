@@ -4,14 +4,16 @@ namespace Querdos\ChallengeMe\AdministratorBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
-class DefaultController extends Controller
+class AdminController extends Controller
 {
     /**
-     * @Route("/")
+     * @Route("/admin", name="admin_homepage")
+     * @Template("AdminBundle::index.html.twig")
      */
     public function indexAction()
     {
-        return $this->render('AdminBundle:Default:index.html.twig');
+        return array();
     }
 }
