@@ -72,4 +72,24 @@ class AdminController extends Controller
             'admin' => $adminRepo->getAdminPublicInfo($admin->getId())
         );
     }
+
+    /**
+     * @Route("/players-management", name="admin_playersManagement")
+     * @Template("AdminBundle:content:players_management.html.twig")
+     *
+     * @Method("GET")
+     *
+     * @return array
+     */
+    public function playersManagementAction() {
+        /** @var AdministratorRepository $adminRepo */
+        $adminRepo = $this->get('challengeme.manager.administrator');
+
+        /** @var Administrator $admin */
+        $admin = $this->getUser();
+
+        return array(
+            'admin' => $adminRepo->getAdminPublicInfo($admin->getId())
+        );
+    }
 }
