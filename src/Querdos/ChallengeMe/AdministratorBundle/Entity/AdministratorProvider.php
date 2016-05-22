@@ -40,6 +40,7 @@ class AdministratorProvider implements UserProviderInterface
 
         if ($userData) {
             return new Administrator(
+                $userData["id"],
                 $userData["username"],
                 $userData["email"],
                 $userData["password"]

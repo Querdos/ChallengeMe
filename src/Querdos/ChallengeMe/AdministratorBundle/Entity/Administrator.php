@@ -69,8 +69,9 @@ class Administrator implements UserInterface, \Serializable
      */
     private $apiKey;
 
-    public function __construct($username = "", $email = "", $password = "")
+    public function __construct($id = "", $username = "", $email = "", $password = "")
     {
+        $this->id           = $id;
         $this->username     = $username;
         $this->email        = $email;
         $this->emailBack    = "";

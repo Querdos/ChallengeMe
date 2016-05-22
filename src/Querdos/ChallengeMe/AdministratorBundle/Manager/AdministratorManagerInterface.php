@@ -22,4 +22,6 @@ interface AdministratorManagerInterface
     public function adminExists(Administrator $admin);
 
     public function getAdminData($username);
+
+    public function getAdminPublicInfo($id);
 }
