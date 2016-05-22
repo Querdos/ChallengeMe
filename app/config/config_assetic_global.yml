@@ -11,6 +11,13 @@ assetic:
                 - 'assets/vendor/bootstrap/dist/js/bootstrap.min.js'
             output: 'assets/js/bootstrap.js'
 
+        bootstrapWYSIWYG_js:
+            inputs:
+                - 'assets/vendor/bootstrap-wysiwyg/js/bootstrap-wysiwyg.min.js'
+                - 'assets/vendor/jquery.hotkeys/jquery.hotkeys.js'
+                - 'assets/vendor/google-code-prettify/src/prettify.js'
+            output: 'assets/js/bootstrapwysiyg.js'
+
         fastclick_js:
             inputs:
                 - 'assets/vendor/fastclick/lib/fastclick.js'
@@ -55,11 +62,22 @@ assetic:
                 - 'assets/vendor/Flot/jquery.flot.resize.js'
             output: 'assets/js/flot.js'
 
+        morris_js:
+            inputs:
+                - 'assets/vendor/raphael/raphael.min.js'
+                - 'assets/vendor/morris.js/morris.min.js'
+            output: 'assets/js/morris.js'
+
         # Stylesheets
         bootstrap:
             inputs:
                 - 'assets/vendor/bootstrap/dist/css/bootstrap.min.css'
             output: 'assets/css/boostrap.css'
+
+        bootstrapWYSIWYG_css:
+            inputs:
+                - 'assets/vendor/google-code-prettify/bin/prettify.min.css'
+            output: 'assets/css/bootstrapwysiwyg.css'
 
         fontAwesome:
             inputs:
