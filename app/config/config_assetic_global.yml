@@ -68,6 +68,11 @@ assetic:
                 - 'assets/vendor/morris.js/morris.min.js'
             output: 'assets/js/morris.js'
 
+        iCheck_js:
+            inputs:
+                - 'assets/vendor/iCheck/icheck.min.js'
+            output: 'assets/js/icheck.js'
+
         # Stylesheets
         bootstrap:
             inputs:
