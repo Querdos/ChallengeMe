@@ -2,10 +2,10 @@ assetic:
     assets:
         jVectorMap:
             inputs:
-                - '@AdminBundle/Resources/public/css/maps/jquery-jvectormap-2.0.3.css'
+                - 'bundles/admin/css/maps/jquery-jvectormap-2.0.3.css'
             output: 'assets/css/jvectormap.css'
 
         customTheme:
             inputs:
-                - '@AdminBundle/Resources/public/css/custom.css'
+                - 'bundles/admin/css/custom.css'
             output: 'assets/css/custom.css'
