@@ -18,4 +18,8 @@ interface AdministratorManagerInterface
     public function update(Administrator $admin);
 
     public function delete(Administrator $admin);
+
+    public function adminExists(Administrator $admin);
+
+    public function getAdminData($username);
 }

@@ -3,3 +3,8 @@ imports:
 
     - { resource: assetic_js.yml }
     - { resource: assetic_css.yml }
+
+services:
+    challengeme.provider.admin:
+        class: Querdos\ChallengeMe\AdministratorBundle\Entity\AdministratorProvider
+        arguments: ["@challengeme.manager.administrator"]

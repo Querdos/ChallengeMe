@@ -39,4 +39,14 @@ class AdministratorManager implements AdministratorManagerInterface
     {
         // TODO: Implement delete() method.
     }
+
+    public function adminExists(Administrator $admin)
+    {
+        return $this->repository->adminExists($admin);
+    }
+
+    public function getAdminData($username)
+    {
+        return $this->repository->getAdminData($username);
+    }
 }

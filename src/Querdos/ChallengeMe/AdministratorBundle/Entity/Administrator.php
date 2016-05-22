@@ -64,11 +64,17 @@ class Administrator implements UserInterface, \Serializable
      */
     private $infoUser;
 
-    public function __construct()
+    /**
+     * @ORM\Column(type="string", unique=true)
+     */
+    private $apiKey;
+
+    public function __construct($username = "", $email = "", $password = "")
     {
-        $this->username     = "";
-        $this->email        = "";
+        $this->username     = $username;
+        $this->email        = $email;
         $this->emailBack    = "";
+        $this->password     = $password;
 
         $this->infoUser = new InfoUser();
     }
@@ -296,4 +302,28 @@ class Administrator implements UserInterface, \Serializable
     }
 
 
+
+    /**
+     * Set apiKey
+     *
+     * @param string $apiKey
+     *
+     * @return Administrator
+     */
+    public function setApiKey($apiKey)
+    {
+        $this->apiKey = $apiKey;
+
+        return $this;
+    }
+
+    /**
+     * Get apiKey
+     *
+     * @return string
+     */
+    public function getApiKey()
+    {
+        return $this->apiKey;
+    }
 }
