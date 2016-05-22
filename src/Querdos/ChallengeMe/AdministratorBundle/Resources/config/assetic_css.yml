@@ -1,25 +1,5 @@
 assetic:
     assets:
-        bootstrap:
-            inputs:
-                - 'assets/vendor/bootstrap/dist/css/bootstrap.min.css'
-            output: 'assets/css/boostrap.css'
-
-        fontAwesome:
-            inputs:
-                - 'assets/vendor/font-awesome/css/font-awesome.min.css'
-            output: 'assets/css/fontAwesome.css'
-
-        iCheck:
-            inputs:
-                - 'assets/vendor/iCheck/skins/flat/green.css'
-            output: 'assets/css/icheck.css'
-
-        bootstrap_progressBar:
-            inputs:
-                - 'assets/vendor/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css'
-            output: 'assets/css/bootstrap-progressbar.css'
-
         jVectorMap:
             inputs:
                 - '@AdminBundle/Resources/public/css/maps/jquery-jvectormap-2.0.3.css'
