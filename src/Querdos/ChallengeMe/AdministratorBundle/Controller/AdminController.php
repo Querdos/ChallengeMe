@@ -30,4 +30,46 @@ class AdminController extends Controller
             'admin' => $adminRepo->getAdminPublicInfo($admin->getId())
         );
     }
+
+    /**
+     * @Route("/inbox", name="admin_inbox")
+     * @Template("AdminBundle:content:inbox.html.twig")
+     *
+     * @Method("GET")
+     *
+     * @return array
+     */
+    public function inboxAction()
+    {
+        /** @var AdministratorRepository $adminRepo */
+        $adminRepo = $this->get('challengeme.manager.administrator');
+
+        /** @var Administrator $admin */
+        $admin = $this->getUser();
+
+        return array(
+            'admin' => $adminRepo->getAdminPublicInfo($admin->getId())
+        );
+    }
+
+    /**
+     * @Route("/profile", name="admin_profile")
+     * @Template("AdminBundle:content:profile.html.twig")
+     *
+     * @Method("GET")
+     *
+     * @return array
+     */
+    public function profileAction()
+    {
+        /** @var AdministratorRepository $adminRepo */
+        $adminRepo = $this->get('challengeme.manager.administrator');
+
+        /** @var Administrator $admin */
+        $admin = $this->getUser();
+
+        return array(
+            'admin' => $adminRepo->getAdminPublicInfo($admin->getId())
+        );
+    }
 }
