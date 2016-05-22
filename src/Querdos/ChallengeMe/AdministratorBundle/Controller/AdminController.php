@@ -92,4 +92,64 @@ class AdminController extends Controller
             'admin' => $adminRepo->getAdminPublicInfo($admin->getId())
         );
     }
+
+    /**
+     * @Route("/admins-management", name="admin_adminsManagement")
+     * @Template("AdminBundle:content:admins_management.html.twig")
+     *
+     * @Method("GET")
+     *
+     * @return array
+     */
+    public function adminsManagementAction() {
+        /** @var AdministratorRepository $adminRepo */
+        $adminRepo = $this->get('challengeme.manager.administrator');
+
+        /** @var Administrator $admin */
+        $admin = $this->getUser();
+
+        return array(
+            'admin' => $adminRepo->getAdminPublicInfo($admin->getId())
+        );
+    }
+
+    /**
+     * @Route("/moderators-management", name="admin_moderatorsManagement")
+     * @Template("AdminBundle:content:moderators_management.html.twig")
+     *
+     * @Method("GET")
+     *
+     * @return array
+     */
+    public function moderatorsManagementAction() {
+        /** @var AdministratorRepository $adminRepo */
+        $adminRepo = $this->get('challengeme.manager.administrator');
+
+        /** @var Administrator $admin */
+        $admin = $this->getUser();
+
+        return array(
+            'admin' => $adminRepo->getAdminPublicInfo($admin->getId())
+        );
+    }
+
+    /**
+     * @Route("/redactors-management", name="admin_redactorsManagement")
+     * @Template("AdminBundle:content:redactors_management.html.twig")
+     *
+     * @Method("GET")
+     *
+     * @return array
+     */
+    public function redactorsManagementAction() {
+        /** @var AdministratorRepository $adminRepo */
+        $adminRepo = $this->get('challengeme.manager.administrator');
+
+        /** @var Administrator $admin */
+        $admin = $this->getUser();
+
+        return array(
+            'admin' => $adminRepo->getAdminPublicInfo($admin->getId())
+        );
+    }
 }
