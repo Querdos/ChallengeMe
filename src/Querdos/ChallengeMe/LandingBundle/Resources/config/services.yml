@@ -1,0 +1,3 @@
+imports:
+    - { resource: assetic_css.yml }
+    - { resource: assetic_js.yml }

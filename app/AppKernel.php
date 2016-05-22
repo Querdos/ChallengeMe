@@ -19,6 +19,7 @@ class AppKernel extends Kernel
             new Symfony\Bundle\AsseticBundle\AsseticBundle(),
             
             new Querdos\ChallengeMe\AdministratorBundle\AdminBundle(),
+            new Querdos\ChallengeMe\LandingBundle\LandingBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

@@ -1,5 +1,9 @@
-# TODO : remettre le prefix à /admin quand terminé
+landing:
+    resource: "@LandingBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
 admin:
     resource: "@AdminBundle/Controller/"
     type:     annotation
-    prefix:   /
+    prefix:   /admin
