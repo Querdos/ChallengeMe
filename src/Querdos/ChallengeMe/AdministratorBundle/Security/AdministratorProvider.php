@@ -6,7 +6,7 @@
  * Time: 2:24 PM
  */
 
-namespace Querdos\ChallengeMe\AdministratorBundle\Entity;
+namespace Querdos\ChallengeMe\AdministratorBundle\Security;
 
 
 use Doctrine\ORM\EntityManager;

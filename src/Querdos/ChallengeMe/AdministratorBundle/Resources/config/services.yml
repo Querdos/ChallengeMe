@@ -6,5 +6,5 @@ imports:
 
 services:
     challengeme.provider.admin:
-        class: Querdos\ChallengeMe\AdministratorBundle\Entity\AdministratorProvider
+        class: Querdos\ChallengeMe\AdministratorBundle\Security\AdministratorProvider
         arguments: ["@challengeme.manager.administrator"]
