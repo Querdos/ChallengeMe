@@ -32,3 +32,4 @@ Querdos\ChallengeMe\AdministratorBundle\Entity\Administrator:
     manyToOne:
         infoUser:
             targetEntity: Querdos\ChallengeMe\AdministratorBundle\Entity\InfoUser
+            cascade:      [ all ]
