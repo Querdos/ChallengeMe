@@ -1,0 +1,60 @@
+###################
+# AdminController #
+##################
+
+admin_homepage:
+    path:     /
+    defaults: { _controller: AdminBundle:Admin:index }
+    methods:
+        - GET
+
+admin_inbox:
+    path:     /inbox
+    defaults: { _controller: AdminBundle:Admin:inbox }
+    methods:
+        - GET
+
+admin_profile:
+    path:     /profile
+    defaults: { _controller: AdminBundle:Admin:profile }
+    methods:
+        - GET
+
+admin_playersManagement:
+    path:     /players-management
+    defaults: { _controller: AdminBundle:Admin:playersManagement }
+    methods:
+        - GET
+
+admin_adminsManagement:
+    path:     /admins-management
+    defaults: { _controller: AdminBundle:Admin:adminsManagement }
+    methods:
+        - GET
+
+admin_moderatorsManagement:
+    path:     /moderators-management
+    defaults: { _controller: AdminBundle:Admin:moderatorsManagement }
+    methods:
+        - GET
+
+admin_redactorsManagement:
+    path:     /redactors-management
+    defaults: { _controller: AdminBundle:Admin:redactorsManagement }
+    methods:
+        - GET
+
+######################
+# SecurityController #
+######################
+admin_login:
+    path:     /login
+    defaults: { _controller: AdminBundle:Security:login }
+
+admin_login_check:
+    path:     /login_check
+    defaults: { _controller: AdminBundle:Security:loginCheck }
+
+admin_logout:
+    path:     /logout
+    defaults: { _controller: AdminBundle:Security:logout }

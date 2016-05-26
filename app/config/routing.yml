@@ -4,6 +4,5 @@ landing:
     prefix:   /
 
 admin:
-    resource: "@AdminBundle/Controller/"
-    type:     annotation
+    resource: "@AdminBundle/Resources/config/routing.yml"
     prefix:   /admin

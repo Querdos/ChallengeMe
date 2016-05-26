@@ -5,18 +5,14 @@ namespace Querdos\ChallengeMe\AdministratorBundle\Controller;
 use Querdos\ChallengeMe\AdministratorBundle\Entity\Administrator;
 use Querdos\ChallengeMe\AdministratorBundle\Repository\AdministratorRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Symfony\Component\VarDumper\VarDumper;
 
 class AdminController extends Controller
 {
     /**
-     * @Route("/", name="admin_homepage")
      * @Template("AdminBundle:content:dashboard.html.twig")
      *
-     * @Method("GET")
+     * @return array
      */
     public function indexAction()
     {
@@ -32,10 +28,7 @@ class AdminController extends Controller
     }
 
     /**
-     * @Route("/inbox", name="admin_inbox")
      * @Template("AdminBundle:content:inbox.html.twig")
-     *
-     * @Method("GET")
      *
      * @return array
      */
@@ -53,10 +46,7 @@ class AdminController extends Controller
     }
 
     /**
-     * @Route("/profile", name="admin_profile")
      * @Template("AdminBundle:content:profile.html.twig")
-     *
-     * @Method("GET")
      *
      * @return array
      */
@@ -74,10 +64,7 @@ class AdminController extends Controller
     }
 
     /**
-     * @Route("/players-management", name="admin_playersManagement")
      * @Template("AdminBundle:content:players_management.html.twig")
-     *
-     * @Method("GET")
      *
      * @return array
      */
@@ -94,10 +81,7 @@ class AdminController extends Controller
     }
 
     /**
-     * @Route("/admins-management", name="admin_adminsManagement")
      * @Template("AdminBundle:content:admins_management.html.twig")
-     *
-     * @Method("GET")
      *
      * @return array
      */
@@ -114,10 +98,7 @@ class AdminController extends Controller
     }
 
     /**
-     * @Route("/moderators-management", name="admin_moderatorsManagement")
      * @Template("AdminBundle:content:moderators_management.html.twig")
-     *
-     * @Method("GET")
      *
      * @return array
      */
@@ -134,10 +115,7 @@ class AdminController extends Controller
     }
 
     /**
-     * @Route("/redactors-management", name="admin_redactorsManagement")
      * @Template("AdminBundle:content:redactors_management.html.twig")
-     *
-     * @Method("GET")
      *
      * @return array
      */

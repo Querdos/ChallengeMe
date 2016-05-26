@@ -18,7 +18,6 @@ use Symfony\Component\Security\Core\User\UserInterface;
 class SecurityController extends Controller
 {
     /**
-     * @Route("/login", name="admin_login")
      * @Template("AdminBundle:security:login.html.twig")
      *
      * @param Request $request
@@ -42,15 +41,11 @@ class SecurityController extends Controller
 
     /**
      * @Route("/login_check", name="admin_login_check")
-     *
      */
     public function loginCheckAction() {}
 
     /**
-     * @Route("/logout", name="admin_logout")
-     *
      * @param Request $request
-     *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function logoutAction(Request $request) {
