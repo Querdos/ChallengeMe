@@ -110,7 +110,9 @@ EOT
          */
         $admin->getInfoUser()->setFirstname($input->getOption('firstname'));
         $admin->getInfoUser()->setLastName($input->getOption('lastname'));
-        $admin->getInfoUser()->setBirthday(\DateTime::createFromFormat('m/d/Y', $input->getOption('birthday')));
+
+        // TODO : Gérer l'anniversaire
+        $admin->getInfoUser()->setBirthday($input->getOption('birthday'));
 
         /*
          * Encoding the password
@@ -236,7 +238,7 @@ EOT
          */
         $birthday = $input->getOption('birthday');
         $question = new Question($questionHelper->getQuestion(
-            'Birthday (m/d/y)',
+            'Birthday (YYYY-MM-DD)',
             $birthday
         ), $birthday);
         $question
