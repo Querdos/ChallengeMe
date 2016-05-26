@@ -3,43 +3,29 @@
 namespace Querdos\ChallengeMe\AdministratorBundle\Entity;
 
 use DateTime;
-use Doctrine\ORM\Mapping as ORM;
 
 /**
  * InfoUser
- *
- * @ORM\Table(name="info_user")
- * @ORM\Entity(repositoryClass="Querdos\ChallengeMe\AdministratorBundle\Repository\InfoUserRepository")
  */
 class InfoUser
 {
     /**
      * @var int
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
 
     /**
      * @var string
-     *
-     * @ORM\Column(name="firstName", type="string", length=255)
      */
     private $firstName;
 
     /**
      * @var string
-     *
-     * @ORM\Column(name="lastName", type="string", length=255)
      */
     private $lastName;
 
     /**
      * @var \DateTime
-     *
-     * @ORM\Column(name="birthday", type="datetime")
      */
     private $birthday;
 
@@ -131,4 +117,15 @@ class InfoUser
     {
         return $this->birthday;
     }
+    /**
+     * @var string
+     */
+    private $firstname;
+
+    /**
+     * @var string
+     */
+    private $lastname;
+
+
 }

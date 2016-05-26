@@ -2,31 +2,21 @@
 
 namespace Querdos\ChallengeMe\AdministratorBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
 use Querdos\ChallengeMe\AdministratorBundle\Entity\InfoUser;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * Adminstrator
- *
- * @ORM\Table(name="adminstrator")
- * @ORM\Entity(repositoryClass="Querdos\ChallengeMe\AdministratorBundle\Repository\AdministratorRepository")
  */
 class Administrator implements UserInterface, \Serializable
 {
     /**
      * @var int
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
 
     /**
      * @var string
-     *
-     * @ORM\Column(name="username", type="string", length=255)
      */
     private $username;
 
@@ -37,37 +27,23 @@ class Administrator implements UserInterface, \Serializable
 
     /**
      * @var string
-     *
-     * @ORM\Column(name="password", type="string", length=255)
      */
     private $password;
 
     /**
      * @var string
-     *
-     * @ORM\Column(name="email", type="string", length=255)
      */
     private $email;
 
     /**
      * @var string
-     *
-     * @ORM\Column(name="emailBack", type="string", length=255)
      */
     private $emailBack;
 
     /**
      * @var InfoUser
-     *
-     * @ORM\ManyToOne(targetEntity="InfoUser", cascade={"all"})
-     * @ORM\JoinColumn(nullable=false)
      */
     private $infoUser;
-
-    /**
-     * @ORM\Column(type="string", unique=true)
-     */
-    private $apiKey;
 
     public function __construct($id = "", $username = "", $email = "", $password = "")
     {
@@ -300,31 +276,5 @@ class Administrator implements UserInterface, \Serializable
     public function setPlainPassword($plainPassword)
     {
         $this->plainPassword = $plainPassword;
-    }
-
-
-
-    /**
-     * Set apiKey
-     *
-     * @param string $apiKey
-     *
-     * @return Administrator
-     */
-    public function setApiKey($apiKey)
-    {
-        $this->apiKey = $apiKey;
-
-        return $this;
-    }
-
-    /**
-     * Get apiKey
-     *
-     * @return string
-     */
-    public function getApiKey()
-    {
-        return $this->apiKey;
     }
 }
