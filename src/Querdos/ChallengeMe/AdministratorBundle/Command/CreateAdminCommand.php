@@ -10,6 +10,7 @@ namespace Querdos\ChallengeMe\AdministratorBundle\Command;
 
 use Querdos\ChallengeMe\AdministratorBundle\Entity\Administrator;
 use Querdos\ChallengeMe\AdministratorBundle\Manager\AdministratorManager;
+use Querdos\ChallengeMe\AdministratorBundle\Validator\AdminValidator;
 use Sensio\Bundle\GeneratorBundle\Command\GeneratorCommand;
 use Sensio\Bundle\GeneratorBundle\Command\Helper\QuestionHelper;
 use Symfony\Component\Console\Input\InputInterface;
@@ -18,9 +19,22 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\ConfirmationQuestion;
 use Symfony\Component\Console\Question\Question;
 use Symfony\Component\Security\Core\Encoder\EncoderFactory;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
+use Symfony\Component\VarDumper\VarDumper;
 
 class CreateAdminCommand extends GeneratorCommand
 {
+
+    /**
+     * @var AdminValidator $adminValidator
+     */
+    private $adminValidator;
+
+    protected function initialize(InputInterface $input, OutputInterface $output)
+    {
+        $this->adminValidator = $this->getContainer()->get('challengeme.validator.admin');
+    }
+
     public function configure()
     {
         $this
@@ -114,7 +128,9 @@ EOT
 
     protected function interact(InputInterface $input, OutputInterface $output)
     {
+        /** @var QuestionHelper $questionHelper */
         $questionHelper = $this->getQuestionHelper();
+
         $questionHelper->writeSection($output, "Welcome to the ChallengeMe Admin generator");
 
         /*
@@ -126,9 +142,10 @@ EOT
             $username
         ), $username);
         $question
+            ->setMaxAttempts(3)
             ->setValidator(function($inputUsername) {
-            return Validators::usernameValidator($inputUsername);
-        });
+                return $this->adminValidator->validateUsername($inputUsername);
+            });
         $username = $questionHelper->ask($input, $output, $question);
         $input->setOption('username', $username);
 
@@ -140,14 +157,13 @@ EOT
             'Password',
             $plainPassword
         ), $plainPassword);
-
         $question
+            ->setMaxAttempts(3)
             ->setHidden(true)
             ->setHiddenFallback(false)
             ->setValidator(function($inputPassword) {
-                return Validators::passwordValidator($inputPassword);
+                return $this->adminValidator->validatePassword($inputPassword);
             });
-
         $plainPassword = $questionHelper->ask($input, $output, $question);
         $input->setOption('password', $plainPassword);
 
@@ -160,8 +176,9 @@ EOT
             $email
         ), $email);
         $question
+            ->setMaxAttempts(3)
             ->setValidator(function($inputEmail) {
-                return Validators::emailValidator($inputEmail);
+                return $this->adminValidator->validateEmail($inputEmail);
             });
         $email = $questionHelper->ask($input, $output, $question);
         $input->setOption('email', $email);
@@ -174,10 +191,11 @@ EOT
             'Firstname',
             $firstName
         ), $firstName);
-        $question->setValidator(function($inputFirstName) {
-
-            return Validators::noWhiteSpaceValidator($inputFirstName);
-        });
+        $question
+            ->setMaxAttempts(3)
+            ->setValidator(function($inputFirstName) {
+                return $this->adminValidator->validateFirstname($inputFirstName);
+            });
         $firstName = $questionHelper->ask($input, $output, $question);
         $input->setOption('firstname', $firstName);
 
@@ -190,8 +208,9 @@ EOT
             $lastName
         ), $lastName);
         $question
+            ->setMaxAttempts(3)
             ->setValidator(function($inputLastname) {
-                return Validators::noWhiteSpaceValidator($inputLastname);
+                return $this->adminValidator->validateLastname($inputLastname);
             });
         $lastName = $questionHelper->ask($input, $output, $question);
         $input->setOption('lastname', $lastName);
@@ -205,8 +224,9 @@ EOT
             $emailBack
         ), $emailBack);
         $question
+            ->setMaxAttempts(3)
             ->setValidator(function($inputEmail) {
-                return Validators::emailValidator($inputEmail);
+                return $this->adminValidator->validateEmailBack($inputEmail);
             });
         $emailBack = $questionHelper->ask($input, $output, $question);
         $input->setOption('emailback', $emailBack);
@@ -219,7 +239,11 @@ EOT
             'Birthday (m/d/y)',
             $birthday
         ), $birthday);
-
+        $question
+            ->setMaxAttempts(3)
+            ->setValidator(function($inputBirthday) {
+                return $this->adminValidator->validateBirthday($inputBirthday);
+            });
         $birthday = $questionHelper->ask($input, $output, $question);
         $input->setOption('birthday', $birthday);
     }
