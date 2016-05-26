@@ -19,11 +19,15 @@ Querdos\ChallengeMe\AdministratorBundle\Entity\Administrator:
         email:
             - NotBlank:
                 message:    "Email is mandatory"
-            - Length:
-                min:        50
-                max:        255
-                minMessage: "Email must be at least {{ limit }} characters long"
-                maxMessage: "Email cannot be longer than {{ limit }} characters"
+            - Email:
+                message:    "The email {{ value }} is not a valid email"
+                checkMX:    true
+        emailBack:
+            - NotNull:
+                message:    "Secondary email cannot be null"
+            - Email:
+                message:    "The email {{ value }} is not a valid email"
+                checkMX:    true
         infoUser:
             - Valid:        ~
 
