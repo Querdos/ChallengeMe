@@ -17,7 +17,6 @@ class AppKernel extends Kernel
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             
             new Querdos\ChallengeMe\AdministratorBundle\AdminBundle(),
-            new Querdos\ChallengeMe\ConsoleBundle\ConsoleBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {
