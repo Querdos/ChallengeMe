@@ -23,8 +23,8 @@ class AdministratorRepository extends EntityRepository
     /**
      * Check if an admin exists
      *
-     * @param Administrator $admin
-     * @return array
+     * @param   Administrator $admin
+     * @return  array
      */
     public function adminExists(Administrator $admin) {
         $query = $this->_em->createQueryBuilder()
@@ -39,9 +39,9 @@ class AdministratorRepository extends EntityRepository
     /**
      * Get the admin username, password and email
      *
-     * @param $username
+     * @param   $username
      *
-     * @return array
+     * @return  array
      */
     public function getAdminData($username) {
         $query = $this->_em->createQueryBuilder()
@@ -53,6 +53,15 @@ class AdministratorRepository extends EntityRepository
         return $query->getQuery()->getSingleResult();
     }
 
+    /**
+     * Return the public info of an admin
+     *
+     * @param   $id
+     * @return  mixed
+     *
+     * @throws  \Doctrine\ORM\NoResultException
+     * @throws  \Doctrine\ORM\NonUniqueResultException
+     */
     public function getAdminPublicInfo($id) {
         $query = $this->_em->createQueryBuilder()
             ->select("admin.username", "admin.email", "info.firstName", "info.lastName", "info.birthday")
@@ -62,5 +71,41 @@ class AdministratorRepository extends EntityRepository
             ->setParameter("id", $id);
 
         return $query->getQuery()->getSingleResult();
+    }
+
+    /**
+     * Check username existence for an admin
+     *
+     * @param   $username
+     * @return  array
+     */
+    public function checkUsername($username) {
+        $query = $this->_em->createQueryBuilder()
+            ->select("admin.username")
+            ->from("AdminBundle:Administrator", "admin")
+            ->where("admin.username = :username")
+            ->setParameter("username", $username);
+
+        return $query
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+
+    /**
+     * Check email existence for an admin
+     *
+     * @param   $email
+     * @return  array
+     */
+    public function checkEmail($email) {
+        $query = $this->_em->createQueryBuilder()
+            ->select("admin.email")
+            ->from("AdminBundle:Administrator", "admin")
+            ->where("admin.email = :email")
+            ->setParameter("email", $email);
+
+        return $query
+            ->getQuery()
+            ->getOneOrNullResult();
     }
 }

@@ -24,4 +24,8 @@ interface AdministratorManagerInterface
     public function getAdminData($username);
 
     public function getAdminPublicInfo($id);
+
+    public function checkUsername($username);
+
+    public function checkEmail($email);
 }

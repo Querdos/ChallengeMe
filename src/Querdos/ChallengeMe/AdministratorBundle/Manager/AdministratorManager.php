@@ -53,4 +53,16 @@ class AdministratorManager implements AdministratorManagerInterface
     public function getAdminPublicInfo($id) {
         return $this->repository->getAdminPublicInfo($id);
     }
+
+    public function checkUsername($username)
+    {
+        return $this->repository->checkUsername($username);
+    }
+
+    public function checkEmail($email)
+    {
+        return $this->repository->checkEmail($email);
+    }
+
+
 }
