@@ -9,6 +9,7 @@
 namespace Querdos\ChallengeMe\AdministratorBundle\Command;
 
 use Querdos\ChallengeMe\AdministratorBundle\Entity\Administrator;
+use Querdos\ChallengeMe\AdministratorBundle\Entity\InfoUser;
 use Querdos\ChallengeMe\AdministratorBundle\Manager\AdministratorManager;
 use Querdos\ChallengeMe\AdministratorBundle\Validator\AdminValidator;
 use Sensio\Bundle\GeneratorBundle\Command\GeneratorCommand;
@@ -82,12 +83,12 @@ EOT
          */
         $questionHelper->writeSection($output, "Summary before generation");
 
-        $output->writeln("Firstname:\t<info>" . $input->getOption('firstname') . "</info>");
-        $output->writeln("Lastname:\t<info>" . $input->getOption('lastname') . "</info>");
-        $output->writeln("Username:\t<info>" . $input->getOption('username') . "</info>");
-        $output->writeln("Email:\t\t<info>" . $input->getOption('email') . "</info>");
-        $output->writeln("Email (2):\t<info>" . $input->getOption('emailback') . "</info>");
-        $output->writeln("Birthday:\t<info>" . $input->getOption('birthday') . "</info>");
+        $output->writeln("Firstname:\t<info>" .     $input->getOption('firstname') . "</info>");
+        $output->writeln("Lastname:\t<info>" .      $input->getOption('lastname') . "</info>");
+        $output->writeln("Username:\t<info>" .      $input->getOption('username') . "</info>");
+        $output->writeln("Email:\t\t<info>" .       $input->getOption('email') . "</info>");
+        $output->writeln("Email (2):\t<info>" .     $input->getOption('emailback') . "</info>");
+        $output->writeln("Birthday:\t<info>" .      $input->getOption('birthday') . "</info>");
         $output->writeln("");
 
         $question = new ConfirmationQuestion("Continue ? (y|n)", true);
@@ -95,37 +96,42 @@ EOT
             $this->interact($input, $output);
         }
 
-        $admin = new Administrator();
+        $admin      = new Administrator();
+        $infoUser   = new InfoUser();
 
-        /*
-         * Mandatory informations
-         */
-        $admin->setUsername($input->getOption('username'));
-        $admin->setPlainPassword($input->getOption('password'));
-        $admin->setEmail($input->getOption('email'));
-        $admin->setEmailBack($input->getOption('emailback'));
+        $encoder    = $this->getContainer()->get('security.password_encoder');
 
         /*
          * Optional informations
          */
-        $admin->getInfoUser()->setFirstname($input->getOption('firstname'));
-        $admin->getInfoUser()->setLastName($input->getOption('lastname'));
-
-        // TODO : Gérer l'anniversaire
-        $admin->getInfoUser()->setBirthday($input->getOption('birthday'));
+        $infoUser
+            ->setFirstName($input->getOption('firstname'))
+            ->setLastName($input->getOption('lastname'))
+            ->setBirthday(
+                new \DateTime($input->getOption('birthday'))
+            );
 
         /*
-         * Encoding the password
+         * Mandatory informations
          */
-        $encoder = $this->getContainer()->get('security.password_encoder');
-        $admin->setPassword($encoder->encodePassword($admin, $admin->getPlainPassword()));
-
+        $admin
+            ->setUsername($input->getOption('username'))
+            ->setPlainPassword($input->getOption('password'))
+            ->setEmail($input->getOption('email'))
+            ->setEmailBack($input->getOption('emailback'))
+            ->setInfoUser($infoUser)
+            ->setPassword($encoder->encodePassword($admin, $admin->getPlainPassword()))
+            ->eraseCredentials();
         /*
          * Persisting the admin
          */
-        $adminManager->create($admin);
+        $adminManager
+            ->create($admin);
 
-//        $questionHelper->writeGeneratorSummary($output, "Everything ok !");
+        /*
+         * Summary
+         */
+        $questionHelper->writeGeneratorSummary($output, null);
     }
 
     protected function interact(InputInterface $input, OutputInterface $output)
