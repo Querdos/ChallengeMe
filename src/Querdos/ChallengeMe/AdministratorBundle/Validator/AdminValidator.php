@@ -11,7 +11,6 @@ namespace Querdos\ChallengeMe\AdministratorBundle\Validator;
 
 use Querdos\ChallengeMe\AdministratorBundle\Entity\Administrator;
 use Querdos\ChallengeMe\AdministratorBundle\Entity\InfoUser;
-use Symfony\Component\Form\Exception\RuntimeException;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class AdminValidator
