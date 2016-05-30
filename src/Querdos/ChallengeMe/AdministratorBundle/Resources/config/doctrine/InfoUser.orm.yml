@@ -11,7 +11,7 @@ Querdos\ChallengeMe\AdministratorBundle\Entity\InfoUser:
         firstName:
             type:       string
             length:     128
-            unique:     true
+            unique:     false
             nullable:   false
         lastName:
             type:       string
