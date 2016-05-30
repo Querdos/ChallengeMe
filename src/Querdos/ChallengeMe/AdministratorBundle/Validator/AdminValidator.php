@@ -11,6 +11,7 @@ namespace Querdos\ChallengeMe\AdministratorBundle\Validator;
 
 use Querdos\ChallengeMe\AdministratorBundle\Entity\Administrator;
 use Querdos\ChallengeMe\AdministratorBundle\Entity\InfoUser;
+use Querdos\ChallengeMe\AdministratorBundle\Manager\AdministratorManager;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class AdminValidator
@@ -20,9 +21,15 @@ class AdminValidator
      */
     private $validator;
 
-    public function __construct(ValidatorInterface $validator)
+    /**
+     * @var AdministratorManager $adminManager
+     */
+    private $adminManager;
+
+    public function __construct(ValidatorInterface $validator, AdministratorManager $administratorManager)
     {
-        $this->validator = $validator;
+        $this->validator    = $validator;
+        $this->adminManager = $administratorManager;
     }
 
     /**
@@ -32,6 +39,10 @@ class AdminValidator
      * @return mixed
      */
     public function validateUsername($name) {
+        if (null !== $this->adminManager->checkUsername($name)) {
+            throw new \RuntimeException("Username already exists");
+        }
+
         $error = $this->validator->validatePropertyValue(Administrator::class, 'username', $name);
 
         if (count($error) > 0) {
@@ -66,6 +77,10 @@ class AdminValidator
      * @return mixed
      */
     public function validateEmail($email) {
+        if (null !== $this->adminManager->checkEmail($email)) {
+            throw new \RuntimeException("Email alreayd exists");
+        }
+
         $error = $this->validator->validatePropertyValue(Administrator::class, 'email', $email);
 
         if (count($error) > 0) {
