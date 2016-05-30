@@ -10,6 +10,7 @@ namespace Querdos\ChallengeMe\AdministratorBundle\Security;
 
 
 use Doctrine\ORM\EntityManager;
+use Querdos\ChallengeMe\AdministratorBundle\Entity\Administrator;
 use Querdos\ChallengeMe\AdministratorBundle\Manager\AdministratorManager;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
