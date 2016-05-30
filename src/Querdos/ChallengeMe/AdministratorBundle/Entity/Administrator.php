@@ -260,6 +260,8 @@ class Administrator implements UserInterface, \Serializable
     public function setPassword($password)
     {
         $this->password = $password;
+
+        return $this;
     }
 
     /**
@@ -272,9 +274,12 @@ class Administrator implements UserInterface, \Serializable
 
     /**
      * @param string $plainPassword
+     * @return $this
      */
     public function setPlainPassword($plainPassword)
     {
         $this->plainPassword = $plainPassword;
+
+        return $this;
     }
 }

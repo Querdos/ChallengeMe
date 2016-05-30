@@ -31,7 +31,7 @@ class InfoUser
 
     public function __construct()
     {
-        $this->firstname    = "";
+        $this->firstName    = "";
         $this->lastName     = "";
         $this->birthday     = new DateTime();
     }
@@ -39,7 +39,7 @@ class InfoUser
     /**
      * Get id
      *
-     * @return int
+     * @return integer
      */
     public function getId()
     {
@@ -47,21 +47,21 @@ class InfoUser
     }
 
     /**
-     * Set firstname
+     * Set firstName
      *
-     * @param string $firstname
+     * @param string $firstName
      *
      * @return InfoUser
      */
-    public function setFirstName($firstname)
+    public function setFirstName($firstName)
     {
-        $this->firstName = $firstname;
+        $this->firstName = $firstName;
 
         return $this;
     }
 
     /**
-     * Get firstname
+     * Get firstName
      *
      * @return string
      */
@@ -117,15 +117,4 @@ class InfoUser
     {
         return $this->birthday;
     }
-    /**
-     * @var string
-     */
-    private $firstname;
-
-    /**
-     * @var string
-     */
-    private $lastname;
-
-
 }
