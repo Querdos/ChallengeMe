@@ -13,13 +13,13 @@ use Querdos\ChallengeMe\AdministratorBundle\Entity\Moderator;
 
 interface ModeratorManagerInterface
 {
-    public function create(Moderator $admin);
+    public function create(Moderator $moderator);
 
-    public function update(Moderator $admin);
+    public function update(Moderator $moderator);
 
-    public function delete(Moderator $admin);
+    public function delete(Moderator $moderator);
 
-    public function adminExists(Moderator $admin);
+    public function moderatorExists(Moderator $moderator);
 
     public function getModeratorData($username);
 

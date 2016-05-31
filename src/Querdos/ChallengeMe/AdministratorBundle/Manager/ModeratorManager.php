@@ -23,22 +23,22 @@ class ModeratorManager implements ModeratorManagerInterface
         $this->repository = $objectManager->getRepository('AdminBundle:Moderator');
     }
 
-    public function create(Moderator $admin)
+    public function create(Moderator $moderator)
     {
-        // TODO: Implement create() method.
+        $this->repository->create($moderator);
     }
 
-    public function update(Moderator $admin)
+    public function update(Moderator $moderator)
     {
-        // TODO: Implement update() method.
+        $this->repository->update($moderator);
     }
 
-    public function delete(Moderator $admin)
+    public function delete(Moderator $moderator)
     {
-        // TODO: Implement delete() method.
+        $this->repository->delete($moderator);
     }
 
-    public function adminExists(Moderator $admin)
+    public function moderatorExists(Moderator $moderator)
     {
         // TODO: Implement adminExists() method.
     }
