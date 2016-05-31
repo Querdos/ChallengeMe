@@ -23,11 +23,11 @@ security:
             security: false
 
         login_firewall:
-            pattern: ^/(.*)/login$
+            pattern: ^/(.*)/(.*)/login$
             anonymous: ~
 
         admin_firewall:
-            pattern:  ^/admin
+            pattern:  ^/restricted/admin
 #            guard:
 #                authenticators:
 #                    - challengeme.authenticator.admin
@@ -39,8 +39,8 @@ security:
                 default_target_path:  admin_homepage
                 failure_path:         admin_login
             logout:
-                path:   /admin/logout
-                target: /admin/login
+                path:   /restricted/admin/logout
+                target: /restricted/admin/login
 
         landing_firewall:
             pattern:    ^/
