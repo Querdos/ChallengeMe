@@ -1,6 +1,6 @@
 security:
     encoders:
-        Querdos\ChallengeMe\AdministratorBundle\Entity\Adminstrator:
+        Querdos\ChallengeMe\AdministratorBundle\Entity\Administrator:
             algorithm: bcrypt
             cost: 12
 
@@ -10,9 +10,7 @@ security:
 
     providers:
         administrator_provider:
-            entity:
-                class: Querdos\ChallengeMe\AdministratorBundle\Entity\Adminstrator
-                property: username
+            id: challengeme.provider.admin
 
     role_hierarchy:
         ROLE_ADMIN:       ROLE_USER
@@ -21,13 +19,34 @@ security:
     firewalls:
         # disables authentication for assets and the profiler, adapt it according to your needs
         dev:
-            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            pattern:  ^/(_(profiler|wdt)|css|images|js)/
             security: false
 
-        admin:
-            pattern: ^/admin
-            http_basic: ~
+        login_firewall:
+            pattern: ^/(.*)/login$
+            anonymous: ~
+
+        admin_firewall:
+            pattern:  ^/admin
+#            guard:
+#                authenticators:
+#                    - challengeme.authenticator.admin
             provider: administrator_provider
+            form_login:
+                login_path:           admin_login
+                check_path:           admin_login_check
+                csrf_token_generator: security.csrf.token_manager
+                default_target_path:  admin_homepage
+                failure_path:         admin_login
+            logout:
+                path:   /admin/logout
+                target: /admin/login
+
+        landing_firewall:
+            pattern:    ^/
+            anonymous:  ~
 
     access_control:
-        - { path: ^/admin, roles: ROLE_ADMIN }
+        - { path: ^/(.*)/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/,           roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/admin,      roles: ROLE_ADMIN }

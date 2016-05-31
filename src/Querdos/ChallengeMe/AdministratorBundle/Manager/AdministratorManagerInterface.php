@@ -9,13 +9,25 @@
 namespace Querdos\ChallengeMe\AdministratorBundle\Manager;
 
 
-use Querdos\ChallengeMe\AdministratorBundle\Entity\Adminstrator;
+use Querdos\ChallengeMe\AdministratorBundle\Entity\Administrator;
 
 interface AdministratorManagerInterface
 {
-    public function create(Adminstrator $admin);
+    public function create(Administrator $admin);
 
-    public function update(Adminstrator $admin);
+    public function update(Administrator $admin);
 
-    public function delete(Adminstrator $admin);
+    public function delete(Administrator $admin);
+
+    public function adminExists(Administrator $admin);
+
+    public function getAdminData($username);
+
+    public function getAdminPublicInfo($id);
+
+    public function checkUsername($username);
+
+    public function checkEmail($email);
+
+    public function checkEmailBack($email);
 }

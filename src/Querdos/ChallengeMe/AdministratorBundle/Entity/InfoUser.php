@@ -3,49 +3,35 @@
 namespace Querdos\ChallengeMe\AdministratorBundle\Entity;
 
 use DateTime;
-use Doctrine\ORM\Mapping as ORM;
 
 /**
  * InfoUser
- *
- * @ORM\Table(name="info_user")
- * @ORM\Entity(repositoryClass="Querdos\ChallengeMe\AdministratorBundle\Repository\InfoUserRepository")
  */
 class InfoUser
 {
     /**
      * @var int
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
 
     /**
      * @var string
-     *
-     * @ORM\Column(name="firstname", type="string", length=255)
      */
-    private $firstname;
+    private $firstName;
 
     /**
      * @var string
-     *
-     * @ORM\Column(name="lastName", type="string", length=255)
      */
     private $lastName;
 
     /**
      * @var \DateTime
-     *
-     * @ORM\Column(name="birthday", type="datetime")
      */
     private $birthday;
 
     public function __construct()
     {
-        $this->firstname    = "";
+        $this->firstName    = "";
         $this->lastName     = "";
         $this->birthday     = new DateTime();
     }
@@ -53,7 +39,7 @@ class InfoUser
     /**
      * Get id
      *
-     * @return int
+     * @return integer
      */
     public function getId()
     {
@@ -61,27 +47,27 @@ class InfoUser
     }
 
     /**
-     * Set firstname
+     * Set firstName
      *
-     * @param string $firstname
+     * @param string $firstName
      *
      * @return InfoUser
      */
-    public function setFirstname($firstname)
+    public function setFirstName($firstName)
     {
-        $this->firstname = $firstname;
+        $this->firstName = $firstName;
 
         return $this;
     }
 
     /**
-     * Get firstname
+     * Get firstName
      *
      * @return string
      */
-    public function getFirstname()
+    public function getFirstName()
     {
-        return $this->firstname;
+        return $this->firstName;
     }
 
     /**

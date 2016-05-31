@@ -1,0 +1,971 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Landlr - The All-in-One Landing Page - Flat Design</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="Landlr" name="description">
+    <meta content="playlab" name="author">
+
+    {#Bootstrap & font awesome#}
+    {% stylesheets '@bootstrapLandlr_css' '@fontAwesomeLandlr_css' filter='cssrewrite' %}
+        <link href="{{ asset_url }}" rel="stylesheet"/>
+    {% endstylesheets %}
+
+    {# Revolution Responsive jQuery Slider #}
+    {% stylesheets '@jquerySlider_css' filter='cssrewrite' %}
+        <link rel="stylesheet" type="text/css" href="{{ asset_url }}" media="screen" />
+    {% endstylesheets %}
+
+    {#Landlr Style #}
+    {% stylesheets '@landlr_css' filter='cssrewrite' %}
+        <link href="{{ asset_url }}" rel="stylesheet">
+    {% endstylesheets %}
+
+    {# Favicon and touch icons  #}
+    <link href="ico/apple-touch-icon-144-precomposed.png" rel="apple-touch-icon-precomposed" sizes="144x144">
+    <link href="ico/apple-touch-icon-114-precomposed.png" rel="apple-touch-icon-precomposed" sizes="114x114">
+    <link href="ico/apple-touch-icon-72-precomposed.png" rel="apple-touch-icon-precomposed" sizes="72x72">
+    <link href="ico/apple-touch-icon-57-precomposed.png" rel="apple-touch-icon-precomposed">
+    <link href="ico/favicon.png" rel="shortcut icon">
+
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+    {% javascripts '@html5Shiv_js' %}
+    <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+    <![endif]-->
+</head>
+<body class="page-dark">
+<div id="back">
+
+</div>
+<!-- Navigation -->
+<header>
+    <div class="navbar navbar-fixed-top">
+        <div class="navbar-inner">
+            <div class="container">
+                <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="brand" href="#"><i class="icon-rocket"></i> Landlr</a>
+                <div class="nav-collapse collapse">
+                    <ul class="nav pull-right">
+                        <li><a href="#row1">Home</a></li>
+                        <li><a href="#row2">Project</a></li>
+                        <li><a href="#row3">Features</a></li>
+                        <li><a href="#row4">Specifications</a></li>
+                        <li><a href="#row5">Pricing</a></li>
+                        <li><a href="#row6">Testimonials</a></li>
+                        <li><a href="#row7">Get Started</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div><!-- .navbar -->
+</header>
+
+<!-- Home -->
+<section class="wrapper home">
+    <a class="anchor" id="row1"></a>
+    <div class="container">
+        <div class="row">
+            <div class="span12 text-center">
+                <hgroup class="main-title white">
+                    <h2>Landlr is the all-in-one landing page</h2>
+                    <h3>The best solution for launching awesome applications and cool web projects.</h3>
+                </hgroup>
+                <a class="btn btn-large btn-tomato uppercase">Buy this template</a>
+                <a class="btn btn-large btn-transparent uppercase">Learn more</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Project -->
+<section class="wrapper bg-turquoise colored">
+    <a class="anchor" id="row2"></a>
+    <div class="container">
+        <div class="row">
+            <div class="span12 text-center">
+                <hgroup>
+                    <h2>A new perspective for your web projects</h2>
+                    <h3>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc id lobortis diam, vel lobortis ipsum.</h3>
+                </hgroup>
+            </div>
+        </div>
+
+        <!-- Slider -->
+        <div class="bannercontainer row">
+            <div class="banner span12" >
+                <ul>
+
+                    <!-- slide 1 -->
+                    <li data-transition="fade, papercut" data-slotamount="10" data-masterspeed="300" data-slideindex="back">
+                        <div class="caption sfl fadeout"
+                             data-x="0"
+                             data-y="180"
+                             data-speed="300"
+                             data-start="1250"
+                             data-end="5000"
+                             data-endeasing="easeOutBack"
+                             data-easing="easeOutBack">
+                            {% image "@LandingBundle/Resources/public/images/bl_black_slide.png" %}
+                                <img src="{{ asset_url }}" alt="image" />
+                            {% endimage %}
+                        </div>
+                        <div class="caption sfl fadeout"
+                             data-x="0"
+                             data-y="135"
+                             data-speed="300"
+                             data-start="1000"
+                             data-captionhidden="on"
+                             data-end="5000"
+                             data-endeasing="easeOutBack"
+                             data-easing="easeOutBack">
+                            {% image "@LandingBundle/Resources/public/images/bl_black_slide.png" %}
+                                <img src="{{ asset_url }}" alt="image" />
+                            {% endimage %}
+                        </div>
+                        <div class="caption sfl fadeout"
+                             data-x="0"
+                             data-y="90"
+                             data-speed="300"
+                             data-start="750"
+                             data-captionhidden="on"
+                             data-end="5000"
+                             data-endeasing="easeOutBack"
+                             data-easing="easeOutBack">
+                            {% image "@LandingBundle/Resources/public/images/l_slide.png" %}
+                                <img src="{{ asset_url }}" alt="image" />
+                            {% endimage %}
+                        </div>
+                        <div class="caption sfl fadeout"
+                             data-x="0"
+                             data-y="45"
+                             data-speed="300"
+                             data-start="500"
+                             data-captionhidden="on"
+                             data-end="5000"
+                             data-endeasing="easeOutBack"
+                             data-easing="easeOutBack">
+                            {% image "@LandingBundle/Resources/public/images/tl_white_slide.png" %}
+                            <img src="{{ asset_url }}" alt="image" />
+                            {% endimage %}
+                        </div>
+                        <div class="caption sfl fadeout"
+                             data-x="0"
+                             data-y="0"
+                             data-speed="300"
+                             data-start="0"
+                             data-captionhidden="on"
+                             data-end="5000"
+                             data-endeasing="easeOutBack"
+                             data-easing="easeOutBack">
+                            {% image "@LandingBundle/Resources/public/images/tl_white_slide.png" %}
+                            <img src="{{ asset_url }}" alt="image" />
+                            {% endimage %}
+                        </div>
+                        <div class="caption sft fadeout tp-resizeme"
+                             data-x="314"
+                             data-y="80"
+                             data-speed="300"
+                             data-start="1500"
+                             data-captionhidden="on"
+                             data-end="5000"
+                             data-endeasing="easeOutBack"
+                             data-easing="easeOutBack">
+                            {% image "@LandingBundle/Resources/public/images/shape_1.png" %}
+                            <img src="{{ asset_url }}" alt="image" />
+                            {% endimage %}
+                        </div>
+                        <div class="caption sfr fadeout tp-resizeme"
+                             data-x="700"
+                             data-y="0"
+                             data-speed="300"
+                             data-start="1750"
+                             data-captionhidden="on"
+                             data-end="5000"
+                             data-endeasing="easeOutBack"
+                             data-easing="easeOutBack">
+                            {% image "@LandingBundle/Resources/public/images/txt_1.png" %}
+                            <img src="{{ asset_url }}" alt="image" />
+                            {% endimage %}
+                        </div>
+                        <div class="caption fade fadeout tp-resizeme"
+                             data-x="398"
+                             data-y="200"
+                             data-speed="300"
+                             data-start="2000"
+                             data-captionhidden="on"
+                             data-end="5000"
+                             data-endeasing="easeOutBack"
+                             data-easing="easeOutBack">
+                            {% image "@LandingBundle/Resources/public/images/lens_1.png" %}
+                            <img src="{{ asset_url }}" alt="image" />
+                            {% endimage %}
+                        </div>
+                    </li>
+
+                    <!-- slide 2 -->
+                    <li data-transition="fade, papercut" data-slotamount="10" data-masterspeed="300" data-slideindex="back">
+                        <div class="caption sfr fadeout"
+                             data-x="right"
+                             data-y="180"
+                             data-speed="300"
+                             data-start="1250"
+                             data-end="5000"
+                             data-endeasing="easeOutBack"
+                             data-easing="easeOutBack">
+                            {% image "@LandingBundle/Resources/public/images/br_black_slide.png" %}
+                            <img src="{{ asset_url }}" alt="image" />
+                            {% endimage %}
+                        </div>
+                        <div class="caption sfr fadeout"
+                             data-x="right"
+                             data-y="135"
+                             data-speed="300"
+                             data-start="1000"
+                             data-captionhidden="on"
+                             data-end="5000"
+                             data-endeasing="easeOutBack"
+                             data-easing="easeOutBack">
+                            {% image "@LandingBundle/Resources/public/images/br_black_slide.png" %}
+                            <img src="{{ asset_url }}" alt="image" />
+                            {% endimage %}
+                        </div>
+                        <div class="caption sfr fadeout"
+                             data-x="right"
+                             data-y="90"
+                             data-speed="300"
+                             data-start="750"
+                             data-captionhidden="on"
+                             data-end="5000"
+                             data-endeasing="easeOutBack"
+                             data-easing="easeOutBack">
+                            {% image "@LandingBundle/Resources/public/images/r_slide.png" %}
+                            <img src="{{ asset_url }}" alt="image" />
+                            {% endimage %}
+                        </div>
+                        <div class="caption sfr fadeout"
+                             data-x="right"
+                             data-y="45"
+                             data-speed="300"
+                             data-start="500"
+                             data-captionhidden="on"
+                             data-end="5000"
+                             data-endeasing="easeOutBack"
+                             data-easing="easeOutBack">
+                            {% image "@LandingBundle/Resources/public/images/tr_white_slide.png" %}
+                            <img src="{{ asset_url }}" alt="image" />
+                            {% endimage %}
+                        </div>
+                        <div class="caption sfr fadeout"
+                             data-x="right"
+                             data-y="0"
+                             data-speed="300"
+                             data-start="0"
+                             data-captionhidden="on"
+                             data-end="5000"
+                             data-endeasing="easeOutBack"
+                             data-easing="easeOutBack">
+                            {% image "@LandingBundle/Resources/public/images/tr_white_slide.png" %}
+                            <img src="{{ asset_url }}" alt="image" />
+                            {% endimage %}
+                        </div>
+                        <div class="caption sft fadeout tp-resizeme"
+                             data-x="490"
+                             data-y="80"
+                             data-speed="300"
+                             data-start="1500"
+                             data-captionhidden="on"
+                             data-end="5000"
+                             data-endeasing="easeOutBack"
+                             data-easing="easeOutBack">
+                            {% image "@LandingBundle/Resources/public/images/shape_2.png" %}
+                            <img src="{{ asset_url }}" alt="image" />
+                            {% endimage %}
+                        </div>
+                        <div class="caption sfr fadeout tp-resizeme"
+                             data-x="0"
+                             data-y="0"
+                             data-speed="300"
+                             data-start="1750"
+                             data-captionhidden="on"
+                             data-end="5000"
+                             data-endeasing="easeOutBack"
+                             data-easing="easeOutBack">
+                            {% image "@LandingBundle/Resources/public/images/txt_2.png" %}
+                            <img src="{{ asset_url }}" alt="image" />
+                            {% endimage %}
+                        </div>
+                        <div class="caption fade fadeout tp-resizeme"
+                             data-x="505"
+                             data-y="190"
+                             data-speed="300"
+                             data-start="2000"
+                             data-captionhidden="on"
+                             data-end="5000"
+                             data-endeasing="easeOutBack"
+                             data-easing="easeOutBack">
+                            {% image "@LandingBundle/Resources/public/images/lens_2.png" %}
+                            <img src="{{ asset_url }}" alt="image" />
+                            {% endimage %}
+                        </div>
+                    </li>
+
+                    <!-- slide 3 -->
+                    <li data-transition="fade, papercut" data-slotamount="10" data-masterspeed="300" data-slideindex="back">
+                        <div class="caption sfl fadeout tp-resizeme"
+                             data-x="390"
+                             data-y="center"
+                             data-speed="300"
+                             data-start="0"
+                             data-captionhidden="on"
+                             data-end="5000"
+                             data-endeasing="easeOutBack"
+                             data-easing="easeOutBack">
+                            {% image "@LandingBundle/Resources/public/images/cl_black_slide.png" %}
+                            <img src="{{ asset_url }}" alt="image" />
+                            {% endimage %}
+                        </div>
+                        <div class="caption sfl fadeout tp-resizeme"
+                             data-x="435"
+                             data-y="center"
+                             data-speed="300"
+                             data-start="250"
+                             data-captionhidden="on"
+                             data-end="5000"
+                             data-endeasing="easeOutBack"
+                             data-easing="easeOutBack">
+                            {% image "@LandingBundle/Resources/public/images/cl_black_slide.png" %}
+                            <img src="{{ asset_url }}" alt="image" />
+                            {% endimage %}
+                        </div>
+                        <div class="caption sft fadeout tp-resizeme"
+                             data-x="center"
+                             data-y="center"
+                             data-speed="300"
+                             data-start="500"
+                             data-captionhidden="on"
+                             data-end="5000"
+                             data-endeasing="easeOutBack"
+                             data-easing="easeOutBack">
+                            {% image "@LandingBundle/Resources/public/images/c_slide.png" %}
+                            <img src="{{ asset_url }}" alt="image" />
+                            {% endimage %}
+                        </div>
+                        <div class="caption sfr fadeout tp-resizeme"
+                             data-x="530"
+                             data-y="center"
+                             data-speed="300"
+                             data-start="750"
+                             data-captionhidden="on"
+                             data-end="5000"
+                             data-endeasing="easeOutBack"
+                             data-easing="easeOutBack">
+                            {% image "@LandingBundle/Resources/public/images/cr_white_slide.png" %}
+                            <img src="{{ asset_url }}" alt="image" />
+                            {% endimage %}
+                        </div>
+                        <div class="caption sfr fadeout tp-resizeme"
+                             data-x="575"
+                             data-y="center"
+                             data-speed="300"
+                             data-start="1000"
+                             data-captionhidden="on"
+                             data-end="5000"
+                             data-endeasing="easeOutBack"
+                             data-easing="easeOutBack">
+                            {% image "@LandingBundle/Resources/public/images/cr_white_slide.png" %}
+                            <img src="{{ asset_url }}" alt="image" />
+                            {% endimage %}
+                        </div>
+                        <div class="caption sft fadeout tp-resizeme"
+                             data-x="390"
+                             data-y="90"
+                             data-speed="300"
+                             data-start="1250"
+                             data-captionhidden="on"
+                             data-end="5000"
+                             data-endeasing="easeOutBack"
+                             data-easing="easeOutBack">
+                            {% image "@LandingBundle/Resources/public/images/shape_3.png" %}
+                            <img src="{{ asset_url }}" alt="image" />
+                            {% endimage %}
+                        </div>
+                        <div class="caption sfr fadeout tp-resizeme"
+                             data-x="0"
+                             data-y="0"
+                             data-speed="300"
+                             data-start="1500"
+                             data-captionhidden="on"
+                             data-end="5000"
+                             data-endeasing="easeOutBack"
+                             data-easing="easeOutBack">
+                            {% image "@LandingBundle/Resources/public/images/txt_3.png" %}
+                            <img src="{{ asset_url }}" alt="image" />
+                            {% endimage %}
+                        </div>
+                        <div class="caption sfb fadeout tp-resizeme"
+                             data-x="650"
+                             data-y="320"
+                             data-speed="300"
+                             data-start="1750"
+                             data-captionhidden="on"
+                             data-end="5000"
+                             data-endeasing="easeOutBack"
+                             data-easing="easeOutBack">
+                            {% image "@LandingBundle/Resources/public/images/shape_4.png" %}
+                            <img src="{{ asset_url }}" alt="image" />
+                            {% endimage %}
+                        </div>
+                        <div class="caption sfl fadeout tp-resizeme"
+                             data-x="right"
+                             data-y="0"
+                             data-speed="300"
+                             data-start="2000"
+                             data-captionhidden="on"
+                             data-end="5000"
+                             data-endeasing="easeOutBack"
+                             data-easing="easeOutBack">
+                            {% image "@LandingBundle/Resources/public/images/txt_4.png" %}
+                                <img src="{{ asset_url }}" alt="image" />
+                            {% endimage %}
+                        </div>
+                    </li>
+                </ul>
+                <!-- <div class="tp-bannertimer tp-bottom"></div> -->
+            </div>
+        </div><!-- .bannercontainer -->
+    </div>
+</section>
+
+<!-- Features -->
+<section class="wrapper bg-white">
+    <a class="anchor" id="row3"></a>
+    <div class="container">
+        <div class="row">
+            <div class="span12 text-center mar-b30">
+                <hgroup>
+                    <h2>Features available with Landlr</h2>
+                    <h3>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc id lobortis diam, vel lobortis ipsum.<br />
+                        Nulla auctor, lectus a consectetur ornare, tortor dui pellentesque orci.</h3>
+                </hgroup>
+            </div>
+        </div>
+        <div class="row">
+            <div class="span6">
+                <div class="row-fluid">
+                    <div class="span2">
+                        <i class="icon-laptop icon-4x"></i>
+                    </div>
+                    <div class="span9">
+                        <h4>Flat and modern design</h4>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc id lobortis diam, vel lobortis ipsum. Nulla auctor, lectus a consectetur ornare, tortor dui pellentesque orci.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="span6">
+                <div class="row-fluid">
+                    <div class="span2">
+                        <i class="icon-rocket icon-4x"></i>
+                    </div>
+                    <div class="span9">
+                        <h4>Perfect for launching projects</h4>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc id lobortis diam, vel lobortis ipsum. Nulla auctor, lectus a consectetur ornare, tortor dui pellentesque orci.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="span6">
+                <div class="row-fluid">
+                    <div class="span2">
+                        <i class="icon-retweet icon-4x"></i>
+                    </div>
+                    <div class="span9">
+                        <h4>Responsive ready</h4>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc id lobortis diam, vel lobortis ipsum. Nulla auctor, lectus a consectetur ornare, tortor dui pellentesque orci.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="span6">
+                <div class="row-fluid">
+                    <div class="span2">
+                        <i class="icon-search icon-4x"></i>
+                    </div>
+                    <div class="span9">
+                        <h4>Seo optimized</h4>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc id lobortis diam, vel lobortis ipsum. Nulla auctor, lectus a consectetur ornare, tortor dui pellentesque orci.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="span6">
+                <div class="row-fluid">
+                    <div class="span2">
+                        <i class="icon-css3 icon-4x"></i>
+                    </div>
+                    <div class="span9">
+                        <h4>Css3 animations</h4>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc id lobortis diam, vel lobortis ipsum. Nulla auctor, lectus a consectetur ornare, tortor dui pellentesque orci.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="span6">
+                <div class="row-fluid">
+                    <div class="span2">
+                        <i class="icon-html5 icon-5x"></i>
+                    </div>
+                    <div class="span9">
+                        <h4>Powered by Html5</h4>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc id lobortis diam, vel lobortis ipsum. Nulla auctor, lectus a consectetur ornare, tortor dui pellentesque orci.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Specifications -->
+<section class="wrapper bg-turquoise colored">
+    <a class="anchor" id="row4"></a>
+    <div class="container">
+        <div class="row">
+            <div class="span12 text-center">
+                <h2>Landlr specifications</h2>
+                <h3>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc id lobortis diam, vel lobortis ipsum.<br />
+                    Nulla auctor, lectus a consectetur ornare, tortor dui pellentesque orci.</h3>
+            </div>
+        </div>
+        <div class="tabbable row mar-t30">
+            <ul class="nav nav-tabs nav-stacked span3">
+                <li class="active"><a href="#tab1" data-toggle="tab">Overview</a></li>
+                <li><a href="#tab2" data-toggle="tab">Designers</a></li>
+                <li><a href="#tab3" data-toggle="tab">Developers</a></li>
+                <li><a href="#tab4" data-toggle="tab">Our story</a></li>
+            </ul>
+            <div class="tab-content span9">
+                <div class="tab-pane active fade in" id="tab1">
+                    <div class="row-fluid">
+                        <div class="span6">
+                            <div class="row-fluid">
+                                <div class="span2">
+                                    <i class="icon-wrench icon-3x"></i>
+                                </div>
+                                <div class="span10">
+                                    <h4>Built with Boostrap</h4>
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc id lobortis diam, vel lobortis ipsum. Nulla auctor, lectus a consectetur ornare.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="span6">
+                            <div class="row-fluid">
+                                <div class="span2">
+                                    <i class="icon-cog icon-3x"></i>
+                                </div>
+                                <div class="span10">
+                                    <h4>Easy to customize</h4>
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc id lobortis diam, vel lobortis ipsum. Nulla auctor, lectus a consectetur ornare.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span6">
+                            <div class="row-fluid">
+                                <div class="span2">
+                                    <i class="icon-desktop icon-3x"></i>
+                                </div>
+                                <div class="span10">
+                                    <h4>Cross-browser compatibility</h4>
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc id lobortis diam, vel lobortis ipsum. Nulla auctor, lectus a consectetur ornare.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="span6">
+                            <div class="row-fluid">
+                                <div class="span2">
+                                    <i class="icon-coffee icon-3x"></i>
+                                </div>
+                                <div class="span10">
+                                    <h4>Good for your projects</h4>
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc id lobortis diam, vel lobortis ipsum. Nulla auctor, lectus a consectetur ornare.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span6">
+                            <div class="row-fluid">
+                                <div class="span2">
+                                    <i class="icon-thumbs-up-alt icon-3x"></i>
+                                </div>
+                                <div class="span10">
+                                    <h4>Well documented</h4>
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc id lobortis diam, vel lobortis ipsum. Nulla auctor, lectus a consectetur ornare.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="span6">
+                            <div class="row-fluid">
+                                <div class="span2">
+                                    <i class="icon-microphone icon-3x"></i>
+                                </div>
+                                <div class="span10">
+                                    <h4>Professional support</h4>
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc id lobortis diam, vel lobortis ipsum. Nulla auctor, lectus a consectetur ornare.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div><!-- .tab-pane -->
+                <div class="tab-pane fade" id="tab2">
+                    <div class="row-fluid">
+                        <div class="span4 text-center team">
+                            <div class="mar-b20 bordered full-rounded">
+                                {% image "@LandingBundle/Resources/public/images/face_1.jpg" %}
+                                    <img class="img-circle" src="{{ asset_url }}" alt="image" />
+                                {% endimage %}
+                            </div>
+                            <p><strong>Martin Wooden</strong><br />
+                                Head of Design Team</p>
+                            <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante.</p>
+                            <ul class="inline unstyled">
+                            <li><a href="#"><i class="icon-twitter"></i></a></li>
+                            <li><a href="#"><i class="icon-dribbble"></i></a></li>
+                            <li><a href="#"><i class="icon-linkedin"></i></a></li>
+                            </ul>
+                        </div>
+                        <div class="span4 text-center team"
+                            <div class="mar-b20 bordered full-rounded">
+                                {% image "@LandingBundle/Resources/public/images/face_2.jpg" %}
+                                <img class="img-circle" src="{{ asset_url }}" alt="image" />
+                                {% endimage %}
+                            </div>
+                            <p><strong>Paul Simpson</strong><br />
+                                Web Designer</p>
+                            <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante.</p>
+                            <ul class="inline unstyled"
+                            <li><a href="#"><i class="icon-twitter"></i></a></li>
+                            <li><a href="#"><i class="icon-dribbble"></i></a></li>
+                            <li><a href="#"><i class="icon-linkedin"></i></a></li>
+                            </ul>
+                        </div>
+                        <div class="span4 text-center team">
+                            <div class="mar-b20 bordered full-rounded">
+                                {% image "@LandingBundle/Resources/public/images/face_3.jpg" %}
+                                <img class="img-circle" src="{{ asset_url }}" alt="image" />
+                                {% endimage %}
+                            </div>
+                            <p><strong>Karen Wilson</strong><br />
+                                Web Deisgner</p>
+                            <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante.</p>
+                            <ul class="inline unstyled"
+                            <li><a href="#"><i class="icon-twitter"></i></a></li>
+                            <li><a href="#"><i class="icon-dribbble"></i></a></li>
+                            <li><a href="#"><i class="icon-linkedin"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div><!-- .tab-pane -->
+                <div class="tab-pane fade" id="tab3">
+                    <div class="row-fluid team">
+                        <div class="mar-b20 bordered full-rounded span2">
+                            {% image "@LandingBundle/Resources/public/images/face_5.jpg" %}
+                            <img class="img-circle" src="{{ asset_url }}" alt="image" />
+                            {% endimage %}
+                        </div>
+                        <div class="span10">
+                            <p><strong>Mike Carlson</strong> - Lead Developer</p>
+                            <p>Lorem ipsum dolor sit amet, consectetur ultricies eget, tempor sit adipiscing elit. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.</p>
+                            <ul class="inline unstyled"
+                            <li><a href="#"><i class="icon-twitter"></i></a></li>
+                            <li><a href="#"><i class="icon-github-sign"></i></a></li>
+                            <li><a href="#"><i class="icon-linkedin"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="row-fluid team">
+                        <div class="mar-b20 bordered full-rounded span2">
+                            {% image "@LandingBundle/Resources/public/images/face_6.jpg" %}
+                            <img class="img-circle" src="{{ asset_url }}" alt="image" />
+                            {% endimage %}
+                        </div>
+                        <div class="span10">
+                            <p><strong>James Dower</strong> - Developer</p>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque ultricies eget, tempor sit habitant morbi tristique senectus et netus et malesuada fames ac ultricies eget, tempor sit amet, ante.</p>
+                            <ul class="inline unstyled"
+                            <li><a href="#"><i class="icon-twitter"></i></a></li>
+                            <li><a href="#"><i class="icon-github-sign"></i></a></li>
+                            <li><a href="#"><i class="icon-linkedin"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="row-fluid team">
+                        <div class="mar-b20 bordered full-rounded span2">
+                            {% image "@LandingBundle/Resources/public/images/face_6.jpg" %}
+                            <img class="img-circle" src="{{ asset_url }}" alt="image" />
+                            {% endimage %}
+                        </div>
+                        <div class="span10">
+                            <p><strong>Peter Tosh</strong> - Developer</p>
+                            <p>Lorem ipsum dolor sit ameue habitant morbi ultricies eget, tempor sit tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante.</p>
+                            <ul class="inline unstyled"
+                            <li><a href="#"><i class="icon-twitter"></i></a></li>
+                            <li><a href="#"><i class="icon-github-sign"></i></a></li>
+                            <li><a href="#"><i class="icon-linkedin"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div><!-- .tab-pane -->
+                <div class="tab-pane fade" id="tab4">
+                    <h4>Our story</h4>
+                    <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo. Ut felis. Praesent dapibus, neque id cursus faucibus, tortor neque egestas augue, eu vulputate magna eros eu erat. Aliquam erat volutpat.</p>
+                    <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo. Quisque sit amet est et sapien ullamcorper pharetra. Vestibulum erat wisi, condimentum sed, commodo vitae, ornare sit amet, wisi. Aenean fermentum, elit eget tincidunt condimentum, eros ipsum rutrum orci, sagittis tempus lacus enim ac dui. Donec non enim in turpis pulvinar facilisis. Ut felis. Praesent dapibus, neque id cursus faucibus, tortor neque egestas augue, eu vulputate magna eros eu erat. Aliquam erat volutpat. Nam dui mi, tincidunt quis, accumsan porttitor, facilisis luctus, metus</p>
+                    <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo. Ut felis. Praesent dapibus, neque id cursus faucibus, tortor neque egestas augue, eu vulputate magna eros eu erat. Aliquam erat volutpat.</p>
+                </div><!-- .tab-pane -->
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Pricing & Plans -->
+<section class="wrapper bg-white">
+    <a class="anchor" id="row5"></a>
+    <div class="container">
+        <div class="row">
+            <div class="span12 text-center">
+                <hgroup>
+                    <h2>Pricing &amp; Plans</h2>
+                    <h3>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc id lobortis diam, vel lobortis ipsum.<br />
+                        Nulla auctor, lectus a consectetur ornare, tortor dui pellentesque orci.</h3>
+                </hgroup>
+            </div>
+        </div>
+        <div class="row">
+            <ul class="pricing-list unstyled clearfix mar-t60">
+                <li class="span3 pricing-table text-center">
+                    <div class="pricing-title">
+                        <h4 class="light">Basic</h4>
+                    </div>
+                    <div class="pricing-price">
+                        <span class="price">19</span><sup class="decimal">.95</sup>
+                    </div>
+                    <ul class="pricing-features unstyled">
+                        <li>Duis sit amet nisl ornare nunc</li>
+                        <li>In at urna ac felis hendrerit fringilla </li>
+                        <li>Duis semper justo convallis justo</li>
+                        <li>Pellentesque commodo lacus </li>
+                    </ul>
+                    <div class="pricing-action">
+                        <a class="bg-tomato uppercase" href="#">Get started</a>
+                    </div>
+                </li>
+                <li class="span3 pricing-table text-center">
+                    <div class="pricing-title">
+                        <h4 class="light">Standard</h4>
+                    </div>
+                    <div class="pricing-price">
+                        <span class="price">39</span><sup class="decimal">.95</sup>
+                    </div>
+                    <ul class="pricing-features unstyled">
+                        <li>Duis sit amet nisl ornare nunc</li>
+                        <li>In at urna ac felis hendrerit fringilla </li>
+                        <li>Duis semper justo convallis justo</li>
+                        <li>Pellentesque commodo lacus </li>
+                    </ul>
+                    <div class="pricing-action">
+                        <a class="bg-tomato uppercase" href="#">Get started</a>
+                    </div>
+                </li>
+                <li class="span3 pricing-table text-center focus">
+                    <div class="pricing-title">
+                        <h4 class="light">Professional</h4>
+                    </div>
+                    <div class="pricing-price">
+                        <span class="price">59</span><sup class="decimal">.95</sup>
+                    </div>
+                    <ul class="pricing-features unstyled">
+                        <li>Duis sit amet nisl ornare nunc</li>
+                        <li>In at urna ac felis hendrerit fringilla </li>
+                        <li>Duis semper justo convallis justo</li>
+                        <li>Pellentesque commodo lacus </li>
+                    </ul>
+                    <div class="pricing-action">
+                        <a class="bg-tomato uppercase" href="#">Get started</a>
+                    </div>
+                </li>
+                <li class="span3 pricing-table text-center">
+                    <div class="pricing-title">
+                        <h4 class="light">Business</h4>
+                    </div>
+                    <div class="pricing-price">
+                        <span class="price">79</span><sup class="decimal">.95</sup>
+                    </div>
+                    <ul class="pricing-features unstyled">
+                        <li>Duis sit amet nisl ornare nunc</li>
+                        <li>In at urna ac felis hendrerit fringilla </li>
+                        <li>Duis semper justo convallis justo</li>
+                        <li>Pellentesque commodo lacus </li>
+                    </ul>
+                    <div class="pricing-action">
+                        <a class="bg-tomato uppercase" href="#">Get started</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<!-- Testimonials -->
+<section class="wrapper bg-turquoise colored">
+    <a class="anchor" id="row6"></a>
+    <div class="container">
+        <div class="row">
+            <div class="span12 text-center">
+                <hgroup>
+                    <h2>Landlr testimonials says</h2>
+                    <h3>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc id lobortis diam, vel lobortis ipsum.<br />
+                        Nulla auctor, lectus a consectetur ornare, tortor dui pellentesque orci.</h3>
+                </hgroup>
+            </div>
+        </div>
+        <div class="row">
+            <div class="span12">
+                <div id="testimonial-slider" class="carousel slide mar-t30">
+                    <ul class="carousel-indicators text-center row-fluid">
+                        <li data-target="#testimonial-slider" data-slide-to="0" class="active span3">
+                            <div class="thumbnail  bordered full-rounded">
+                                {% image "@LandingBundle/Resources/public/images/testimonial_1.jpg" %}
+                                <img class="img-circle" src="{{ asset_url }}" alt="image" />
+                                {% endimage %}
+                            </div>
+                            <div class="desc">
+                                <p><strong>John Doe</strong><br />
+                                    Senior UX Designer</p>
+                            </div>
+                            <div class="arrow"></div>
+                        </li>
+                        <li data-target="#testimonial-slider" data-slide-to="1" class="span3">
+                            <div class="thumbnail  bordered full-rounded">
+                                {% image "@LandingBundle/Resources/public/images/testimonial_2.jpg" %}
+                                <img class="img-circle" src="{{ asset_url }}" alt="image" />
+                                {% endimage %}
+                            </div>
+                            <div class="desc">
+                                <p><strong>Susan Wood</strong><br />
+                                    Account Manager</p>
+                            </div>
+                            <div class="arrow"></div>
+                        </li>
+                        <li data-target="#testimonial-slider" data-slide-to="2" class="span3">
+                            <div class="thumbnail bordered full-rounded">
+                                {% image "@LandingBundle/Resources/public/images/testimonial_3.jpg" %}
+                                <img class="img-circle" src="{{ asset_url }}" alt="image" />
+                                {% endimage %}
+                            </div>
+                            <div class="desc">
+                                <p><strong>Peter White</strong><br />
+                                    General Manager</p>
+                            </div>
+                            <div class="arrow"></div>
+                        </li>
+                        <li data-target="#testimonial-slider" data-slide-to="3" class="span3">
+                            <div class="thumbnail bordered full-rounded">
+                                {% image "@LandingBundle/Resources/public/images/testimonial_4.jpg" %}
+                                <img class="img-circle" src="{{ asset_url }}" alt="image" />
+                                {% endimage %}
+                            <div class="desc">
+                                <p><strong>Mia Benson</strong><br />
+                                    Marketing Director</p>
+                            </div>
+                            <div class="arrow"></div>
+                        </li>
+                    </ul>
+                    <div class="carousel-inner clearfix">
+                        <div class="active item clearfix">
+                            <div class="row-fluid clearfix">
+                                <div class="span12">
+                                    <blockquote>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc id lobortis diam, vel lobortis ipsum. Nulla auctor, lectus a consectetur ornare, tortor dui pellentesque orci, vitae rhoncus sem nunc et sem.</blockquote>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="item">
+                            <div class="row-fluid clearfix">
+                                <div class="span12">
+                                    <blockquote>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Nunc id lobortis diam, vel lobortis ipsum. Nulla auctor, lectus a consectetur ornare, tortor dui sem nunc et sem.</blockquote>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="item">
+                            <div class="row-fluid clearfix">
+                                <div class="span12">
+                                    <blockquote>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla auctor, lectus a consectetur ornare, tortor dui pellentesque orci, vitae rhoncus sem nunc et sem. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.</blockquote>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="item">
+                            <div class="row-fluid clearfix">
+                                <div class="span12">
+                                    <blockquote>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc id lobortis diam, vel lobortis ipsum. Nulla auctor, lectus a consectetur ornare, tortor dui pellentesque orci, vitae rhoncus sem nunc et sem.</blockquote>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <a class="carousel-control left" href="#testimonial-slider" data-slide="prev"><i class="icon-chevron-sign-left"></i></a>
+                    <a class="carousel-control right" href="#testimonial-slider" data-slide="next"><i class="icon-chevron-sign-right"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Get Started -->
+<section class="wrapper mini-wrapper">
+    <a class="anchor" id="row7"></a>
+    <div class="container">
+        <div class="row">
+            <div class="span12 text-center">
+                <hgroup class="main-title white">
+                    <h2>Landlr is the all-in-one landing page</h2>
+                    <h3>The best solution for launching awesome applications and cool web projects.</h3>
+                </hgroup>
+                <a class="btn btn-large btn-tomato uppercase">Buy this template</a>
+                <a class="btn btn-large btn-transparent uppercase">Learn more</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="span10 pull-right">
+                <ul class="unstyled inline text-right footer-nav">
+                    <li><a href="#row1">Home</a></li>
+                    <li><a href="#row2">Project</a></li>
+                    <li><a href="#row3">Features</a></li>
+                    <li><a href="#row4">Specifications</a></li>
+                    <li><a href="#row5">Pricing</a></li>
+                    <li><a href="#row6">Testimonials</a></li>
+                    <li><a href="#row7">Get Started</a></li>
+                </ul>
+            </div>
+            <div class="span2 pull-left copyright">
+                Landlr - Copyright 2013
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- Javascript  -->
+{% javascripts '@jqueryLandlr_js' '@bootstrapLandlr_js' '@jqueryScrollTo_js' '@jqueryEasing_js' '@jquerySlider_js'  %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+{% endjavascripts %}
+
+</body>
+</html>
+
+

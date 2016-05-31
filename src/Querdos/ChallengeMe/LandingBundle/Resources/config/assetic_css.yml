@@ -1,0 +1,21 @@
+assetic:
+    assets:
+        jquerySlider_css:
+            inputs:
+                - 'bundles/landing/css/settings.css'
+            output: 'assets/css/jquerySlider.css'
+
+        landlr_css:
+            inputs:
+                - 'bundles/landing/css/colors.css'
+                - 'bundles/landing/css/style.css'
+                - 'bundles/landing/css/responsive.css'
+            output: 'assets/css/landlr.css'
+
+        bootstrapLandlr_css:
+            inputs: 'bundles/landing/css/bootstrap.css'
+            output: 'assets/css/bootstrapLandlr.css'
+
+        fontAwesomeLandlr_css:
+            inputs: 'bundles/landing/css/font-awesome.min.css'
+            output: 'assets/css/fontawesomelandlr.css'

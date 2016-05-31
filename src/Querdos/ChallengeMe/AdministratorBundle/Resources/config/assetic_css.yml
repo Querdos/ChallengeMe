@@ -1,0 +1,11 @@
+assetic:
+    assets:
+        jVectorMap:
+            inputs:
+                - 'bundles/admin/css/maps/jquery-jvectormap-2.0.3.css'
+            output: 'assets/css/jvectormap.css'
+
+        customTheme:
+            inputs:
+                - 'bundles/admin/css/custom.css'
+            output: 'assets/css/custom.css'

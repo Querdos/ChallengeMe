@@ -1,4 +1,8 @@
-admin:
-    resource: "@AdminBundle/Controller/"
+landing:
+    resource: "@LandingBundle/Controller/"
     type:     annotation
     prefix:   /
+
+admin:
+    resource: "@AdminBundle/Resources/config/routing.yml"
+    prefix:   /admin

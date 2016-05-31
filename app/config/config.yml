@@ -3,7 +3,10 @@ imports:
     - { resource: security.yml }
     - { resource: services.yml }
 
+    - { resource: config_assetic_global.yml }
+
     - { resource: "@AdminBundle/Resources/config/services.yml" }
+    - { resource: "@LandingBundle/Resources/config/services.yml" }
 
 # Put parameters here that don't need to change on each machine where the app is deployed
 # http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
@@ -19,7 +22,7 @@ framework:
         strict_requirements: ~
     form:            ~
     csrf_protection: ~
-    validation:      { enable_annotations: true }
+    validation:      { enable_annotations: false }
     #serializer:      { enable_annotations: true }
     templating:
         engines: ['twig']
@@ -68,3 +71,11 @@ swiftmailer:
     username:  "%mailer_user%"
     password:  "%mailer_password%"
     spool:     { type: memory }
+
+# Assetic configuration
+assetic:
+    debug:          '%kernel.debug%'
+    use_controller: '%kernel.debug%'
+    filters:
+        cssrewrite: ~
+

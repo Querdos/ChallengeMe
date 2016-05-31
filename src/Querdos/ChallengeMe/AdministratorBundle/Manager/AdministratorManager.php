@@ -10,31 +10,63 @@ namespace Querdos\ChallengeMe\AdministratorBundle\Manager;
 
 
 use Doctrine\Common\Persistence\ObjectManager;
-use Doctrine\ORM\EntityManager;
-use Querdos\ChallengeMe\AdministratorBundle\Entity\Adminstrator;
-use Querdos\ChallengeMe\AdministratorBundle\Repository\AdminstratorRepository;
+use Querdos\ChallengeMe\AdministratorBundle\Entity\Administrator;
+use Querdos\ChallengeMe\AdministratorBundle\Repository\AdministratorRepository;
 
 class AdministratorManager implements AdministratorManagerInterface
 {
+    /**
+     * @var AdministratorRepository $repository
+     */
     private $repository;
 
     public function __construct(ObjectManager $objectManager)
     {
-        $this->repository = $objectManager->getRepository('AdminBundle:Adminstrator');
+        $this->repository = $objectManager->getRepository('AdminBundle:Administrator');
     }
 
-    public function create(Adminstrator $admin)
+    public function create(Administrator $admin)
     {
         $this->repository->create($admin);
     }
 
-    public function update(Adminstrator $admin)
+    public function update(Administrator $admin)
     {
         // TODO: Implement update() method.
     }
 
-    public function delete(Adminstrator $admin)
+    public function delete(Administrator $admin)
     {
         // TODO: Implement delete() method.
     }
+
+    public function adminExists(Administrator $admin)
+    {
+        return $this->repository->adminExists($admin);
+    }
+
+    public function getAdminData($username)
+    {
+        return $this->repository->getAdminData($username);
+    }
+
+    public function getAdminPublicInfo($id) {
+        return $this->repository->getAdminPublicInfo($id);
+    }
+
+    public function checkUsername($username)
+    {
+        return $this->repository->checkUsername($username);
+    }
+
+    public function checkEmail($email)
+    {
+        return $this->repository->checkEmail($email);
+    }
+
+    public function checkEmailBack($email) {
+        return $this->repository->checkEmailBack($email);
+    }
+
+
 }

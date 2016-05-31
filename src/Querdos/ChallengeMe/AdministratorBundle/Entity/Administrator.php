@@ -2,31 +2,21 @@
 
 namespace Querdos\ChallengeMe\AdministratorBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
 use Querdos\ChallengeMe\AdministratorBundle\Entity\InfoUser;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * Adminstrator
- *
- * @ORM\Table(name="adminstrator")
- * @ORM\Entity(repositoryClass="Querdos\ChallengeMe\AdministratorBundle\Repository\AdminstratorRepository")
  */
-class Adminstrator implements UserInterface, \Serializable
+class Administrator implements UserInterface, \Serializable
 {
     /**
      * @var int
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
 
     /**
      * @var string
-     *
-     * @ORM\Column(name="username", type="string", length=255)
      */
     private $username;
 
@@ -37,38 +27,31 @@ class Adminstrator implements UserInterface, \Serializable
 
     /**
      * @var string
-     *
-     * @ORM\Column(name="password", type="string", length=255)
      */
     private $password;
 
     /**
      * @var string
-     *
-     * @ORM\Column(name="email", type="string", length=255)
      */
     private $email;
 
     /**
      * @var string
-     *
-     * @ORM\Column(name="emailBack", type="string", length=255)
      */
     private $emailBack;
 
     /**
      * @var InfoUser
-     *
-     * @ORM\ManyToOne(targetEntity="InfoUser", cascade={"all"})
-     * @ORM\JoinColumn(nullable=false)
      */
     private $infoUser;
 
-    public function __construct()
+    public function __construct($id = "", $username = "", $email = "", $password = "")
     {
-        $this->username     = "";
-        $this->email        = "";
+        $this->id           = $id;
+        $this->username     = $username;
+        $this->email        = $email;
         $this->emailBack    = "";
+        $this->password     = $password;
 
         $this->infoUser = new InfoUser();
     }
@@ -88,7 +71,7 @@ class Adminstrator implements UserInterface, \Serializable
      *
      * @param InfoUser $infoUser
      *
-     * @return Adminstrator
+     * @return Administrator
      */
     public function setInfoUser(InfoUser $infoUser)
     {
@@ -112,7 +95,7 @@ class Adminstrator implements UserInterface, \Serializable
      *
      * @param string $username
      *
-     * @return Adminstrator
+     * @return Administrator
      */
     public function setUsername($username)
     {
@@ -136,7 +119,7 @@ class Adminstrator implements UserInterface, \Serializable
      *
      * @param string $email
      *
-     * @return Adminstrator
+     * @return Administrator
      */
     public function setEmail($email)
     {
@@ -160,7 +143,7 @@ class Adminstrator implements UserInterface, \Serializable
      *
      * @param string $emailBack
      *
-     * @return Adminstrator
+     * @return Administrator
      */
     public function setEmailBack($emailBack)
     {
@@ -254,10 +237,7 @@ class Adminstrator implements UserInterface, \Serializable
      *
      * @return string|null The salt
      */
-    public function getSalt()
-    {
-        // TODO: Implement getSalt() method.
-    }
+    public function getSalt() {}
 
     /**
      * Removes sensitive data from the user.
@@ -267,7 +247,7 @@ class Adminstrator implements UserInterface, \Serializable
      */
     public function eraseCredentials()
     {
-        // TODO: Implement eraseCredentials() method.
+        $this->plainPassword = "";
     }
 
     /**
@@ -275,11 +255,13 @@ class Adminstrator implements UserInterface, \Serializable
      *
      * @param string $password
      *
-     * @return Adminstrator
+     * @return Administrator
      */
     public function setPassword($password)
     {
         $this->password = $password;
+
+        return $this;
     }
 
     /**
@@ -292,11 +274,12 @@ class Adminstrator implements UserInterface, \Serializable
 
     /**
      * @param string $plainPassword
+     * @return $this
      */
     public function setPlainPassword($plainPassword)
     {
         $this->plainPassword = $plainPassword;
+
+        return $this;
     }
-
-
 }

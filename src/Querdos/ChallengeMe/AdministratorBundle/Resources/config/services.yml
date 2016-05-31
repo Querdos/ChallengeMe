@@ -1,2 +1,12 @@
 imports:
     - { resource: managers.yml }
+
+    - { resource: assetic_js.yml }
+    - { resource: assetic_css.yml }
+
+    - { resource: validators.yml }
+
+services:
+    challengeme.provider.admin:
+        class: Querdos\ChallengeMe\AdministratorBundle\Security\AdministratorProvider
+        arguments: ["@challengeme.manager.administrator"]
