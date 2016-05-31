@@ -123,7 +123,6 @@ class AdministratorRepository extends EntityRepository
             ->select("admin.emailBack")
             ->from("AdminBundle:Administrator", "admin")
             ->where("admin.emailBack = :email")
-            ->orWhere("admin.email = :email")
             ->setParameter("email", $email);
 
         return $query

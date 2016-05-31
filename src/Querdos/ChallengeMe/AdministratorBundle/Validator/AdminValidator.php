@@ -77,7 +77,7 @@ class AdminValidator
      * @return mixed
      */
     public function validateEmail($email) {
-        if (null !== $this->adminManager->checkEmail($email)) {
+        if (null !== $this->adminManager->checkEmail($email) || null !== $this->adminManager->checkEmailBack($email)) {
             throw new \RuntimeException("Email alreayd exists");
         }
 
@@ -93,10 +93,14 @@ class AdminValidator
     /**
      * Validate the secondary email
      *
-     * @param $email
-     * @return mixed
+     * @param   $email
+     * @return  mixed
      */
     public function validateEmailBack($email) {
+        if (null !== $this->adminManager->checkEmailBack($email) || null !== $this->adminManager->checkEmail($email)) {
+            throw new \RuntimeException("Email already exists");
+        }
+
         $error = $this->validator->validatePropertyValue(Administrator::class, 'emailBack', $email);
 
         if (count($error) > 0) {
