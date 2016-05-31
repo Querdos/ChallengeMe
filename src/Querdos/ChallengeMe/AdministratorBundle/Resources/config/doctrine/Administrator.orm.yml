@@ -29,7 +29,10 @@ Querdos\ChallengeMe\AdministratorBundle\Entity\Administrator:
             length:     255
             unique:     true
             nullable:   false
+
     manyToOne:
         infoUser:
             targetEntity: Querdos\ChallengeMe\AdministratorBundle\Entity\InfoUser
             cascade:      [ all ]
+
+    lifecycleCallbacks: {  }
