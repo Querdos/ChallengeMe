@@ -64,5 +64,9 @@ class AdministratorManager implements AdministratorManagerInterface
         return $this->repository->checkEmail($email);
     }
 
+    public function checkEmailBack($email)
+    {
+        return $this->repository->checkEmailBack($email);
+    }
 
 }

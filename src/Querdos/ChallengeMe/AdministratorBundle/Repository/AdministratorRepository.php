@@ -108,4 +108,26 @@ class AdministratorRepository extends EntityRepository
             ->getQuery()
             ->getOneOrNullResult();
     }
+
+    /**
+     * Check emaiBack existance for an admin
+     * (as emailBack, and check too if it exists
+     * as a main email)
+     *
+     * @param $email
+     * @return mixed
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     */
+    public function checkEmailBack($email) {
+        $query = $this->_em->createQueryBuilder()
+            ->select("admin.emailBack")
+            ->from("AdminBundle:Administrator", "admin")
+            ->where("admin.emailBack = :email")
+            ->orWhere("admin.email = :email")
+            ->setParameter("email", $email);
+
+        return $query
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
 }

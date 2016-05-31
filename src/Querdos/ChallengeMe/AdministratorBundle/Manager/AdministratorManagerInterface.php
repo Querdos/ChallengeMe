@@ -28,4 +28,6 @@ interface AdministratorManagerInterface
     public function checkUsername($username);
 
     public function checkEmail($email);
+
+    public function checkEmailBack($email);
 }
