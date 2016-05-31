@@ -1,4 +1,8 @@
 services:
     challengeme.manager.administrator:
-        class: Querdos\ChallengeMe\AdministratorBundle\Manager\AdministratorManager
-        arguments: ["@doctrine.orm.entity_manager"]
+        class:      Querdos\ChallengeMe\AdministratorBundle\Manager\AdministratorManager
+        arguments:  ["@doctrine.orm.entity_manager"]
+
+    challengeme.manager.moderator:
+        class:      Querdos\ChallengeMe\AdministratorBundle\Manager\ModeratorManager
+        arguments:  ["@doctrine.orm.entity_manager"]
