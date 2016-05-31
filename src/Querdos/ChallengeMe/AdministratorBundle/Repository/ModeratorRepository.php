@@ -2,6 +2,7 @@
 
 namespace Querdos\ChallengeMe\AdministratorBundle\Repository;
 use Doctrine\ORM\EntityRepository;
+use Querdos\ChallengeMe\AdministratorBundle\Entity\Moderator;
 
 /**
  * ModeratorRepository
@@ -11,4 +12,18 @@ use Doctrine\ORM\EntityRepository;
  */
 class ModeratorRepository extends EntityRepository
 {
+    public function create(Moderator $moderator) {
+        $this->getEntityManager()->persist($moderator);
+        $this->getEntityManager()->flush();
+    }
+
+    public function update(Moderator $moderator) {
+        $this->getEntityManager()->persist($moderator);
+        $this->getEntityManager()->flush();
+    }
+
+    public function delete(Moderator $moderator) {
+        $this->getEntityManager()->remove($moderator);
+        $this->getEntityManager()->flush();
+    }
 }
