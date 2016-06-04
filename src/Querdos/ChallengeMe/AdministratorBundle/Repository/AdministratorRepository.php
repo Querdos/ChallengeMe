@@ -53,7 +53,7 @@ class AdministratorRepository extends EntityRepository
      * @return  array
      */
     public function adminExists(Administrator $admin) {
-        $query = $this->_em->createQueryBuilder()
+        $query = $this->getEntityManager()->createQueryBuilder()
             ->select('admin.apiKey')
             ->from("AdminBundle:Administrator", "admin")
             ->where("admin.username = :username")
@@ -70,7 +70,7 @@ class AdministratorRepository extends EntityRepository
      * @return  array
      */
     public function getAdminData($username) {
-        $query = $this->_em->createQueryBuilder()
+        $query = $this->getEntityManager()->createQueryBuilder()
             ->select("admin.id", "admin.username", "admin.password", "admin.email")
             ->from("AdminBundle:Administrator", "admin")
             ->where("admin.username = :username")
@@ -89,7 +89,7 @@ class AdministratorRepository extends EntityRepository
      * @throws  \Doctrine\ORM\NonUniqueResultException
      */
     public function getAdminPublicInfo($id) {
-        $query = $this->_em->createQueryBuilder()
+        $query = $this->getEntityManager()->createQueryBuilder()
             ->select("admin.username", "admin.email", "info.firstName", "info.lastName", "info.birthday")
             ->from("AdminBundle:Administrator", "admin")
             ->innerJoin("admin.infoUser", "info")
@@ -106,7 +106,7 @@ class AdministratorRepository extends EntityRepository
      * @return  array
      */
     public function checkUsername($username) {
-        $query = $this->_em->createQueryBuilder()
+        $query = $this->getEntityManager()->createQueryBuilder()
             ->select("admin.username")
             ->from("AdminBundle:Administrator", "admin")
             ->where("admin.username = :username")
@@ -124,7 +124,7 @@ class AdministratorRepository extends EntityRepository
      * @return  array
      */
     public function checkEmail($email) {
-        $query = $this->_em->createQueryBuilder()
+        $query = $this->getEntityManager()->createQueryBuilder()
             ->select("admin.email")
             ->from("AdminBundle:Administrator", "admin")
             ->where("admin.email = :email")
@@ -145,7 +145,7 @@ class AdministratorRepository extends EntityRepository
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function checkEmailBack($email) {
-        $query = $this->_em->createQueryBuilder()
+        $query = $this->getEntityManager()->createQueryBuilder()
             ->select("admin.emailBack")
             ->from("AdminBundle:Administrator", "admin")
             ->where("admin.emailBack = :email")
