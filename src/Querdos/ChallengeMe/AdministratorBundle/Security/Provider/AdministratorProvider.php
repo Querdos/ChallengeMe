@@ -6,7 +6,7 @@
  * Time: 2:24 PM
  */
 
-namespace Querdos\ChallengeMe\AdministratorBundle\Security;
+namespace Querdos\ChallengeMe\AdministratorBundle\Security\Provider;
 
 
 use Querdos\ChallengeMe\AdministratorBundle\Entity\Administrator;
@@ -22,16 +22,6 @@ class AdministratorProvider implements UserProviderInterface
      * @var AdministratorManager
      */
     private $adminManager;
-
-    /**
-     * AdministratorProvider constructor.
-     *
-     * @param AdministratorManager $adminManager
-     */
-    public function __construct(AdministratorManager $adminManager)
-    {
-        $this->adminManager = $adminManager;
-    }
 
     public function loadUserByUsername($username)
     {
@@ -64,5 +54,13 @@ class AdministratorProvider implements UserProviderInterface
     public function supportsClass($class)
     {
         return $class === "AdminBundle\\Entity\\Administrator";
+    }
+
+    /**
+     * @param AdministratorManager $adminManager
+     */
+    public function setAdminManager($adminManager)
+    {
+        $this->adminManager = $adminManager;
     }
 }

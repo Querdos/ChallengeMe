@@ -9,8 +9,10 @@ imports:
 services:
     challengeme.provider.admin:
         class: Querdos\ChallengeMe\AdministratorBundle\Security\Provider\AdministratorProvider
-        arguments: ["@challengeme.manager.administrator"]
+        calls:
+            - [ setAdminManager,    ['@challengeme.manager.administrator'] ]
+
     challengeme.provider.moderator:
         class: Querdos\ChallengeMe\AdministratorBundle\Security\Provider\ModeratorProvider
         calls:
-            - [ setModeratorManager, ['@challengeme.manager.moderator']]
+            - [ setModeratorManager, ['@challengeme.manager.moderator'] ]
