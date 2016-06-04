@@ -6,10 +6,9 @@
  * Time: 11:57 PM
  */
 
-namespace Querdos\ChallengeMe\AdministratorBundle\Security;
+namespace Querdos\ChallengeMe\AdministratorBundle\Security\Provider;
 
 
-use Querdos\ChallengeMe\AdministratorBundle\Entity\Administrator;
 use Querdos\ChallengeMe\AdministratorBundle\Entity\Moderator;
 use Querdos\ChallengeMe\AdministratorBundle\Manager\ModeratorManager;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
@@ -23,16 +22,6 @@ class ModeratorProvider implements UserProviderInterface
      * @var ModeratorManager
      */
     private $moderatorManager;
-
-    /**
-     * ModeratorProvider constructor.
-     * 
-     * @param ModeratorManager $moderatorManager
-     */
-    public function __construct(ModeratorManager $moderatorManager)
-    {
-        $this->moderatorManager = $moderatorManager;
-    }
 
     public function loadUserByUsername($username)
     {
@@ -65,5 +54,13 @@ class ModeratorProvider implements UserProviderInterface
     public function supportsClass($class)
     {
         return $class === 'AdminBundle\\Entity\\Moderator';
+    }
+
+    /**
+     * @param ModeratorManager $moderatorManager
+     */
+    public function setModeratorManager($moderatorManager)
+    {
+        $this->moderatorManager = $moderatorManager;
     }
 }
