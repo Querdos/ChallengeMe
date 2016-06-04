@@ -26,12 +26,6 @@ class AdminValidator implements UserValidatorInterface
      */
     private $adminManager;
 
-    public function __construct(ValidatorInterface $validator, AdministratorManager $administratorManager)
-    {
-        $this->validator    = $validator;
-        $this->adminManager = $administratorManager;
-    }
-
     /** {@inheritdoc} */
     public function validateUsername($name) {
         if (null !== $this->adminManager->checkUsername($name)) {
@@ -121,5 +115,21 @@ class AdminValidator implements UserValidatorInterface
         } else {
             return $birthday;
         }
+    }
+
+    /**
+     * @param ValidatorInterface $validator
+     */
+    public function setValidator($validator)
+    {
+        $this->validator = $validator;
+    }
+
+    /**
+     * @param AdministratorManager $adminManager
+     */
+    public function setAdminManager($adminManager)
+    {
+        $this->adminManager = $adminManager;
     }
 }
