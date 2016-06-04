@@ -2,8 +2,8 @@ services:
     challengeme.validator.admin:
         class:      Querdos\ChallengeMe\AdministratorBundle\Validator\AdminValidator
         calls:
-            - [ setValidator,     ['@validator'] ]
-            - [ setAdminManager,  ['@challengeme.manager.administrator'] ]
+            - [ setValidator,         ['@validator'] ]
+            - [ setAdminManager,      ['@challengeme.manager.administrator'] ]
     challengeme.validator.moderator:
         class:      Querdos\ChallengeMe\ModeratorBundle\Validator\ModeratorValidator
         calls:
