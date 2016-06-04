@@ -20,6 +20,27 @@ class AdministratorRepository extends EntityRepository
         $this->getEntityManager()->flush();
     }
 
+
+    /**
+     * Update admin
+     *
+     * @param Administrator $admin
+     */
+    public function update(Administrator $admin) {
+        $this->getEntityManager()->persist($admin);
+        $this->getEntityManager()->flush();
+    }
+
+    /**
+     * Remove admin from database
+     *
+     * @param Administrator $admin
+     */
+    public function delete(Administrator $admin) {
+        $this->getEntityManager()->remove($admin);
+        $this->getEntityManager()->flush();
+    }
+
     /**
      * Check if an admin exists
      *

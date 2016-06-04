@@ -26,4 +26,26 @@ class ModeratorRepository extends EntityRepository
         $this->getEntityManager()->remove($moderator);
         $this->getEntityManager()->flush();
     }
+
+    public function moderatorExists($moderator)
+    {
+    }
+
+    public function getModeratorData($username)
+    {
+    }
+
+    public function getModeratorPublicInfo($id)
+    {
+    }
+
+    public function checkUsername($username)
+    {
+    }
+
+    public function checkEmail($email)
+    {
+    }
+
+
 }

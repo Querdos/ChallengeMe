@@ -25,6 +25,7 @@ class AdministratorProvider implements UserProviderInterface
 
     /**
      * AdministratorProvider constructor.
+     *
      * @param AdministratorManager $adminManager
      */
     public function __construct(AdministratorManager $adminManager)

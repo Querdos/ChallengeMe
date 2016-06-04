@@ -40,31 +40,31 @@ class ModeratorManager implements ModeratorManagerInterface
 
     public function moderatorExists(Moderator $moderator)
     {
-        // TODO: Implement adminExists() method.
+        return $this->repository->moderatorExists($moderator);
     }
 
     public function getModeratorData($username)
     {
-        // TODO: Implement getModeratorData() method.
+        return $this->repository->getModeratorData($username);
     }
 
     public function getModeratorPublicInfo($id)
     {
-        // TODO: Implement getModeratorPublicInfo() method.
+        return $this->repository->getModeratorPublicInfo($id);
     }
 
     public function checkUsername($username)
     {
-        // TODO: Implement checkUsername() method.
+        return $this->repository->checkUsername($username);
     }
 
     public function checkEmail($email)
     {
-        // TODO: Implement checkEmail() method.
+        return $this->repository->checkEmail($email);
     }
 
     public function checkEmailBack($email)
     {
-        // TODO: Implement checkEmailBack() method.
+        return $this->repository->checkEmailBack($email);
     }
 }

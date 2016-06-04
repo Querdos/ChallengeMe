@@ -32,7 +32,8 @@ class ModeratorProvider implements UserProviderInterface
 
     public function loadUserByUsername($username)
     {
-        // TODO: Implement loadUserByUsername() method.
+        /** @var array $userData */
+//        $userData = $this->moderatorManager->
     }
 
     public function refreshUser(UserInterface $user)
