@@ -14,7 +14,7 @@ use Querdos\ChallengeMe\AdministratorBundle\Entity\InfoUser;
 use Querdos\ChallengeMe\AdministratorBundle\Manager\AdministratorManager;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
-class AdminValidator
+class AdminValidator implements UserValidatorInterface
 {
     /**
      * @var ValidatorInterface $validator
@@ -32,12 +32,7 @@ class AdminValidator
         $this->adminManager = $administratorManager;
     }
 
-    /**
-     * Validate the username
-     *
-     * @param $name
-     * @return mixed
-     */
+    /** {@inheritdoc} */
     public function validateUsername($name) {
         if (null !== $this->adminManager->checkUsername($name)) {
             throw new \RuntimeException("Username already exists");
@@ -53,12 +48,7 @@ class AdminValidator
 
     }
 
-    /**
-     * Validate the password
-     *
-     * @param $password
-     * @return mixed
-     */
+    /** {@inheritdoc} */
     public function validatePassword($password) {
         $password = trim($password);
         $error = $this->validator->validatePropertyValue(Administrator::class, 'password', $password);
@@ -70,12 +60,7 @@ class AdminValidator
         }
     }
 
-    /**
-     * Validate the email
-     *
-     * @param $email
-     * @return mixed
-     */
+    /** {@inheritdoc} */
     public function validateEmail($email) {
         if (null !== $this->adminManager->checkEmail($email) || null !== $this->adminManager->checkEmailBack($email)) {
             throw new \RuntimeException("Email alreayd exists");
@@ -90,12 +75,7 @@ class AdminValidator
         }
     }
 
-    /**
-     * Validate the secondary email
-     *
-     * @param   $email
-     * @return  mixed
-     */
+    /** {@inheritdoc} */
     public function validateEmailBack($email) {
         if (null !== $this->adminManager->checkEmailBack($email) || null !== $this->adminManager->checkEmail($email)) {
             throw new \RuntimeException("Email already exists");
@@ -110,12 +90,7 @@ class AdminValidator
         }
     }
 
-    /**
-     * Validate the firstname
-     *
-     * @param $name
-     * @return mixed
-     */
+    /** {@inheritdoc} */
     public function validateFirstname($name) {
         $error = $this->validator->validatePropertyValue(InfoUser::class, 'firstName', $name);
 
@@ -126,12 +101,7 @@ class AdminValidator
         }
     }
 
-    /**
-     * Validate the lastname
-     *
-     * @param $name
-     * @return mixed
-     */
+    /** {@inheritdoc} */
     public function validateLastname($name) {
         $error = $this->validator->validatePropertyValue(InfoUser::class, 'lastName', $name);
 
@@ -142,12 +112,7 @@ class AdminValidator
         }
     }
 
-    /**
-     * Validate the birthday
-     *
-     * @param $birthday
-     * @return mixed
-     */
+    /** {@inheritdoc} */
     public function validateBirthday($birthday) {
         $error = $this->validator->validatePropertyValue(InfoUser::class, 'birthday', $birthday);
 
