@@ -1,4 +1,9 @@
 <?php
+/**
+ * Created by Hamza ESSAYEGH
+ * Date : 6/4/16
+ * Time : 7:22 PM
+ */
 
 namespace Querdos\ChallengeMe\AdministratorBundle\Repository;
 use Doctrine\ORM\EntityRepository;
@@ -12,39 +17,213 @@ use Querdos\ChallengeMe\AdministratorBundle\Entity\Moderator;
  */
 class ModeratorRepository extends EntityRepository
 {
+    /**
+     * Persists new moderator to the database
+     *
+     * @param Moderator $moderator
+     */
     public function create(Moderator $moderator) {
-        $this->getEntityManager()->persist($moderator);
-        $this->getEntityManager()->flush();
+        $this
+            ->getEntityManager()
+            ->persist($moderator);
+
+        $this
+            ->getEntityManager()
+            ->flush();
     }
 
+    /**
+     * Update existing moderator
+     * 
+     * @param Moderator $moderator
+     */
     public function update(Moderator $moderator) {
-        $this->getEntityManager()->persist($moderator);
-        $this->getEntityManager()->flush();
+        $this
+            ->getEntityManager()
+            ->persist($moderator)
+        ;
+        
+        $this
+            ->getEntityManager()
+            ->flush()
+        ;
     }
 
+    /**
+     * Remove moderator from the database
+     *
+     * @param Moderator $moderator
+     */
     public function delete(Moderator $moderator) {
-        $this->getEntityManager()->remove($moderator);
-        $this->getEntityManager()->flush();
+        $this
+            ->getEntityManager()
+            ->remove($moderator)
+        ;
+        
+        $this
+            ->getEntityManager()
+            ->flush()
+        ;
     }
 
-    public function moderatorExists($moderator)
+    /**
+     * Check if a moderator exists
+     *
+     * @param   Moderator $moderator
+     * @return  Moderator|null
+     */
+    public function moderatorExists(Moderator $moderator)
     {
+        $query = $this
+            ->getEntityManager()
+            ->createQueryBuilder()
+
+            ->select('m')
+            ->from('AdminBundle:Moderator', 'm')
+            ->where('m = :moderator')
+            ->setParameter('moderator', $moderator)
+        ;
+
+        return $query
+            ->getQuery()
+            ->getOneOrNullResult();
     }
 
+    /**
+     * Retrieve the moderator data with a given username
+     *
+     * @param   string  $username
+     * @return  array
+     */
     public function getModeratorData($username)
     {
+        $query = $this
+            ->getEntityManager()
+            ->createQueryBuilder()
+
+            ->select('m.id')
+            ->select('m.username')
+            ->select('m.password')
+            ->select('m.email')
+
+            ->from('AdminBundle:Moderator', 'm')
+            ->where('m.username = :username')
+
+            ->setParameter('username', $username);
+        ;
+
+        return $query
+            ->getQuery()
+            ->getSingleResult();
     }
 
+    /**
+     * @param   int     $id
+     * @return  array
+     */
     public function getModeratorPublicInfo($id)
     {
+        $query = $this
+            ->getEntityManager()
+            ->createQueryBuilder()
+
+            ->select('m.username')
+            ->select('m.email')
+            ->select('info.firstName')
+            ->select('info.lastName')
+            ->select('info.birthday')
+
+            ->from("AdminBundle:Moderator", 'm')
+            ->innerJoin('m.infoUser', 'info')
+
+            ->where('m.id = :id')
+
+            ->setParameter('id', $id);
+        ;
+
+        return $query
+            ->getQuery()
+            ->getSingleResult();
     }
 
+    /**
+     * Check if the username exists
+     *
+     * @param   string  $username
+     * @return  string|null
+     */
     public function checkUsername($username)
     {
+        $query = $this
+            ->getEntityManager()
+            ->createQueryBuilder()
+
+            ->select('m.username')
+
+            ->from('AdminBundle:Moderator', 'm')
+
+            ->where('m.username = :username')
+
+            ->setParameter('username', $username)
+        ;
+
+        return $query
+            ->getQuery()
+            ->getOneOrNullResult();
     }
 
+    /**
+     * Check email existence for an admin
+     *
+     * @param   string      $email
+     * @return  string|null
+     */
     public function checkEmail($email)
     {
+        $query = $this
+            ->getEntityManager()
+            ->createQueryBuilder()
+
+            ->select('m.email')
+
+            ->from('AdminBundle:Moderator', 'm')
+
+            ->where('m.email = :email')
+
+            ->setParameter('email', $email);
+        ;
+
+        return $query
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+
+    /**
+     * Check emaiBack existance for a moderator
+     * (as emailBack, and also check if it exists
+     * as a main email)
+     *
+     * @param   string      $email
+     * @return  string|null
+     */
+    public function checkEmailBack($email)
+    {
+        $query = $this
+            ->getEntityManager()
+            ->createQueryBuilder()
+
+            ->select('m.emailBack')
+
+            ->from('AdminBundle:Moderator', 'm')
+
+            ->where('m.emailBack = :email')
+
+            ->setParameter('email', $email)
+        ;
+
+        return $query
+            ->getQuery()
+            ->getOneOrNullResult();
     }
 
 

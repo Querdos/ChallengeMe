@@ -117,7 +117,7 @@ class AdministratorRepository extends EntityRepository
      * Return the public info of an admin
      *
      * @param   $id
-     * @return  mixed
+     * @return  array
      */
     public function getAdminPublicInfo($id) {
         $query = $this
@@ -132,7 +132,9 @@ class AdministratorRepository extends EntityRepository
 
             ->from("AdminBundle:Administrator", "admin")
             ->innerJoin("admin.infoUser", "info")
+            
             ->where("admin.id = :id")
+            
             ->setParameter("id", $id)
         ;
 
@@ -153,8 +155,11 @@ class AdministratorRepository extends EntityRepository
             ->createQueryBuilder()
 
             ->select("admin.username")
+            
             ->from("AdminBundle:Administrator", "admin")
+            
             ->where("admin.username = :username")
+            
             ->setParameter("username", $username)
         ;
 
@@ -175,8 +180,11 @@ class AdministratorRepository extends EntityRepository
             ->createQueryBuilder()
 
             ->select("admin.email")
+            
             ->from("AdminBundle:Administrator", "admin")
+            
             ->where("admin.email = :email")
+            
             ->setParameter("email", $email)
         ;
 
