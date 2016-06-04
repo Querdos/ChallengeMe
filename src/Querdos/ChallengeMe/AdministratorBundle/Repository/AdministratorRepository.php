@@ -97,9 +97,14 @@ class AdministratorRepository extends EntityRepository
             ->getEntityManager()
             ->createQueryBuilder()
 
-            ->select("admin.id", "admin.username", "admin.password", "admin.email")
+            ->select("admin.id")
+            ->select("admin.username")
+            ->select("admin.password")
+            ->select("admin.email")
+
             ->from("AdminBundle:Administrator", "admin")
             ->where("admin.username = :username")
+
             ->setParameter("username", $username)
         ;
 
@@ -119,7 +124,12 @@ class AdministratorRepository extends EntityRepository
             ->getEntityManager()
             ->createQueryBuilder()
 
-            ->select("admin.username", "admin.email", "info.firstName", "info.lastName", "info.birthday")
+            ->select("admin.username")
+            ->select("admin.email")
+            ->select("info.firstName")
+            ->select("info.lastName")
+            ->select("info.birthday")
+
             ->from("AdminBundle:Administrator", "admin")
             ->innerJoin("admin.infoUser", "info")
             ->where("admin.id = :id")
