@@ -11,6 +11,7 @@ namespace Querdos\ChallengeMe\ModeratorBundle\Validator;
 use Querdos\ChallengeMe\AdministratorBundle\Entity\InfoUser;
 use Querdos\ChallengeMe\AdministratorBundle\Entity\Moderator;
 use Querdos\ChallengeMe\AdministratorBundle\Manager\ModeratorManager;
+use Querdos\ChallengeMe\AdministratorBundle\Validator\UserValidatorInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class ModeratorValidator implements UserValidatorInterface
