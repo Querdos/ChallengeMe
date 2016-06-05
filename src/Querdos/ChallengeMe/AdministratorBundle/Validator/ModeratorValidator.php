@@ -5,7 +5,7 @@
  * Time: 8:22 PM
  */
 
-namespace Querdos\ChallengeMe\ModeratorBundle\Validator;
+namespace Querdos\ChallengeMe\AdministratorBundle\Validator;
 
 
 use Querdos\ChallengeMe\AdministratorBundle\Entity\InfoUser;
