@@ -55,7 +55,7 @@ class CreateAdminCommand extends GeneratorCommand
             ->setHelp(<<<EOT
 The <info>%command.name%</info> command helps you generates new admins.
 
-By default, the command intereacts with the developer to tweak the generation.
+By default, the command interacts with the developer to tweak the generation.
 Any passed option will be used as a default value for the interaction.
 
 If you want to disable any user interaction, use <comment>--no-interaction</comment> but don't forget to pass all needed options:
