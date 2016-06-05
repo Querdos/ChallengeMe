@@ -61,7 +61,7 @@ class AdministratorRepositoryTest extends KernelTestCase
         $admin  = new Administrator(1, 'admin', 'admin@gmail.com', 'qsdfqsdjfhlkdj');
 
         /** @var Administrator $admin0 */
-        $admin0 = new Administrator('2', 'admin0', 'admin0@gmail.com', 'qsdfqsdjfhlkdj');
+        $admin0 = new Administrator(2, 'admin0', 'admin0@gmail.com', 'qsdfqsdjfhlkdj');
 
         $adminData  = $repo->getAdminData('admin');
         $admin0Data = $repo->getAdminData('admin0');
@@ -97,6 +97,93 @@ class AdministratorRepositoryTest extends KernelTestCase
             $admin0->getEmail(),
             $admin0Data['email']
         );
+    }
+
+    public function testGetAdminPublicInfo()
+    {
+        /** @var AdministratorRepository $repo */
+        $repo = $this->em->getRepository('AdminBundle:Administrator');
+
+        /** @var Administrator $admin */
+        $admin  = new Administrator(1, 'admin', 'admin@gmail.com', 'qsdfqsdjfhlkdj');
+        $admin
+            ->setEmailBack('admin@hotmail.fr')
+            ->getInfoUser()
+            ->setFirstName('Hamza')
+            ->setLastName('ESSAYEGH')
+            ->setBirthday(new \DateTime('1992-03-30'));
+
+        /** @var Administrator $admin0 */
+        $admin0 = new Administrator(2, 'admin0', 'admin0@gmail.com', 'qsdfqsdjfhlkdj');
+        $admin0
+            ->setEmailBack('admin0@hotmail.fr')
+            ->getInfoUser()
+            ->setFirstName('Admin0')
+            ->setLastName('Admin0')
+            ->setBirthday(new \DateTime('1992-03-30'));
+
+        // Tests for admin0
+        $this->assertEquals(
+            $admin0->getUsername(),
+            $repo->getAdminPublicInfo($admin0->getId())['username']
+        );
+
+        $this->assertEquals(
+            $admin0->getEmail(),
+            $repo->getAdminPublicInfo($admin0->getId())['email']
+        );
+
+        $this->assertEquals(
+            $admin0->getEmailBack(),
+            $repo->getAdminPublicInfo($admin0->getId())['emailBack']
+        );
+
+        $this->assertEquals(
+            $admin0->getInfoUser()->getFirstName(),
+            $repo->getAdminPublicInfo($admin0->getId())['firstname']
+        );
+
+        $this->assertEquals(
+            $admin0->getInfoUser()->getLastName(),
+            $repo->getAdminPublicInfo($admin0->getId())['lastname']
+        );
+
+        $this->assertEquals(
+            $admin0->getInfoUser()->getBirthday(),
+            $repo->getAdminPublicInfo($admin0->getId())['birthday']
+        );
+
+        // Tests for admin
+        $this->assertEquals(
+            $admin->getUsername(),
+            $repo->getAdminPublicInfo($admin->getId())['username']
+        );
+
+        $this->assertEquals(
+            $admin->getEmail(),
+            $repo->getAdminPublicInfo($admin->getId())['email']
+        );
+
+        $this->assertEquals(
+            $admin->getEmailBack(),
+            $repo->getAdminPublicInfo($admin->getId())['emailBack']
+        );
+
+        $this->assertEquals(
+            $admin->getInfoUser()->getFirstName(),
+            $repo->getAdminPublicInfo($admin->getId())['firstname']
+        );
+
+        $this->assertEquals(
+            $admin->getInfoUser()->getLastName(),
+            $repo->getAdminPublicInfo($admin->getId())['lastname']
+        );
+
+        $this->assertEquals(
+            $admin->getInfoUser()->getBirthday(),
+            $repo->getAdminPublicInfo($admin->getId())['birthday']
+        );
+
     }
 
     protected function tearDown()
