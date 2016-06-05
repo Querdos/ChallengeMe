@@ -186,6 +186,40 @@ class AdministratorRepositoryTest extends KernelTestCase
 
     }
 
+    public function testCheckEmail()
+    {
+        /** @var AdministratorRepository $repo */
+        $repo = $this->em->getRepository('AdminBundle:Administrator');
+
+        $existingEmail      = 'admin@gmail.com';
+        $nonExistingEmail   = 'admin@hotmail.com';
+
+        $this->assertNotNull(
+            $repo->checkEmail($existingEmail)
+        );
+
+        $this->assertNull(
+            $repo->checkEmail($nonExistingEmail)
+        );
+    }
+
+    public function testCheckEmailBack()
+    {
+        /** @var AdministratorRepository $repo */
+        $repo = $this->em->getRepository('AdminBundle:Administrator');
+
+        $existingEmailBack      = 'admin@hotmail.fr';
+        $nonExistingEmailBack   = 'admin@hotmail.com';
+
+        $this->assertNotNull(
+            $repo->checkEmailBack($existingEmailBack)
+        );
+
+        $this->assertNull(
+            $repo->checkEmailBack($nonExistingEmailBack)
+        );
+    }
+
     protected function tearDown()
     {
         parent::tearDown();
