@@ -124,11 +124,11 @@ class AdministratorRepository extends EntityRepository
             ->getEntityManager()
             ->createQueryBuilder()
 
-            ->select("admin.username")
-            ->addSelect("admin.email")
-            ->addSelect("info.firstName")
-            ->addSelect("info.lastName")
-            ->addSelect("info.birthday")
+            ->select("admin.username as username")
+            ->addSelect("admin.email as email")
+            ->addSelect("info.firstName as firstname")
+            ->addSelect("info.lastName as lastname")
+            ->addSelect("info.birthday as birthday")
 
             ->from("AdminBundle:Administrator", "admin")
             ->innerJoin("admin.infoUser", "info")
