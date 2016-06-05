@@ -31,7 +31,6 @@ class AdministratorRepository extends EntityRepository
         ;
     }
 
-
     /**
      * Update admin
      *
