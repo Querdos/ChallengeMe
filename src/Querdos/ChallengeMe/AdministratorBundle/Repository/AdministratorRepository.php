@@ -65,28 +65,6 @@ class AdministratorRepository extends EntityRepository
     }
 
     /**
-     * Check if an admin exists
-     *
-     * @param   Administrator $admin
-     * @return  Administrator|null
-     */
-    public function adminExists(Administrator $admin) {
-        $query = $this
-            ->getEntityManager()
-            ->createQueryBuilder()
-
-            ->select('admin.apiKey')
-            ->from("AdminBundle:Administrator", "admin")
-            ->where("admin.username = :username")
-            ->setParameter("username", $admin->getUsername())
-        ;
-
-        return $query
-            ->getQuery()
-            ->getOneOrNullResult();
-    }
-
-    /**
      * Get the admin username, password and email
      *
      * @param   $username
