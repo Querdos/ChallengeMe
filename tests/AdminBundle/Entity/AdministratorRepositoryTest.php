@@ -58,7 +58,7 @@ class AdministratorRepositoryTest extends KernelTestCase
         $repo = $this->em->getRepository('AdminBundle:Administrator');
 
         /** @var Administrator $admin */
-        $admin  = new Administrator('1', 'admin', 'admin@gmail.com', 'qsdfqsdjfhlkdj');
+        $admin  = new Administrator(1, 'admin', 'admin@gmail.com', 'qsdfqsdjfhlkdj');
 
         /** @var Administrator $admin0 */
         $admin0 = new Administrator('2', 'admin0', 'admin0@gmail.com', 'qsdfqsdjfhlkdj');
@@ -66,15 +66,37 @@ class AdministratorRepositoryTest extends KernelTestCase
         $adminData  = $repo->getAdminData('admin');
         $admin0Data = $repo->getAdminData('admin0');
 
-//        dump()
-        
         // Tests for admin
         $this->assertEquals(
             $admin->getId(),
             $adminData['id']
         );
 
+        $this->assertEquals(
+            $admin->getUsername(),
+            $adminData['username']
+        );
+
+        $this->assertEquals(
+            $admin->getEmail(),
+            $adminData['email']
+        );
+
         // Tests for admin0
+        $this->assertEquals(
+            $admin0->getId(),
+            $admin0Data['id']
+        );
+
+        $this->assertEquals(
+            $admin0->getUsername(),
+            $admin0Data['username']
+        );
+
+        $this->assertEquals(
+            $admin0->getEmail(),
+            $admin0Data['email']
+        );
     }
 
     protected function tearDown()
