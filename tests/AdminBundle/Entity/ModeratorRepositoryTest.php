@@ -12,5 +12,5 @@ use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 class ModeratorRepositoryTest extends KernelTestCase
 {
-
+    
 }
