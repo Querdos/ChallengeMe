@@ -47,14 +47,29 @@ admin_redactorsManagement:
 ######################
 # SecurityController #
 ######################
+
+# Administrator
 admin_login:
     path:     /admin/login
-    defaults: { _controller: AdminBundle:Security:login }
+    defaults: { _controller:  AdminBundle:Security:login }
 
 admin_login_check:
     path:     /admin/login_check
-    defaults: { _controller: AdminBundle:Security:loginCheck }
+    defaults: { _controller:  AdminBundle:Security:loginCheck }
 
 admin_logout:
     path:     /admin/logout
+    defaults: { _controller:  AdminBundle:Security:logout }
+
+# Moderator
+moderator_login:
+    path:     /moderator/login
+    defaults: { _controller: AdminBundle:Security:login }
+
+moderator_login_check:
+    path:     /moderator/login_check
+    default:  { _controller: AdminBundle:Security:loginCheck }
+
+moderator_logout:
+    path:     /moderator/logout
     defaults: { _controller: AdminBundle:Security:logout }
