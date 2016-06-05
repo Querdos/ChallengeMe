@@ -35,6 +35,7 @@ class CreateAdminCommand extends GeneratorCommand
         $this->adminValidator = $this->getContainer()->get('challengeme.validator.admin');
     }
 
+    // TODO : Update help (user interaction)
     public function configure()
     {
         $this
