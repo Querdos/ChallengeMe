@@ -1,9 +1,8 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: querdos
- * Date: 07/05/16
- * Time: 17:38
+ * Created by Hamza ESSAYEGH.
+ * Date: 6/5/16
+ * Time: 11:37 AM
  */
 
 namespace Querdos\ChallengeMe\AdministratorBundle\Command;
