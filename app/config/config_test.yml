@@ -14,3 +14,10 @@ web_profiler:
 
 swiftmailer:
     disable_delivery: true
+
+doctrine:
+    dbal:
+        host:     localhost
+        dbname:   test_challenge_me
+        user:     root
+        password: Jr0W2WsZR
