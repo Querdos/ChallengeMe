@@ -5,7 +5,7 @@
  * Time: 2:46 PM
  */
 
-namespace tests\AdminBundle\Entity;
+namespace Tests\AdminBundle\Entity;
 
 
 use Doctrine\ORM\EntityManager;
