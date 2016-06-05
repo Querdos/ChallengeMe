@@ -126,6 +126,7 @@ class AdministratorRepository extends EntityRepository
 
             ->select("admin.username as username")
             ->addSelect("admin.email as email")
+            ->addSelect("admin.emailBack as emailBack")
             ->addSelect("info.firstName as firstname")
             ->addSelect("info.lastName as lastname")
             ->addSelect("info.birthday as birthday")
