@@ -110,7 +110,7 @@ class AdministratorRepository extends EntityRepository
 
         return $query
             ->getQuery()
-            ->getArrayResult();
+            ->getSingleResult();
     }
 
     /**
