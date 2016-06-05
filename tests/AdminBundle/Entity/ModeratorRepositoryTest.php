@@ -10,7 +10,7 @@ namespace Tests\AdminBundle\Entity;
 
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
-class ModeratorRepositoryTest extends KernelTestCase
+class ModeratorRepositoryTest /*extends KernelTestCase*/
 {
     
 }
