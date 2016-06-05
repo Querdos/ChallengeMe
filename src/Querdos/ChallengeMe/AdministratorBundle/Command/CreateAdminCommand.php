@@ -32,12 +32,16 @@ class CreateAdminCommand extends GeneratorCommand
 
     protected function initialize(InputInterface $input, OutputInterface $output)
     {
+        parent::initialize($input, $output);
+
         $this->adminValidator = $this->getContainer()->get('challengeme.validator.admin');
     }
 
     // TODO : Update help (user interaction)
     public function configure()
     {
+        parent::configure();
+
         $this
             ->setName("challengeme:generate:admin")
             ->setDescription("Generate administrator")
@@ -72,6 +76,8 @@ EOT
      */
     public function execute(InputInterface $input, OutputInterface $output)
     {
+        parent::execute($input, $output);
+
         /** @var QuestionHelper $questionHelper */
         $questionHelper = $this->getQuestionHelper();
 
@@ -136,6 +142,8 @@ EOT
 
     protected function interact(InputInterface $input, OutputInterface $output)
     {
+        parent::interact($input, $output);
+
         /** @var QuestionHelper $questionHelper */
         $questionHelper = $this->getQuestionHelper();
 
