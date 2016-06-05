@@ -97,10 +97,10 @@ class AdministratorRepository extends EntityRepository
             ->getEntityManager()
             ->createQueryBuilder()
 
-            ->select("admin.id")
-            ->select("admin.username")
-            ->select("admin.password")
-            ->select("admin.email")
+            ->select("admin.id as id")
+            ->select("admin.username as username")
+            ->select("admin.password as password")
+            ->select("admin.email as email")
 
             ->from("AdminBundle:Administrator", "admin")
             ->where("admin.username = :username")
@@ -110,7 +110,7 @@ class AdministratorRepository extends EntityRepository
 
         return $query
             ->getQuery()
-            ->getSingleResult();
+            ->getArrayResult();
     }
 
     /**
