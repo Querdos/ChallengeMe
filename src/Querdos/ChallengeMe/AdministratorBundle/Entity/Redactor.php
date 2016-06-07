@@ -38,6 +38,16 @@ class Redactor implements UserInterface, \Serializable
      */
     private $emailBack;
 
+    public function __construct($id = "", $username = "", $email = "", $password = "")
+    {
+        $this->id           = $id;
+        $this->username     = $username;
+        $this->email        = $email;
+        $this->emailBack    = "";
+        $this->password     = $password;
+
+        $this->infoUser = new InfoUser();
+    }
 
     /**
      * Get id
@@ -188,5 +198,34 @@ class Redactor implements UserInterface, \Serializable
     public function eraseCredentials()
     {
         $this->plainPassword = '';
+    }
+    /**
+     * @var \Querdos\ChallengeMe\AdministratorBundle\Entity\InfoUser
+     */
+    private $infoUser;
+
+
+    /**
+     * Set infoUser
+     *
+     * @param \Querdos\ChallengeMe\AdministratorBundle\Entity\InfoUser $infoUser
+     *
+     * @return Redactor
+     */
+    public function setInfoUser(\Querdos\ChallengeMe\AdministratorBundle\Entity\InfoUser $infoUser = null)
+    {
+        $this->infoUser = $infoUser;
+
+        return $this;
+    }
+
+    /**
+     * Get infoUser
+     *
+     * @return \Querdos\ChallengeMe\AdministratorBundle\Entity\InfoUser
+     */
+    public function getInfoUser()
+    {
+        return $this->infoUser;
     }
 }
