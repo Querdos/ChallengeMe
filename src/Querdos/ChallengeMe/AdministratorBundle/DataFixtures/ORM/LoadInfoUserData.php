@@ -47,8 +47,17 @@ class LoadInfoUserData extends AbstractFixture implements OrderedFixtureInterfac
 
         $this->addReference('moderator-info', $infoUser);
 
+        $infoUser = new InfoUser();
+
         // Redactor
-        // TODO : Redactor info user data fixture
+        $infoUser
+            ->setFirstName('Redactor')
+            ->setBirthday(new \DateTime());
+
+        $manager->persist($infoUser);
+        $manager->flush();
+
+        $this->addReference('redactor-info', $infoUser);
     }
 
     /**

@@ -14,6 +14,7 @@ use Doctrine\Common\Persistence\ObjectManager;
 use Querdos\ChallengeMe\AdministratorBundle\Entity\Administrator;
 use Querdos\ChallengeMe\AdministratorBundle\Entity\InfoUser;
 use Querdos\ChallengeMe\AdministratorBundle\Entity\Moderator;
+use Querdos\ChallengeMe\AdministratorBundle\Entity\Redactor;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Security\Core\Tests\Encoder\PasswordEncoder;
@@ -34,19 +35,23 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface, C
         // Initial objects
         $userAdmin      = new Administrator();
         $userModerator  = new Moderator();
-        // TODO : Redactor
+        $userRedactor   = new Redactor();
 
         /** @var PasswordEncoder $encoder */
         $encoder            = $this->container->get('security.password_encoder');
 
         $passwordAdmin      = $encoder->encodePassword($userAdmin, 'admin');
         $passwordModerator  = $encoder->encodePassword($userModerator, 'moderator');
+        $passwordRedactor    = $encoder->encodePassword($userRedactor, 'redactor');
 
         /** @var InfoUser $infoAdmin */
         $infoAdmin      = $this->getReference('admin-info');
 
         /** @var InfoUser $infoModerator */
         $infoModerator  = $this->getReference('moderator-info');
+
+        /** @var InfoUser $infoRedactor */
+        $infoRedactor   = $this->getReference('info-redactor');
 
         // Hidrating admin
         $userAdmin
@@ -66,8 +71,18 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface, C
             ->setInfoUser($infoModerator)
         ;
 
+        // Hidrating redactor
+        $userRedactor
+            ->setUsername('redactor')
+            ->setEmail('redactor@challengeme.com')
+            ->setEmailBack('redactor@gmail.com')
+            ->setPassword($passwordRedactor)
+            ->setInfoUser($infoRedactor)
+        ;
+
         $manager->persist($userAdmin);
         $manager->persist($userModerator);
+        $manager->persist($userRedactor);
         $manager->flush();
     }
 
