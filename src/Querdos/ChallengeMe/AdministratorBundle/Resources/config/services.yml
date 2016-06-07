@@ -10,9 +10,14 @@ services:
     challengeme.provider.admin:
         class: Querdos\ChallengeMe\AdministratorBundle\Security\Provider\AdministratorProvider
         calls:
-            - [ setAdminManager,    ['@challengeme.manager.administrator'] ]
+            - [ setAdminManager,      ['@challengeme.manager.administrator'] ]
 
     challengeme.provider.moderator:
         class: Querdos\ChallengeMe\AdministratorBundle\Security\Provider\ModeratorProvider
         calls:
-            - [ setModeratorManager, ['@challengeme.manager.moderator'] ]
+            - [ setModeratorManager,  ['@challengeme.manager.moderator'] ]
+
+    challengeme.provider.redactor:
+        class: Querdos\ChallengeMe\AdministratorBundle\Security\Provider\RedactorProvider
+        calls:
+            - [ setRedactorManager,   ['@challengeme.manager.redactor']]
