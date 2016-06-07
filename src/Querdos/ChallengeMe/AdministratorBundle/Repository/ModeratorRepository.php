@@ -67,29 +67,6 @@ class ModeratorRepository extends EntityRepository
     }
 
     /**
-     * Check if a moderator exists
-     *
-     * @param   Moderator $moderator
-     * @return  Moderator|null
-     */
-    public function moderatorExists(Moderator $moderator)
-    {
-        $query = $this
-            ->getEntityManager()
-            ->createQueryBuilder()
-
-            ->select('m')
-            ->from('AdminBundle:Moderator', 'm')
-            ->where('m = :moderator')
-            ->setParameter('moderator', $moderator)
-        ;
-
-        return $query
-            ->getQuery()
-            ->getOneOrNullResult();
-    }
-
-    /**
      * Retrieve the moderator data with a given username
      *
      * @param   string  $username
