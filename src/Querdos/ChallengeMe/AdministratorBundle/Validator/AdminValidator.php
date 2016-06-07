@@ -13,6 +13,7 @@ use Querdos\ChallengeMe\AdministratorBundle\Entity\Administrator;
 use Querdos\ChallengeMe\AdministratorBundle\Entity\InfoUser;
 use Querdos\ChallengeMe\AdministratorBundle\Manager\AdministratorManager;
 use Querdos\ChallengeMe\AdministratorBundle\Manager\ModeratorManager;
+use Querdos\ChallengeMe\AdministratorBundle\Manager\RedactorManager;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class AdminValidator implements UserValidatorInterface
@@ -32,6 +33,9 @@ class AdminValidator implements UserValidatorInterface
      */
     private $moderatorManager;
 
+    /** @var  RedactorManager $redactorManager */
+    private $redactorManager;
+
     /** {@inheritdoc} */
     public function validateUsername($name) {
         if (
@@ -39,7 +43,10 @@ class AdminValidator implements UserValidatorInterface
             null !== $this->adminManager->checkUsername($name) ||
 
             // Check from moderator repository
-            null !== $this->moderatorManager->checkUsername($name)
+            null !== $this->moderatorManager->checkUsername($name) ||
+
+            // Check from redactor repository
+            null !== $this->redactorManager->checkUsername($name)
 
         ) {
             throw new \RuntimeException("Username already exists");
@@ -76,7 +83,11 @@ class AdminValidator implements UserValidatorInterface
 
             // Check from moderator repository
             null !== $this->moderatorManager->checkEmail($email) ||
-            null !== $this->moderatorManager->checkEmailBack($email)
+            null !== $this->moderatorManager->checkEmailBack($email) ||
+
+            // Check from redactor repository
+            null !== $this->redactorManager->checkEmail($email) ||
+            null !== $this->redactorManager->checkEmailBack($email)
         ) {
             throw new \RuntimeException("Email alreayd exists");
         }
@@ -99,7 +110,11 @@ class AdminValidator implements UserValidatorInterface
 
             // Check from moderator repository
             null !== $this->moderatorManager->checkEmail($email) ||
-            null !== $this->moderatorManager->checkEmailBack($email)
+            null !== $this->moderatorManager->checkEmailBack($email) ||
+
+            // Check from redactor repository
+            null !== $this->redactorManager->checkEmail($email) ||
+            null !== $this->redactorManager->checkEmailBack($email)
         ) {
             throw new \RuntimeException("Email already exists");
         }
@@ -168,5 +183,13 @@ class AdminValidator implements UserValidatorInterface
     public function setModeratorManager($moderatorManager)
     {
         $this->moderatorManager = $moderatorManager;
+    }
+
+    /**
+     * @param RedactorManager $redactorManager
+     */
+    public function setRedactorManager($redactorManager)
+    {
+        $this->redactorManager = $redactorManager;
     }
 }
