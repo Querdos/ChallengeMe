@@ -8,6 +8,10 @@ security:
             algorithm:  bcrypt
             cost:       12
 
+        Querdos\ChallengeMe\AdministratorBundle\Entity\Redactor:
+            algorithm:  bcrypt
+            cost:       12
+
         Symfony\Component\Security\Core\User\User:
             algorithm:  bcrypt
             cost:       12
@@ -51,8 +55,8 @@ security:
                 default_target_path:  admin_homepage
                 failure_path:         admin_login
             logout:
-                path:                 /restricted/admin/logout
-                target:               /restricted/admin/login
+                path:                 admin_logout
+                target:               admin_login
 
         moderator_firewall:
             pattern:                  ^/restricted/moderator
@@ -64,8 +68,21 @@ security:
                 default_target_path:  moderator_homepage
                 failure_path:         moderator_login
             logout:
-                path:                 /restricted/moderator/logout
-                target:               /restricted/moderator/login
+                path:                 moderator_logout
+                target:               moderator_login
+
+        redactor_firewall:
+            pattern:                  ^/restricted/redactor
+            provider:                 redactor_provider
+            form_login:
+                login_path:           redactor_login
+                check_path:           redactor_login_check
+                csrf_token_generator: security.csrf.token_manager
+                default_target_path:  redactor_homepage
+                failure_path:         redactor_login
+            logout:
+                path:                 redactor_logout
+                target:               redactor_login
 
         landing_firewall:
             pattern:                  ^/
@@ -75,4 +92,5 @@ security:
         - { path: ^/(.*)/login,             roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/,                       roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/restricted/admin,       roles: ROLE_ADMIN }
+        - { path: ^/restricted/redactor,    roles: ROLE_REDACTOR }
         - { path: ^/restricted/moderator,   roles: ROLE_MODERATOR }
