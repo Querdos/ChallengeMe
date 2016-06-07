@@ -51,7 +51,7 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface, C
         $infoModerator  = $this->getReference('moderator-info');
 
         /** @var InfoUser $infoRedactor */
-        $infoRedactor   = $this->getReference('info-redactor');
+        $infoRedactor   = $this->getReference('redactor-info');
 
         // Hidrating admin
         $userAdmin
