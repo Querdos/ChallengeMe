@@ -1,0 +1,33 @@
+Querdos\ChallengeMe\AdministratorBundle\Entity\Redactor:
+    type: entity
+    table: null
+    repositoryClass: Querdos\ChallengeMe\AdministratorBundle\Repository\RedactorRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        username:
+            type: string
+            length: '128'
+            unique: true
+        password:
+            type: string
+            length: '255'
+        email:
+            type: string
+            length: '255'
+            unique: true
+        emailBack:
+            type: string
+            length: 255
+            unique: true
+
+    manyToOne:
+        infoUser:
+            targetEntity: Querdos\ChallengeMe\AdministratorBundle\Entity\InfoUser
+            cascade:      [ all ]
+
+    lifecycleCallbacks: {  }
