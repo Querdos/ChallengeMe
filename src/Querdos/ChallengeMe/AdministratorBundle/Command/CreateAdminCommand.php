@@ -32,16 +32,12 @@ class CreateAdminCommand extends GeneratorCommand
 
     protected function initialize(InputInterface $input, OutputInterface $output)
     {
-        parent::initialize($input, $output);
-
         $this->adminValidator = $this->getContainer()->get('challengeme.validator.admin');
     }
 
     // TODO : Update help (user interaction)
     public function configure()
     {
-        parent::configure();
-
         $this
             ->setName("challengeme:generate:admin")
             ->setDescription("Generate administrator")
@@ -76,8 +72,6 @@ EOT
      */
     public function execute(InputInterface $input, OutputInterface $output)
     {
-        parent::execute($input, $output);
-
         /** @var QuestionHelper $questionHelper */
         $questionHelper = $this->getQuestionHelper();
 
@@ -153,119 +147,144 @@ EOT
          * Username
          */
         $username = $input->getOption('username');
-        $question = new Question($questionHelper->getQuestion(
-            'Username',
-            $username
-        ), $username);
-        $question
-            ->setMaxAttempts(3)
-            ->setValidator(function($inputUsername) {
-                return $this->adminValidator->validateUsername($inputUsername);
-            });
-        $username = $questionHelper->ask($input, $output, $question);
-        $input->setOption('username', $username);
+        if (!$username) {
+            $question = new Question($questionHelper->getQuestion(
+                'Username',
+                $username
+            ), $username);
+            $question
+                ->setMaxAttempts(3)
+                ->setValidator(function ($inputUsername) {
+                    return $this->adminValidator->validateUsername($inputUsername);
+                });
+            $username = $questionHelper->ask($input, $output, $question);
+            $input->setOption('username', $username);
+        } else {
+            $this->adminValidator->validateUsername($username);
+        }
 
         /*
          * Password
          */
         $plainPassword = $input->getOption('password');
-        $question = new Question($questionHelper->getQuestion(
-            'Password',
-            $plainPassword
-        ), $plainPassword);
-        $question
-            ->setMaxAttempts(3)
-            ->setHidden(true)
-            ->setHiddenFallback(false)
-            ->setValidator(function($inputPassword) {
-                return $this->adminValidator->validatePassword($inputPassword);
-            });
-        $plainPassword = $questionHelper->ask($input, $output, $question);
-        $input->setOption('password', $plainPassword);
+        if (!$plainPassword) {
+            $question = new Question($questionHelper->getQuestion(
+                'Password',
+                $plainPassword
+            ), $plainPassword);
+            $question
+                ->setMaxAttempts(3)
+                ->setHidden(true)
+                ->setHiddenFallback(false)
+                ->setValidator(function ($inputPassword) {
+                    return $this->adminValidator->validatePassword($inputPassword);
+                });
+            $plainPassword = $questionHelper->ask($input, $output, $question);
+            $input->setOption('password', $plainPassword);
+        } else {
+            $this->adminValidator->validatePassword($plainPassword);
+        }
 
         /*
          * Email
          */
         $email = $input->getOption('email');
-        $question = new Question($questionHelper->getQuestion(
-            'Email',
-            $email
-        ), $email);
-        $question
-            ->setMaxAttempts(3)
-            ->setValidator(function($inputEmail) {
-                return $this->adminValidator->validateEmail($inputEmail);
-            });
-        $email = $questionHelper->ask($input, $output, $question);
-        $input->setOption('email', $email);
+        if (!$email) {
+            $question = new Question($questionHelper->getQuestion(
+                'Email',
+                $email
+            ), $email);
+            $question
+                ->setMaxAttempts(3)
+                ->setValidator(function ($inputEmail) {
+                    return $this->adminValidator->validateEmail($inputEmail);
+                });
+            $email = $questionHelper->ask($input, $output, $question);
+            $input->setOption('email', $email);
+        } else {
+            $this->adminValidator->validateEmail($email);
+        }
 
         /*
          * Firstname
          */
         $firstName = $input->getOption('firstname');
-        $question = new Question($questionHelper->getQuestion(
-            'Firstname',
-            $firstName
-        ), $firstName);
-        $question
-            ->setMaxAttempts(3)
-            ->setValidator(function($inputFirstName) {
-                return $this->adminValidator->validateFirstname($inputFirstName);
-            });
-        $firstName = $questionHelper->ask($input, $output, $question);
-        $input->setOption('firstname', $firstName);
+        if (!$firstName) {
+            $question = new Question($questionHelper->getQuestion(
+                'Firstname',
+                $firstName
+            ), $firstName);
+            $question
+                ->setMaxAttempts(3)
+                ->setValidator(function ($inputFirstName) {
+                    return $this->adminValidator->validateFirstname($inputFirstName);
+                });
+            $firstName = $questionHelper->ask($input, $output, $question);
+            $input->setOption('firstname', $firstName);
+        } else {
+            $this->adminValidator->validateFirstname($firstName);
+        }
 
         /*
          * LastName
          */
         $lastName = $input->getOption('lastname');
-        $question = new Question($questionHelper->getQuestion(
-            'Lastname',
-            $lastName
-        ), $lastName);
-        $question
-            ->setMaxAttempts(3)
-            ->setValidator(function($inputLastname) {
-                return $this->adminValidator->validateLastname($inputLastname);
-            });
-        $lastName = $questionHelper->ask($input, $output, $question);
-        $input->setOption('lastname', $lastName);
+        if (!$lastName) {
+            $question = new Question($questionHelper->getQuestion(
+                'Lastname',
+                $lastName
+            ), $lastName);
+            $question
+                ->setMaxAttempts(3)
+                ->setValidator(function ($inputLastname) {
+                    return $this->adminValidator->validateLastname($inputLastname);
+                });
+            $lastName = $questionHelper->ask($input, $output, $question);
+            $input->setOption('lastname', $lastName);
+        } else {
+            $this->adminValidator->validateLastname($lastName);
+        }
 
         /*
          * Additionnal email
          */
         $emailBack = $input->getOption('emailback');
-        $question = new Question($questionHelper->getQuestion(
-            'Additionnal email',
-            $emailBack
-        ), $emailBack);
-        $question
-            ->setMaxAttempts(3)
-            ->setValidator(function($inputEmail) {
-                return $this->adminValidator->validateEmailBack($inputEmail);
-            });
-        $emailBack = $questionHelper->ask($input, $output, $question);
-        $input->setOption('emailback', $emailBack);
+        if (!$emailBack) {
+            $question = new Question($questionHelper->getQuestion(
+                'Additionnal email',
+                $emailBack
+            ), $emailBack);
+            $question
+                ->setMaxAttempts(3)
+                ->setValidator(function ($inputEmail) {
+                    return $this->adminValidator->validateEmailBack($inputEmail);
+                });
+            $emailBack = $questionHelper->ask($input, $output, $question);
+            $input->setOption('emailback', $emailBack);
+        } else {
+            $this->adminValidator->validateEmailBack($emailBack);
+        }
 
         /*
          * Birthday
          */
         $birthday = $input->getOption('birthday');
-        $question = new Question($questionHelper->getQuestion(
-            'Birthday (YYYY-MM-DD)',
-            $birthday
-        ), $birthday);
-        $question
-            ->setMaxAttempts(3)
-            ->setValidator(function($inputBirthday) {
-                return $this->adminValidator->validateBirthday($inputBirthday);
-            });
-        $birthday = $questionHelper->ask($input, $output, $question);
-        $input->setOption('birthday', $birthday);
+        if (!$birthday) {
+            $question = new Question($questionHelper->getQuestion(
+                'Birthday (YYYY-MM-DD)',
+                $birthday
+            ), $birthday);
+            $question
+                ->setMaxAttempts(3)
+                ->setValidator(function ($inputBirthday) {
+                    return $this->adminValidator->validateBirthday($inputBirthday);
+                });
+            $birthday = $questionHelper->ask($input, $output, $question);
+            $input->setOption('birthday', $birthday);
+        } else {
+            $this->adminValidator->validateBirthday($birthday);
+        }
     }
 
-    protected function createGenerator()
-    {
-        // TODO: Implement createGenerator() method.
-    }
+    protected function createGenerator() {}
 }

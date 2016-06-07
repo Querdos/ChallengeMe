@@ -8,12 +8,16 @@
 namespace Querdos\ChallengeMe\AdministratorBundle\Command;
 
 
+use Querdos\ChallengeMe\AdministratorBundle\Entity\InfoUser;
+use Querdos\ChallengeMe\AdministratorBundle\Entity\Moderator;
+use Querdos\ChallengeMe\AdministratorBundle\Manager\ModeratorManager;
 use Querdos\ChallengeMe\AdministratorBundle\Validator\ModeratorValidator;
 use Sensio\Bundle\GeneratorBundle\Command\GeneratorCommand;
 use Sensio\Bundle\GeneratorBundle\Command\Helper\QuestionHelper;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Question\ConfirmationQuestion;
 use Symfony\Component\Console\Question\Question;
 
 class CreateModeratorCommand extends GeneratorCommand
@@ -62,7 +66,66 @@ EOT
      */
     public function execute(InputInterface $input, OutputInterface $output)
     {
-        //
+        /** @var QuestionHelper $questionHelper */
+        $questionHelper = $this->getQuestionHelper();
+
+        /** @var ModeratorManager $moderatorManager */
+        $moderatorManager = $this->getContainer()->get('challengeme.manager.moderator');
+
+        /*
+         * Summary before generation
+         */
+        $questionHelper->writeSection($output, "Summary before generation");
+
+        $output->writeln("Firstname:\t<info>" .     $input->getOption('firstname') . "</info>");
+        $output->writeln("Lastname:\t<info>" .      $input->getOption('lastname') . "</info>");
+        $output->writeln("Username:\t<info>" .      $input->getOption('username') . "</info>");
+        $output->writeln("Email:\t\t<info>" .       $input->getOption('email') . "</info>");
+        $output->writeln("Email (2):\t<info>" .     $input->getOption('emailback') . "</info>");
+        $output->writeln("Birthday:\t<info>" .      $input->getOption('birthday') . "</info>");
+        $output->writeln("");
+
+        $question = new ConfirmationQuestion("Continue ? (y|n)", true);
+        if (!$questionHelper->ask($input, $output, $question)) {
+            $this->interact($input, $output);
+        }
+
+        $moderator  = new Moderator();
+        $infoUser   = new InfoUser();
+
+        $encoder    = $this->getContainer()->get('security.password_encoder');
+
+        /*
+         * Optional informations
+         */
+        $infoUser
+            ->setFirstName($input->getOption('firstname'))
+            ->setLastName($input->getOption('lastname'))
+            ->setBirthday(
+                new \DateTime($input->getOption('birthday'))
+            );
+
+        /*
+         * Mandatory informations
+         */
+        $moderator
+            ->setUsername($input->getOption('username'))
+            ->setPlainPassword($input->getOption('password'))
+            ->setEmail($input->getOption('email'))
+            ->setEmailBack($input->getOption('emailback'))
+            ->setInfoUser($infoUser)
+            ->setPassword($encoder->encodePassword($moderator, $moderator->getPlainPassword()))
+            ->eraseCredentials();
+        /*
+         * Persisting the admin
+         */
+        $moderatorManager
+            ->create($moderator);
+
+        /*
+         * Summary
+         */
+        $questionHelper->writeGeneratorSummary($output, null);
     }
 
     /**
@@ -79,115 +142,143 @@ EOT
          * Username
          */
         $username = $input->getOption('username');
-        $question = new Question($questionHelper->getQuestion(
-            'Username',
-            $username
-        ), $username);
-        $question
-            ->setMaxAttempts(3)
-            ->setValidator(function($inputUsername) {
-                return $this->moderatorValidator->validateUsername($inputUsername);
-            });
-        $username = $questionHelper->ask($input, $output, $question);
-        $input->setOption('username', $username);
+        if (!$username) {
+            $question = new Question($questionHelper->getQuestion(
+                'Username',
+                $username
+            ), $username);
+            $question
+                ->setMaxAttempts(3)
+                ->setValidator(function ($inputUsername) {
+                    return $this->moderatorValidator->validateUsername($inputUsername);
+                });
+            $username = $questionHelper->ask($input, $output, $question);
+            $input->setOption('username', $username);
+        } else {
+            $this->moderatorValidator->validateUsername($username);
+        }
 
         /*
          * Password
          */
         $plainPassword = $input->getOption('password');
-        $question = new Question($questionHelper->getQuestion(
-            'Password',
-            $plainPassword
-        ), $plainPassword);
-        $question
-            ->setMaxAttempts(3)
-            ->setHidden(true)
-            ->setHiddenFallback(false)
-            ->setValidator(function($inputPassword) {
-                return $this->moderatorValidator->validatePassword($inputPassword);
-            });
-        $plainPassword = $questionHelper->ask($input, $output, $question);
-        $input->setOption('password', $plainPassword);
+        if (!$plainPassword) {
+            $question = new Question($questionHelper->getQuestion(
+                'Password',
+                $plainPassword
+            ), $plainPassword);
+            $question
+                ->setMaxAttempts(3)
+                ->setHidden(true)
+                ->setHiddenFallback(false)
+                ->setValidator(function ($inputPassword) {
+                    return $this->moderatorValidator->validatePassword($inputPassword);
+                });
+            $plainPassword = $questionHelper->ask($input, $output, $question);
+            $input->setOption('password', $plainPassword);
+        } else {
+            $this->moderatorValidator->validatePassword($plainPassword);
+        }
 
         /*
          * Email
          */
         $email = $input->getOption('email');
-        $question = new Question($questionHelper->getQuestion(
-            'Email',
-            $email
-        ), $email);
-        $question
-            ->setMaxAttempts(3)
-            ->setValidator(function($inputEmail) {
-                return $this->moderatorValidator->validateEmail($inputEmail);
-            });
-        $email = $questionHelper->ask($input, $output, $question);
-        $input->setOption('email', $email);
+        if (!$email) {
+            $question = new Question($questionHelper->getQuestion(
+                'Email',
+                $email
+            ), $email);
+            $question
+                ->setMaxAttempts(3)
+                ->setValidator(function ($inputEmail) {
+                    return $this->moderatorValidator->validateEmail($inputEmail);
+                });
+            $email = $questionHelper->ask($input, $output, $question);
+            $input->setOption('email', $email);
+        } else {
+            $this->moderatorValidator->validateEmail($email);
+        }
 
         /*
          * Firstname
          */
         $firstName = $input->getOption('firstname');
-        $question = new Question($questionHelper->getQuestion(
-            'Firstname',
-            $firstName
-        ), $firstName);
-        $question
-            ->setMaxAttempts(3)
-            ->setValidator(function($inputFirstName) {
-                return $this->moderatorValidator->validateFirstname($inputFirstName);
-            });
-        $firstName = $questionHelper->ask($input, $output, $question);
-        $input->setOption('firstname', $firstName);
+        if (!$firstName) {
+            $question = new Question($questionHelper->getQuestion(
+                'Firstname',
+                $firstName
+            ), $firstName);
+            $question
+                ->setMaxAttempts(3)
+                ->setValidator(function ($inputFirstName) {
+                    return $this->moderatorValidator->validateFirstname($inputFirstName);
+                });
+            $firstName = $questionHelper->ask($input, $output, $question);
+            $input->setOption('firstname', $firstName);
+        } else {
+            $this->moderatorValidator->validateFirstname($firstName);
+        }
 
         /*
          * LastName
          */
         $lastName = $input->getOption('lastname');
-        $question = new Question($questionHelper->getQuestion(
-            'Lastname',
-            $lastName
-        ), $lastName);
-        $question
-            ->setMaxAttempts(3)
-            ->setValidator(function($inputLastname) {
-                return $this->moderatorValidator->validateLastname($inputLastname);
-            });
-        $lastName = $questionHelper->ask($input, $output, $question);
-        $input->setOption('lastname', $lastName);
+        if (!$lastName) {
+            $question = new Question($questionHelper->getQuestion(
+                'Lastname',
+                $lastName
+            ), $lastName);
+            $question
+                ->setMaxAttempts(3)
+                ->setValidator(function ($inputLastname) {
+                    return $this->moderatorValidator->validateLastname($inputLastname);
+                });
+            $lastName = $questionHelper->ask($input, $output, $question);
+            $input->setOption('lastname', $lastName);
+        } else {
+            $this->moderatorValidator->validateLastname($lastName);
+        }
 
         /*
          * Additionnal email
          */
         $emailBack = $input->getOption('emailback');
-        $question = new Question($questionHelper->getQuestion(
-            'Additionnal email',
-            $emailBack
-        ), $emailBack);
-        $question
-            ->setMaxAttempts(3)
-            ->setValidator(function($inputEmail) {
-                return $this->moderatorValidator->validateEmailBack($inputEmail);
-            });
-        $emailBack = $questionHelper->ask($input, $output, $question);
-        $input->setOption('emailback', $emailBack);
+        if (!$emailBack) {
+            $question = new Question($questionHelper->getQuestion(
+                'Additionnal email',
+                $emailBack
+            ), $emailBack);
+            $question
+                ->setMaxAttempts(3)
+                ->setValidator(function ($inputEmail) {
+                    return $this->moderatorValidator->validateEmailBack($inputEmail);
+                });
+            $emailBack = $questionHelper->ask($input, $output, $question);
+            $input->setOption('emailback', $emailBack);
+        } else {
+            $this->moderatorValidator->validateEmailBack($emailBack);
+        }
 
         /*
          * Birthday
          */
         $birthday = $input->getOption('birthday');
-        $question = new Question($questionHelper->getQuestion(
-            'Birthday (YYYY-MM-DD)',
-            $birthday
-        ), $birthday);
-        $question
-            ->setMaxAttempts(3)
-            ->setValidator(function($inputBirthday) {
-                return $this->moderatorValidator->validateBirthday($inputBirthday);
-            });
-        $birthday = $questionHelper->ask($input, $output, $question);
-        $input->setOption('birthday', $birthday);
+        if (!$birthday) {
+            $question = new Question($questionHelper->getQuestion(
+                'Birthday (YYYY-MM-DD)',
+                $birthday
+            ), $birthday);
+            $question
+                ->setMaxAttempts(3)
+                ->setValidator(function ($inputBirthday) {
+                    return $this->moderatorValidator->validateBirthday($inputBirthday);
+                });
+            $birthday = $questionHelper->ask($input, $output, $question);
+            $input->setOption('birthday', $birthday);
+        } else {
+            $this->moderatorValidator->validateBirthday($birthday);
+        }
     }
 
     protected function createGenerator()

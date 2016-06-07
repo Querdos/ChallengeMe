@@ -101,10 +101,10 @@ class ModeratorRepository extends EntityRepository
             ->getEntityManager()
             ->createQueryBuilder()
 
-            ->select('m.id')
-            ->select('m.username')
-            ->select('m.password')
-            ->select('m.email')
+            ->select('m.id as id')
+            ->addSelect('m.username')
+            ->addSelect('m.password')
+            ->addSelect('m.email')
 
             ->from('AdminBundle:Moderator', 'm')
             ->where('m.username = :username')
