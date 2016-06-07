@@ -105,10 +105,10 @@ class ModeratorRepository extends EntityRepository
             ->createQueryBuilder()
 
             ->select('m.username')
-            ->select('m.email')
-            ->select('info.firstName')
-            ->select('info.lastName')
-            ->select('info.birthday')
+            ->addSelect('m.email')
+            ->addSelect('info.firstName')
+            ->addSelect('info.lastName')
+            ->addSelect('info.birthday')
 
             ->from("AdminBundle:Moderator", 'm')
             ->innerJoin('m.infoUser', 'info')
