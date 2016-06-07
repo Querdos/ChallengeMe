@@ -19,8 +19,6 @@ interface ModeratorManagerInterface
 
     public function delete(Moderator $moderator);
 
-    public function moderatorExists(Moderator $moderator);
-
     public function getModeratorData($username);
 
     public function getModeratorPublicInfo($id);
