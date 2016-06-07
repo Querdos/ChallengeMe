@@ -73,3 +73,16 @@ moderator_login_check:
 moderator_logout:
     path:     /moderator/logout
     defaults: { _controller: AdminBundle:Security:logout }
+
+# Redactor
+redactor_login:
+    path:     /redactor/login
+    defaults: { _controller: AdminBundle:Security:login }
+
+redactor_login_check:
+    path:     /redactor/login_check
+    defaults: { _controller: AdminBundle:Security:loginCheck }
+
+redactor_logout:
+    path:     /redactor/logout
+    defaults: { _controller: AdminBundle:Security:logout }
