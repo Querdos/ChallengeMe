@@ -17,10 +17,12 @@ security:
             id: challengeme.provider.admin
         moderator_provider:
             id: challengeme.provider.moderator
+        redactor_provider:
+            id: challengeme.provider.redactor
 
     role_hierarchy:
-        ROLE_MODERATOR:     [ROLE_USER]
         ROLE_REDACTOR:      [ROLE_USER]
+        ROLE_MODERATOR:     [ROLE_USER, ROLE_REDACTOR]
         ROLE_ADMIN:         [ROLE_USER, ROLE_MODERATOR, ROLE_REDACTOR]
         ROLE_SUPER_ADMIN:   [ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
 
