@@ -8,8 +8,11 @@
 namespace Querdos\ChallengeMe\AdministratorBundle\Validator;
 
 
+use Querdos\ChallengeMe\AdministratorBundle\Entity\InfoUser;
+use Querdos\ChallengeMe\AdministratorBundle\Entity\Redactor;
 use Querdos\ChallengeMe\AdministratorBundle\Manager\AdministratorManager;
 use Querdos\ChallengeMe\AdministratorBundle\Manager\ModeratorManager;
+use Querdos\ChallengeMe\AdministratorBundle\Manager\RedactorManager;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class RedactorValidator implements UserValidatorInterface
@@ -31,6 +34,11 @@ class RedactorValidator implements UserValidatorInterface
     private $moderatorManager;
 
     /**
+     * @var RedactorManager $redactorManager
+     */
+    private $redactorManager;
+
+    /**
      * Validate the username
      *
      * @param $name
@@ -38,7 +46,26 @@ class RedactorValidator implements UserValidatorInterface
      */
     public function validateUsername($name)
     {
-        // TODO: Implement validateUsername() method.
+        if (
+            // Checking from moderator repository
+            null !== $this->moderatorManager->checkUsername($name) ||
+
+            // Checking from admin repository
+            null !== $this->adminManager->checkUsername($name) ||
+
+            // Checking from redactor repository
+            null !== $this->redactorManager->checkUsername($name)
+        ) {
+            throw new \RuntimeException("Username already exists");
+        }
+
+        $error = $this->validator->validatePropertyValue(Redactor::class, 'username', $name);
+
+        if (count($error) > 0) {
+            throw new \RuntimeException($error[0]->getMessage());
+        } else {
+            return $name;
+        }
     }
 
     /**
@@ -49,7 +76,14 @@ class RedactorValidator implements UserValidatorInterface
      */
     public function validatePassword($password)
     {
-        // TODO: Implement validatePassword() method.
+        $password = trim($password);
+        $error = $this->validator->validatePropertyValue(Redactor::class, 'password', $password);
+
+        if (count($error) > 0) {
+            throw new \RuntimeException($error[0]->getMessage());
+        } else {
+            return $password;
+        }
     }
 
     /**
@@ -60,7 +94,29 @@ class RedactorValidator implements UserValidatorInterface
      */
     public function validateEmail($email)
     {
-        // TODO: Implement validateEmail() method.
+        if (
+            // Check email from moderator repository
+            null !== $this->moderatorManager->checkEmail($email) ||
+            null !== $this->moderatorManager->checkEmailBack($email) ||
+
+            // Check mail from admin repository
+            null !== $this->adminManager->checkEmail($email) ||
+            null !== $this->adminManager->checkEmailBack($email) ||
+
+            // Check mail from redactor repository
+            null !== $this->redactorManager->checkEmail($email) ||
+            null !== $this->redactorManager->checkEmailBack($email)
+        ) {
+            throw new \RuntimeException("Email alreayd exists");
+        }
+
+        $error = $this->validator->validatePropertyValue(Redactor::class, 'email', $email);
+
+        if (count($error) > 0) {
+            throw new \RuntimeException($error[0]->getMessage());
+        } else {
+            return $email;
+        }
     }
 
     /**
@@ -71,7 +127,29 @@ class RedactorValidator implements UserValidatorInterface
      */
     public function validateEmailBack($email)
     {
-        // TODO: Implement validateEmailBack() method.
+        if (
+            // Check email from moderator repository first
+            null !== $this->moderatorManager->checkEmailBack($email) ||
+            null !== $this->moderatorManager->checkEmail($email) ||
+
+            // Check email from admin repository
+            null !== $this->adminManager->checkEmail($email) ||
+            null !== $this->adminManager->checkEmailBack($email) ||
+
+            // Checking from redactor repository
+            null !== $this->redactorManager->checkEmail($email) ||
+            null !== $this->redactorManager->checkEmailBack($email)
+        ) {
+            throw new \RuntimeException("Email already exists");
+        }
+
+        $error = $this->validator->validatePropertyValue(Redactor::class, 'emailBack', $email);
+
+        if (count($error) > 0) {
+            throw new \RuntimeException($error[0]->getMessage());
+        } else {
+            return $email;
+        }
     }
 
     /**
@@ -82,7 +160,13 @@ class RedactorValidator implements UserValidatorInterface
      */
     public function validateFirstname($name)
     {
-        // TODO: Implement validateFirstname() method.
+        $error = $this->validator->validatePropertyValue(InfoUser::class, 'firstName', $name);
+
+        if (count($error) > 0) {
+            throw new \RuntimeException($error[0]->getMessage());
+        } else {
+            return $name;
+        }
     }
 
     /**
@@ -93,7 +177,13 @@ class RedactorValidator implements UserValidatorInterface
      */
     public function validateLastname($name)
     {
-        // TODO: Implement validateLastname() method.
+        $error = $this->validator->validatePropertyValue(InfoUser::class, 'lastName', $name);
+
+        if (count($error) > 0) {
+            throw new \RuntimeException($error[0]->getMessage());
+        } else {
+            return $name;
+        }
     }
 
     /**
@@ -104,6 +194,44 @@ class RedactorValidator implements UserValidatorInterface
      */
     public function validateBirthday($birthday)
     {
-        // TODO: Implement validateBirthday() method.
+        $error = $this->validator->validatePropertyValue(InfoUser::class, 'birthday', $birthday);
+
+        if (count($error) > 0) {
+            throw new \RuntimeException($error[0]->getMessage());
+        } else {
+            return $birthday;
+        }
+    }
+
+    /**
+     * @param ValidatorInterface $validator
+     */
+    public function setValidator($validator)
+    {
+        $this->validator = $validator;
+    }
+
+    /**
+     * @param AdministratorManager $adminManager
+     */
+    public function setAdminManager($adminManager)
+    {
+        $this->adminManager = $adminManager;
+    }
+
+    /**
+     * @param ModeratorManager $moderatorManager
+     */
+    public function setModeratorManager($moderatorManager)
+    {
+        $this->moderatorManager = $moderatorManager;
+    }
+
+    /**
+     * @param RedactorManager $redactorManager
+     */
+    public function setRedactorManager($redactorManager)
+    {
+        $this->redactorManager = $redactorManager;
     }
 }
