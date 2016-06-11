@@ -42,7 +42,7 @@ class AdministratorManager implements AdministratorManagerInterface
 
     public function all()
     {
-        $this->repository->findAll();
+        return $this->repository->findAll();
     }
 
     public function adminExists(Administrator $admin)

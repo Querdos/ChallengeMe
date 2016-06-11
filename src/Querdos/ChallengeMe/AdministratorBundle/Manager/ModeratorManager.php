@@ -39,7 +39,7 @@ class ModeratorManager implements ModeratorManagerInterface
     
     public function all()
     {
-        $this->repository->findAll();
+        return $this->repository->findAll();
     }
 
     public function getModeratorData($username)

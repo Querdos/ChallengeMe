@@ -39,7 +39,7 @@ class RedactorManager implements RedactorManagerInterface
 
     public function all()
     {
-        $this->repository->findAll();
+        return $this->repository->findAll();
     }
 
     public function getRedactorData($username)
