@@ -10,6 +10,7 @@ namespace Querdos\ChallengeMe\AdministratorBundle\Manager;
 
 use Querdos\ChallengeMe\AdministratorBundle\Entity\Redactor;
 
+// TODO : PHPDoc
 interface RedactorManagerInterface
 {
     public function create(Redactor $redactor);
@@ -17,6 +18,8 @@ interface RedactorManagerInterface
     public function update(Redactor $redactor);
 
     public function delete(Redactor $redactor);
+
+    public function all();
 
     public function getRedactorData($username);
 

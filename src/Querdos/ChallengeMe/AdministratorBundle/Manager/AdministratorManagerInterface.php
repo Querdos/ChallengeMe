@@ -11,6 +11,7 @@ namespace Querdos\ChallengeMe\AdministratorBundle\Manager;
 
 use Querdos\ChallengeMe\AdministratorBundle\Entity\Administrator;
 
+// TODO : PHPDoc
 interface AdministratorManagerInterface
 {
     public function create(Administrator $admin);
@@ -18,6 +19,8 @@ interface AdministratorManagerInterface
     public function update(Administrator $admin);
 
     public function delete(Administrator $admin);
+
+    public function all();
 
     public function adminExists(Administrator $admin);
 
