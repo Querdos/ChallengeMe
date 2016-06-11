@@ -32,12 +32,17 @@ class AdministratorManager implements AdministratorManagerInterface
 
     public function update(Administrator $admin)
     {
-        // TODO: Implement update() method.
+        $this->repository->update($admin);
     }
 
     public function delete(Administrator $admin)
     {
-        // TODO: Implement delete() method.
+        $this->repository->delete($admin);
+    }
+
+    public function all()
+    {
+        $this->repository->findAll();
     }
 
     public function adminExists(Administrator $admin)

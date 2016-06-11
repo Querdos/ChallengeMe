@@ -37,6 +37,11 @@ class RedactorManager implements RedactorManagerInterface
         $this->repository->delete($redactor);
     }
 
+    public function all()
+    {
+        $this->repository->findAll();
+    }
+
     public function getRedactorData($username)
     {
         return $this->repository->getRedactorData($username);

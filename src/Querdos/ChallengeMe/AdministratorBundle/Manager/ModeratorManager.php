@@ -36,6 +36,11 @@ class ModeratorManager implements ModeratorManagerInterface
     {
         $this->repository->delete($moderator);
     }
+    
+    public function all()
+    {
+        $this->repository->findAll();
+    }
 
     public function getModeratorData($username)
     {
