@@ -1,4 +1,1 @@
 services:
-    challengeme.authenticator.admin:
-        class: Querdos\ChallengeMe\AdministratorBundle\Security\FormAuthenticatorAdmin
-        arguments: ["@router"]

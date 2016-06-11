@@ -42,48 +42,18 @@ security:
 
         # Firewall for the login route
         login_firewall:
-            pattern: ^/(.*)/(.*)/login$
+            pattern: ^/(.*)/login$
             anonymous: ~
 
         # Firewall for the restricted area - Admin
-        admin_firewall:
-            pattern:                  ^/restricted/admin
-            provider:                 administrator_provider
-            form_login:
-                login_path:           /restricted/admin/login
-                check_path:           /restricted/admin/login_check
-                csrf_token_generator: security.csrf.token_manager
-                default_target_path:  admin_homepage
-                failure_path:         admin_login
+        administration_firewall:
+            pattern:                  ^/administration
             logout:
-                path:                 admin_logout
-                target:               admin_login
-
-        moderator_firewall:
-            pattern:                  ^/restricted/moderator
-            provider:                 moderator_provider
-            form_login:
-                login_path:           /restricted/moderator/login
-                check_path:           /restricted/moderator/login_check
-                csrf_token_generator: security.csrf.token_manager
-                default_target_path:  moderator_homepage
-                failure_path:         moderator_login
-            logout:
-                path:                 moderator_logout
-                target:               moderator_login
-
-        redactor_firewall:
-            pattern:                  ^/restricted/redactor
-            provider:                 redactor_provider
-            form_login:
-                login_path:           redactor_login
-                check_path:           redactor_login_check
-                csrf_token_generator: security.csrf.token_manager
-                default_target_path:  redactor_homepage
-                failure_path:         redactor_login
-            logout:
-                path:                 redactor_logout
-                target:               redactor_login
+                path: /administration/logout
+                target: /
+            guard:
+                authenticators:
+                    - challengeme.form_authenticator
 
         landing_firewall:
             pattern:                  ^/
@@ -92,6 +62,4 @@ security:
     access_control:
         - { path: ^/(.*)/login,             roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/,                       roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/restricted/admin,       roles: ROLE_ADMIN }
-        - { path: ^/restricted/redactor,    roles: ROLE_REDACTOR }
-        - { path: ^/restricted/moderator,   roles: ROLE_MODERATOR }
+        - { path: ^/administration,         roles: ROLE_ADMIN}

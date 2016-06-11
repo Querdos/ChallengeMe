@@ -7,101 +7,60 @@
 
 namespace Querdos\ChallengeMe\AdministratorBundle\Controller;
 
+use Querdos\ChallengeMe\AdministratorBundle\Entity\Administrator;
+use Querdos\ChallengeMe\AdministratorBundle\Entity\Moderator;
+use Querdos\ChallengeMe\AdministratorBundle\Entity\Redactor;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 class SecurityController extends Controller
 {
-    public function homepageAction()
+
+    public function defaultAction()
     {
-        $authChecker = $this->get('security.authorization_checker');
+        $user = $this->getUser();
 
-        if (true === $authChecker->isGranted('ROLE_ADMIN')) {
+        // Checking Admin
+        if ($user instanceof Administrator) {
             return $this->redirectToRoute('admin_homepage');
-        } else if (true === $authChecker->isGranted('ROLE_MODERATOR')) {
-            return $this->redirectToRoute('moderator_homepage');
-        } else if (true === $authChecker->isGranted('ROLE_REDACTOR')) {
-            return $this->redirectToRoute('redactor_homepage');
-        } else {
-            return $this->redirectToRoute('admin_login');
         }
-    }
 
+        // Checking moderator
+        if ($user instanceof Moderator) {
+            return $this->redirectToRoute('moderator_homepage');
+        }
+
+        // Checking redactor
+        if ($user instanceof Redactor) {
+            return $this->redirectToRoute('redactor_homepage');
+        }
+
+        return $this->redirectToRoute('administration_login');
+    }
     /**
      * @Template("AdminBundle:security:login.html.twig")
      *
      * @return  array
      */
-    public function loginAdminAction() {
-        $authenticationUtils = $this->get('security.authentication_utils');
+    public function loginAction() {
+        $user = $this->getUser();
+        if ($user instanceof UserInterface) {
+            return $this->redirectToRoute('admin_homepage');
+        }
 
-        // get the login error if there is one
-        $error          = $authenticationUtils->getLastAuthenticationError();
+        /** @var AuthenticationException $exception */
+        $exception = $this->get('security.authentication_utils')
+            ->getLastAuthenticationError();
 
-        // last username entered by the user
-        $lastUsername   = $authenticationUtils->getLastUsername();
-
-        return array(
-            // last username entered by the user
-            'last_username' => $lastUsername,
-            'error'         => $error,
-        );
+        return [
+            'error' => $exception ? $exception->getMessage() : NULL,
+        ];
     }
 
-    /**
-     * @Template("AdminBundle:security:login.html.twig")
-     * @return array
-     */
-    public function loginModeratorAction() {
-        $authenticationUtils = $this->get('security.authentication_utils');
-
-        // get the login error if there is one
-        $error          = $authenticationUtils->getLastAuthenticationError();
-
-        // last username entered by the user
-        $lastUsername   = $authenticationUtils->getLastUsername();
-
-        return array(
-            // last username entered by the user
-            'last_username' => $lastUsername,
-            'error'         => $error,
-        );
-    }
-
-    /**
-     * @Template("AdminBundle:security:login.html.twig")
-     * 
-     * @return array
-     */
-    public function loginRedactorAction() {
-        $authenticationUtils = $this->get('security.authentication_utils');
-
-        // get the login error if there is one
-        $error          = $authenticationUtils->getLastAuthenticationError();
-
-        // last username entered by the user
-        $lastUsername   = $authenticationUtils->getLastUsername();
-
-        return array(
-            // last username entered by the user
-            'last_username' => $lastUsername,
-            'error'         => $error,
-        );
-    }
-
-    /**
-     * Check login method for admin
-     */
-    public function loginAdminCheckAction() {}
-
-    public function loginModeratorCheckAction(){}
-
-    public function loginRedactorCheckAction(){}
+    public function loginCheckAction() {}
 
     /**
      * @param   Request         $request
@@ -112,14 +71,6 @@ class SecurityController extends Controller
         if ($user instanceof UserInterface) {
             $this->get('security.firewall.context')->setToken(null);
             $request->getSession()->invalidate();
-        }
-
-        if (in_array('ROLE_ADMIN', $user->getRoles())) {
-            return $this->redirectToRoute('admin_login');
-        } else if (in_array('ROLE_MODERATOR', $user->getRoles())) {
-            return $this->redirectToRoute('moderator_login');
-        } else if (in_array('ROLE_REDACTOR', $user->getRoles())) {
-            return $this->redirectToRoute('redactor_login');
         }
     }
 }

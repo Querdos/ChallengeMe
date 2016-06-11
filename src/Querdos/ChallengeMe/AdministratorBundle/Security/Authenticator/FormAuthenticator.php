@@ -9,26 +9,33 @@
 namespace Querdos\ChallengeMe\AdministratorBundle\Security\Authenticator;
 
 
-use Querdos\ChallengeMe\AdministratorBundle\Entity\AdministratorProvider;
+use Querdos\ChallengeMe\AdministratorBundle\Security\Provider\AdministratorProvider;
+use Querdos\ChallengeMe\AdministratorBundle\Security\Provider\ModeratorProvider;
+use Querdos\ChallengeMe\AdministratorBundle\Security\Provider\RedactorProvider;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\RouterInterface;
-use Symfony\Component\Security\Core\Exception\CustomUserMessageAuthenticationException;
-use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
-use Symfony\Component\Security\Core\Security;
-use Symfony\Component\Security\Core\User\InMemoryUserProvider;
-use Symfony\Component\Security\Core\User\UserInterface;
-use Symfony\Component\Security\Guard\AbstractGuardAuthenticator;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
+use Symfony\Component\Security\Core\Exception\CustomUserMessageAuthenticationException;
+use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
+use Symfony\Component\Security\Core\Tests\Encoder\PasswordEncoder;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
+use Symfony\Component\Security\Guard\AbstractGuardAuthenticator;
+use Symfony\Component\VarDumper\VarDumper;
 
-class FormAuthenticatorAdmin extends AbstractGuardAuthenticator
+class FormAuthenticator extends AbstractGuardAuthenticator
 {
+    /**
+     * @var ContainerInterface $container
+     */
+    private $container;
 
     /**
-     * @var RouterInterface
+     * @var RouterInterface $router
      */
     private $router;
 
@@ -38,27 +45,17 @@ class FormAuthenticatorAdmin extends AbstractGuardAuthenticator
     private $failMessage = "Invalid credentials";
 
     /**
-     * Creates a new instance of FormAuthenticator
-     *
-     * @param RouterInterface $router
-     */
-    public function __construct(RouterInterface $router)
-    {
-        $this->router = $router;
-    }
-
-    /**
      * {@inheritdoc}
      */
     public function getCredentials(Request $request)
     {
-        if ($request->getPathInfo() != '/admin/login' || !$request->isMethod('POST')) {
-            return null;
+        if ($request->getPathInfo() !== '/administration/login_check') {
+            return;
         }
 
         return array(
-            'username'  => $request->request->get('username'),
-            'password'  => $request->request->get('password')
+            'username'  => $request->request->get('_username'),
+            'password'  => $request->request->get('_password')
         );
     }
 
@@ -67,8 +64,8 @@ class FormAuthenticatorAdmin extends AbstractGuardAuthenticator
      */
     public function getUser($credentials, UserProviderInterface $userProvider)
     {
-        if (!$userProvider instanceof AdministratorProvider) {
-            return;
+        foreach ($userProvider as $provider) {
+            $provider->loadUserByUsername($credentials['username']);
         }
 
         try {
@@ -83,7 +80,10 @@ class FormAuthenticatorAdmin extends AbstractGuardAuthenticator
      */
     public function checkCredentials($credentials, UserInterface $user)
     {
-        if ($user->getPassword() === $credentials['password']) {
+        /** @var PasswordEncoder $encoder */
+        $encoder = $this->container->get('security.encoder_factory')->getEncoder($user);
+
+        if (true === $encoder->isPasswordValid($user->getPassword(), $credentials['password'], null)) {
             return true;
         }
 
@@ -104,8 +104,7 @@ class FormAuthenticatorAdmin extends AbstractGuardAuthenticator
      */
     public function onAuthenticationFailure(Request $request, AuthenticationException $exception)
     {
-        die("FAIL");
-        $url = $this->router->generate('admin_login');
+        $url = $this->router->generate('administration_login');
         return new RedirectResponse($url);
     }
 
@@ -114,7 +113,7 @@ class FormAuthenticatorAdmin extends AbstractGuardAuthenticator
      */
     public function start(Request $request, AuthenticationException $authException = null)
     {
-        $url = $this->router->generate('admin_login');
+        $url = $this->router->generate('administration_login');
         return new RedirectResponse($url);
     }
 
@@ -124,5 +123,21 @@ class FormAuthenticatorAdmin extends AbstractGuardAuthenticator
     public function supportsRememberMe()
     {
         return false;
+    }
+
+    /**
+     * @param ContainerInterface $container
+     */
+    public function setContainer($container)
+    {
+        $this->container = $container;
+    }
+
+    /**
+     * @param mixed $router
+     */
+    public function setRouter($router)
+    {
+        $this->router = $router;
     }
 }
