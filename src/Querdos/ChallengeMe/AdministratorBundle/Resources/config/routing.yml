@@ -48,14 +48,19 @@ admin_redactorsManagement:
 # SecurityController #
 ######################
 
+# Path for ^/restricted
+restricted_homepage:
+    path:     /
+    defaults: { _controller: AdminBundle:Security:homepage }
+
 # Administrator
 admin_login:
     path:     /admin/login
-    defaults: { _controller:  AdminBundle:Security:login }
+    defaults: { _controller:  AdminBundle:Security:loginAdmin }
 
 admin_login_check:
     path:     /admin/login_check
-    defaults: { _controller:  AdminBundle:Security:loginCheck }
+    defaults: { _controller:  AdminBundle:Security:loginAdminCheck }
 
 admin_logout:
     path:     /admin/logout
@@ -64,11 +69,11 @@ admin_logout:
 # Moderator
 moderator_login:
     path:     /moderator/login
-    defaults: { _controller: AdminBundle:Security:login }
+    defaults: { _controller: AdminBundle:Security:loginModerator }
 
 moderator_login_check:
     path:     /moderator/login_check
-    default:  { _controller: AdminBundle:Security:loginCheck }
+    defaults:  { _controller: AdminBundle:Security:loginModeratorCheck }
 
 moderator_logout:
     path:     /moderator/logout
@@ -77,11 +82,11 @@ moderator_logout:
 # Redactor
 redactor_login:
     path:     /redactor/login
-    defaults: { _controller: AdminBundle:Security:login }
+    defaults: { _controller: AdminBundle:Security:loginRedactor }
 
 redactor_login_check:
     path:     /redactor/login_check
-    defaults: { _controller: AdminBundle:Security:loginCheck }
+    defaults: { _controller: AdminBundle:Security:loginRedactorCheck }
 
 redactor_logout:
     path:     /redactor/logout

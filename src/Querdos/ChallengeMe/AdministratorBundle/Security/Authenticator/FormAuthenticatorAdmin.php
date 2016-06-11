@@ -6,7 +6,7 @@
  * Time: 1:21 PM
  */
 
-namespace Querdos\ChallengeMe\AdministratorBundle\Security;
+namespace Querdos\ChallengeMe\AdministratorBundle\Security\Authenticator;
 
 
 use Querdos\ChallengeMe\AdministratorBundle\Entity\AdministratorProvider;

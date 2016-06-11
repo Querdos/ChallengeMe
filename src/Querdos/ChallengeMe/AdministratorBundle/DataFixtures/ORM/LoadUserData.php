@@ -42,7 +42,7 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface, C
 
         $passwordAdmin      = $encoder->encodePassword($userAdmin, 'admin');
         $passwordModerator  = $encoder->encodePassword($userModerator, 'moderator');
-        $passwordRedactor    = $encoder->encodePassword($userRedactor, 'redactor');
+        $passwordRedactor   = $encoder->encodePassword($userRedactor, 'redactor');
 
         /** @var InfoUser $infoAdmin */
         $infoAdmin      = $this->getReference('admin-info');
