@@ -1,6 +1,6 @@
 Querdos\ChallengeMe\AdministratorBundle\Entity\Redactor:
     type: entity
-    table: null
+    table: cm_admin_redactor
     repositoryClass: Querdos\ChallengeMe\AdministratorBundle\Repository\RedactorRepository
     id:
         id:
