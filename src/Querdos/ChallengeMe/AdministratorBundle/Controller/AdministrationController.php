@@ -3,6 +3,7 @@
 namespace Querdos\ChallengeMe\AdministratorBundle\Controller;
 
 use Querdos\ChallengeMe\AdministratorBundle\Entity\Administrator;
+use Querdos\ChallengeMe\AdministratorBundle\Manager\AdministratorManager;
 use Querdos\ChallengeMe\AdministratorBundle\Repository\AdministratorRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -54,7 +55,12 @@ class AdministrationController extends Controller
      * @return array
      */
     public function adminsManagementAction() {
-        return array();
+        /** @var AdministratorManager $adminManager */
+        $adminManager = $this->get('challengeme.manager.administrator');
+
+        return array(
+            'administrators'    => $adminManager->all()
+        );
     }
 
     /**
