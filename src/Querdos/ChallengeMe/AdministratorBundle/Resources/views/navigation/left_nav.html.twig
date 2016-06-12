@@ -6,7 +6,7 @@
 
         <div class="clearfix"></div>
 
-        <!-- menu profile quick info -->
+        {# menu profile quick info #}
         <div class="profile">
             <div class="profile_pic">
                 {% image "@AdminBundle/Resources/public/images/img.jpg" %}
@@ -18,11 +18,11 @@
                 <h2>{{ app.user.infoUser.firstname }} {{ app.user.infoUser.lastname }}</h2>
             </div>
         </div>
-        <!-- /menu profile quick info -->
+        {# /menu profile quick info #}
 
         <br />
 
-        <!-- sidebar menu -->
+        {# sidebar menu #}
         <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
             {# General #}
             <div class="menu_section">
@@ -40,15 +40,18 @@
                             </li>
                         </ul>
                     </li>
+                    {% if is_granted('ROLE_MODERATOR') %}
                     <li><a><i class="fa fa-user"></i> User management <span class="fa fa-chevron-down"></span></a>
                         <ul class="nav child_menu">
                             <li><a href="{{ path('admin_playersManagement') }}">Players</a></li>
-                            <li><a href="{{ path('admin_adminsManagement') }}">Administrators</a></li>
-                            <li><a href="{{ path('admin_moderatorsManagement') }}">Moderators</a></li>
+                            {% if is_granted('ROLE_ADMIN') %}
+                                <li><a href="{{ path('admin_adminsManagement') }}">Administrators</a></li>
+                                <li><a href="{{ path('admin_moderatorsManagement') }}">Moderators</a></li>
+                            {% endif %}
                             <li><a href="{{ path('admin_redactorsManagement') }}">Redactors</a></li>
                         </ul>
-
                     </li>
+                    {% endif %}
                     {#<li><a><i class="fa fa-edit"></i> Forms <span class="fa fa-chevron-down"></span></a>
                         <ul class="nav child_menu">
                             <li><a href="form.html">General Form</a>
@@ -161,9 +164,9 @@
             </div>
 
         </div>
-        <!-- /sidebar menu -->
+        {# /sidebar menu #}
 
-        <!-- /menu footer buttons -->
+        {# /menu footer buttons #}
         <div class="sidebar-footer hidden-small">
             <a data-toggle="tooltip" data-placement="top" title="Settings">
                 <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
@@ -178,6 +181,6 @@
                 <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
             </a>
         </div>
-        <!-- /menu footer buttons -->
+        {# /menu footer buttons #}
     </div>
 </div>
