@@ -49,11 +49,6 @@ class FormAuthenticator extends AbstractGuardAuthenticator
     private $failMessage = "Invalid credentials";
 
     /**
-     * @var UserInterface
-     */
-    private $adminLoaded;
-
-    /**
      * {@inheritdoc}
      */
     public function getCredentials(Request $request)
