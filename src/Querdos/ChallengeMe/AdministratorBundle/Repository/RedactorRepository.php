@@ -86,7 +86,7 @@ class RedactorRepository extends EntityRepository
 
         return $query
             ->getQuery()
-            ->getSingleResult();
+            ->getOneOrNullResult();
     }
 
     /**
