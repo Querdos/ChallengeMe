@@ -29,12 +29,18 @@ class ModeratorProvider implements UserProviderInterface
         $userData = $this->moderatorManager->getModeratorData($username);
 
         if ($userData) {
-            return new Moderator(
-                $userData['id'],
-                $userData['username'],
-                $userData['email'],
-                $userData['password']
-            );
+            $moderator = new Moderator($userData['id']);
+            $moderator
+                ->setUsername($userData['username'])
+                ->setEmail($userData['email'])
+                ->setPassword($userData['password'])
+                ->getInfoUser()
+                ->setFirstName($userData['firstname'])
+                ->setLastName($userData['lastname'])
+                ->setBirthday($userData['birthday'])
+            ;
+            
+            return $moderator;
         }
 
         return null;

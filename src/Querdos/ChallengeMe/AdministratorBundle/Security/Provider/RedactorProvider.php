@@ -30,12 +30,18 @@ class RedactorProvider implements UserProviderInterface
         $userData = $this->redactorManager->getRedactorData($username);
 
         if ($userData) {
-            return new Redactor(
-                $userData['id'],
-                $userData['username'],
-                $userData['email'],
-                $userData['password']
-            );
+            $redactor = new Redactor($userData['id']);
+            $redactor
+                ->setUsername($userData['username'])
+                ->setEmail($userData['email'])
+                ->setPassword($userData['password'])
+                ->getInfoUser()
+                ->setFirstName($userData['firstname'])
+                ->setLastName($userData['lastname'])
+                ->setBirthday($userData['birthday'])
+            ;
+
+            return $redactor;
         }
 
         return null;
