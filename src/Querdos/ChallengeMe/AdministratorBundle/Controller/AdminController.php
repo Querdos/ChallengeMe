@@ -16,15 +16,7 @@ class AdminController extends Controller
      */
     public function indexAction()
     {
-        /** @var AdministratorRepository $adminRepo */
-        $adminRepo = $this->get('challengeme.manager.administrator');
-
-        /** @var Administrator $admin */
-        $admin = $this->getUser();
-
-        return array(
-            'admin' => $adminRepo->getAdminPublicInfo($admin->getId())
-        );
+        return array();
     }
 
     /**
@@ -34,15 +26,7 @@ class AdminController extends Controller
      */
     public function inboxAction()
     {
-        /** @var AdministratorRepository $adminRepo */
-        $adminRepo = $this->get('challengeme.manager.administrator');
-
-        /** @var Administrator $admin */
-        $admin = $this->getUser();
-
-        return array(
-            'admin' => $adminRepo->getAdminPublicInfo($admin->getId())
-        );
+        return array();
     }
 
     /**
@@ -52,15 +36,7 @@ class AdminController extends Controller
      */
     public function profileAction()
     {
-        /** @var AdministratorRepository $adminRepo */
-        $adminRepo = $this->get('challengeme.manager.administrator');
-
-        /** @var Administrator $admin */
-        $admin = $this->getUser();
-
-        return array(
-            'admin' => $adminRepo->getAdminPublicInfo($admin->getId())
-        );
+        return array();
     }
 
     /**
@@ -69,15 +45,7 @@ class AdminController extends Controller
      * @return array
      */
     public function playersManagementAction() {
-        /** @var AdministratorRepository $adminRepo */
-        $adminRepo = $this->get('challengeme.manager.administrator');
-
-        /** @var Administrator $admin */
-        $admin = $this->getUser();
-
-        return array(
-            'admin' => $adminRepo->getAdminPublicInfo($admin->getId())
-        );
+        return array();
     }
 
     /**
@@ -86,15 +54,7 @@ class AdminController extends Controller
      * @return array
      */
     public function adminsManagementAction() {
-        /** @var AdministratorRepository $adminRepo */
-        $adminRepo = $this->get('challengeme.manager.administrator');
-
-        /** @var Administrator $admin */
-        $admin = $this->getUser();
-
-        return array(
-            'admin' => $adminRepo->getAdminPublicInfo($admin->getId())
-        );
+        return array();
     }
 
     /**
@@ -103,15 +63,7 @@ class AdminController extends Controller
      * @return array
      */
     public function moderatorsManagementAction() {
-        /** @var AdministratorRepository $adminRepo */
-        $adminRepo = $this->get('challengeme.manager.administrator');
-
-        /** @var Administrator $admin */
-        $admin = $this->getUser();
-
-        return array(
-            'admin' => $adminRepo->getAdminPublicInfo($admin->getId())
-        );
+        return array();
     }
 
     /**
@@ -120,14 +72,6 @@ class AdminController extends Controller
      * @return array
      */
     public function redactorsManagementAction() {
-        /** @var AdministratorRepository $adminRepo */
-        $adminRepo = $this->get('challengeme.manager.administrator');
-
-        /** @var Administrator $admin */
-        $admin = $this->getUser();
-
-        return array(
-            'admin' => $adminRepo->getAdminPublicInfo($admin->getId())
-        );
+        return array();
     }
 }
