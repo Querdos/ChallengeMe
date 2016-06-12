@@ -1,7 +1,7 @@
 <div class="col-md-3 left_col">
     <div class="left_col scroll-view">
         <div class="navbar nav_title" style="border: 0;">
-            <a href="{{ path('admin_homepage') }}" class="site_title"><i class="fa fa-shield"></i> <span>ChallengeMe</span></a>
+            <a href="{{ path('administration_homepage') }}" class="site_title"><i class="fa fa-shield"></i> <span>ChallengeMe</span></a>
         </div>
 
         <div class="clearfix"></div>
@@ -30,11 +30,11 @@
                 <ul class="nav side-menu">
                     <li><a><i class="fa fa-home"></i> Home <span class="fa fa-chevron-down"></span></a>
                         <ul class="nav child_menu">
-                            <li><a href="{{ path('admin_homepage') }}">Dashboard</a>
+                            <li><a href="{{ path('administration_homepage') }}">Dashboard</a>
                             </li>
-                            <li><a href="{{ path('admin_profile') }}">Profile</a>
+                            <li><a href="{{ path('administration_profile') }}">Profile</a>
                             </li>
-                            <li><a href="{{ path('admin_inbox') }}">Private messages</a>
+                            <li><a href="{{ path('administration_inbox') }}">Private messages</a>
                             </li>
                             <li><a href="javascript:;">System</a>
                             </li>
@@ -43,12 +43,12 @@
                     {% if is_granted('ROLE_MODERATOR') %}
                     <li><a><i class="fa fa-user"></i> User management <span class="fa fa-chevron-down"></span></a>
                         <ul class="nav child_menu">
-                            <li><a href="{{ path('admin_playersManagement') }}">Players</a></li>
+                            <li><a href="{{ path('administration_playersManagement') }}">Players</a></li>
                             {% if is_granted('ROLE_ADMIN') %}
-                                <li><a href="{{ path('admin_adminsManagement') }}">Administrators</a></li>
-                                <li><a href="{{ path('admin_moderatorsManagement') }}">Moderators</a></li>
+                                <li><a href="{{ path('administration_adminsManagement') }}">Administrators</a></li>
+                                <li><a href="{{ path('administration_moderatorsManagement') }}">Moderators</a></li>
                             {% endif %}
-                            <li><a href="{{ path('admin_redactorsManagement') }}">Redactors</a></li>
+                            <li><a href="{{ path('administration_redactorsManagement') }}">Redactors</a></li>
                         </ul>
                     </li>
                     {% endif %}

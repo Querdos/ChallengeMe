@@ -75,7 +75,6 @@ class FormAuthenticator extends AbstractGuardAuthenticator
     {
         foreach ($userProvider->getProviders() as $provider) {
             if (null !== $userLoaded = $provider->loadUserByUsername($credentials['username'])) {
-                $this->adminLoaded = $userLoaded;
                 return $userLoaded;
             }
         }
@@ -104,21 +103,7 @@ class FormAuthenticator extends AbstractGuardAuthenticator
      */
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
     {
-        // Checking if administrator
-        if ($this->adminLoaded instanceof Administrator) {
-            $url = $this->router->generate('admin_homepage');
-        }
-
-        // Checking if moderator
-        if ($this->adminLoaded instanceof Moderator) {
-            $url = $this->router->generate('moderator_homepage');
-        }
-
-        // Checking if redactor
-        if ($this->adminLoaded instanceof Redactor) {
-            $url = $this->router->generate('redactor_homepage');
-        }
-
+        $url = $this->router->generate('administration_homepage');
         return new RedirectResponse($url);
     }
 
@@ -136,6 +121,7 @@ class FormAuthenticator extends AbstractGuardAuthenticator
      */
     public function start(Request $request, AuthenticationException $authException = null)
     {
+        // TODO : Error message
         $url = $this->router->generate('administration_login');
         return new RedirectResponse($url);
     }

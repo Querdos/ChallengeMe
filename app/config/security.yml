@@ -61,13 +61,11 @@ security:
             anonymous:                ~
 
     access_control:
-        # Restricting access to the administration panel
-        - { path: ^/(.*)/admin,             roles: ROLE_ADMIN }
-        - { path: ^/(.*)/moderator,         roles: ROLE_MODERATOR }
-        - { path: ^/(.*)/redactor,          roles: ROLE_REDACTOR }
-
         # No restriction on the login page
         - { path: ^/(.*)/login,             roles: IS_AUTHENTICATED_ANONYMOUSLY }
+
+        # Restricting access to the administration panel
+        - { path: ^/administration,         roles: [ROLE_ADMIN, ROLE_MODERATOR, ROLE_REDACTOR]}
 
         # No restriction on the landing page
         - { path: ^/,                       roles: IS_AUTHENTICATED_ANONYMOUSLY }

@@ -7,7 +7,7 @@ use Querdos\ChallengeMe\AdministratorBundle\Repository\AdministratorRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
-class AdminController extends Controller
+class AdministrationController extends Controller
 {
     /**
      * @Template("AdminBundle:content:dashboard.html.twig")
