@@ -37,7 +37,7 @@ class ModeratorProvider implements UserProviderInterface
             );
         }
 
-        throw new UsernameNotFoundException("$username doesn't exists");
+        return null;
     }
 
     public function refreshUser(UserInterface $user)
@@ -62,5 +62,10 @@ class ModeratorProvider implements UserProviderInterface
     public function setModeratorManager($moderatorManager)
     {
         $this->moderatorManager = $moderatorManager;
+    }
+
+    public function getClassName()
+    {
+        return $this->getClassName();
     }
 }

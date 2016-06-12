@@ -37,7 +37,7 @@ class AdministratorProvider implements UserProviderInterface
             );
         }
 
-        throw new UsernameNotFoundException("$username doesn't exists");
+        return null;
     }
 
     public function refreshUser(UserInterface $user)
@@ -62,5 +62,10 @@ class AdministratorProvider implements UserProviderInterface
     public function setAdminManager($adminManager)
     {
         $this->adminManager = $adminManager;
+    }
+
+    public function getClassName()
+    {
+        return $this->getClassName();
     }
 }

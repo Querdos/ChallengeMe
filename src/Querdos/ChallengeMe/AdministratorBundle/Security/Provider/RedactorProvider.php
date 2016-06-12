@@ -38,7 +38,7 @@ class RedactorProvider implements UserProviderInterface
             );
         }
 
-        throw new UsernameNotFoundException("$username doesn't exists");
+        return null;
     }
 
     /**
@@ -69,5 +69,10 @@ class RedactorProvider implements UserProviderInterface
     public function setRedactorManager($redactorManager)
     {
         $this->redactorManager = $redactorManager;
+    }
+
+    public function getClassName()
+    {
+        return $this->getClassName();
     }
 }
