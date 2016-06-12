@@ -55,6 +55,7 @@ security:
                 authenticators:
                     - challengeme.form_authenticator
 
+        # Firewall for the landing zone
         landing_firewall:
             pattern:                  ^/
             anonymous:                ~
