@@ -44,6 +44,24 @@ admin_redactorsManagement:
     methods:
         - GET
 
+#######################
+# ModeratorController #
+#######################
+moderator_homepage:
+    path:     /moderator
+    defaults: { _controller: AdminBundle:Moderator:index}
+    methods:
+        - GET
+
+######################
+# RedactorController #
+######################
+redactor_homepage:
+    path:     /redactor
+    defaults: { _controller: AdminBundle:Redactor:index }
+    methods:
+        - GET
+
 ######################
 # SecurityController #
 ######################
