@@ -15,10 +15,16 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 class SecurityController extends Controller
 {
 
+    /**
+     * Redirect the user to the login page or its homepage
+     *
+     * @return RedirectResponse
+     */
     public function defaultAction()
     {
         $user = $this->getUser();
@@ -40,6 +46,7 @@ class SecurityController extends Controller
 
         return $this->redirectToRoute('administration_login');
     }
+
     /**
      * @Template("AdminBundle:security:login.html.twig")
      *
