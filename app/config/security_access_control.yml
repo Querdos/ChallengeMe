@@ -1,0 +1,17 @@
+security:
+    access_control:
+        # No restriction on the login page
+        - { path: ^/(.*)/login,             roles: IS_AUTHENTICATED_ANONYMOUSLY }
+
+        # Restriction on user managements
+        - { path: ^/administration/admins-management,     roles: ROLE_ADMIN }
+        - { path: ^/administration/moderators-management, roles: ROLE_ADMIN }
+        - { path: ^/administration/redactors-management,  roles: ROLE_MODERATOR }
+        - { path: ^/administration/players-management,    roles: ROLE_MODERATOR }
+
+        # Restricting access to the administration panel
+        - { path: ^/administration,         roles: [ROLE_ADMIN, ROLE_MODERATOR, ROLE_REDACTOR]}
+
+
+        # No restriction on the landing page
+        - { path: ^/,                       roles: IS_AUTHENTICATED_ANONYMOUSLY }
