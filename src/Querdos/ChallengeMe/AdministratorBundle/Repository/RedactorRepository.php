@@ -78,7 +78,7 @@ class RedactorRepository extends EntityRepository
             ->addSelect('redactor.password')
             ->addSelect('redactor.email')
             ->addSelect('info.firstName as firstname')
-            ->addSelect('info.firstName as firstname')
+            ->addSelect('info.lastName as lastname')
             ->addSelect('info.birthday as birthday')
 
             ->from('AdminBundle:Redactor', 'redactor')

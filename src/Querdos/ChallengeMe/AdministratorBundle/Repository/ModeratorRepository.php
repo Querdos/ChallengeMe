@@ -83,7 +83,7 @@ class ModeratorRepository extends EntityRepository
             ->addSelect('moderator.password')
             ->addSelect('moderator.email')
             ->addSelect('info.firstName as firstname')
-            ->addSelect('info.firstName as firstname')
+            ->addSelect('info.lastName as lastname')
             ->addSelect('info.birthday as birthday')
 
             ->from('AdminBundle:Moderator', 'moderator')

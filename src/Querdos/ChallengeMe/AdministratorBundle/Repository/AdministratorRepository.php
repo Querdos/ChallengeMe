@@ -80,7 +80,7 @@ class AdministratorRepository extends EntityRepository
             ->addSelect("admin.password as password")
             ->addSelect("admin.email as email")
             ->addSelect('info.firstName as firstname')
-            ->addSelect('info.firstName as firstname')
+            ->addSelect('info.lastName as lastname')
             ->addSelect('info.birthday as birthday')
 
             ->from("AdminBundle:Administrator", "admin")
