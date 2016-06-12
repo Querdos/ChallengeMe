@@ -42,15 +42,15 @@ security:
 
         # Firewall for the login route
         login_firewall:
-            pattern: ^/(.*)/login$
-            anonymous: ~
+            pattern:    ^/(.*)/login$
+            anonymous:  ~
 
-        # Firewall for the restricted area - Admin
+        # Firewall for the restricted area Administration
         administration_firewall:
             pattern:                  ^/administration
             logout:
-                path: /administration/logout
-                target: /
+                path:                 /administration/logout
+                target:               /
             guard:
                 authenticators:
                     - challengeme.form_authenticator
@@ -62,4 +62,7 @@ security:
     access_control:
         - { path: ^/(.*)/login,             roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/,                       roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/administration,         roles: ROLE_ADMIN}
+        - { path: ^/administration,         roles: [ROLE_ADMIN, ROLE_MODERATOR, ROLE_REDACTOR] }
+        - { path: ^/(.*)/moderator,         roles: ROLE_MODERATOR }
+        - { path: ^/(.*)/redactor,          roles: ROLE_REDACTOR }
+        - { path: ^/(.*)/admin,             roles: ROLE_ADMIN }

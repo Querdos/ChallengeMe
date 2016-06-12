@@ -9,6 +9,9 @@
 namespace Querdos\ChallengeMe\AdministratorBundle\Security\Authenticator;
 
 
+use Querdos\ChallengeMe\AdministratorBundle\Entity\Administrator;
+use Querdos\ChallengeMe\AdministratorBundle\Entity\Moderator;
+use Querdos\ChallengeMe\AdministratorBundle\Entity\Redactor;
 use Querdos\ChallengeMe\AdministratorBundle\Security\Provider\AdministratorProvider;
 use Querdos\ChallengeMe\AdministratorBundle\Security\Provider\ModeratorProvider;
 use Querdos\ChallengeMe\AdministratorBundle\Security\Provider\RedactorProvider;
@@ -22,6 +25,7 @@ use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\Exception\CustomUserMessageAuthenticationException;
 use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
 use Symfony\Component\Security\Core\Tests\Encoder\PasswordEncoder;
+use Symfony\Component\Security\Core\User\ChainUserProvider;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Symfony\Component\Security\Guard\AbstractGuardAuthenticator;
@@ -45,6 +49,11 @@ class FormAuthenticator extends AbstractGuardAuthenticator
     private $failMessage = "Invalid credentials";
 
     /**
+     * @var UserInterface
+     */
+    private $adminLoaded;
+
+    /**
      * {@inheritdoc}
      */
     public function getCredentials(Request $request)
@@ -64,15 +73,15 @@ class FormAuthenticator extends AbstractGuardAuthenticator
      */
     public function getUser($credentials, UserProviderInterface $userProvider)
     {
-        foreach ($userProvider as $provider) {
-            $provider->loadUserByUsername($credentials['username']);
+        foreach ($userProvider->getProviders() as $provider) {
+            if (null !== $userLoaded = $provider->loadUserByUsername($credentials['username'])) {
+                $this->adminLoaded = $userLoaded;
+                return $userLoaded;
+            }
         }
 
-        try {
-            return $userProvider->loadUserByUsername($credentials['username']);
-        } catch (UsernameNotFoundException $e) {
-            throw new CustomUserMessageAuthenticationException($this->failMessage);
-        }
+        throw new CustomUserMessageAuthenticationException($this->failMessage);
+
     }
 
     /**
@@ -95,7 +104,21 @@ class FormAuthenticator extends AbstractGuardAuthenticator
      */
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
     {
-        $url = $this->router->generate('admin_homepage');
+        // Checking if administrator
+        if ($this->adminLoaded instanceof Administrator) {
+            $url = $this->router->generate('admin_homepage');
+        }
+
+        // Checking if moderator
+        if ($this->adminLoaded instanceof Moderator) {
+            $url = $this->router->generate('moderator_homepage');
+        }
+
+        // Checking if redactor
+        if ($this->adminLoaded instanceof Redactor) {
+            $url = $this->router->generate('redactor_homepage');
+        }
+
         return new RedirectResponse($url);
     }
 
