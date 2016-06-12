@@ -3,7 +3,7 @@
 ##################
 
 admin_homepage:
-    path:     /admin/
+    path:     /admin
     defaults: { _controller: AdminBundle:Admin:index }
     methods:
         - GET
@@ -44,50 +44,40 @@ admin_redactorsManagement:
     methods:
         - GET
 
+#######################
+# ModeratorController #
+#######################
+moderator_homepage:
+    path:     /moderator
+    defaults: { _controller: AdminBundle:Moderator:index}
+    methods:
+        - GET
+
+######################
+# RedactorController #
+######################
+redactor_homepage:
+    path:     /redactor
+    defaults: { _controller: AdminBundle:Redactor:index }
+    methods:
+        - GET
+
 ######################
 # SecurityController #
 ######################
 
-# Path for ^/restricted
-restricted_homepage:
+administration:
     path:     /
-    defaults: { _controller: AdminBundle:Security:homepage }
+    defaults: { _controller: AdminBundle:Security:default}
 
-# Administrator
-admin_login:
-    path:     /admin/login
-    defaults: { _controller:  AdminBundle:Security:loginAdmin }
+administration_login:
+    path:     /login
+    defaults: { _controller: AdminBundle:Security:login }
 
-admin_login_check:
-    path:     /admin/login_check
-    defaults: { _controller:  AdminBundle:Security:loginAdminCheck }
+administration_login_check:
+    path:     /login_check
+    defaults: { _controller: AdminBundle:Security:loginCheck }
 
-admin_logout:
-    path:     /admin/logout
-    defaults: { _controller:  AdminBundle:Security:logout }
-
-# Moderator
-moderator_login:
-    path:     /moderator/login
-    defaults: { _controller: AdminBundle:Security:loginModerator }
-
-moderator_login_check:
-    path:     /moderator/login_check
-    defaults:  { _controller: AdminBundle:Security:loginModeratorCheck }
-
-moderator_logout:
-    path:     /moderator/logout
-    defaults: { _controller: AdminBundle:Security:logout }
-
-# Redactor
-redactor_login:
-    path:     /redactor/login
-    defaults: { _controller: AdminBundle:Security:loginRedactor }
-
-redactor_login_check:
-    path:     /redactor/login_check
-    defaults: { _controller: AdminBundle:Security:loginRedactorCheck }
-
-redactor_logout:
-    path:     /redactor/logout
+administration_logout:
+    path:     /logout
     defaults: { _controller: AdminBundle:Security:logout }

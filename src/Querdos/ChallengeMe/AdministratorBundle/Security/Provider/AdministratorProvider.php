@@ -29,15 +29,22 @@ class AdministratorProvider implements UserProviderInterface
         $userData = $this->adminManager->getAdminData($username);
 
         if ($userData) {
-            return new Administrator(
-                $userData["id"],
-                $userData["username"],
-                $userData["email"],
-                $userData["password"]
-            );
+            $admin = new Administrator($userData['id']);
+
+            $admin
+                ->setUsername($userData['username'])
+                ->setEmail($userData['email'])
+                ->setPassword($userData['password'])
+                ->getInfoUser()
+                ->setFirstName($userData['firstname'])
+                ->setLastName($userData['lastname'])
+                ->setBirthday($userData['birthday'])
+            ;
+            
+            return $admin;
         }
 
-        throw new UsernameNotFoundException("$username doesn't exists");
+        return null;
     }
 
     public function refreshUser(UserInterface $user)
@@ -62,5 +69,10 @@ class AdministratorProvider implements UserProviderInterface
     public function setAdminManager($adminManager)
     {
         $this->adminManager = $adminManager;
+    }
+
+    public function getClassName()
+    {
+        return $this->getClassName();
     }
 }

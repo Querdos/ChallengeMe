@@ -78,20 +78,24 @@ class ModeratorRepository extends EntityRepository
             ->getEntityManager()
             ->createQueryBuilder()
 
-            ->select('m.id as id')
-            ->addSelect('m.username')
-            ->addSelect('m.password')
-            ->addSelect('m.email')
+            ->select('moderator.id as id')
+            ->addSelect('moderator.username')
+            ->addSelect('moderator.password')
+            ->addSelect('moderator.email')
+            ->addSelect('info.firstName as firstname')
+            ->addSelect('info.lastName as lastname')
+            ->addSelect('info.birthday as birthday')
 
-            ->from('AdminBundle:Moderator', 'm')
-            ->where('m.username = :username')
+            ->from('AdminBundle:Moderator', 'moderator')
+            ->join('moderator.infoUser', 'info')
+            ->where('moderator.username = :username')
 
             ->setParameter('username', $username);
         ;
 
         return $query
             ->getQuery()
-            ->getSingleResult();
+            ->getOneOrNullResult();
     }
 
     /**

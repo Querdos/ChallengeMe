@@ -21,3 +21,9 @@ services:
         class: Querdos\ChallengeMe\AdministratorBundle\Security\Provider\RedactorProvider
         calls:
             - [ setRedactorManager,   ['@challengeme.manager.redactor']]
+
+    challengeme.form_authenticator:
+        class: Querdos\ChallengeMe\AdministratorBundle\Security\Authenticator\FormAuthenticator
+        calls:
+            - [ setContainer,         ['@service_container'] ]
+            - [ setRouter,            ['@router']]
