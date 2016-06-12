@@ -12,7 +12,7 @@
                         {% image "@AdminBundle/Resources/public/images/img.jpg" %}
                             <img src="{{ asset_url }}" alt="">
                         {% endimage %}
-                        {{ admin.firstname }} {{ admin.lastname }}
+                        {{ app.user.infoUser.firstname }} {{ app.user.infoUser.lastname }}
                         <span class=" fa fa-angle-down"></span>
                     </a>
                     <ul class="dropdown-menu dropdown-usermenu pull-right">
