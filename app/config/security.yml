@@ -54,7 +54,6 @@ security:
             guard:
                 authenticators:
                     - challengeme.form_authenticator
-            switch_user: true
 
         # Firewall for the landing zone
         landing_firewall:
