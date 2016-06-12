@@ -54,6 +54,7 @@ security:
             guard:
                 authenticators:
                     - challengeme.form_authenticator
+            switch_user: true
 
         # Firewall for the landing zone
         landing_firewall:
@@ -61,9 +62,13 @@ security:
             anonymous:                ~
 
     access_control:
-        - { path: ^/(.*)/login,             roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/,                       roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/administration,         roles: [ROLE_ADMIN, ROLE_MODERATOR, ROLE_REDACTOR] }
+        # Restricting access to the administration panel
+        - { path: ^/(.*)/admin,             roles: ROLE_ADMIN }
         - { path: ^/(.*)/moderator,         roles: ROLE_MODERATOR }
         - { path: ^/(.*)/redactor,          roles: ROLE_REDACTOR }
-        - { path: ^/(.*)/admin,             roles: ROLE_ADMIN }
+
+        # No restriction on the login page
+        - { path: ^/(.*)/login,             roles: IS_AUTHENTICATED_ANONYMOUSLY }
+
+        # No restriction on the landing page
+        - { path: ^/,                       roles: IS_AUTHENTICATED_ANONYMOUSLY }
