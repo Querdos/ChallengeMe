@@ -29,7 +29,8 @@
         "incenteev/composer-parameter-handler": "^2.0",
         "symfony/assetic-bundle": "^2.8",
         "symfony/security-guard": "^3.0",
-        "phpunit/phpunit": "4.8.26"
+        "phpunit/phpunit": "4.8.26",
+        "fzaninotto/faker": "^1.6"
     },
     "require-dev": {
         "sensio/generator-bundle": "^3.0",
