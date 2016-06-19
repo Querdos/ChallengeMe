@@ -1,5 +1,7 @@
 {% extends "AdminBundle::base.html.twig" %}
 
+{% form_theme form '@Admin/form/form_rows_manager.html.twig' '@Admin/form/form_errors_manager.html.twig' %}
+
 {% block main_content %}
     <div class="">
 
@@ -33,58 +35,20 @@
                     </div>
                     <div class="x_content">
                         <br />
-                        {# TODO : check for errors #}
                         {{ form_start(form, {'id': 'demo-form2', 'attr': {'class': 'form-horizontal form-label-left'}}) }}
-                            <div class="form-group">
-                                {{ form_label(form.infoUser.firstName) }}
-                                <div class="col-md-6 col-sm-6 col-xs-12">
-                                    {{ form_widget(form.infoUser.firstName) }}
-                                </div>
-                            </div>
+                            {{ form_row(form.infoUser.firstName) }}
 
-                            <div class="form-group">
-                                {{ form_label(form.infoUser.lastName) }}
-                                <div class="col-md-6 col-sm-6 col-xs-12">
-                                    {{ form_widget(form.infoUser.lastName) }}
-                                </div>
-                            </div>
+                            {{ form_row(form.infoUser.lastName) }}
 
-                            <div class="form-group">
-                                {{ form_label(form.username) }}
-                                <div class="col-md-6 col-sm-6 col-xs-12">
-                                    {{ form_widget(form.username) }}
-                                </div>
-                            </div>
+                            {{ form_row(form.username) }}
 
-                            <div class="form-group">
-                                {{ form_label(form.password) }}
-                                <div class="col-md-6 col-sm-6 col-xs-12">
-                                    {{ form_widget(form.password) }}
-                                </div>
-                            </div>
+                            {{ form_row(form.plain_password) }}
 
-                            <div class="form-group">
-                                {{ form_label(form.email) }}
-                                <div class="col-md-6 col-sm-6 col-xs-12">
-                                    {{ form_widget(form.email) }}
-                                </div>
-                            </div>
+                            {{ form_row(form.email) }}
 
-                            <div class="form-group">
-                                {{ form_label(form.emailBack) }}
-                                <div class="col-md-6 col-sm-6 col-xs-12">
-                                    {{ form_widget(form.emailBack) }}
-                                </div>
-                            </div>
+                            {{ form_row(form.emailBack) }}
 
-                            <div class="form-group">
-                                {{ form_label(form.infoUser.birthday) }}
-                                <div class="col-md-6 col-sm-6 col-xs xdisplay_inputx form-group has-feedback">
-                                    {{ form_widget(form.infoUser.birthday, {'id': 'single_cal1'}) }}
-                                    <span class="fa fa-calendar-o form-control-feedback left" aria-hidden="true"></span>
-                                    <span id="inputSuccess2Status" class="sr-only">(success)</span>
-                                </div>
-                            </div>
+                            {{ form_row(form.infoUser.birthday) }}
 
                             <div class="ln_solid"></div>
 
@@ -103,16 +67,13 @@
 {% endblock main_content %}
 
 {% block javascript %}
-    {% javascripts '@jquery_js' '@bootstrap_js' '@fastclick_js' '@nprogress_js' '@iCheck_js' '@bootstrapDateRangePicker_js' '@customTheme_js' %}
+    {% javascripts '@jquery_js' '@jquery_inputmask_js' '@bootstrap_js' '@fastclick_js' '@nprogress_js' '@iCheck_js' '@bootstrapDateRangePicker_js' '@customTheme_js' %}
         <script src="{{ asset_url }}"></script>
     {% endjavascripts %}
 
     <script>
-        $(document).ready(function() {
-            $('#single_cal1').daterangepicker({
-                singleDatePicker: true,
-                calender_style: "picker_2",
-            });
-        });
+      $(document).ready(function() {
+        $(":input").inputmask();
+      });
     </script>
 {% endblock javascript %}
