@@ -6,6 +6,8 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class InfoUserType extends AbstractType
@@ -43,25 +45,29 @@ class InfoUserType extends AbstractType
                     'class' => 'control-label col-md-3 col-sm-3 col-xs-12'
                 ),
                 'attr'          => array(
-                    'required'          => 'required',
-                    'class'             => 'form-control has-feedback-left',
-                    'aria-describedby'  => 'inputSuccess2Status' 
+                    'required'       => 'required',
+                    'class'          => 'form-control',
+                    'data-inputmask' => "'mask': '9999-99-99'"
                 ),
                 'html5'         => false,
                 'widget'        => 'single_text',
-                'format'        => 'yyyy/MM/dd', 
+                'format'        => 'y-M-d', 
                 'data'          => null
             ))
         ;
+
     }
-    
+
     /**
      * @param OptionsResolver $resolver
      */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Querdos\ChallengeMe\AdministratorBundle\Entity\InfoUser'
+            'data_class'      => 'Querdos\ChallengeMe\AdministratorBundle\Entity\InfoUser',
+            'csrf_protection' => true,
+            'csrf_field_name' => '_token',
+            'csrf_token_id'   => 'administrator_token',
         ));
     }
 }
