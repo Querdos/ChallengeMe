@@ -6,6 +6,11 @@ assetic:
                 - 'assets/vendor/jquery/dist/jquery.min.js'
             output: 'assets/js/jquery.js'
 
+        jquery_inputmask_js:
+            inputs:
+                - 'assets/vendor/jquery.inputmask/dist/min/jquery.inputmask.bundle.min.js'
+            output: 'assets/js/jquery_inputmask.js'
+
         bootstrap_js:
             inputs:
                 - 'assets/vendor/bootstrap/dist/js/bootstrap.min.js'
