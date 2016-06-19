@@ -29,7 +29,7 @@ class AdministratorType extends AbstractType
                 ),
                 'required'      => true
             ))
-            ->add('password',   PasswordType::class,    array(
+            ->add('plain_password',   PasswordType::class,    array(
                 'label' => 'Password',
                 'label_attr'    => array(
                     'class' => 'control-label col-md-3 col-sm-3 col-xs-12'
