@@ -32,6 +32,12 @@ administration_adminsManagement:
     methods:
         - GET
 
+administration_addAdmin:
+    path:     /admins-management/create
+    defaults: { _controller: AdminBundle:Administration:addAdmin }
+    methods:
+        - GET
+
 administration_moderatorsManagement:
     path:     /moderators-management
     defaults: { _controller: AdminBundle:Administration:moderatorsManagement }
