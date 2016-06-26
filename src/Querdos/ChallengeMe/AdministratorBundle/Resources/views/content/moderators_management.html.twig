@@ -64,19 +64,27 @@
                                 <th>Email</th>
                                 <th>Email (2)</th>
                                 <th>Birthday</th>
+                                <th>Actions</th>
                             </tr>
                             </thead>
 
                             <tbody>
                             {% for moderator in moderators %}
-                                <tr>
-                                    <td>{{ moderator.infoUser.firstname }}</td>
-                                    <td>{{ moderator.infoUser.lastname }}</td>
-                                    <td>{{ moderator.username }}</td>
-                                    <td>{{ moderator.email }}</td>
-                                    <td>{{ moderator.emailBack }}</td>
-                                    <td>{{ moderator.infoUser.birthday|date('m-d-Y') }}</td>
-                                </tr>
+                                {% if moderator.username != app.user.username %}
+                                    <tr>
+                                        <td>{{ moderator.infoUser.firstname }}</td>
+                                        <td>{{ moderator.infoUser.lastname }}</td>
+                                        <td>{{ moderator.username }}</td>
+                                        <td>{{ moderator.email }}</td>
+                                        <td>{{ moderator.emailBack }}</td>
+                                        <td>{{ moderator.infoUser.birthday|date('m-d-Y') }}</td>
+                                        <td align="center">
+                                            <a href="javascript:void(0)"><i class="fa fa-pencil fa-fw" aria-hidden="true"></i></a>
+                                            <a href="javascript:void(0)"><i class="fa fa-recycle fa-fw" aria-hidden="true"></i></a>
+                                            <a href="{{ path('administration_removeModerator', {'id': moderator.id}) }}"><i class="fa fa-times fa-fw" aria-hidden="true"></i></a>
+                                        </td>
+                                    </tr>
+                                {% endif %}
                             {% endfor %}
                             </tbody>
                         </table>
