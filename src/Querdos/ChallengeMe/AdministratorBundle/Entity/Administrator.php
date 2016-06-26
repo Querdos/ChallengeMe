@@ -187,6 +187,15 @@ class Administrator implements UserInterface, \Serializable
     }
 
     /**
+     * Check if email and email back are different
+     * @return true if emails are different
+     */
+    public function isEmailCorrect()
+    {
+        return $this->email !== $this->emailBack;
+    }
+    
+    /**
      * {@inheritdoc}
      */
     public function getRoles()
@@ -230,6 +239,8 @@ class Administrator implements UserInterface, \Serializable
     }
 
     /**
+     * Set the plain password
+     *
      * @return string
      */
     public function getPlainPassword()
