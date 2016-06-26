@@ -8,9 +8,10 @@
 namespace Querdos\ChallengeMe\AdministratorBundle\Manager;
 
 
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\ORM\EntityManager;
 use Querdos\ChallengeMe\AdministratorBundle\Entity\Moderator;
 use Querdos\ChallengeMe\AdministratorBundle\Repository\ModeratorRepository;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoder;
 use Symfony\Component\Security\Core\Tests\Encoder\PasswordEncoder;
 
 class ModeratorManager implements ModeratorManagerInterface
@@ -21,12 +22,25 @@ class ModeratorManager implements ModeratorManagerInterface
     private $repository;
 
     /**
-     * @var PasswordEncoder $passwordEncoder
+     * @var UserPasswordEncoder $passwordEncoder
      */
     private $passwordEncoder;
 
+    public function __construct(EntityManager $em)
+    {
+        $this->repository = $em->getRepository('AdminBundle:Moderator');
+    }
+
     public function create(Moderator $moderator)
     {
+        // Encoding the password
+        $moderator
+            ->setPassword(
+                $this->passwordEncoder->encodePassword($moderator, $moderator->getPlainPassword())
+            )
+            ->eraseCredentials();
+
+        // Persisting
         $this->repository->create($moderator);
     }
 

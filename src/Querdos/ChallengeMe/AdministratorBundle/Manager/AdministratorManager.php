@@ -9,9 +9,10 @@
 namespace Querdos\ChallengeMe\AdministratorBundle\Manager;
 
 
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\ORM\EntityManager;
 use Querdos\ChallengeMe\AdministratorBundle\Entity\Administrator;
 use Querdos\ChallengeMe\AdministratorBundle\Repository\AdministratorRepository;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoder;
 use Symfony\Component\Security\Core\Tests\Encoder\PasswordEncoder;
 
 class AdministratorManager implements AdministratorManagerInterface
@@ -22,17 +23,29 @@ class AdministratorManager implements AdministratorManagerInterface
     private $repository;
 
     /**
-     * @var PasswordEncoder $passwordEncoder
+     * @var UserPasswordEncoder $passwordEncoder
      */
     private $passwordEncoder;
 
+    /**
+     * AdministratorManager constructor.
+     * 
+     * @param EntityManager $em
+     */
+    public function __construct(EntityManager $em)
+    {
+        $this->repository = $em->getRepository('AdminBundle:Administrator');
+    }
+
     public function create(Administrator $admin)
     {
-        // Encoding the password
-
-        // Setting it
-
-        // Clearing credentials
+        // Encoding the password and setting it
+        $admin
+            ->setPassword(
+                $this->passwordEncoder->encodePassword($admin, $admin->getPlainPassword())
+            )
+            ->eraseCredentials()
+        ;
 
         // Persisting
         $this->repository->create($admin);
