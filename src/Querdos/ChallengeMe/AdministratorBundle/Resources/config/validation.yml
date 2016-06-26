@@ -31,6 +31,9 @@ Querdos\ChallengeMe\AdministratorBundle\Entity\Administrator:
             - Querdos\ChallengeMe\AdministratorBundle\Validator\Constraints\EmailExists: ~
         infoUser:
             - Valid:        ~
+    getters:
+        emailCorrect:
+            - 'IsTrue': { message: "Emails must be different" }
 
 Querdos\ChallengeMe\AdministratorBundle\Entity\Moderator:
     properties:
@@ -65,6 +68,9 @@ Querdos\ChallengeMe\AdministratorBundle\Entity\Moderator:
             - Querdos\ChallengeMe\AdministratorBundle\Validator\Constraints\EmailExists: ~
         infoUser:
             - Valid:        ~
+    getters:
+        emailCorrect:
+            - 'IsTrue': { message: "Emails must be different" }
 
 Querdos\ChallengeMe\AdministratorBundle\Entity\Redactor:
     properties:
@@ -99,6 +105,9 @@ Querdos\ChallengeMe\AdministratorBundle\Entity\Redactor:
             - Querdos\ChallengeMe\AdministratorBundle\Validator\Constraints\EmailExists: ~
         infoUser:
             - Valid:        ~
+    getters:
+        emailCorrect:
+            - 'IsTrue': { message: "Emails must be different" }
 
 Querdos\ChallengeMe\AdministratorBundle\Entity\InfoUser:
     properties:
