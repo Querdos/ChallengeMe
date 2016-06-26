@@ -9,8 +9,6 @@ Querdos\ChallengeMe\AdministratorBundle\Entity\Administrator:
                 minMessage: "Username must be at least {{ limit }} characters long"
                 maxMessage: "Username cannot be longer than {{ limit }} characters"
         password:
-            - NotBlank:
-                message:    "Password is mandatory"
             - Length:
                 min:        8
                 max:        255
@@ -42,8 +40,6 @@ Querdos\ChallengeMe\AdministratorBundle\Entity\Moderator:
                 minMessage: "Username must be at least {{ limit }} characters long"
                 maxMessage: "Username cannot be longer than {{ limit }} characters"
         password:
-            - NotBlank:
-                message:    "Password is mandatory"
             - Length:
                 min:        8
                 max:        255
@@ -75,8 +71,6 @@ Querdos\ChallengeMe\AdministratorBundle\Entity\Redactor:
                 minMessage: "Username must be at least {{ limit }} characters long"
                 maxMessage: "Username cannot be longer than {{ limit }} characters"
         password:
-            - NotBlank:
-                message:    "Password is mandatory"
             - Length:
                 min:        8
                 max:        255
