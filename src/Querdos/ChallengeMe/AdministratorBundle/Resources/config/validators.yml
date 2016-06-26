@@ -1,4 +1,13 @@
 services:
+    challengeme.validator.username:
+        class: Querdos\ChallengeMe\AdministratorBundle\Validator\Constraints\UsernameExistsValidator
+        calls:
+            - [ setAdminManager, [ '@challengeme.manager.administrator' ]]
+            - [ setModeratorManager, [ '@challengeme.manager.moderator' ]]
+            - [ setRedactorManager, [ '@challengeme.manager.redactor' ]]
+        tags:
+            - { name: validator.constraint_validator}
+
     challengeme.validator.admin:
         class: Querdos\ChallengeMe\AdministratorBundle\Validator\AdminValidator
         calls:
