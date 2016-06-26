@@ -77,7 +77,7 @@
                                         <td align="center">
                                             <a title="Send a message" href="javascript:void(0)"><i class="fa fa-envelope-o fa-fw" aria-hidden="true"></i></a>
                                             <a title="Edit" href="javascript:void(0)"><i class="fa fa-pencil fa-fw" aria-hidden="true"></i></a>
-                                            <a title="Reset password" href="javascript:void(0)"><i class="fa fa-recycle fa-fw" aria-hidden="true"></i></a>
+                                            <a title="Reset password" href="{{ path('administration_resetPassword', {'id': admin.id}) }}"><i class="fa fa-recycle fa-fw" aria-hidden="true"></i></a>
                                             <a title="Remove" href="{{ path('administration_removeAdmin', {'id': admin.id}) }}"><i class="fa fa-times fa-fw" aria-hidden="true"></i></a>
                                         </td>
                                     </tr>

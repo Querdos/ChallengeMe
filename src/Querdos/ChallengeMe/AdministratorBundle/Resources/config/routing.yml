@@ -82,6 +82,12 @@ administration_removeRedactor:
     methods:
         - GET
 
+administration_resetPassword:
+    path:     /reset-password/{id}
+    defaults: { _controller: AdminBundle:Administration:resetPassword }
+    methods:
+        - GET
+
 ######################
 # SecurityController #
 ######################

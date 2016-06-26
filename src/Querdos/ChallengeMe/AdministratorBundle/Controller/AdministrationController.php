@@ -111,6 +111,7 @@ class AdministrationController extends Controller
     /**
      * Remove and admin from the database
      *
+     * @param $id
      * @param Request $request
      * @return RedirectResponse
      */
@@ -294,5 +295,85 @@ class AdministrationController extends Controller
 
         // Redirecting
         return $this->redirectToRoute('administration_redactorsManagement');
+    }
+
+    /**
+     * Reset the password for the given user
+     *
+     * @param   $id
+     * @param   Request $request
+     * @return  RedirectResponse
+     */
+    public function resetPasswordAction($id, Request $request)
+    {
+        // Retreving the referer
+        $referer    = $request->server->get('HTTP_REFERER');
+
+        // Generating url
+        $adminUrl       = $this->generateUrl('administration_adminsManagement');
+        $moderatorUrl   = $this->generateUrl('administration_moderatorsManagement');
+        $redactorUrl    = $this->generateUrl('administration_redactorsManagement');
+
+        // Resetting admin password
+        if (false !== strstr($referer, $adminUrl)) {
+            // Denying access
+            $this->denyAccessUnlessGranted('ROLE_ADMIN', null, "You are not allowed to access this page");
+
+            // Retrieving the manager
+            $manager = $this->get('challengeme.manager.administrator');
+
+            // Retrieving admin
+            $admin   = $manager->readById($id);
+
+            // Resetting the password
+            $manager->resetPassword($admin);
+
+            // Redirecting
+            return $this->redirectToRoute('administration_adminsManagement', array(
+                'success' => 'Password reseted successfully'
+            ));
+        }
+
+        // Resetting moderator password
+        else if (false !== strstr($referer, $moderatorUrl)) {
+            // Denying access
+            $this->denyAccessUnlessGranted('ROLE_ADMIN', null, "You are not allowed to access this page");
+
+            // Retrieving the manager
+            $manager    = $this->get('challengeme.manager.moderator');
+
+            // Retrieving admin
+            $moderator  = $manager->readById($id);
+
+            // Resetting the password
+            $manager->resetPassword($moderator);
+
+            // Redirecting
+            return $this->redirectToRoute('administration_moderatorsManagement');
+        }
+
+        // Resetting redactor password
+        else if (false !== strstr($referer, $redactorUrl)) {
+            // Denying access
+            $this->denyAccessUnlessGranted('ROLE_MODERATOR', null, "You are not allowed to access this page");
+
+            // Retrieving the manager
+            $manager    = $this->get('challengeme.manager.redactor');
+
+            // Retrieving admin
+            $redactor   = $manager->readById($id);
+
+            // Resetting the password
+            $manager->resetPassword($redactor);
+
+            // Redirecting
+            return $this->redirectToRoute('administration_redactorsManagement');
+        }
+
+        // Resetting admin password
+        else {
+            // Redirecting
+            return $this->redirectToRoute('administration_homepage');
+        }
     }
 }
