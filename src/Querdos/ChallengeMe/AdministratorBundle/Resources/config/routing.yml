@@ -45,11 +45,25 @@ administration_moderatorsManagement:
     methods:
         - GET
 
+administration_addModerator:
+    path:     /moderators-management/create
+    defaults: { _controller: AdminBundle:Administration:addModerator }
+    methods:
+        - GET
+        - POST
+
 administration_redactorsManagement:
     path:     /redactors-management
     defaults: { _controller: AdminBundle:Administration:redactorsManagement }
     methods:
         - GET
+
+administration_addRedactor:
+    path:     /redactors-management/create
+    defaults: { _controller: AdminBundle:Administration:addRedactor }
+    methods:
+        - GET
+        - POST
 
 ######################
 # SecurityController #

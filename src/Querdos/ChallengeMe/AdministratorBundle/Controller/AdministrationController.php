@@ -5,6 +5,8 @@ namespace Querdos\ChallengeMe\AdministratorBundle\Controller;
 use Querdos\ChallengeMe\AdministratorBundle\Entity\Administrator;
 use Querdos\ChallengeMe\AdministratorBundle\Form\AdministratorType;
 use Querdos\ChallengeMe\AdministratorBundle\Manager\AdministratorManager;
+use Querdos\ChallengeMe\AdministratorBundle\Manager\ModeratorManager;
+use Querdos\ChallengeMe\AdministratorBundle\Manager\RedactorManager;
 use Querdos\ChallengeMe\AdministratorBundle\Repository\AdministratorRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -106,7 +108,22 @@ class AdministrationController extends Controller
      * @return array
      */
     public function moderatorsManagementAction() {
-        return array();
+        /** @var ModeratorManager $moderatorManager */
+        $moderatorManager = $this->get('challengeme.manager.moderator');
+
+        return array(
+            'moderators' => $moderatorManager->all()
+        );
+    }
+
+    /**
+     * @Template("AdminBundle:content:add_moderator.html.twig")
+     *
+     * @param Request $request
+     */
+    public function addModeratorAction(Request $request)
+    {
+        //
     }
 
     /**
@@ -115,6 +132,21 @@ class AdministrationController extends Controller
      * @return array
      */
     public function redactorsManagementAction() {
-        return array();
+        /** @var RedactorManager $redactorManager */
+        $redactorManager = $this->get('challengeme.manager.redactor');
+
+        return array(
+            'redactors' => $redactorManager->all()
+        );
+    }
+
+    /**
+     * @Template("AdminBundle:content:add_redactor.html.twig")
+     *
+     * @param Request $request
+     */
+    public function addRedactorAction(Request $request)
+    {
+        //
     }
 }
