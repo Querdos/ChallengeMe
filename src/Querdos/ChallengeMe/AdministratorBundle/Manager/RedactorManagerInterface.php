@@ -21,6 +21,8 @@ interface RedactorManagerInterface
 
     public function all();
 
+    public function resetPassword(Redactor $redactor);
+
     public function readById($id);
 
     public function getRedactorData($username);

@@ -23,6 +23,8 @@ interface AdministratorManagerInterface
     public function all();
 
     public function readById($id);
+    
+    public function resetPassword(Administrator $admin);
 
     public function getAdminData($username);
 

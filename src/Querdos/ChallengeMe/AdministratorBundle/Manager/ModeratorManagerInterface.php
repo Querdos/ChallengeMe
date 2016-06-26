@@ -24,6 +24,8 @@ interface ModeratorManagerInterface
 
     public function readById($id);
 
+    public function resetPassword(Moderator $moderator);
+
     public function getModeratorData($username);
 
     public function getModeratorPublicInfo($id);
