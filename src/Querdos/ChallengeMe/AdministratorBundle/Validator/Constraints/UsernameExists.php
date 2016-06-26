@@ -12,5 +12,5 @@ use Symfony\Component\Validator\Constraint;
 
 class UsernameExists extends Constraint
 {
-    public $message = "This username exists";
+    public $message = "This username already exists";
 }
