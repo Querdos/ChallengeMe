@@ -98,4 +98,13 @@ class RedactorManager implements RedactorManagerInterface
     {
         $this->passwordEncoder = $passwordEncoder;
     }
+
+    /**
+     * @param $id
+     * @return Redactor
+     */
+    public function readById($id)
+    {
+        return $this->repository->findOneById($id);
+    }
 }

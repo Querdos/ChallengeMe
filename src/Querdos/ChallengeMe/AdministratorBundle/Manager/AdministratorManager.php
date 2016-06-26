@@ -110,4 +110,12 @@ class AdministratorManager implements AdministratorManagerInterface
         $this->passwordEncoder = $passwordEncoder;
     }
 
+    /**
+     * @param  int $id
+     * @return Administrator
+     */
+    public function readById($id)
+    {
+        return $this->repository->findOneById($id);
+    }
 }

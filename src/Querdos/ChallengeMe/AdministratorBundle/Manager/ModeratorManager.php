@@ -100,4 +100,12 @@ class ModeratorManager implements ModeratorManagerInterface
         $this->passwordEncoder = $passwordEncoder;
     }
 
+    /**
+     * @param $id
+     * @return Moderator
+     */
+    public function readById($id)
+    {
+        return $this->repository->findOneById($id);
+    }
 }
