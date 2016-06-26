@@ -12,6 +12,7 @@ namespace Querdos\ChallengeMe\AdministratorBundle\Manager;
 use Doctrine\Common\Persistence\ObjectManager;
 use Querdos\ChallengeMe\AdministratorBundle\Entity\Administrator;
 use Querdos\ChallengeMe\AdministratorBundle\Repository\AdministratorRepository;
+use Symfony\Component\Security\Core\Tests\Encoder\PasswordEncoder;
 
 class AdministratorManager implements AdministratorManagerInterface
 {
@@ -20,13 +21,20 @@ class AdministratorManager implements AdministratorManagerInterface
      */
     private $repository;
 
-    public function __construct(ObjectManager $objectManager)
-    {
-        $this->repository = $objectManager->getRepository('AdminBundle:Administrator');
-    }
+    /**
+     * @var PasswordEncoder $passwordEncoder
+     */
+    private $passwordEncoder;
 
     public function create(Administrator $admin)
     {
+        // Encoding the password
+
+        // Setting it
+
+        // Clearing credentials
+
+        // Persisting
         $this->repository->create($admin);
     }
 
@@ -43,11 +51,6 @@ class AdministratorManager implements AdministratorManagerInterface
     public function all()
     {
         return $this->repository->findAll();
-    }
-
-    public function adminExists(Administrator $admin)
-    {
-        return $this->repository->adminExists($admin);
     }
 
     public function getAdminData($username)
@@ -72,6 +75,26 @@ class AdministratorManager implements AdministratorManagerInterface
     public function checkEmailBack($email)
     {
         return $this->repository->checkEmailBack($email);
+    }
+
+    /**
+     * Setting the repository
+     *
+     * @param AdministratorRepository $repository
+     */
+    public function setRepository($repository)
+    {
+        $this->repository = $repository;
+    }
+
+    /**
+     * Setting the password encoder
+     *
+     * @param PasswordEncoder $passwordEncoder
+     */
+    public function setPasswordEncoder($passwordEncoder)
+    {
+        $this->passwordEncoder = $passwordEncoder;
     }
 
 }

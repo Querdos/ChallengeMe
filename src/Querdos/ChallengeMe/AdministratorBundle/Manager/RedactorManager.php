@@ -11,17 +11,20 @@ namespace Querdos\ChallengeMe\AdministratorBundle\Manager;
 use Doctrine\Common\Persistence\ObjectManager;
 use Querdos\ChallengeMe\AdministratorBundle\Entity\Redactor;
 use Querdos\ChallengeMe\AdministratorBundle\Repository\RedactorRepository;
+use Symfony\Component\Security\Core\Tests\Encoder\PasswordEncoder;
 
 class RedactorManager implements RedactorManagerInterface
 {
-    /** @var  RedactorRepository $repository */
+    /**
+     * @var RedactorRepository $repository
+     */
     private $repository;
 
-    public function __construct(ObjectManager $objectManager)
-    {
-        $this->repository = $objectManager->getRepository('AdminBundle:Redactor');
-    }
-
+    /**
+     * @var PasswordEncoder $passwordEncoder
+     */
+    private $passwordEncoder;
+    
     public function create(Redactor $redactor)
     {
         $this->repository->create($redactor);
@@ -65,5 +68,21 @@ class RedactorManager implements RedactorManagerInterface
     public function checkEmailBack($email)
     {
         return $this->repository->checkEmailBack($email);
+    }
+
+    /**
+     * @param RedactorRepository $repository
+     */
+    public function setRepository($repository)
+    {
+        $this->repository = $repository;
+    }
+
+    /**
+     * @param PasswordEncoder $passwordEncoder
+     */
+    public function setPasswordEncoder($passwordEncoder)
+    {
+        $this->passwordEncoder = $passwordEncoder;
     }
 }

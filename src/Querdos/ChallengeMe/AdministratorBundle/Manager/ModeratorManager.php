@@ -11,16 +11,19 @@ namespace Querdos\ChallengeMe\AdministratorBundle\Manager;
 use Doctrine\Common\Persistence\ObjectManager;
 use Querdos\ChallengeMe\AdministratorBundle\Entity\Moderator;
 use Querdos\ChallengeMe\AdministratorBundle\Repository\ModeratorRepository;
+use Symfony\Component\Security\Core\Tests\Encoder\PasswordEncoder;
 
 class ModeratorManager implements ModeratorManagerInterface
 {
-    /** @var ModeratorRepository $repository */
+    /**
+     * @var ModeratorRepository $repository
+     */
     private $repository;
 
-    public function __construct(ObjectManager $objectManager)
-    {
-        $this->repository = $objectManager->getRepository('AdminBundle:Moderator');
-    }
+    /**
+     * @var PasswordEncoder $passwordEncoder
+     */
+    private $passwordEncoder;
 
     public function create(Moderator $moderator)
     {
@@ -66,4 +69,21 @@ class ModeratorManager implements ModeratorManagerInterface
     {
         return $this->repository->checkEmailBack($email);
     }
+
+    /**
+     * @param ModeratorRepository $repository
+     */
+    public function setRepository($repository)
+    {
+        $this->repository = $repository;
+    }
+
+    /**
+     * @param PasswordEncoder $passwordEncoder
+     */
+    public function setPasswordEncoder($passwordEncoder)
+    {
+        $this->passwordEncoder = $passwordEncoder;
+    }
+
 }
