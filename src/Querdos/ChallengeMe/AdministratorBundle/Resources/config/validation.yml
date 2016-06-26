@@ -139,3 +139,6 @@ Querdos\ChallengeMe\AdministratorBundle\Entity\InfoUser:
                 message:    "Birthday cannot be null"
             - Date:
                 message:    "The value for the birthday isn't a valid Date"
+    getters:
+        birthdayCorrect:
+            - 'IsTrue': { message: "The birthday cannot be greater than today" }

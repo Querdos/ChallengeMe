@@ -117,4 +117,13 @@ class InfoUser
     {
         return $this->birthday;
     }
+
+    /**
+     * Check if the birthday date is correct
+     * @return true if the birthday is lower than today
+     */
+    public function isBirthdayCorrect()
+    {
+        return $this->birthday < (new \DateTime());
+    }
 }
