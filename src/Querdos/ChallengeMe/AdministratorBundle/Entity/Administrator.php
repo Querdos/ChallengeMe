@@ -188,11 +188,22 @@ class Administrator implements UserInterface, \Serializable
 
     /**
      * Check if email and email back are different
+     * 
      * @return true if emails are different
      */
     public function isEmailCorrect()
     {
         return $this->email !== $this->emailBack;
+    }
+
+    /**
+     * Check if the username and the given password are different
+     *
+     * @return true if password and username are different
+     */
+    public function isPasswordDifferentFromUsername()
+    {
+        return $this->username !== $this->plainPassword;
     }
     
     /**

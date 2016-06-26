@@ -162,6 +162,16 @@ class Moderator implements UserInterface, \Serializable
     }
 
     /**
+     * Check if the username and the given password are different
+     *
+     * @return true if password and username are different
+     */
+    public function isPasswordDifferentFromUsername()
+    {
+        return $this->username !== $this->plainPassword;
+    }
+
+    /**
      * Check if email and email back are different
      * @return true if emails are different
      */

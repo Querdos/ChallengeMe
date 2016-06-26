@@ -34,6 +34,8 @@ Querdos\ChallengeMe\AdministratorBundle\Entity\Administrator:
     getters:
         emailCorrect:
             - 'IsTrue': { message: "Emails must be different" }
+        passwordDifferentFromUsername:
+            - 'IsTrue': { message: "The password and the username cannot be equal" }
 
 Querdos\ChallengeMe\AdministratorBundle\Entity\Moderator:
     properties:
@@ -71,6 +73,8 @@ Querdos\ChallengeMe\AdministratorBundle\Entity\Moderator:
     getters:
         emailCorrect:
             - 'IsTrue': { message: "Emails must be different" }
+        passwordDifferentFromUsername:
+            - 'IsTrue': { message: "The password and the username cannot be equal" }
 
 Querdos\ChallengeMe\AdministratorBundle\Entity\Redactor:
     properties:
@@ -108,6 +112,8 @@ Querdos\ChallengeMe\AdministratorBundle\Entity\Redactor:
     getters:
         emailCorrect:
             - 'IsTrue': { message: "Emails must be different" }
+        passwordDifferentFromUsername:
+            - 'IsTrue': { message: "The password and the username cannot be equal" }
 
 Querdos\ChallengeMe\AdministratorBundle\Entity\InfoUser:
     properties:
