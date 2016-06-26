@@ -1,6 +1,7 @@
 <?php
 
 namespace Querdos\ChallengeMe\AdministratorBundle\Entity;
+use Querdos\ChallengeMe\AdministratorBundle\Entity\InfoUser;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
@@ -37,6 +38,11 @@ class Redactor implements UserInterface, \Serializable
      * @var string
      */
     private $emailBack;
+
+    /**
+     * @var InfoUser
+     */
+    private $infoUser;
 
     public function __construct($id = "", $username = "", $email = "", $password = "")
     {
@@ -199,20 +205,15 @@ class Redactor implements UserInterface, \Serializable
     {
         $this->plainPassword = '';
     }
-    /**
-     * @var \Querdos\ChallengeMe\AdministratorBundle\Entity\InfoUser
-     */
-    private $infoUser;
-
 
     /**
      * Set infoUser
      *
-     * @param \Querdos\ChallengeMe\AdministratorBundle\Entity\InfoUser $infoUser
+     * @param InfoUser $infoUser
      *
      * @return Redactor
      */
-    public function setInfoUser(\Querdos\ChallengeMe\AdministratorBundle\Entity\InfoUser $infoUser = null)
+    public function setInfoUser(InfoUser $infoUser = null)
     {
         $this->infoUser = $infoUser;
 
@@ -222,10 +223,26 @@ class Redactor implements UserInterface, \Serializable
     /**
      * Get infoUser
      *
-     * @return \Querdos\ChallengeMe\AdministratorBundle\Entity\InfoUser
+     * @return InfoUser
      */
     public function getInfoUser()
     {
         return $this->infoUser;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPlainPassword()
+    {
+        return $this->plainPassword;
+    }
+
+    /**
+     * @param string $plainPassword
+     */
+    public function setPlainPassword($plainPassword)
+    {
+        $this->plainPassword = $plainPassword;
     }
 }
