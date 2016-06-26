@@ -3,7 +3,11 @@
 namespace Querdos\ChallengeMe\AdministratorBundle\Controller;
 
 use Querdos\ChallengeMe\AdministratorBundle\Entity\Administrator;
+use Querdos\ChallengeMe\AdministratorBundle\Entity\Moderator;
+use Querdos\ChallengeMe\AdministratorBundle\Entity\Redactor;
 use Querdos\ChallengeMe\AdministratorBundle\Form\AdministratorType;
+use Querdos\ChallengeMe\AdministratorBundle\Form\ModeratorType;
+use Querdos\ChallengeMe\AdministratorBundle\Form\RedactorType;
 use Querdos\ChallengeMe\AdministratorBundle\Manager\AdministratorManager;
 use Querdos\ChallengeMe\AdministratorBundle\Manager\ModeratorManager;
 use Querdos\ChallengeMe\AdministratorBundle\Manager\RedactorManager;
@@ -11,6 +15,7 @@ use Querdos\ChallengeMe\AdministratorBundle\Repository\AdministratorRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 class AdministrationController extends Controller
@@ -120,10 +125,34 @@ class AdministrationController extends Controller
      * @Template("AdminBundle:content:add_moderator.html.twig")
      *
      * @param Request $request
+     * @return array|RedirectResponse
      */
     public function addModeratorAction(Request $request)
     {
-        //
+        $moderator  = new Moderator();
+        $form   = $this->createForm(ModeratorType::class, $moderator);
+
+        $form
+            ->add('save', SubmitType::class, array(
+                'label' => 'Save',
+                'attr'  => array(
+                    'class' => 'btn btn-success'
+                )
+            ))
+        ;
+
+        $form->handleRequest($request);
+        if ($form->isValid()) {
+            // Persisting the new administrator
+            $this->get('challengeme.manager.moderator')->create($moderator);
+
+            // Redirecting after success
+            return $this->redirectToRoute('administration_moderatorsManagement');
+        }
+
+        return array(
+            'form'  => $form->createView()
+        );
     }
 
     /**
@@ -144,9 +173,33 @@ class AdministrationController extends Controller
      * @Template("AdminBundle:content:add_redactor.html.twig")
      *
      * @param Request $request
+     * @return array|RedirectResponse
      */
     public function addRedactorAction(Request $request)
     {
-        //
+        $redactor = new Redactor();
+        $form     = $this->createForm(RedactorType::class, $redactor);
+
+        $form
+            ->add('save', SubmitType::class, array(
+                'label' => 'Save',
+                'attr'  => array(
+                    'class' => 'btn btn-success'
+                )
+            ))
+        ;
+
+        $form->handleRequest($request);
+        if ($form->isValid()) {
+            // Persisting the new redactor
+            $this->get('challengeme.manager.redactor')->create($redactor);
+
+            // Redirecting after success
+            return $this->redirectToRoute('administration_redactorsManagement');
+        }
+
+        return array(
+            'form'  => $form->createView()
+        );
     }
 }
