@@ -38,6 +38,11 @@ administration_addAdmin:
     methods:
         - GET
         - POST
+administration_removeAdmin:
+    path:     /admins-management/remove/{id}
+    defaults: { _controller: AdminBundle:Administration:removeAdmin }
+    methods:
+        - GET
 
 administration_moderatorsManagement:
     path:     /moderators-management
@@ -52,6 +57,12 @@ administration_addModerator:
         - GET
         - POST
 
+administration_removeModerator:
+    path:     /moderators-management/remove/{id}
+    defaults: { _controller: AdminBundle:Administration:removeModerator }
+    methods:
+        - GET
+
 administration_redactorsManagement:
     path:     /redactors-management
     defaults: { _controller: AdminBundle:Administration:redactorsManagement }
@@ -64,6 +75,12 @@ administration_addRedactor:
     methods:
         - GET
         - POST
+
+administration_removeRedactor:
+    path:     /redactors-management/remove/{id}
+    defaults: { _controller: AdminBundle:Administration:removeRedactor }
+    methods:
+        - GET
 
 ######################
 # SecurityController #

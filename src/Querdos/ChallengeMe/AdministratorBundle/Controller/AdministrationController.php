@@ -14,6 +14,7 @@ use Querdos\ChallengeMe\AdministratorBundle\Manager\RedactorManager;
 use Querdos\ChallengeMe\AdministratorBundle\Repository\AdministratorRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\Finder\Exception\AccessDeniedException;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -108,6 +109,36 @@ class AdministrationController extends Controller
     }
 
     /**
+     * Remove and admin from the database
+     *
+     * @param Request $request
+     * @return RedirectResponse
+     */
+    public function removeAdminAction($id, Request $request)
+    {
+        // Checking authorization
+        $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'You are not allowed to access this page');
+
+        // Retrieving url and the referer
+        $url        = $this->generateUrl('administration_adminsManagement');
+        $referer    = $request->server->get('HTTP_REFERER');
+
+        // If not from adminsManagement, redirecting without doing anything
+        if (false === strstr($referer, $url)) {
+            return $this->redirectToRoute('administration_adminsManagement');
+        }
+
+        // Retrieving admin
+        $admin = $this->get('challengeme.manager.administrator')->readById($id);
+
+        // Everything correct, removing
+        $this->get('challengeme.manager.administrator')->delete($admin);
+
+        // Redirecting
+        return $this->redirectToRoute('administration_adminsManagement');
+    }
+
+    /**
      * @Template("AdminBundle:content:moderators_management.html.twig")
      *
      * @return array
@@ -156,6 +187,37 @@ class AdministrationController extends Controller
     }
 
     /**
+     * Remove a moderator from database
+     *
+     * @param $id
+     * @param Request $request
+     * @return RedirectResponse
+     */
+    public function removeModeratorAction($id, Request $request)
+    {
+        // Checking authorization
+        $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'You are not allowed to access this page');
+
+        // Retrieving url and the referer
+        $url        = $this->generateUrl('administration_moderatorsManagement');
+        $referer    = $request->server->get('HTTP_REFERER');
+
+        // If not from adminsManagement, redirecting without doing anything
+        if (false === strstr($referer, $url)) {
+            return $this->redirectToRoute('administration_moderatorsManagement');
+        }
+
+        // Retrieving admin
+        $moderator = $this->get('challengeme.manager.moderator')->readById($id);
+
+        // Everything correct, removing
+        $this->get('challengeme.manager.moderator')->delete($moderator);
+
+        // Redirecting
+        return $this->redirectToRoute('administration_moderatorsManagement');
+    }
+
+    /**
      * @Template("AdminBundle:content:redactors_management.html.twig")
      *
      * @return array
@@ -201,5 +263,36 @@ class AdministrationController extends Controller
         return array(
             'form'  => $form->createView()
         );
+    }
+
+    /**
+     * Remove a redactor from database
+     *
+     * @param $id
+     * @param Request $request
+     * @return RedirectResponse
+     */
+    public function removeRedactorAction($id, Request $request)
+    {
+        // Checking authorization
+        $this->denyAccessUnlessGranted('ROLE_MODERATOR', null, 'You are not allowed to access this page');
+
+        // Retrieving url and the referer
+        $url        = $this->generateUrl('administration_redactorsManagement');
+        $referer    = $request->server->get('HTTP_REFERER');
+
+        // If not from adminsManagement, redirecting without doing anything
+        if (false === strstr($referer, $url)) {
+            return $this->redirectToRoute('administration_redactorsManagement');
+        }
+
+        // Retrieving admin
+        $redactor = $this->get('challengeme.manager.redactor')->readById($id);
+
+        // Everything correct, removing
+        $this->get('challengeme.manager.redactor')->delete($redactor);
+
+        // Redirecting
+        return $this->redirectToRoute('administration_redactorsManagement');
     }
 }
