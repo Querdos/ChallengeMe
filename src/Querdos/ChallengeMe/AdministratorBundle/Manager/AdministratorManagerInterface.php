@@ -22,6 +22,8 @@ interface AdministratorManagerInterface
 
     public function all();
 
+    public function readById($id);
+
     public function getAdminData($username);
 
     public function getAdminPublicInfo($id);

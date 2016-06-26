@@ -22,6 +22,8 @@ interface ModeratorManagerInterface
 
     public function all();
 
+    public function readById($id);
+
     public function getModeratorData($username);
 
     public function getModeratorPublicInfo($id);

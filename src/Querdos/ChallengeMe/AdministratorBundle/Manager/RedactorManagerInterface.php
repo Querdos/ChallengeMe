@@ -21,6 +21,8 @@ interface RedactorManagerInterface
 
     public function all();
 
+    public function readById($id);
+
     public function getRedactorData($username);
 
     public function getRedactorPublicInfo($id);
