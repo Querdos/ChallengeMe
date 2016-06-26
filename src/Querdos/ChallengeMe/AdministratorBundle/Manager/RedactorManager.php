@@ -45,6 +45,16 @@ class RedactorManager implements RedactorManagerInterface
 
     public function update(Redactor $redactor)
     {
+        // If the plain password is not empty <=> resetting password
+        if ("" !== $redactor->getPlainPassword()) {
+            $redactor
+                ->setPassword(
+                    $this->passwordEncoder->encodePassword($redactor, $redactor->getPlainPassword())
+                )
+                ->eraseCredentials()
+            ;
+        }
+
         $this->repository->update($redactor);
     }
 
@@ -56,6 +66,12 @@ class RedactorManager implements RedactorManagerInterface
     public function all()
     {
         return $this->repository->findAll();
+    }
+
+    public function resetPassword(Redactor $redactor)
+    {
+        $redactor->setPlainPassword(uniqid());
+        $this->update($redactor);
     }
 
     public function getRedactorData($username)

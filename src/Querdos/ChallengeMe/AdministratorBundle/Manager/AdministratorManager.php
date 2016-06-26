@@ -53,6 +53,16 @@ class AdministratorManager implements AdministratorManagerInterface
 
     public function update(Administrator $admin)
     {
+        // If the plain password is not empty <=> resetting password
+        if ("" !== $admin->getPlainPassword()) {
+            $admin
+                ->setPassword(
+                    $this->passwordEncoder->encodePassword($admin, $admin->getPlainPassword())
+                )
+                ->eraseCredentials()
+            ;
+        }
+
         $this->repository->update($admin);
     }
 
@@ -64,6 +74,12 @@ class AdministratorManager implements AdministratorManagerInterface
     public function all()
     {
         return $this->repository->findAll();
+    }
+
+    public function resetPassword(Administrator $admin)
+    {
+        $admin->setPlainPassword(uniqid());
+        $this->update($admin);
     }
 
     public function getAdminData($username)

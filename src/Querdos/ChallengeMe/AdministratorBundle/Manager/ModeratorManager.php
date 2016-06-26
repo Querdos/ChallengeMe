@@ -46,6 +46,16 @@ class ModeratorManager implements ModeratorManagerInterface
 
     public function update(Moderator $moderator)
     {
+        // If the plain password is not empty <=> resetting password
+        if ("" !== $moderator->getPlainPassword()) {
+            $moderator
+                ->setPassword(
+                    $this->passwordEncoder->encodePassword($moderator, $moderator->getPlainPassword())
+                )
+                ->eraseCredentials()
+            ;
+        }
+
         $this->repository->update($moderator);
     }
 
@@ -57,6 +67,12 @@ class ModeratorManager implements ModeratorManagerInterface
     public function all()
     {
         return $this->repository->findAll();
+    }
+
+    public function resetPassword(Moderator $moderator)
+    {
+        $moderator->setPlainPassword(uniqid());
+        $this->update($moderator);
     }
 
     public function getModeratorData($username)
