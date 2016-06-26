@@ -49,7 +49,9 @@ class UsernameExistsValidator extends ConstraintValidator
             // Check from redactor repository
             null !== $this->redactorManager->checkUsername($value)
         ) {
-            $this->context->buildViolation($constraint->message)
+            $this
+                ->context
+                ->buildViolation($constraint->message)
                 ->addViolation()
             ;
         }
