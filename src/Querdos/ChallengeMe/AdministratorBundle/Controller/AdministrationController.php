@@ -11,10 +11,8 @@ use Querdos\ChallengeMe\AdministratorBundle\Form\RedactorType;
 use Querdos\ChallengeMe\AdministratorBundle\Manager\AdministratorManager;
 use Querdos\ChallengeMe\AdministratorBundle\Manager\ModeratorManager;
 use Querdos\ChallengeMe\AdministratorBundle\Manager\RedactorManager;
-use Querdos\ChallengeMe\AdministratorBundle\Repository\AdministratorRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Symfony\Component\Finder\Exception\AccessDeniedException;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -83,7 +81,9 @@ class AdministrationController extends Controller
     public function addAdminAction(Request $request)
     {
         $admin = new Administrator();
-        $form   = $this->createForm(AdministratorType::class, $admin);
+        $form  = $this->createForm(AdministratorType::class, $admin, array(
+            'create'    => true
+        ));
 
         $form
             ->add('save', SubmitType::class, array(
@@ -108,6 +108,47 @@ class AdministrationController extends Controller
         );
     }
 
+    /**
+     * @Template("AdminBundle:content:update_admin.html.twig")
+     *
+     * @param $id
+     * @param Request $request
+     * @return array|RedirectResponse
+     */
+    public function updateAdminAction($id, Request $request)
+    {
+        // Retrieving admin
+        $admin = $this->get('challengeme.manager.administrator')->readById($id);
+        
+        // Building the form
+        $form   = $this->createForm(AdministratorType::class, $admin, array(
+            'create' => false
+        ));
+        $form
+            ->add('save', SubmitType::class, array(
+                'label' => 'Save',
+                'attr'  => array(
+                    'class' => 'btn btn-success'
+                )
+            ))
+        ;
+        
+        $form->handleRequest($request);
+        if ($form->isValid()) {
+            dump($admin);die;
+            // Persisting the admin
+            $this->get('challengeme.manager.administrator')->update($admin);
+            
+            // Redirecting to the admins management page
+            return $this->redirectToRoute('administration_adminsManagement');
+        }
+        
+        return array(
+            'username' => $admin->getUsername(),
+            'form'     => $form->createView()
+        );
+    }
+    
     /**
      * Remove and admin from the database
      *
@@ -188,6 +229,18 @@ class AdministrationController extends Controller
     }
 
     /**
+     * @Template("AdminBundle:content:update_moderator.html.twig")
+     *
+     * @param $id
+     * @param Request $request
+     * @return array|RedirectResponse
+     */
+    public function updateModeratorAction($id, Request $request)
+    {
+        // 
+    }
+    
+    /**
      * Remove a moderator from database
      *
      * @param $id
@@ -266,6 +319,18 @@ class AdministrationController extends Controller
         );
     }
 
+    /**
+     * @Template("AdminBundle:content:update_redactor.html.twig")
+     *
+     * @param $id
+     * @param Request $request
+     * @return array|RedirectResponse
+     */
+    public function updateRedactorAction($id, Request $request)
+    {
+        
+    }
+    
     /**
      * Remove a redactor from database
      *
