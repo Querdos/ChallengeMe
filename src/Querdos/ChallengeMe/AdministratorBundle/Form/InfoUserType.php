@@ -22,12 +22,12 @@ class InfoUserType extends AbstractType
             ->add('firstName',  TextType::class, array(
                 'label'         => 'First name',
                 'label_attr'    => array(
-                    'class' => 'control-label col-md-3 col-sm-3 col-xs-12'
+                    'class'     => 'control-label col-md-3 col-sm-3 col-xs-12'
                 ),
                 'attr'          => array(
-                    'required'  => 'required',
                     'class'     => 'form-control col-md-7 col-xs-12'
-                )
+                ),
+                'required'      => true
             ))
             ->add('lastName',   TextType::class, array(
                 'label'         => 'Last name',
@@ -37,22 +37,22 @@ class InfoUserType extends AbstractType
                 'attr'          => array(
                     'required'  => 'required',
                     'class'     => 'form-control col-md-7 col-xs-12'
-                )
+                ),
+                'required'      => true
             ))
             ->add('birthday',   DateType::class, array(
                 'label'         => 'Birthday',
                 'label_attr'    => array(
-                    'class' => 'control-label col-md-3 col-sm-3 col-xs-12'
+                    'class'     => 'control-label col-md-3 col-sm-3 col-xs-12'
                 ),
                 'attr'          => array(
-                    'required'       => 'required',
                     'class'          => 'form-control',
                     'data-inputmask' => "'mask': '9999-99-99'"
                 ),
                 'html5'         => false,
                 'widget'        => 'single_text',
                 'format'        => 'y-M-d', 
-                'data'          => null
+                'required'      => true
             ))
         ;
 

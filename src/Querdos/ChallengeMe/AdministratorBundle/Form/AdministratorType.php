@@ -19,51 +19,48 @@ class AdministratorType extends AbstractType
     {
         $builder
             ->add('username',   TextType::class,        array(
-                'label' => 'Username',
+                'label'         => 'Username',
                 'label_attr'    => array(
-                    'class' => 'control-label col-md-3 col-sm-3 col-xs-12'
+                    'class'     => 'control-label col-md-3 col-sm-3 col-xs-12'
                 ),
                 'attr'          => array(
-                    'required'  => 'required',
                     'class'     => 'form-control col-md-7 col-xs-12'
                 ),
                 'required'      => true
             ))
             ->add('plain_password',   PasswordType::class,    array(
-                'label' => 'Password',
+                'label'         => 'Password',
                 'label_attr'    => array(
-                    'class' => 'control-label col-md-3 col-sm-3 col-xs-12'
+                    'class'     => 'control-label col-md-3 col-sm-3 col-xs-12'
                 ),
                 'attr'          => array(
-                    'required'  => 'required',
-                    'class'     => 'form-control col-md-7 col-xs-12'
+                    'class'     => 'form-control col-md-7 col-xs-12',
+                    'value'     =>  $options['create'] ? '' : '********'
                 ),
-                'required'      => true
+                'required'      => $options['create']
             ))
             ->add('email',      EmailType::class,       array(
-                'label' => 'Main Email',
+                'label'         => 'Main Email',
                 'label_attr'    => array(
-                    'class' => 'control-label col-md-3 col-sm-3 col-xs-12'
+                    'class'     => 'control-label col-md-3 col-sm-3 col-xs-12'
                 ),
                 'attr'          => array(
-                    'required'  => 'required',
                     'class'     => 'form-control col-md-7 col-xs-12'
                 ),
                 'required'      => true
             ))
             ->add('emailBack',  EmailType::class,       array(
-                'label' => 'Secondary email',
+                'label'         => 'Secondary email',
                 'label_attr'    => array(
-                    'class' => 'control-label col-md-3 col-sm-3 col-xs-12'
+                    'class'     => 'control-label col-md-3 col-sm-3 col-xs-12'
                 ),
                 'attr'          => array(
-                    'required'  => 'required',
                     'class'     => 'form-control col-md-7 col-xs-12'
                 ),
                 'required'      => true
             ))
             ->add('infoUser', InfoUserType::class, array(
-                'label'     => ''
+                'label'         => ''
             ))
         ;
     }
@@ -73,11 +70,16 @@ class AdministratorType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
-            'data_class' => 'Querdos\ChallengeMe\AdministratorBundle\Entity\Administrator',
-            'csrf_protection' => true,
-            'csrf_field_name' => '_token',
-            'csrf_token_id'   => 'administrator_token',
-        ));
+        $resolver
+            ->setDefaults(array(
+                'data_class'        => 'Querdos\ChallengeMe\AdministratorBundle\Entity\Administrator',
+                'csrf_protection'   => true,
+                'csrf_field_name'   => '_token',
+                'csrf_token_id'     => 'administrator_token',
+            ))
+            ->setRequired(
+                'create'
+            )
+        ;
     }
 }
