@@ -1,0 +1,47 @@
+#!/bin/bash
+
+DIRARRAY=(
+    var/cache
+    var/logs
+    var/sessions
+)
+
+HTTPDUSER=`ps aux | grep -E '[a]pache|[h]ttpd|[_]www|[w]ww-data|[n]ginx' | grep -v tomcat | grep -v root | head -1 | cut -d\  -f1`
+USER=`whoami`
+DIRS=${DIRARRAY[*]}
+
+run() {
+    sudo $@
+    if [[ $? -ne 0 ]]
+    then
+        echo -e "\x1b[31;1mUne erreur est survenue.\x1b[m"
+
+        exit 1
+    fi
+}
+echo -e "Application des droits sur les dossiers suivants :"
+for dir in $DIRS
+do
+    echo -e " - \x1b[1m$dir\x1b[m"
+done
+
+mkdir -p $DIRS
+run setfacl --recursive --remove-all $DIRS
+run chmod -R a=r $DIRS
+run chmod -R u=rwX,g=rX,o=rX $DIRS
+
+# access ACL
+run setfacl --recursive --modify user:"$HTTPDUSER":rwX,mask::rwX $DIRS
+if [[ $USER != $HTTPDUSER ]]
+then
+    run setfacl --recursive --modify user:$USER:rwX,mask::rwX $DIRS
+fi
+
+# default ACL (used when creating objects)
+run setfacl --recursive --default --modify user:"$HTTPDUSER":rwX,mask::rwX $DIRS
+if [[ $USER != $HTTPDUSER ]]
+then
+    run setfacl --recursive --default --modify user:$USER:rwX,mask::rwX $DIRS
+fi
+
+echo -e "\x1b[1mTerminé.\x1b[m"
