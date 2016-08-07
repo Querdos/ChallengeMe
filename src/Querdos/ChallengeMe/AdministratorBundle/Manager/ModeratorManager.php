@@ -8,11 +8,11 @@
 namespace Querdos\ChallengeMe\AdministratorBundle\Manager;
 
 
-use Doctrine\ORM\EntityManager;
 use Querdos\ChallengeMe\AdministratorBundle\Entity\Moderator;
 use Querdos\ChallengeMe\AdministratorBundle\Repository\ModeratorRepository;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoder;
 use Symfony\Component\Security\Core\Tests\Encoder\PasswordEncoder;
+use Doctrine\ORM\EntityManager;
 
 class ModeratorManager implements ModeratorManagerInterface
 {
@@ -25,12 +25,16 @@ class ModeratorManager implements ModeratorManagerInterface
      * @var UserPasswordEncoder $passwordEncoder
      */
     private $passwordEncoder;
+    
+    /**
+     * @var EntityManager $entityManager
+     */
+    private $entityManager;
 
-    public function __construct(EntityManager $em)
-    {
-        $this->repository = $em->getRepository('AdminBundle:Moderator');
-    }
-
+    /**
+     * {@inheritDoc}
+     * @see \Querdos\ChallengeMe\AdministratorBundle\Manager\ModeratorManagerInterface::create()
+     */
     public function create(Moderator $moderator)
     {
         // Encoding the password
@@ -40,10 +44,15 @@ class ModeratorManager implements ModeratorManagerInterface
             )
             ->eraseCredentials();
 
-        // Persisting
-        $this->repository->create($moderator);
+        // Persisting and flushing
+        $this->entityManager->persist($moderator);
+        $this->entityManager->flush($moderator);
     }
 
+    /**
+     * {@inheritDoc}
+     * @see \Querdos\ChallengeMe\AdministratorBundle\Manager\ModeratorManagerInterface::update()
+     */
     public function update(Moderator $moderator)
     {
         // If the plain password is not empty <=> resetting password
@@ -56,59 +65,103 @@ class ModeratorManager implements ModeratorManagerInterface
             ;
         }
 
-        $this->repository->update($moderator);
+        // Retrieving unit of work
+        $unitOfWork = $this->entityManager->getUnitOfWork();
+        
+        // Checking if already persisted
+        if (!$unitOfWork->isEntityScheduled($moderator)) {
+        	$this->entityManager->persist($moderator);
+        }
+        
+        // Flushing
+        $this->entityManager->flush($moderator);
     }
 
+    /**
+     * {@inheritDoc}
+     * @see \Querdos\ChallengeMe\AdministratorBundle\Manager\ModeratorManagerInterface::delete()
+     */
     public function delete(Moderator $moderator)
     {
-        $this->repository->delete($moderator);
+        // Retrieving unit of work
+        $unitOfWork = $this->entityManager->getUnitOfWork();
+        
+        // Checking if already persisted
+        if (!$unitOfWork->isEntityScheduled($moderator)) {
+        	$this->entityManager->persist($moderator);
+        }
+        
+        // Flushing
+        $this->entityManager->flush($moderator);
     }
     
+    /**
+     * {@inheritDoc}
+     * @see \Querdos\ChallengeMe\AdministratorBundle\Manager\ModeratorManagerInterface::all()
+     */
     public function all()
     {
         return $this->repository->findAll();
     }
 
+    /**
+     * {@inheritDoc}
+     * @see \Querdos\ChallengeMe\AdministratorBundle\Manager\ModeratorManagerInterface::resetPassword()
+     */
     public function resetPassword(Moderator $moderator)
     {
         $moderator->setPlainPassword(uniqid());
         $this->update($moderator);
     }
 
+    /**
+     * {@inheritDoc}
+     * @see \Querdos\ChallengeMe\AdministratorBundle\Manager\ModeratorManagerInterface::getModeratorData()
+     */
     public function getModeratorData($username)
     {
         return $this->repository->getModeratorData($username);
     }
 
+    /**
+     * {@inheritDoc}
+     * @see \Querdos\ChallengeMe\AdministratorBundle\Manager\ModeratorManagerInterface::getModeratorPublicInfo()
+     */
     public function getModeratorPublicInfo($id)
     {
         return $this->repository->getModeratorPublicInfo($id);
     }
 
+    /**
+     * {@inheritDoc}
+     * @see \Querdos\ChallengeMe\AdministratorBundle\Manager\ModeratorManagerInterface::checkUsername()
+     */
     public function checkUsername($username)
     {
         return $this->repository->checkUsername($username);
     }
 
+    /**
+     * {@inheritDoc}
+     * @see \Querdos\ChallengeMe\AdministratorBundle\Manager\ModeratorManagerInterface::checkEmail()
+     */
     public function checkEmail($email)
     {
         return $this->repository->checkEmail($email);
     }
 
+    /**
+     * {@inheritDoc}
+     * @see \Querdos\ChallengeMe\AdministratorBundle\Manager\ModeratorManagerInterface::checkEmailBack()
+     */
     public function checkEmailBack($email)
     {
         return $this->repository->checkEmailBack($email);
     }
 
     /**
-     * @param ModeratorRepository $repository
-     */
-    public function setRepository($repository)
-    {
-        $this->repository = $repository;
-    }
-
-    /**
+     * Set the password encoder
+     * 
      * @param PasswordEncoder $passwordEncoder
      */
     public function setPasswordEncoder($passwordEncoder)
@@ -123,5 +176,27 @@ class ModeratorManager implements ModeratorManagerInterface
     public function readById($id)
     {
         return $this->repository->findOneById($id);
+    }
+    
+    /**
+     * Set the repository
+     *
+     * @param ModeratorRepository $repository
+     */
+    public function setRepository(ModeratorRepository $repository)
+    {
+    	$this->repository = $repository;
+    	return $this;
+    }
+    
+    /**
+     * Set the entity manager
+     * 
+     * @param EntityManager $entityManager
+     */
+    public function setEntityManager(EntityManager $entityManager)
+    {
+    	$this->entityManager = $entityManager;
+    	return $this;
     }
 }

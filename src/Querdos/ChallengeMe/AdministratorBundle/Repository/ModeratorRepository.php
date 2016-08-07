@@ -18,55 +18,6 @@ use Querdos\ChallengeMe\AdministratorBundle\Entity\Moderator;
 class ModeratorRepository extends EntityRepository
 {
     /**
-     * Persists new moderator to the database
-     *
-     * @param Moderator $moderator
-     */
-    public function create(Moderator $moderator) {
-        $this
-            ->getEntityManager()
-            ->persist($moderator);
-
-        $this
-            ->getEntityManager()
-            ->flush();
-    }
-
-    /**
-     * Update existing moderator
-     * 
-     * @param Moderator $moderator
-     */
-    public function update(Moderator $moderator) {
-        $this
-            ->getEntityManager()
-            ->persist($moderator)
-        ;
-        
-        $this
-            ->getEntityManager()
-            ->flush()
-        ;
-    }
-
-    /**
-     * Remove moderator from the database
-     *
-     * @param Moderator $moderator
-     */
-    public function delete(Moderator $moderator) {
-        $this
-            ->getEntityManager()
-            ->remove($moderator)
-        ;
-        
-        $this
-            ->getEntityManager()
-            ->flush()
-        ;
-    }
-
-    /**
      * Retrieve the moderator data with a given username
      *
      * @param   string  $username

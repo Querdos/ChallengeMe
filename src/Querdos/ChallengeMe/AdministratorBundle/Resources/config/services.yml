@@ -1,10 +1,6 @@
 imports:
-    - { resource: managers.yml }
-
     - { resource: assetic_js.yml }
     - { resource: assetic_css.yml }
-
-    - { resource: validators.yml }
 
 services:
     challengeme.provider.admin:

@@ -26,17 +26,18 @@ class AdministratorManager implements AdministratorManagerInterface
      * @var UserPasswordEncoder $passwordEncoder
      */
     private $passwordEncoder;
-
+    
     /**
-     * AdministratorManager constructor.
-     * 
-     * @param EntityManager $em
+     * @var EntityManager $entityManager
      */
-    public function __construct(EntityManager $em)
-    {
-        $this->repository = $em->getRepository('AdminBundle:Administrator');
-    }
-
+    private $entityManager;
+    
+    /**
+     * Create a new administrator
+     * 
+     * {@inheritDoc}
+     * @see \Querdos\ChallengeMe\AdministratorBundle\Manager\AdministratorManagerInterface::create()
+     */
     public function create(Administrator $admin)
     {
         // Encoding the password and setting it
@@ -48,9 +49,14 @@ class AdministratorManager implements AdministratorManagerInterface
         ;
 
         // Persisting
-        $this->repository->create($admin);
+        $this->entityManager->persist($admin);
+        $this->entityManager->flush($admin);
     }
 
+    /**
+     * {@inheritDoc}
+     * @see \Querdos\ChallengeMe\AdministratorBundle\Manager\AdministratorManagerInterface::update()
+     */
     public function update(Administrator $admin)
     {
         // If the plain password is not empty <=> resetting password
@@ -62,60 +68,112 @@ class AdministratorManager implements AdministratorManagerInterface
                 ->eraseCredentials()
             ;
         }
-
-        $this->repository->update($admin);
+        
+        // Retrieving unit of work
+        $unitOfWork = $this->entityManager->getUnitOfWork();
+        
+        // Checking if already persisted
+        if (!$unitOfWork->isEntityScheduled($admin)) {
+        	$this->entityManager->persist($admin);
+        }
+        
+        // Flushing
+        $this->entityManager->flush($admin);
+        
     }
 
+    /**
+     * {@inheritDoc}
+     * @see \Querdos\ChallengeMe\AdministratorBundle\Manager\AdministratorManagerInterface::delete()
+     */
     public function delete(Administrator $admin)
     {
-        $this->repository->delete($admin);
+    	// Retrieving unit of work
+    	$unitOfWork = $this->entityManager->getUnitOfWork();
+    	
+    	// Checking if already persisted
+    	if (!$unitOfWork->isEntityScheduled($admin)) {
+    		$this->entityManager->persist($amdin);
+    	}
+    	
+    	// Flushing
+    	$this->entityManager->flush($admin);
     }
 
+    /**
+     * {@inheritDoc}
+     * @see \Querdos\ChallengeMe\AdministratorBundle\Manager\AdministratorManagerInterface::all()
+     */
     public function all()
     {
         return $this->repository->findAll();
     }
 
+    /**
+     * {@inheritDoc}
+     * @see \Querdos\ChallengeMe\AdministratorBundle\Manager\AdministratorManagerInterface::resetPassword()
+     */
     public function resetPassword(Administrator $admin)
     {
         $admin->setPlainPassword(uniqid());
         $this->update($admin);
     }
 
+    /**
+     * {@inheritDoc}
+     * @see \Querdos\ChallengeMe\AdministratorBundle\Manager\AdministratorManagerInterface::getAdminData()
+     */
     public function getAdminData($username)
     {
         return $this->repository->getAdminData($username);
     }
 
+    /**
+     * {@inheritDoc}
+     * @see \Querdos\ChallengeMe\AdministratorBundle\Manager\AdministratorManagerInterface::getAdminPublicInfo()
+     */
     public function getAdminPublicInfo($id) {
         return $this->repository->getAdminPublicInfo($id);
     }
 
+    /**
+     * {@inheritDoc}
+     * @see \Querdos\ChallengeMe\AdministratorBundle\Manager\AdministratorManagerInterface::checkUsername()
+     */
     public function checkUsername($username)
     {
         return $this->repository->checkUsername($username);
     }
 
+    /**
+     * {@inheritDoc}
+     * @see \Querdos\ChallengeMe\AdministratorBundle\Manager\AdministratorManagerInterface::checkEmail()
+     */
     public function checkEmail($email)
     {
         return $this->repository->checkEmail($email);
     }
 
+    /**
+     * {@inheritDoc}
+     * @see \Querdos\ChallengeMe\AdministratorBundle\Manager\AdministratorManagerInterface::checkEmailBack()
+     */
     public function checkEmailBack($email)
     {
         return $this->repository->checkEmailBack($email);
     }
 
     /**
-     * Setting the repository
+     * Return an administrator with a given id
      *
-     * @param AdministratorRepository $repository
+     * @param  int $id
+     * @return Administrator
      */
-    public function setRepository($repository)
+    public function readById($id)
     {
-        $this->repository = $repository;
+    	return $this->repository->findOneById($id);
     }
-
+    
     /**
      * Setting the password encoder
      *
@@ -127,11 +185,26 @@ class AdministratorManager implements AdministratorManagerInterface
     }
 
     /**
-     * @param  int $id
-     * @return Administrator
+     * Set the repository
+     *
+     * @param AdministratorRepository $repository
+     * @return AdministratorManager
      */
-    public function readById($id)
+    public function setRepository(AdministratorRepository $repository)
     {
-        return $this->repository->findOneById($id);
+    	$this->repository = $repository;
+    	return $this;
+    }
+    
+    /**
+     * Set the entity manager
+     * 
+     * @param EntityManager $entityManager
+     * @return \Querdos\ChallengeMe\AdministratorBundle\Manager\AdministratorManager
+     */
+    public function setEntityManager(EntityManager $entityManager) 
+    {
+    	$this->entityManager = $entityManager;
+    	return $this;
     }
 }

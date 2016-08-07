@@ -25,12 +25,28 @@ class RedactorManager implements RedactorManagerInterface
      * @var UserPasswordEncoder $passwordEncoder
      */
     private $passwordEncoder;
-
-    public function __construct(EntityManager $em)
+    
+    /**
+     * @var EntityManager $entityManager
+     */
+    private $entityManager;
+    
+    /**
+     * Set the repository
+     * 
+     * @param RedactorRepository $repository
+     * @return \Querdos\ChallengeMe\AdministratorBundle\Manager\RedactorManager
+     */
+    public function setRepository(RedactorRepository $repository) 
     {
-        $this->repository = $em->getRepository('AdminBundle:Redactor');
+    	$this->repository = $repository;
+    	return $this;
     }
 
+    /**
+     * {@inheritDoc}
+     * @see \Querdos\ChallengeMe\AdministratorBundle\Manager\RedactorManagerInterface::create()
+     */
     public function create(Redactor $redactor)
     {
         // Encoding the password and setting it
@@ -40,9 +56,16 @@ class RedactorManager implements RedactorManagerInterface
             )
             ->eraseCredentials()
         ;
-        $this->repository->create($redactor);
+        
+        // Persisting and flushing
+        $this->entityManager->persist($redactor);
+        $this->entityManager->flush($redactor);
     }
 
+    /**
+     * {@inheritDoc}
+     * @see \Querdos\ChallengeMe\AdministratorBundle\Manager\RedactorManagerInterface::update()
+     */
     public function update(Redactor $redactor)
     {
         // If the plain password is not empty <=> resetting password
@@ -55,59 +78,103 @@ class RedactorManager implements RedactorManagerInterface
             ;
         }
 
-        $this->repository->update($redactor);
+        // Retrieving unit of work
+        $unitOfWork = $this->entityManager->getUnitOfWork();
+        
+        // Checking if already persisted
+        if (!$unitOfWork->isEntityScheduled($redactor)) {
+        	$this->entityManager->persist($redactor);
+        }
+        
+        // Flushing 
+        $this->entityManager->flush($redactor);
     }
 
+    /**
+     * {@inheritDoc}
+     * @see \Querdos\ChallengeMe\AdministratorBundle\Manager\RedactorManagerInterface::delete()
+     */
     public function delete(Redactor $redactor)
     {
-        $this->repository->delete($redactor);
+        // Retrieivng unit of work
+        $unitOfWork = $this->entityManager->getUnitOfWork();
+        
+        // Checking if already persisted
+        if (!$unitOfWork->isEntityScheduled($redactor)) {
+        	$this->entityManager->persist($redactor);
+        }
+        
+        // Flushing
+        $this->entityManager->flush($redactor);
     }
 
+    /**
+     * {@inheritDoc}
+     * @see \Querdos\ChallengeMe\AdministratorBundle\Manager\RedactorManagerInterface::all()
+     */
     public function all()
     {
         return $this->repository->findAll();
     }
 
+    /**
+     * {@inheritDoc}
+     * @see \Querdos\ChallengeMe\AdministratorBundle\Manager\RedactorManagerInterface::resetPassword()
+     */
     public function resetPassword(Redactor $redactor)
     {
         $redactor->setPlainPassword(uniqid());
         $this->update($redactor);
     }
 
+    /**
+     * {@inheritDoc}
+     * @see \Querdos\ChallengeMe\AdministratorBundle\Manager\RedactorManagerInterface::getRedactorData()
+     */
     public function getRedactorData($username)
     {
         return $this->repository->getRedactorData($username);
     }
 
+    /**
+     * {@inheritDoc}
+     * @see \Querdos\ChallengeMe\AdministratorBundle\Manager\RedactorManagerInterface::getRedactorPublicInfo()
+     */
     public function getRedactorPublicInfo($id)
     {
         return $this->getRedactorPublicInfo($id);
     }
 
+    /**
+     * {@inheritDoc}
+     * @see \Querdos\ChallengeMe\AdministratorBundle\Manager\RedactorManagerInterface::checkUsername()
+     */
     public function checkUsername($username)
     {
         return $this->repository->checkUsername($username);
     }
 
+    /**
+     * {@inheritDoc}
+     * @see \Querdos\ChallengeMe\AdministratorBundle\Manager\RedactorManagerInterface::checkEmail()
+     */
     public function checkEmail($email)
     {
         return $this->repository->checkEmail($email);
     }
 
+    /**
+     * {@inheritDoc}
+     * @see \Querdos\ChallengeMe\AdministratorBundle\Manager\RedactorManagerInterface::checkEmailBack()
+     */
     public function checkEmailBack($email)
     {
         return $this->repository->checkEmailBack($email);
     }
 
     /**
-     * @param RedactorRepository $repository
-     */
-    public function setRepository($repository)
-    {
-        $this->repository = $repository;
-    }
-
-    /**
+     * Set the password encoder
+     * 
      * @param PasswordEncoder $passwordEncoder
      */
     public function setPasswordEncoder($passwordEncoder)
@@ -122,5 +189,17 @@ class RedactorManager implements RedactorManagerInterface
     public function readById($id)
     {
         return $this->repository->findOneById($id);
+    }
+    
+    /**
+     * Set the entity manager
+     * 
+     * @param EntityManager $entityManager
+     * @return \Querdos\ChallengeMe\AdministratorBundle\Manager\RedactorManager
+     */
+    public function setEntityManager(EntityManager $entityManager)
+    {
+    	$this->entityManager = $entityManager;
+    	return $this;
     }
 }

@@ -16,55 +16,6 @@ use Querdos\ChallengeMe\AdministratorBundle\Entity\Administrator;
 class AdministratorRepository extends EntityRepository
 {
     /**
-     * Persist new admin to the database
-     *
-     * @param Administrator $admin
-     */
-    public function create(Administrator $admin) {
-        $this
-            ->getEntityManager()
-            ->persist($admin)
-        ;
-        $this
-            ->getEntityManager()
-            ->flush()
-        ;
-    }
-
-
-    /**
-     * Update admin
-     *
-     * @param Administrator $admin
-     */
-    public function update(Administrator $admin) {
-        $this
-            ->getEntityManager()
-            ->persist($admin)
-        ;
-        $this 
-            ->getEntityManager()
-            ->flush()
-        ;
-    }
-
-    /**
-     * Remove admin from database
-     *
-     * @param Administrator $admin
-     */
-    public function delete(Administrator $admin) {
-        $this
-            ->getEntityManager()
-            ->remove($admin)
-        ;
-        $this
-            ->getEntityManager()
-            ->flush()
-        ;
-    }
-
-    /**
      * Get the admin username, password and email
      *
      * @param   $username

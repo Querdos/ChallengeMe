@@ -1,0 +1,20 @@
+services:
+    challengeme.repository.administrator:
+        class:      Querdos\ChallengeMe\AdministratorBundle\Repository\AdministratorRepository
+        factory:    ["@doctrine.orm.entity_manager", "getRepository"]
+        arguments:  ["AdminBundle:Administrator"]
+    
+    challengeme.repository.moderator:
+        class:      Querdos\ChallengeMe\AdministratorBundle\Repository\ModeratorRepository
+        factory:    ["@doctrine.orm.entity_manager", "getRepository"]
+        arguments:  ["AdminBundle:Moderator"]
+        
+    challengeme.repository.redactor:
+        class:      Querdos\ChallengeMe\AdministratorBundle\Repository\RedactorRepository
+        factory:    ["@doctrine.orm.entity_manager", "getRepository"]
+        arguments:  ["AdminBundle:Redactor"]
+    
+    challengeme.repository.info_user:
+        class:      Querdos\ChallengeMe\AdministratorBundle\Repository\InfoUserRepository
+        factory:    ["@doctrine.orm.entity_manager", "getRepository"]
+        arguments:  ["AdminBundle:InfoUser"]
