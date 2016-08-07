@@ -50,7 +50,7 @@ You can combine each of the three options below to get multiple list :
     * <info>--redactors</info>
     
 If the <info>--all</info> option is specified, no matter other options, it will output the complete list of administrators.
-If no option is specified, the command will output the administrators list.
+If no option is specified, the command will output the complete list.
 EOT
 )
         ;
@@ -77,21 +77,27 @@ EOT
         }
 
         // Administrator list
-        if ($administratorList) {
+        elseif ($administratorList) {
             $this->printAdministrators($output);
             $output->writeln('');
         }
 
         // Moderator list
-        if ($moderatorList) {
+        elseif ($moderatorList) {
             $this->printModerators($output);
             $output->writeln('');
         }
 
         // Redactor list
-        if ($redacatorList) {
+        elseif ($redacatorList) {
             $this->printRedactors($output);
             $output->writeln('');
+        }
+        
+        // Otherwise, the complete list
+        else {
+        	$this->printAll($output);
+        	$output->writeln('');
         }
     }
 
