@@ -1,10 +1,4 @@
 imports:
-    - { resource: parameters.yml }
-    - { resource: security.yml }
-    - { resource: services.yml }
-
-    - { resource: config_assetic_global.yml }
-
     - { resource: "@AdminBundle/Resources/config/services.yml" }
     - { resource: "@LandingBundle/Resources/config/services.yml" }
 
