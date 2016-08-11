@@ -93,8 +93,6 @@ EOT
         $moderator  = new Moderator();
         $infoUser   = new InfoUser();
 
-        $encoder    = $this->getContainer()->get('security.password_encoder');
-
         /*
          * Optional informations
          */
@@ -114,13 +112,12 @@ EOT
             ->setEmail($input->getOption('email'))
             ->setEmailBack($input->getOption('emailback'))
             ->setInfoUser($infoUser)
-            ->setPassword($encoder->encodePassword($moderator, $moderator->getPlainPassword()))
-            ->eraseCredentials();
+        ;
+        
         /*
-         * Persisting the admin
+         * Persisting the moderatorr
          */
-        $moderatorManager
-            ->create($moderator);
+        $moderatorManager->create($moderator);
 
         /*
          * Summary
