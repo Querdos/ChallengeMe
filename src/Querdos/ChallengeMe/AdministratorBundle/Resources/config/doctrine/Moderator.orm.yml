@@ -33,6 +33,6 @@ Querdos\ChallengeMe\AdministratorBundle\Entity\Moderator:
     manyToOne:
         infoUser:
             targetEntity: Querdos\ChallengeMe\AdministratorBundle\Entity\InfoUser
-            cascade:      [ all ]
+            cascade:      [ "persist", "remove" ]
 
     lifecycleCallbacks: {  }
