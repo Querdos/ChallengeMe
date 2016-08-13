@@ -44,6 +44,14 @@ class Redactor implements UserInterface, \Serializable
      */
     private $infoUser;
 
+    /**
+     * Redactor constructor.
+     *
+     * @param string $id
+     * @param string $username
+     * @param string $email
+     * @param string $password
+     */
     public function __construct($id = "", $username = "", $email = "", $password = "")
     {
         $this->id           = $id;
@@ -52,7 +60,7 @@ class Redactor implements UserInterface, \Serializable
         $this->emailBack    = "";
         $this->password     = $password;
 
-        $this->infoUser = new InfoUser();
+        $this->infoUser     = new InfoUser();
     }
 
     /**
@@ -75,7 +83,6 @@ class Redactor implements UserInterface, \Serializable
     public function setUsername($username)
     {
         $this->username = $username;
-
         return $this;
     }
 
@@ -99,7 +106,6 @@ class Redactor implements UserInterface, \Serializable
     public function setPassword($password)
     {
         $this->password = $password;
-
         return $this;
     }
 
@@ -123,7 +129,6 @@ class Redactor implements UserInterface, \Serializable
     public function setEmail($email)
     {
         $this->email = $email;
-
         return $this;
     }
 
@@ -147,7 +152,6 @@ class Redactor implements UserInterface, \Serializable
     public function setEmailBack($emailBack)
     {
         $this->emailBack = $emailBack;
-
         return $this;
     }
 
@@ -163,7 +167,7 @@ class Redactor implements UserInterface, \Serializable
 
     /**
      * Check if email and email back are different
-     * 
+     *
      * @return true if emails are different
      */
     public function isEmailCorrect()
@@ -224,6 +228,7 @@ class Redactor implements UserInterface, \Serializable
     public function eraseCredentials()
     {
         $this->plainPassword = '';
+        return $this;
     }
 
     /**
@@ -236,7 +241,6 @@ class Redactor implements UserInterface, \Serializable
     public function setInfoUser(InfoUser $infoUser = null)
     {
         $this->infoUser = $infoUser;
-
         return $this;
     }
 
@@ -260,9 +264,11 @@ class Redactor implements UserInterface, \Serializable
 
     /**
      * @param string $plainPassword
+     * @return $this
      */
     public function setPlainPassword($plainPassword)
     {
         $this->plainPassword = $plainPassword;
+        return $this;
     }
 }
