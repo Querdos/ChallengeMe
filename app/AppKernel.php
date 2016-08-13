@@ -19,6 +19,9 @@ class AppKernel extends Kernel
         	new Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle(),
 
             new Symfony\Bundle\AsseticBundle\AsseticBundle(),
+
+            new JMS\DiExtraBundle\JMSDiExtraBundle($this),
+            new JMS\AopBundle\JMSAopBundle(),
             new JMS\TranslationBundle\JMSTranslationBundle(),
             
             new Querdos\ChallengeMe\AdministratorBundle\AdminBundle(),
