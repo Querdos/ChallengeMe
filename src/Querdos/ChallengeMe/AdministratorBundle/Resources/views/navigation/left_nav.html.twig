@@ -1,3 +1,4 @@
+{% trans_default_domain "administration-navigation-left" %}
 <div class="col-md-3 left_col">
     <div class="left_col scroll-view">
         <div class="navbar nav_title" style="border: 0;">
@@ -14,7 +15,7 @@
                 {% endimage %}
             </div>
             <div class="profile_info">
-                <span>Welcome,</span>
+                <span>{{ "msg.welcome" | trans | desc("Welcome,") | meaning("Welcome message") }}</span>
                 <h2>{{ app.user.infoUser.firstname }} {{ app.user.infoUser.lastname }}</h2>
             </div>
         </div>
@@ -28,27 +29,27 @@
             <div class="menu_section">
                 <h3>General</h3>
                 <ul class="nav side-menu">
-                    <li><a><i class="fa fa-home"></i> Home <span class="fa fa-chevron-down"></span></a>
+                    <li><a><i class="fa fa-home"></i> {{ "nav.home" | trans | desc("Home") | meaning("Home button") }} <span class="fa fa-chevron-down"></span></a>
                         <ul class="nav child_menu">
-                            <li><a href="{{ path('administration_homepage') }}">Dashboard</a>
+                            <li><a href="{{ path('administration_homepage') }}">{{ "nav.home.dashboard" | trans | desc("Dashboard") | meaning("Dashboard button") }}</a>
                             </li>
-                            <li><a href="{{ path('administration_profile') }}">Profile</a>
+                            <li><a href="{{ path('administration_profile') }}">{{ "nav.home.profile" | trans | desc("Profile") | meaning("Profile button") }}</a>
                             </li>
-                            <li><a href="{{ path('administration_inbox') }}">Private messages</a>
+                            <li><a href="{{ path('administration_inbox') }}">{{ "nav.home.private-message" | trans | desc("Private messages") | meaning("PM button") }}</a>
                             </li>
-                            <li><a href="javascript:;">System</a>
+                            <li><a href="javascript:;">{{ "nav.home.system" | trans | desc("System") | meaning("System button") }}</a>
                             </li>
                         </ul>
                     </li>
                     {% if is_granted('ROLE_MODERATOR') %}
-                    <li><a><i class="fa fa-user"></i> User management <span class="fa fa-chevron-down"></span></a>
+                    <li><a><i class="fa fa-user"></i> {{ "nav.user-management" | trans | desc("User management") | meaning("User management button") }} <span class="fa fa-chevron-down"></span></a>
                         <ul class="nav child_menu">
-                            <li><a href="{{ path('administration_playersManagement') }}">Players</a></li>
+                            <li><a href="{{ path('administration_playersManagement') }}">{{ "nav.user-management.players" | trans | desc("Players") | meaning("Players management button") }}</a></li>
                             {% if is_granted('ROLE_ADMIN') %}
-                                <li><a href="{{ path('administration_adminsManagement') }}">Administrators</a></li>
-                                <li><a href="{{ path('administration_moderatorsManagement') }}">Moderators</a></li>
+                                <li><a href="{{ path('administration_adminsManagement') }}">{{ "nav.user-management.administrators" | trans | desc("Administrators") | meaning("Administrators management button") }}</a></li>
+                                <li><a href="{{ path('administration_moderatorsManagement') }}">{{ "nav.user-management.moderators" | trans | desc("Moderators") | meaning("Moderators management button") }}</a></li>
                             {% endif %}
-                            <li><a href="{{ path('administration_redactorsManagement') }}">Redactors</a></li>
+                            <li><a href="{{ path('administration_redactorsManagement') }}">{{ "nav.user-management.redactors" | trans | desc("Redactors") | meaning("Redactors management butotn") }}</a></li>
                         </ul>
                     </li>
                     {% endif %}
@@ -124,7 +125,7 @@
 
             {# Challenges management #}
             <div class="menu_section">
-                <h3>Challenges Management</h3>
+                <h3>{{ "nav.challenges-management" | trans | desc("Challenges Management") | meaning("Challenges management button") }}</h3>
                 <ul class="nav side-menu">
                     <li><a><i class="fa fa-bug"></i> Additional Pages <span class="fa fa-chevron-down"></span></a>
                         <ul class="nav child_menu">
@@ -146,7 +147,7 @@
             {# Players & teams management #}
             {% if is_granted('ROLE_MODERATOR') %}
             <div class="menu_section">
-                <h3>Players & Teams management</h3>
+                <h3>{{ "nav.players-and-teams-management" | trans | desc("Players & Teams management") | meaning("Players and teams management butotn") }}</h3>
                 <ul class="nav side-menu">
                     <li><a><i class="fa fa-bug"></i> Additional Pages <span class="fa fa-chevron-down"></span></a>
                         <ul class="nav child_menu">
