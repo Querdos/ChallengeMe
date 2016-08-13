@@ -23,6 +23,35 @@ use Symfony\Component\Console\Output\OutputInterface;
 class UserListCommand extends ContainerAwareCommand
 {
     /**
+     * @var AdministratorManager $adminManager
+     */
+    private $adminManager;
+
+    /**
+     * @var ModeratorManager $this->moderatorManager
+     */
+    private $moderatorManager;
+
+    /**
+     * @var RedactorManager $redactorManager
+     */
+    private $redactorManager;
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function initialize(InputInterface $input, OutputInterface $output)
+    {
+        // Retrieving the container
+        $container = $this->getContainer();
+
+        // Initializing managers
+        $this->adminManager     = $container->get('challengeme.manager.administrator');
+        $this->moderatorManager = $container->get('challengeme.manager.administrator');
+        $this->redactorManager  = $container->get('challengeme.manager.administrator');
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function configure()
@@ -108,29 +137,26 @@ EOT
      */
     private function printAdministrators(OutputInterface $output)
     {
-        /** @var AdministratorManager $adminManager */
-        $adminManager = $this->getContainer()->get('challengeme.manager.administrator');
-
         $table = new Table($output);
-        $table->setHeaders(array(
+        $table->setHeaders([
             'Username',
             'First name',
             'Last name',
             'Email',
             'Email (2)',
             'Birthday'
-        ));
+        ]);
 
         /** @var Administrator $admin */
-        foreach ($adminManager->all() as $admin) {
-            $table->addRow(array(
+        foreach ($this->adminManager->all() as $admin) {
+            $table->addRow([
                 $admin->getUsername(),
                 $admin->getInfoUser()->getFirstName(),
                 $admin->getInfoUser()->getLastName(),
                 $admin->getEmail(),
                 $admin->getEmailBack(),
                 $admin->getInfoUser()->getBirthday()->format('m / d / Y')
-            ));
+            ]);
         }
 
         $output->writeln('<comment>Administrators list:</comment>');
@@ -144,29 +170,29 @@ EOT
      */
     private function printModerators(OutputInterface $output)
     {
-        /** @var ModeratorManager $moderatorManager */
-        $moderatorManager = $this->getContainer()->get('challengeme.manager.moderator');
-
         $table = new Table($output);
-        $table->setHeaders(array(
+        $table->setHeaders([
             'Username',
             'First name',
             'Last name',
             'Email',
             'Email (2)',
             'Birthday'
-        ));
+        ]);
 
         /** @var Moderator $moderator */
-        foreach ($moderatorManager->all() as $moderator) {
-            $table->addRow(array(
+        foreach ($this->moderatorManager->all() as $moderator) {
+            $table->addRow([
                 $moderator->getUsername(),
                 $moderator->getInfoUser()->getFirstName(),
                 $moderator->getInfoUser()->getLastName(),
                 $moderator->getEmail(),
                 $moderator->getEmailBack(),
-                $moderator->getInfoUser()->getBirthday()->format('m / d / Y')
-            ));
+                $moderator
+                    ->getInfoUser()
+                    ->getBirthday()
+                    ->format('m / d / Y')
+            ]);
         }
 
         $output->writeln('<comment>Moderators list:</comment>');
@@ -180,29 +206,26 @@ EOT
      */
     private function printRedactors(OutputInterface $output)
     {
-        /** @var RedactorManager $redactorManager */
-        $redactorManager = $this->getContainer()->get('challengeme.manager.redactor');
-
         $table = new Table($output);
-        $table->setHeaders(array(
+        $table->setHeaders([
             'Username',
             'First name',
             'Last name',
             'Email',
             'Email (2)',
             'Birthday'
-        ));
+        ]);
 
         /** @var Redactor $redactor */
-        foreach ($redactorManager->all() as $redactor) {
-            $table->addRow(array(
+        foreach ($this->redactorManager->all() as $redactor) {
+            $table->addRow([
                 $redactor->getUsername(),
                 $redactor->getInfoUser()->getFirstName(),
                 $redactor->getInfoUser()->getLastName(),
                 $redactor->getEmail(),
                 $redactor->getEmailBack(),
                 $redactor->getInfoUser()->getBirthday()->format('m / d / Y')
-            ));
+            ]);
         }
 
         $output->writeln('<comment>Redactors list:</comment>');
@@ -216,15 +239,6 @@ EOT
      */
     private function printAll(OutputInterface $output)
     {
-        /** @var AdministratorManager $administratorManager  */
-        $administratorManager = $this->getContainer()->get('challengeme.manager.administrator');
-
-        /** @var ModeratorManager     $moderatorManager  */
-        $moderatorManager     = $this->getContainer()->get('challengeme.manager.moderator');
-
-        /** @var RedactorManager      $redactorManager  */
-        $redactorManager      = $this->getContainer()->get('challengeme.manager.redactor');
-
         $table = new Table($output);
         $table->setHeaders(array(
             'Username',
@@ -237,11 +251,11 @@ EOT
         ));
 
         /** @var Administrator $administrator */
-        foreach ($administratorManager->all() as $administrator) {
+        foreach ($this->adminManager->all() as $administrator) {
             $table->addRow(array(
                 $administrator->getUsername(),
-                $administrator->getInfoUser()->getFirstname(),
-                $administrator->getInfoUser()->getLastname(),
+                $administrator->getInfoUser()->getFirstName(),
+                $administrator->getInfoUser()->getLastName(),
                 $administrator->getEmail(),
                 $administrator->getEmailBack(),
                 $administrator->getInfoUser()->getBirthday()->format('m / d / Y'),
@@ -250,29 +264,29 @@ EOT
         }
 
         /** @var Moderator $moderator */
-        foreach ($moderatorManager->all() as $moderator) {
-            $table->addRow(array(
+        foreach ($this->moderatorManager->all() as $moderator) {
+            $table->addRow([
                 $moderator->getUsername(),
-                $moderator->getInfoUser()->getFirstname(),
-                $moderator->getInfoUser()->getLastname(),
+                $moderator->getInfoUser()->getFirstName(),
+                $moderator->getInfoUser()->getLastName(),
                 $moderator->getEmail(),
                 $moderator->getEmailBack(),
                 $moderator->getInfoUser()->getBirthday()->format('m / d / Y'),
                 'Moderator'
-            ));
+            ]);
         }
 
         /** @var Redactor $redactor */
-        foreach ($redactorManager->all() as $redactor) {
-            $table->addRow(array(
+        foreach ($this->redactorManager->all() as $redactor) {
+            $table->addRow([
                 $redactor->getUsername(),
-                $redactor->getInfoUser()->getFirstname(),
-                $redactor->getInfoUser()->getLastname(),
+                $redactor->getInfoUser()->getFirstName(),
+                $redactor->getInfoUser()->getLastName(),
                 $redactor->getEmail(),
                 $redactor->getEmailBack(),
                 $redactor->getInfoUser()->getBirthday()->format('m / d / Y'),
                 'Redactor'
-            ));
+            ]);
         }
 
         $output->writeln('Complete list:');
