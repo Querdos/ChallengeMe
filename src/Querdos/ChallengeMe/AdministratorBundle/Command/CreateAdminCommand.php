@@ -30,12 +30,33 @@ class CreateAdminCommand extends GeneratorCommand
      */
     private $adminValidator;
 
+    /**
+     * @var AdministratorManager $adminManager
+     */
+    private $adminManager;
+    
+    /**
+     * @var QuestionHelper $questionHelper
+     */
+    private $questionHelper;
+    
+    /**
+     * {@inheritDoc}
+     */
     protected function initialize(InputInterface $input, OutputInterface $output)
     {
-        $this->adminValidator = $this->getContainer()->get('challengeme.validator.admin');
+    	// Retrieving the container
+    	$container = $this->getContainer();
+    	
+    	// Initializing global attributes
+        $this->adminValidator = $container->get('challengeme.validator.admin');
+        $this->adminManager	  = $container->get('challengeme.manager.administrator');
+        $this->questionHelper = $this->getQuestionHelper();
     }
 
-    // TODO : Update help (user interaction)
+    /**
+     * {@inheritDoc}
+     */
     public function configure()
     {
         $this
@@ -59,29 +80,20 @@ By default, the command interacts with the developer to tweak the generation.
 Any passed option will be used as a default value for the interaction.
 
 If you want to disable any user interaction, use <comment>--no-interaction</comment> but don't forget to pass all needed options:
-<info>php %command.full_name% --username=root --password=toor --email=admin@challengeme.com
+<info>%command.full_name% --username=root --password=toor --email=admin@challengeme.com
 EOT
 );
     }
 
     /**
-     * @param   InputInterface $input
-     * @param   OutputInterface $output
-     * 
-     * @return  int|null|void
+     * {@inheritdoc} 
      */
-    public function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output)
     {
-        /** @var QuestionHelper $questionHelper */
-        $questionHelper = $this->getQuestionHelper();
-
-        /** @var AdministratorManager $adminManager */
-        $adminManager = $this->getContainer()->get('challengeme.manager.administrator');
-        
         /*
          * Summary before generation
          */
-        $questionHelper->writeSection($output, "Summary before generation");
+        $$this->questionHelper->writeSection($output, "Summary before generation");
 
         $output->writeln("Firstname:\t<info>" .     $input->getOption('firstname') . "</info>");
         $output->writeln("Lastname:\t<info>" .      $input->getOption('lastname') . "</info>");
@@ -92,14 +104,13 @@ EOT
         $output->writeln("");
 
         $question = new ConfirmationQuestion("Continue ? (y|n)", true);
-        if (!$questionHelper->ask($input, $output, $question)) {
+        if (!$this->questionHelper->ask($input, $output, $question)) {
             $this->interact($input, $output);
         }
 
+        // Creating new objects
         $admin      = new Administrator();
         $infoUser   = new InfoUser();
-
-        $encoder    = $this->getContainer()->get('security.password_encoder');
 
         /*
          * Optional informations
@@ -120,35 +131,34 @@ EOT
             ->setEmail($input->getOption('email'))
             ->setEmailBack($input->getOption('emailback'))
             ->setInfoUser($infoUser)
-            ->setPassword($encoder->encodePassword($admin, $admin->getPlainPassword()))
-            ->eraseCredentials();
+        ;
         /*
          * Persisting the admin
          */
-        $adminManager
-            ->create($admin);
+        $this->adminManager->create($admin);
 
         /*
          * Summary
          */
-        $questionHelper->writeGeneratorSummary($output, null);
+        $this->questionHelper->writeGeneratorSummary($output, null);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     protected function interact(InputInterface $input, OutputInterface $output)
     {
+    	// Initializing super
         parent::interact($input, $output);
 
-        /** @var QuestionHelper $questionHelper */
-        $questionHelper = $this->getQuestionHelper();
-
-        $questionHelper->writeSection($output, "Welcome to the ChallengeMe Admin generator");
+        $this->questionHelper->writeSection($output, "Welcome to the ChallengeMe Admin generator");
 
         /*
          * Username
          */
         $username = $input->getOption('username');
         if (!$username) {
-            $question = new Question($questionHelper->getQuestion(
+            $question = new Question($this->questionHelper->getQuestion(
                 'Username',
                 $username
             ), $username);
@@ -157,7 +167,7 @@ EOT
                 ->setValidator(function ($inputUsername) {
                     return $this->adminValidator->validateUsername($inputUsername);
                 });
-            $username = $questionHelper->ask($input, $output, $question);
+            $username = $this->questionHelper->ask($input, $output, $question);
             $input->setOption('username', $username);
         } else {
             $this->adminValidator->validateUsername($username);
@@ -168,7 +178,7 @@ EOT
          */
         $plainPassword = $input->getOption('password');
         if (!$plainPassword) {
-            $question = new Question($questionHelper->getQuestion(
+            $question = new Question($this->questionHelper->getQuestion(
                 'Password',
                 $plainPassword
             ), $plainPassword);
@@ -179,7 +189,7 @@ EOT
                 ->setValidator(function ($inputPassword) {
                     return $this->adminValidator->validatePassword($inputPassword);
                 });
-            $plainPassword = $questionHelper->ask($input, $output, $question);
+            $plainPassword = $this->questionHelper->ask($input, $output, $question);
             $input->setOption('password', $plainPassword);
         } else {
             $this->adminValidator->validatePassword($plainPassword);
@@ -190,7 +200,7 @@ EOT
          */
         $email = $input->getOption('email');
         if (!$email) {
-            $question = new Question($questionHelper->getQuestion(
+            $question = new Question($this->questionHelper->getQuestion(
                 'Email',
                 $email
             ), $email);
@@ -199,7 +209,7 @@ EOT
                 ->setValidator(function ($inputEmail) {
                     return $this->adminValidator->validateEmail($inputEmail);
                 });
-            $email = $questionHelper->ask($input, $output, $question);
+            $email = $this->questionHelper->ask($input, $output, $question);
             $input->setOption('email', $email);
         } else {
             $this->adminValidator->validateEmail($email);
@@ -210,7 +220,7 @@ EOT
          */
         $firstName = $input->getOption('firstname');
         if (!$firstName) {
-            $question = new Question($questionHelper->getQuestion(
+            $question = new Question($this->questionHelper->getQuestion(
                 'Firstname',
                 $firstName
             ), $firstName);
@@ -219,7 +229,7 @@ EOT
                 ->setValidator(function ($inputFirstName) {
                     return $this->adminValidator->validateFirstname($inputFirstName);
                 });
-            $firstName = $questionHelper->ask($input, $output, $question);
+            $firstName = $this->questionHelper->ask($input, $output, $question);
             $input->setOption('firstname', $firstName);
         } else {
             $this->adminValidator->validateFirstname($firstName);
@@ -230,7 +240,7 @@ EOT
          */
         $lastName = $input->getOption('lastname');
         if (!$lastName) {
-            $question = new Question($questionHelper->getQuestion(
+            $question = new Question($this->questionHelper->getQuestion(
                 'Lastname',
                 $lastName
             ), $lastName);
@@ -239,7 +249,7 @@ EOT
                 ->setValidator(function ($inputLastname) {
                     return $this->adminValidator->validateLastname($inputLastname);
                 });
-            $lastName = $questionHelper->ask($input, $output, $question);
+            $lastName = $this->questionHelper->ask($input, $output, $question);
             $input->setOption('lastname', $lastName);
         } else {
             $this->adminValidator->validateLastname($lastName);
@@ -250,7 +260,7 @@ EOT
          */
         $emailBack = $input->getOption('emailback');
         if (!$emailBack) {
-            $question = new Question($questionHelper->getQuestion(
+            $question = new Question($this->questionHelper->getQuestion(
                 'Additionnal email',
                 $emailBack
             ), $emailBack);
@@ -259,7 +269,7 @@ EOT
                 ->setValidator(function ($inputEmail) {
                     return $this->adminValidator->validateEmailBack($inputEmail);
                 });
-            $emailBack = $questionHelper->ask($input, $output, $question);
+            $emailBack = $this->questionHelper->ask($input, $output, $question);
             $input->setOption('emailback', $emailBack);
         } else {
             $this->adminValidator->validateEmailBack($emailBack);
@@ -270,7 +280,7 @@ EOT
          */
         $birthday = $input->getOption('birthday');
         if (!$birthday) {
-            $question = new Question($questionHelper->getQuestion(
+            $question = new Question($this->questionHelper->getQuestion(
                 'Birthday (YYYY-MM-DD)',
                 $birthday
             ), $birthday);
@@ -279,12 +289,15 @@ EOT
                 ->setValidator(function ($inputBirthday) {
                     return $this->adminValidator->validateBirthday($inputBirthday);
                 });
-            $birthday = $questionHelper->ask($input, $output, $question);
+            $birthday = $this->questionHelper->ask($input, $output, $question);
             $input->setOption('birthday', $birthday);
         } else {
             $this->adminValidator->validateBirthday($birthday);
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     protected function createGenerator() {}
 }

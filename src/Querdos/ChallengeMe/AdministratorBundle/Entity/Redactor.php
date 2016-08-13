@@ -1,7 +1,6 @@
 <?php
 
 namespace Querdos\ChallengeMe\AdministratorBundle\Entity;
-use Querdos\ChallengeMe\AdministratorBundle\Entity\InfoUser;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**

@@ -7,8 +7,10 @@
 
 namespace Querdos\ChallengeMe\AdministratorBundle\Command;
 
+use Querdos\ChallengeMe\AdministratorBundle\Manager\RedactorManager;
 use Sensio\Bundle\GeneratorBundle\Command\GeneratorCommand;
 use Querdos\ChallengeMe\AdministratorBundle\Validator\RedactorValidator;
+use Sensio\Bundle\GeneratorBundle\Command\Helper\QuestionHelper;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -22,13 +24,31 @@ class CreateRedactorCommand extends GeneratorCommand
 	 * @var RedactorValidator $redactorValidator
 	 */
 	private $redactorValidator;
+
+    /**
+     * @var RedactorManager $redactorManager
+     */
+    private $redactorManager;
+
+    /**
+     * @var QuestionHelper $questionHelper
+     */
+    private $questionHelper;
 	
 	/**
 	 * {@inheritDoc}
 	 */
 	protected function initialize(InputInterface $input, OutputInterface $output)
 	{
-		$this->redactorValidator = $this->getContainer()->get('challengeme.validator.redactor');
+	    // Retrieving the container
+        $container = $this->getContainer();
+
+        // Retrieving validator and manager
+		$this->redactorValidator = $container->get('challengeme.validator.redactor');
+        $this->redactorManager   = $container->get('challengeme.manager.redactor');
+
+        // Retrieving the question helper
+        $this->questionHelper    = $this->getQuestionHelper();
 	}
 	
 	/**
@@ -64,16 +84,10 @@ EOT
 	
 	public function execute(InputInterface $input, OutputInterface $output)
 	{
-		/** @var QuestionHelper $questionHelper */
-		$questionHelper 	= $this->getQuestionHelper();
-		
-		/** @var AdministratorManager $adminManager */
-		$redactorManager 	= $this->getContainer()->get('challengeme.manager.redactor');
-		
 		/*
 		 * Summary before generation
 		 */
-		$questionHelper->writeSection($output, "Summary before generation");
+		$this->questionHelper->writeSection($output, "Summary before generation");
 		
 		$output->writeln("Firstname:\t<info>" .     $input->getOption('firstname') . "</info>");
 		$output->writeln("Lastname:\t<info>" .      $input->getOption('lastname') . "</info>");
@@ -84,7 +98,7 @@ EOT
 		$output->writeln("");
 		
 		$question = new ConfirmationQuestion("Continue ? (y|n)", true);
-		if (!$questionHelper->ask($input, $output, $question)) {
+		if (!$this->questionHelper->ask($input, $output, $question)) {
 			$this->interact($input, $output);
 		}
 		
@@ -116,12 +130,12 @@ EOT
 		/*
 		 * Persisting the admin
 		 */
-		$redactorManager->create($redactor);
+		$this->redactorManager->create($redactor);
 		
 		/*
 		 * Summary
 		 */
-		$questionHelper->writeGeneratorSummary($output, null);
+		$this->questionHelper->writeGeneratorSummary($output, null);
 	}
 	
 	protected function createGenerator() {}
