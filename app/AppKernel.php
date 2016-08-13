@@ -1,7 +1,7 @@
 <?php
 
-use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Component\Config\Loader\LoaderInterface;
+use Symfony\Component\HttpKernel\Kernel;
 
 class AppKernel extends Kernel
 {
@@ -19,6 +19,7 @@ class AppKernel extends Kernel
         	new Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle(),
 
             new Symfony\Bundle\AsseticBundle\AsseticBundle(),
+            new JMS\TranslationBundle\JMSTranslationBundle(),
             
             new Querdos\ChallengeMe\AdministratorBundle\AdminBundle(),
             new Querdos\ChallengeMe\LandingBundle\LandingBundle(),
