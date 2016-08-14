@@ -90,7 +90,8 @@ class AdministrationController extends Controller
                 'label' => 'Save',
                 'attr'  => array(
                     'class' => 'btn btn-success'
-                )
+                ),
+                'translation_domain' => 'forms'
             ))
         ;
 
@@ -129,7 +130,8 @@ class AdministrationController extends Controller
                 'label' => 'Save',
                 'attr'  => array(
                     'class' => 'btn btn-success'
-                )
+                ),
+                'translation_domain' => 'forms'
             ))
         ;
         
@@ -210,7 +212,8 @@ class AdministrationController extends Controller
                 'label' => 'Save',
                 'attr'  => array(
                     'class' => 'btn btn-success'
-                )
+                ),
+                'translation_domain' => 'forms'
             ))
         ;
 
@@ -301,7 +304,8 @@ class AdministrationController extends Controller
                 'label' => 'Save',
                 'attr'  => array(
                     'class' => 'btn btn-success'
-                )
+                ),
+                'translation_domain' => 'forms'
             ))
         ;
 

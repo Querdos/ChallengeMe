@@ -27,7 +27,8 @@ class ModeratorType extends AbstractType
                     'required'  => 'required',
                     'class'     => 'form-control col-md-7 col-xs-12'
                 ),
-                'required'      => true
+                'required'      => true,
+                'translation_domain' => 'forms'
             ))
             ->add('plain_password',   PasswordType::class,    array(
                 'label' => 'Password',
@@ -38,7 +39,8 @@ class ModeratorType extends AbstractType
                     'required'  => 'required',
                     'class'     => 'form-control col-md-7 col-xs-12'
                 ),
-                'required'      => true
+                'required'      => true,
+                'translation_domain' => 'forms'
             ))
             ->add('email',      EmailType::class,       array(
                 'label' => 'Main Email',
@@ -49,7 +51,8 @@ class ModeratorType extends AbstractType
                     'required'  => 'required',
                     'class'     => 'form-control col-md-7 col-xs-12'
                 ),
-                'required'      => true
+                'required'      => true,
+                'translation_domain' => 'forms'
             ))
             ->add('emailBack',  EmailType::class,       array(
                 'label' => 'Secondary email',
@@ -60,10 +63,12 @@ class ModeratorType extends AbstractType
                     'required'  => 'required',
                     'class'     => 'form-control col-md-7 col-xs-12'
                 ),
-                'required'      => true
+                'required'      => true,
+                'translation_domain' => 'forms'
             ))
             ->add('infoUser', InfoUserType::class, array(
-                'label'     => ''
+                'label'     => '',
+                'translation_domain' => 'forms'
             ))
         ;
     }

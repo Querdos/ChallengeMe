@@ -27,7 +27,8 @@ class InfoUserType extends AbstractType
                 'attr'          => array(
                     'class'     => 'form-control col-md-7 col-xs-12'
                 ),
-                'required'      => true
+                'required'      => true,
+                'translation_domain' => 'forms'
             ))
             ->add('lastName',   TextType::class, array(
                 'label'         => 'Last name',
@@ -38,7 +39,8 @@ class InfoUserType extends AbstractType
                     'required'  => 'required',
                     'class'     => 'form-control col-md-7 col-xs-12'
                 ),
-                'required'      => true
+                'required'      => true,
+                'translation_domain' => 'forms'
             ))
             ->add('birthday',   DateType::class, array(
                 'label'         => 'Birthday',
@@ -52,7 +54,8 @@ class InfoUserType extends AbstractType
                 'html5'         => false,
                 'widget'        => 'single_text',
                 'format'        => 'y-M-d', 
-                'required'      => true
+                'required'      => true,
+                'translation_domain' => 'forms'
             ))
         ;
 

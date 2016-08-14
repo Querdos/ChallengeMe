@@ -26,7 +26,8 @@ class AdministratorType extends AbstractType
                 'attr'          => array(
                     'class'     => 'form-control col-md-7 col-xs-12'
                 ),
-                'required'      => true
+                'required'      => true,
+                'translation_domain' => 'forms'
             ))
             ->add('plain_password',   PasswordType::class,    array(
                 'label'         => 'Password',
@@ -37,7 +38,8 @@ class AdministratorType extends AbstractType
                     'class'     => 'form-control col-md-7 col-xs-12',
                     'value'     =>  $options['create'] ? '' : '********'
                 ),
-                'required'      => $options['create']
+                'required'      => $options['create'],
+                'translation_domain' => 'forms'
             ))
             ->add('email',      EmailType::class,       array(
                 'label'         => 'Main Email',
@@ -47,7 +49,8 @@ class AdministratorType extends AbstractType
                 'attr'          => array(
                     'class'     => 'form-control col-md-7 col-xs-12'
                 ),
-                'required'      => true
+                'required'      => true,
+                'translation_domain' => 'forms'
             ))
             ->add('emailBack',  EmailType::class,       array(
                 'label'         => 'Secondary email',
@@ -57,10 +60,12 @@ class AdministratorType extends AbstractType
                 'attr'          => array(
                     'class'     => 'form-control col-md-7 col-xs-12'
                 ),
-                'required'      => true
+                'required'      => true,
+                'translation_domain' => 'forms'
             ))
             ->add('infoUser', InfoUserType::class, array(
-                'label'         => ''
+                'label'              => '',
+                'translation_domain' => 'forms'
             ))
         ;
     }
