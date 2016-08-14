@@ -21,3 +21,8 @@ Querdos\ChallengeMe\AdministratorBundle\Entity\InfoUser:
         birthday:
             type:       date
             nullable:   false
+        address:
+            type:       string
+            length:     255
+            unique:     false
+            nullable:   true

@@ -29,6 +29,14 @@ class InfoUser
      */
     private $birthday;
 
+    /**
+     * @var string
+     */
+    private $address;
+
+    /**
+     * InfoUser constructor.
+     */
     public function __construct()
     {
         $this->firstName    = "";
@@ -125,5 +133,24 @@ class InfoUser
     public function isBirthdayCorrect()
     {
         return $this->birthday < (new \DateTime());
+    }
+
+    /**
+     * @return string
+     */
+    public function getAddress()
+    {
+        return $this->address;
+    }
+
+    /**
+     * @param $address
+     *
+     * @return $this
+     */
+    public function setAddress($address)
+    {
+        $this->address = $address;
+        return $this;
     }
 }
