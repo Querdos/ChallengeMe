@@ -36,6 +36,7 @@ class InfoUser
 
     /**
      * @var string
+     * TODO : Create preferences entity
      */
     private $locale;
 
