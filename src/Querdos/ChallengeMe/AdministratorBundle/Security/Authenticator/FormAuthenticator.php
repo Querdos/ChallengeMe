@@ -8,28 +8,17 @@
 
 namespace Querdos\ChallengeMe\AdministratorBundle\Security\Authenticator;
 
-
-use Querdos\ChallengeMe\AdministratorBundle\Entity\Administrator;
-use Querdos\ChallengeMe\AdministratorBundle\Entity\Moderator;
-use Querdos\ChallengeMe\AdministratorBundle\Entity\Redactor;
-use Querdos\ChallengeMe\AdministratorBundle\Security\Provider\AdministratorProvider;
-use Querdos\ChallengeMe\AdministratorBundle\Security\Provider\ModeratorProvider;
-use Querdos\ChallengeMe\AdministratorBundle\Security\Provider\RedactorProvider;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\Exception\CustomUserMessageAuthenticationException;
-use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
 use Symfony\Component\Security\Core\Tests\Encoder\PasswordEncoder;
-use Symfony\Component\Security\Core\User\ChainUserProvider;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Symfony\Component\Security\Guard\AbstractGuardAuthenticator;
-use Symfony\Component\VarDumper\VarDumper;
 
 class FormAuthenticator extends AbstractGuardAuthenticator
 {
@@ -75,7 +64,6 @@ class FormAuthenticator extends AbstractGuardAuthenticator
         }
 
         throw new CustomUserMessageAuthenticationException($this->failMessage);
-
     }
 
     /**
@@ -98,7 +86,10 @@ class FormAuthenticator extends AbstractGuardAuthenticator
      */
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
     {
+        // Setting the url for redirection
         $url = $this->router->generate('administration_homepage');
+
+        // Redirecting
         return new RedirectResponse($url);
     }
 

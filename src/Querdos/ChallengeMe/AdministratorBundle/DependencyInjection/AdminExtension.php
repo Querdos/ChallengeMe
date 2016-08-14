@@ -32,6 +32,8 @@ class AdminExtension extends Extension {
 		
 		// Injecting validators
 		$loader->load('validators.yml');
-	
+
+        // Injecting listeners
+        $loader->load('listeners.yml');
 	}
 }
