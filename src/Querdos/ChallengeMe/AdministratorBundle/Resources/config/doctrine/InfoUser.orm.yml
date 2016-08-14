@@ -26,3 +26,8 @@ Querdos\ChallengeMe\AdministratorBundle\Entity\InfoUser:
             length:     255
             unique:     false
             nullable:   true
+        locale:
+            type:       string
+            length:     2
+            unique:     false
+            nullable:   false

@@ -35,6 +35,11 @@ class InfoUser
     private $address;
 
     /**
+     * @var string
+     */
+    private $locale;
+
+    /**
      * InfoUser constructor.
      */
     public function __construct()
@@ -151,6 +156,25 @@ class InfoUser
     public function setAddress($address)
     {
         $this->address = $address;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLocale()
+    {
+        return $this->locale;
+    }
+
+    /**
+     * @param string $locale
+     *
+     * @return $this;
+     */
+    public function setLocale($locale)
+    {
+        $this->locale = $locale;
         return $this;
     }
 }
