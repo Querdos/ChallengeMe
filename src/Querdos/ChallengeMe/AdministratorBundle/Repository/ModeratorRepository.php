@@ -36,6 +36,7 @@ class ModeratorRepository extends EntityRepository
             ->addSelect('info.firstName as firstname')
             ->addSelect('info.lastName as lastname')
             ->addSelect('info.birthday as birthday')
+            ->addSelect('info.locale as locale')
 
             ->from('AdminBundle:Moderator', 'moderator')
             ->join('moderator.infoUser', 'info')

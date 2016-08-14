@@ -36,9 +36,10 @@ class AdministratorProvider implements UserProviderInterface
                 ->setEmail($userData['email'])
                 ->setPassword($userData['password'])
                 ->getInfoUser()
-                ->setFirstName($userData['firstname'])
-                ->setLastName($userData['lastname'])
-                ->setBirthday($userData['birthday'])
+                    ->setFirstName($userData['firstname'])
+                    ->setLastName($userData['lastname'])
+                    ->setBirthday($userData['birthday'])
+                    ->setLocale($userData['locale'])
             ;
             
             return $admin;

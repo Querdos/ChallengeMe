@@ -33,6 +33,7 @@ class AdministratorRepository extends EntityRepository
             ->addSelect('info.firstName as firstname')
             ->addSelect('info.lastName as lastname')
             ->addSelect('info.birthday as birthday')
+            ->addSelect('info.locale as locale')
 
             ->from("AdminBundle:Administrator", "admin")
             ->join('admin.infoUser', 'info')
