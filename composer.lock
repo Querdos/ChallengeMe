@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "bb1a37cad2edb231cb2e927af7dc9da3",
+    "hash": "dfc52210c2a8d42175d3d868a28f786d",
     "content-hash": "95dd22d406d3474f835aa222150bdbad",
     "packages": [
         {
@@ -1277,12 +1277,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/schmittjoh/JMSTranslationBundle.git",
-                "reference": "8aeaaca8cb8ec70a793538fba2e49141cfc0aaff"
+                "reference": "e79fe1cd77e7749223c870bdae0bd400c21a102d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/schmittjoh/JMSTranslationBundle/zipball/8aeaaca8cb8ec70a793538fba2e49141cfc0aaff",
-                "reference": "8aeaaca8cb8ec70a793538fba2e49141cfc0aaff",
+                "url": "https://api.github.com/repos/schmittjoh/JMSTranslationBundle/zipball/e79fe1cd77e7749223c870bdae0bd400c21a102d",
+                "reference": "e79fe1cd77e7749223c870bdae0bd400c21a102d",
                 "shasum": ""
             },
             "require": {
@@ -1338,7 +1338,7 @@
                 "ui",
                 "webinterface"
             ],
-            "time": "2016-08-12 15:17:09"
+            "time": "2016-08-13 23:17:44"
         },
         {
             "name": "kriswallsmith/assetic",
