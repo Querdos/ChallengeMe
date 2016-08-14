@@ -1,6 +1,11 @@
 <?php
-
+/**
+ * Created by Hamza ESSAYEGH
+ * Date: 11/14/16
+ * Time: 01:41 PM
+ */
 namespace Querdos\ChallengeMe\AdministratorBundle\Entity;
+
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
