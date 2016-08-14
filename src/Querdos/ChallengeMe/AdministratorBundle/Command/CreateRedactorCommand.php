@@ -7,16 +7,16 @@
 
 namespace Querdos\ChallengeMe\AdministratorBundle\Command;
 
+use Querdos\ChallengeMe\AdministratorBundle\Entity\InfoUser;
+use Querdos\ChallengeMe\AdministratorBundle\Entity\Redactor;
 use Querdos\ChallengeMe\AdministratorBundle\Manager\RedactorManager;
-use Sensio\Bundle\GeneratorBundle\Command\GeneratorCommand;
 use Querdos\ChallengeMe\AdministratorBundle\Validator\RedactorValidator;
+use Sensio\Bundle\GeneratorBundle\Command\GeneratorCommand;
 use Sensio\Bundle\GeneratorBundle\Command\Helper\QuestionHelper;
-use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\ConfirmationQuestion;
-use Proxies\__CG__\Querdos\ChallengeMe\AdministratorBundle\Entity\Redactor;
-use Querdos\ChallengeMe\AdministratorBundle\Entity\InfoUser;
 
 class CreateRedactorCommand extends GeneratorCommand 
 {
@@ -114,7 +114,9 @@ EOT
 			->setLastName($input->getOption('lastname'))
 			->setBirthday(
 				new \DateTime($input->getOption('birthday'))
-			);
+			)
+            ->setLocale('en')
+        ;
 		
 		/*
 		 * Mandatory informations

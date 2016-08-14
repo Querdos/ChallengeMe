@@ -117,7 +117,9 @@ EOT
             ->setLastName($input->getOption('lastname'))
             ->setBirthday(
                 new \DateTime($input->getOption('birthday'))
-            );
+            )
+            ->setLocale('en')
+        ;
 
         /*
          * Mandatory informations

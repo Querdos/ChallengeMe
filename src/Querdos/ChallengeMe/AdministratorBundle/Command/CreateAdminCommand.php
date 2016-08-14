@@ -18,9 +18,6 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\ConfirmationQuestion;
 use Symfony\Component\Console\Question\Question;
-use Symfony\Component\Security\Core\Encoder\EncoderFactory;
-use Symfony\Component\Validator\Validator\ValidatorInterface;
-use Symfony\Component\VarDumper\VarDumper;
 
 class CreateAdminCommand extends GeneratorCommand
 {
@@ -120,7 +117,9 @@ EOT
             ->setLastName($input->getOption('lastname'))
             ->setBirthday(
                 new \DateTime($input->getOption('birthday'))
-            );
+            )
+            ->setLocale('fr')
+        ;
 
         /*
          * Mandatory informations
