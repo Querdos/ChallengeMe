@@ -1,3 +1,5 @@
+{% trans_default_domain "administration-moderators-management" %}
+
 {% extends "AdminBundle::base.html.twig" %}
 
 {% block stylesheets %}
@@ -14,38 +16,26 @@
         <div class="page-title">
             <div class="title_left">
                 <h3>
-                    Moderators management
+                    {{ "title" | trans | desc("Moderators management") | meaning("Moderators management title") }}
                 </h3>
-            </div>
-
-            <div class="title_right">
-                <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
-                    <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Search for...">
-                    <span class="input-group-btn">
-                      <button class="btn btn-default" type="button">Go!</button>
-                    </span>
-                    </div>
-                </div>
             </div>
         </div>
 
         <div class="clearfix"></div>
 
         <div class="row">
-
             {# List of moderators #}
             <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
                     <div class="x_title">
-                        <h2>List of moderators</h2>
+                        <h2>{{ "table.title" | trans | desc("List of moderators") | meaning("Table's title") }}</h2>
                         <ul class="nav navbar-right panel_toolbox">
                             <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                             </li>
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
                                 <ul class="dropdown-menu" role="menu">
-                                    <li><a href="{{ path('administration_addModerator') }}">New moderator</a>
+                                    <li><a href="{{ path('administration_addModerator') }}">{{ "table.setting.new-moderator" | trans | desc("New moderator") | meaning("New moderator link") }}</a>
                                     </li>
                                 </ul>
                             </li>
@@ -58,13 +48,13 @@
                         <table id="datatable" class="table table-striped table-bordered">
                             <thead>
                             <tr>
-                                <th>Firstname</th>
-                                <th>Lastname</th>
-                                <th>Username</th>
-                                <th>Email</th>
-                                <th>Email (2)</th>
-                                <th>Birthday</th>
-                                <th>Actions</th>
+                                <th>{{ "table.th1" | trans | desc("Firstname")  | meaning("table.th1") }}</th>
+                                <th>{{ "table.th2" | trans | desc("Lastname")   | meaning("table.th2") }}</th>
+                                <th>{{ "table.th3" | trans | desc("Username")   | meaning("table.th3") }}</th>
+                                <th>{{ "table.th4" | trans | desc("Email")      | meaning("table.th4") }}</th>
+                                <th>{{ "table.th5" | trans | desc("Email (2)")  | meaning("table.th5") }}</th>
+                                <th>{{ "table.th6" | trans | desc("Birthday")   | meaning("table.th6") }}</th>
+                                <th>{{ "table.th7" | trans | desc("Actions")    | meaning("table.th7") }}</th>
                             </tr>
                             </thead>
 
@@ -79,10 +69,10 @@
                                         <td>{{ moderator.emailBack }}</td>
                                         <td>{{ moderator.infoUser.birthday|date('m-d-Y') }}</td>
                                         <td align="center">
-                                            <a title="Send a message" href="javascript:void(0)"><i class="fa fa-envelope-o fa-fw" aria-hidden="true"></i></a>
-                                            <a title="Edit" href="javascript:void(0)"><i class="fa fa-pencil fa-fw" aria-hidden="true"></i></a>
-                                            <a title="Reset password" href="{{ path('administration_resetPassword', {'id': moderator.id}) }}"><i class="fa fa-recycle fa-fw" aria-hidden="true"></i></a>
-                                            <a title="Remove" href="{{ path('administration_removeModerator', {'id': moderator.id}) }}"><i class="fa fa-times fa-fw" aria-hidden="true"></i></a>
+                                            <a title="{{ "a.title1" | trans | desc("Send a message")    | meaning("Block a title") }}" href="javascript:void(0)"><i class="fa fa-envelope-o fa-fw" aria-hidden="true"></i></a>
+                                            <a title="{{ "a.title2" | trans | desc("Edit")              | meaning("Block a title") }}" href="javascript:void(0)"><i class="fa fa-pencil fa-fw" aria-hidden="true"></i></a>
+                                            <a title="{{ "a.title3" | trans | desc("Reset password")    | meaning("Block a title") }}" href="{{ path('administration_resetPassword', {'id': moderator.id}) }}"><i class="fa fa-recycle fa-fw" aria-hidden="true"></i></a>
+                                            <a title="{{ "a.title4" | trans | desc("Remove")            | meaning("Block a title") }}" href="{{ path('administration_removeModerator', {'id': moderator.id}) }}"><i class="fa fa-times fa-fw" aria-hidden="true"></i></a>
                                         </td>
                                     </tr>
                                 {% endif %}
