@@ -26,17 +26,14 @@ class AdministratorRepository extends EntityRepository
             ->getEntityManager()
             ->createQueryBuilder()
 
-            ->select("admin.id as id")
-            ->addSelect("admin.username as username")
-            ->addSelect("admin.password as password")
-            ->addSelect("admin.email as email")
-            ->addSelect('info.firstName as firstname')
-            ->addSelect('info.lastName as lastname')
-            ->addSelect('info.birthday as birthday')
-            ->addSelect('info.locale as locale')
+            ->select("admin")
+            ->addSelect("infoUser")
+            ->addSelect("personalInformation")
 
             ->from("AdminBundle:Administrator", "admin")
-            ->join('admin.infoUser', 'info')
+            ->join('admin.infoUser', 'infoUser')
+            ->join('infoUser.personalInformation', 'personalInformation')
+
             ->where("admin.username = :username")
 
             ->setParameter("username", $username)

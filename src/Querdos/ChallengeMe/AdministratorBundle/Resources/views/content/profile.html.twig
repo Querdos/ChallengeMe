@@ -1,5 +1,8 @@
 {% trans_default_domain "administation-profile" %}
 
+{% set infoUser = app.user.infoUser %}
+{% set personalInfo = infoUser.personalInformation %}
+
 {% extends "AdminBundle::base.html.twig" %}
 
 {% block main_content %}
@@ -15,36 +18,20 @@
             <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
                     <div class="x_title">
-                        <h2>User Report <small>Activity report</small></h2>
-                        <ul class="nav navbar-right panel_toolbox">
-                            <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                            </li>
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                                <ul class="dropdown-menu" role="menu">
-                                    <li><a href="#">Settings 1</a>
-                                    </li>
-                                    <li><a href="#">Settings 2</a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li><a class="close-link"><i class="fa fa-close"></i></a>
-                            </li>
-                        </ul>
+                        <h2>
+                            {{ "sub-title.h2.big" | trans | desc("Profile") | meaning("Subtitle, first part") }}
+                            <small>{{ "sub-title.h2.small" | trans | desc("Personnal informations and activity report") | meaning("Subtitle, second part") }}</small>
+                        </h2>
                         <div class="clearfix"></div>
                     </div>
                     <div class="x_content">
-
                         <div class="col-md-3 col-sm-3 col-xs-12 profile_left">
-
                             <div class="profile_img">
-
-                                <!-- end of image cropping -->
                                 <div id="crop-avatar">
-                                    <!-- Current avatar -->
+                                    {# Current avatar #}
                                     <img class="img-responsive avatar-view" src="images/picture.jpg" alt="Avatar" title="Change the avatar">
 
-                                    <!-- Cropping modal -->
+                                    {# Cropping modal #}
                                     <div class="modal fade" id="avatar-modal" aria-hidden="true" aria-labelledby="avatar-modal-label" role="dialog" tabindex="-1">
                                         <div class="modal-dialog modal-lg">
                                             <div class="modal-content">
@@ -56,7 +43,7 @@
                                                     <div class="modal-body">
                                                         <div class="avatar-body">
 
-                                                            <!-- Upload image and data -->
+                                                            {# Upload image and data #}
                                                             <div class="avatar-upload">
                                                                 <input class="avatar-src" name="avatar_src" type="hidden">
                                                                 <input class="avatar-data" name="avatar_data" type="hidden">
@@ -64,7 +51,7 @@
                                                                 <input class="avatar-input" id="avatarInput" name="avatar_file" type="file">
                                                             </div>
 
-                                                            <!-- Crop and preview -->
+                                                            {# Crop and preview #}
                                                             <div class="row">
                                                                 <div class="col-md-9">
                                                                     <div class="avatar-wrapper"></div>
@@ -97,41 +84,49 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <!-- <div class="modal-footer">
-                                                                      <button class="btn btn-default" data-dismiss="modal" type="button">Close</button>
-                                                                    </div> -->
                                                 </form>
                                             </div>
                                         </div>
                                     </div>
-                                    <!-- /.modal -->
+                                    {# /.modal #}
 
-                                    <!-- Loading state -->
+                                    {# Loading state #}
                                     <div class="loading" aria-label="Loading" role="img" tabindex="-1"></div>
                                 </div>
-                                <!-- end of image cropping -->
+                                {# end of image cropping #}
 
                             </div>
-                            <h3>Samuel Doe</h3>
+                            <h3>
+                                {{ infoUser.firstname }} {{ infoUser.lastname }}
+                            </h3>
 
                             <ul class="list-unstyled user_data">
-                                <li><i class="fa fa-map-marker user-profile-icon"></i> San Francisco, California, USA
-                                </li>
+                                {# Address (if present) #}
+                                {% if personalInfo.address is not null %}
+                                    <li>
+                                        <i class="fa fa-map-marker user-profile-icon"></i> {{ personalInfo.address }}
+                                    </li>
+                                {% endif %}
 
+                                {# Job (if present) #}
+                                {% if personalInfo.job is not null %}
                                 <li>
-                                    <i class="fa fa-briefcase user-profile-icon"></i> Software Engineer
+                                    <i class="fa fa-briefcase user-profile-icon"></i> {{ personalInfo.job }}
                                 </li>
+                                {% endif %}
 
+                                {% if personalInfo.website is not null %}
                                 <li class="m-top-xs">
                                     <i class="fa fa-external-link user-profile-icon"></i>
-                                    <a href="http://www.kimlabs.com/profile/" target="_blank">www.kimlabs.com</a>
+                                    <a href="{{ personalInfo.website }}" target="_blank">{{ personalInfo.website }}</a>
                                 </li>
+                                {% endif %}
                             </ul>
 
                             <a class="btn btn-success"><i class="fa fa-edit m-right-xs"></i>Edit Profile</a>
                             <br />
 
-                            <!-- start skills -->
+                            {# start skills #}
                             <h4>Skills</h4>
                             <ul class="list-unstyled user_data">
                                 <li>
@@ -159,7 +154,7 @@
                                     </div>
                                 </li>
                             </ul>
-                            <!-- end of skills -->
+                            {# end of skills #}
 
                         </div>
                         <div class="col-md-9 col-sm-9 col-xs-12">
@@ -175,9 +170,9 @@
                                     </div>
                                 </div>
                             </div>
-                            <!-- start of user-activity-graph -->
+                            {# start of user-activity-graph #}
                             <div id="graph_bar" style="width:100%; height:280px;"></div>
-                            <!-- end of user-activity-graph -->
+                            {# end of user-activity-graph #}
 
                             <div class="" role="tabpanel" data-example-id="togglable-tabs">
                                 <ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">
@@ -191,7 +186,7 @@
                                 <div id="myTabContent" class="tab-content">
                                     <div role="tabpanel" class="tab-pane fade active in" id="tab_content1" aria-labelledby="home-tab">
 
-                                        <!-- start recent activity -->
+                                        {# start recent activity #}
                                         <ul class="messages">
                                             <li>
                                                 <img src="images/img.jpg" class="avatar" alt="Avatar">
@@ -259,12 +254,12 @@
                                             </li>
 
                                         </ul>
-                                        <!-- end recent activity -->
+                                        {# end recent activity #}
 
                                     </div>
                                     <div role="tabpanel" class="tab-pane fade" id="tab_content2" aria-labelledby="profile-tab">
 
-                                        <!-- start user projects -->
+                                        {# start user projects #}
                                         <table class="data table table-striped no-margin">
                                             <thead>
                                             <tr>
@@ -322,7 +317,7 @@
                                             </tr>
                                             </tbody>
                                         </table>
-                                        <!-- end user projects -->
+                                        {# end user projects #}
 
                                     </div>
                                     <div role="tabpanel" class="tab-pane fade" id="tab_content3" aria-labelledby="profile-tab">
@@ -384,7 +379,7 @@
         });
     </script>
 
-    <!-- datepicker -->
+    {# datepicker #}
     <script type="text/javascript">
         $(document).ready(function() {
 
@@ -457,5 +452,5 @@
             });
         });
     </script>
-    <!-- /datepicker -->
+    {# /datepicker #}
 {% endblock javascript %}

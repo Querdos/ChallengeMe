@@ -24,17 +24,14 @@ class RedactorRepository extends EntityRepository
             ->getEntityManager()
             ->createQueryBuilder()
 
-            ->select('redactor.id as id')
-            ->addSelect('redactor.username')
-            ->addSelect('redactor.password')
-            ->addSelect('redactor.email')
-            ->addSelect('info.firstName as firstname')
-            ->addSelect('info.lastName as lastname')
-            ->addSelect('info.birthday as birthday')
-            ->addSelect('info.locale as locale')
+            ->select('redactor')
+            ->addSelect('infoUser')
+            ->addSelect('personnalInformation')
 
             ->from('AdminBundle:Redactor', 'redactor')
-            ->join('redactor.infoUser', 'info')
+            ->join('redactor.infoUser', 'infoUser')
+            ->join('infoUser.personalInformation', 'personalInformation')
+
             ->where('redactor.username = :username')
 
             ->setParameter('username', $username);

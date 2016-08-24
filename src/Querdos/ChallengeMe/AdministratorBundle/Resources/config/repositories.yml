@@ -18,3 +18,18 @@ services:
         class:      Querdos\ChallengeMe\AdministratorBundle\Repository\InfoUserRepository
         factory:    ["@doctrine.orm.entity_manager", "getRepository"]
         arguments:  ["AdminBundle:InfoUser"]
+
+    challengeme.repository.personal_information:
+        class:      Querdos\ChallengeMe\AdministratorBundle\Repository\PersonalInformationRepository
+        factory:    ["@doctrine.orm.entity_manager", "getRepository"]
+        arguments:  ["AdminBundle:PersonalInformation"]
+
+    challengeme.repository.social:
+        class:      Querdos\ChallengeMe\AdministratorBundle\Repository\SocialRepository
+        factory:    ["@doctrine.orm.entity_manager", "getRepository"]
+        arguments:  ["AdminBundle:Social"]
+
+    challengeme.repository.skill:
+        class:      Querdos\ChallengeMe\AdministratorBundle\Repository\SkillRepository
+        factory:    ["@doctrine.orm.entity_manager", "getRepository"]
+        arguments:  ["AdminBundle:Skill"]

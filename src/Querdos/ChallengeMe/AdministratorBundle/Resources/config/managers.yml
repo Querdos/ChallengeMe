@@ -19,3 +19,8 @@ services:
             - [ setRepository,      ['@challengeme.repository.redactor']]
             - [ setPasswordEncoder, ['@security.password_encoder']]
             - [ setEntityManager,   ['@doctrine.orm.entity_manager']]
+
+    challengeme.manager.personal_information:
+        class: Querdos\ChallengeMe\AdministratorBundle\Manager\PersonalInformationManager
+        calls:
+            - [ setRepository,      ['@challengeme.repository.personal_information'] ]

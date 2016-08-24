@@ -1,0 +1,26 @@
+Querdos\ChallengeMe\AdministratorBundle\Entity\Skill:
+    type:             entity
+    table:            cm_admin_skill
+    repositoryClass:  Querdos\ChallengeMe\AdministratorBundle\Repository\SkillRepository
+    id:
+        id:
+            type:     integer
+            id:       true
+            generator:
+                strategy: AUTO
+
+    fields:
+        name:
+            type:     string
+            length:   255
+            unique:   false
+            nullable: false
+        level:
+            type:     integer
+            unique:   false
+            nullable: false
+
+    manyToOne:
+        personalInformation:
+            targetEntity: Querdos\ChallengeMe\AdministratorBundle\Entity\PersonalInformation
+            inversedBy:   skills

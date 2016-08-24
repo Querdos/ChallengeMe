@@ -21,13 +21,17 @@ Querdos\ChallengeMe\AdministratorBundle\Entity\InfoUser:
         birthday:
             type:       date
             nullable:   false
-        address:
-            type:       string
-            length:     255
-            unique:     false
-            nullable:   true
         locale:
             type:       string
             length:     2
             unique:     false
             nullable:   false
+    oneToOne:
+        personalInformation:
+            targetEntity: Querdos\ChallengeMe\AdministratorBundle\Entity\PersonalInformation
+            joinColumn:
+                name: personal_info
+                referencedColumnName: id
+                onDelete: cascade
+
+    lifecycleCallbacks: {  }

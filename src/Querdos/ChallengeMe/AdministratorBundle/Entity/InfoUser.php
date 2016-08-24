@@ -31,14 +31,14 @@ class InfoUser
 
     /**
      * @var string
-     */
-    private $address;
-
-    /**
-     * @var string
      * TODO : Create preferences entity
      */
     private $locale;
+
+    /**
+     * @var PersonalInformation
+     */
+    private $personalInformation;
 
     /**
      * InfoUser constructor.
@@ -144,25 +144,6 @@ class InfoUser
     /**
      * @return string
      */
-    public function getAddress()
-    {
-        return $this->address;
-    }
-
-    /**
-     * @param $address
-     *
-     * @return $this
-     */
-    public function setAddress($address)
-    {
-        $this->address = $address;
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
     public function getLocale()
     {
         return $this->locale;
@@ -176,6 +157,25 @@ class InfoUser
     public function setLocale($locale)
     {
         $this->locale = $locale;
+        return $this;
+    }
+
+    /**
+     * @return PersonalInformation
+     */
+    public function getPersonalInformation()
+    {
+        return $this->personalInformation;
+    }
+
+    /**
+     * @param PersonalInformation $personalInformation
+     *
+     * @return $this;
+     */
+    public function setPersonalInformation($personalInformation)
+    {
+        $this->personalInformation = $personalInformation;
         return $this;
     }
 }

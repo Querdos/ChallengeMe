@@ -25,27 +25,7 @@ class AdministratorProvider implements UserProviderInterface
 
     public function loadUserByUsername($username)
     {
-        /** @var array $userData */
-        $userData = $this->adminManager->getAdminData($username);
-
-        if ($userData) {
-            $admin = new Administrator($userData['id']);
-
-            $admin
-                ->setUsername($userData['username'])
-                ->setEmail($userData['email'])
-                ->setPassword($userData['password'])
-                ->getInfoUser()
-                    ->setFirstName($userData['firstname'])
-                    ->setLastName($userData['lastname'])
-                    ->setBirthday($userData['birthday'])
-                    ->setLocale($userData['locale'])
-            ;
-            
-            return $admin;
-        }
-
-        return null;
+        return $this->adminManager->getAdminData($username);
     }
 
     public function refreshUser(UserInterface $user)
