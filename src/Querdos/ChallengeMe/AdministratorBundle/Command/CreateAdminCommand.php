@@ -90,7 +90,7 @@ EOT
         /*
          * Summary before generation
          */
-        $$this->questionHelper->writeSection($output, "Summary before generation");
+        $this->questionHelper->writeSection($output, "Summary before generation");
 
         $output->writeln("Firstname:\t<info>" .     $input->getOption('firstname') . "</info>");
         $output->writeln("Lastname:\t<info>" .      $input->getOption('lastname') . "</info>");
