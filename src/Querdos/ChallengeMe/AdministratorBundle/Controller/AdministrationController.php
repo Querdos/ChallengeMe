@@ -26,7 +26,16 @@ class AdministrationController extends Controller
      */
     public function indexAction()
     {
-        return array();
+        // retrieving managers
+        $adminManager       = $this->get('challengeme.manager.administrator');
+        $moderatorManager   = $this->get('challengeme.manager.moderator');
+        $redacManager       = $this->get('challengeme.manager.redactor');
+
+        return array(
+            'adminCount'    => count($adminManager->all()),
+            'modoCount'     => count($moderatorManager->all()),
+            'redacCount'    => count($redacManager->all())
+        );
     }
 
     /**

@@ -3,11 +3,11 @@
 namespace Querdos\ChallengeMe\AdministratorBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\RadioType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormEvent;
-use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class InfoUserType extends AbstractType
@@ -57,8 +57,23 @@ class InfoUserType extends AbstractType
                 'required'      => true,
                 'translation_domain' => 'forms'
             ))
+            ->add('locale',     ChoiceType::class, array(
+                'label'         => 'Language',
+                'label_attr'    => array(
+                    'class'         => 'control-label col-md-3 col-sm-3 col-xs-12'
+                ),
+                'attr'          => array(
+                    'required'  => 'required',
+                    'class'     => 'form-control'
+                ),
+                'choices'               => array(
+                    "English"   => "en",
+                    "Français"  => "fr"
+                ),
+                'required'              => true,
+                'translation_domain'    => 'forms'
+            ))
         ;
-
     }
 
     /**
