@@ -28,10 +28,11 @@ Querdos\ChallengeMe\AdministratorBundle\Entity\InfoUser:
             nullable:   false
     oneToOne:
         personalInformation:
-            targetEntity: Querdos\ChallengeMe\AdministratorBundle\Entity\PersonalInformation
+            targetEntity:   Querdos\ChallengeMe\AdministratorBundle\Entity\PersonalInformation
+            cascade:        ["persist", "remove" ]
             joinColumn:
-                name: personal_info
+                name:                 personal_info
                 referencedColumnName: id
-                onDelete: cascade
+                onDelete:             cascade
 
     lifecycleCallbacks: {  }

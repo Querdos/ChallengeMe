@@ -9,6 +9,7 @@ namespace Querdos\ChallengeMe\AdministratorBundle\Command;
 
 use Querdos\ChallengeMe\AdministratorBundle\Entity\Administrator;
 use Querdos\ChallengeMe\AdministratorBundle\Entity\InfoUser;
+use Querdos\ChallengeMe\AdministratorBundle\Entity\PersonalInformation;
 use Querdos\ChallengeMe\AdministratorBundle\Manager\AdministratorManager;
 use Querdos\ChallengeMe\AdministratorBundle\Validator\AdminValidator;
 use Sensio\Bundle\GeneratorBundle\Command\GeneratorCommand;
@@ -106,8 +107,9 @@ EOT
         }
 
         // Creating new objects
-        $admin      = new Administrator();
-        $infoUser   = new InfoUser();
+        $admin                  = new Administrator();
+        $infoUser               = new InfoUser();
+        $personalInformation    = new PersonalInformation();
 
         /*
          * Optional informations
@@ -119,6 +121,7 @@ EOT
                 new \DateTime($input->getOption('birthday'))
             )
             ->setLocale('fr')
+            ->setPersonalInformation($personalInformation)
         ;
 
         /*
@@ -131,6 +134,7 @@ EOT
             ->setEmailBack($input->getOption('emailback'))
             ->setInfoUser($infoUser)
         ;
+
         /*
          * Persisting the admin
          */

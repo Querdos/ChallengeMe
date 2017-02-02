@@ -8,6 +8,7 @@
 namespace Querdos\ChallengeMe\AdministratorBundle\Command;
 
 use Querdos\ChallengeMe\AdministratorBundle\Entity\InfoUser;
+use Querdos\ChallengeMe\AdministratorBundle\Entity\PersonalInformation;
 use Querdos\ChallengeMe\AdministratorBundle\Entity\Redactor;
 use Querdos\ChallengeMe\AdministratorBundle\Manager\RedactorManager;
 use Querdos\ChallengeMe\AdministratorBundle\Validator\RedactorValidator;
@@ -103,8 +104,9 @@ EOT
 		}
 		
 		// Creating new objects
-		$redactor   = new Redactor();
-		$infoUser   = new InfoUser();
+		$redactor            = new Redactor();
+		$infoUser            = new InfoUser();
+		$personalInformation = new PersonalInformation();
 		
 		/*
 		 * Optional informations
@@ -116,6 +118,7 @@ EOT
 				new \DateTime($input->getOption('birthday'))
 			)
             ->setLocale('en')
+            ->setPersonalInformation($personalInformation)
         ;
 		
 		/*

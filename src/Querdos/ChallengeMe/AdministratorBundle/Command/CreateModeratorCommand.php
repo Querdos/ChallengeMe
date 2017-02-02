@@ -9,6 +9,7 @@ namespace Querdos\ChallengeMe\AdministratorBundle\Command;
 
 use Querdos\ChallengeMe\AdministratorBundle\Entity\InfoUser;
 use Querdos\ChallengeMe\AdministratorBundle\Entity\Moderator;
+use Querdos\ChallengeMe\AdministratorBundle\Entity\PersonalInformation;
 use Querdos\ChallengeMe\AdministratorBundle\Manager\ModeratorManager;
 use Querdos\ChallengeMe\AdministratorBundle\Validator\ModeratorValidator;
 use Sensio\Bundle\GeneratorBundle\Command\GeneratorCommand;
@@ -106,8 +107,9 @@ EOT
             $this->interact($input, $output);
         }
 
-        $moderator  = new Moderator();
-        $infoUser   = new InfoUser();
+        $moderator           = new Moderator();
+        $infoUser            = new InfoUser();
+        $personalInformation = new PersonalInformation();
 
         /*
          * Optional informations
@@ -119,6 +121,7 @@ EOT
                 new \DateTime($input->getOption('birthday'))
             )
             ->setLocale('en')
+            ->setPersonalInformation($personalInformation)
         ;
 
         /*
@@ -296,8 +299,5 @@ EOT
         }
     }
 
-    protected function createGenerator()
-    {
-        // TODO: Implement createGenerator() method.
-    }
+    protected function createGenerator() {}
 }

@@ -43,6 +43,24 @@ class PersonalInformation
     private $socials;
 
     /**
+     * PersonalInformation constructor.
+     *
+     * @param string $address
+     * @param string $job
+     * @param string $website
+     * @param Skill[] $skills
+     * @param Social[] $socials
+     */
+    public function __construct($address = "", $job = "", $website = "", array $skills = [], array $socials = [])
+    {
+        $this->address  = $address;
+        $this->job      = $job;
+        $this->website  = $website;
+        $this->skills   = $skills;
+        $this->socials  = $socials;
+    }
+
+    /**
      * @return int
      */
     public function getId()
