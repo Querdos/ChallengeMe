@@ -8,16 +8,6 @@ services:
         calls:
             - [ setAdminManager,      ['@challengeme.manager.administrator'] ]
 
-    challengeme.provider.moderator:
-        class: Querdos\ChallengeMe\AdministratorBundle\Security\Provider\ModeratorProvider
-        calls:
-            - [ setModeratorManager,  ['@challengeme.manager.moderator'] ]
-
-    challengeme.provider.redactor:
-        class: Querdos\ChallengeMe\AdministratorBundle\Security\Provider\RedactorProvider
-        calls:
-            - [ setRedactorManager,   ['@challengeme.manager.redactor']]
-
     challengeme.form_authenticator:
         class: Querdos\ChallengeMe\AdministratorBundle\Security\Authenticator\FormAuthenticator
         calls:
