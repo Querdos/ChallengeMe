@@ -20,16 +20,8 @@ security:
             cost:       12
 
     providers:
-        chain_provider:
-            chain:
-                providers: [administrator_provider, moderator_provider, redactor_provider]
-
         administrator_provider:
             id: challengeme.provider.admin
-        moderator_provider:
-            id: challengeme.provider.moderator
-        redactor_provider:
-            id: challengeme.provider.redactor
 
     role_hierarchy:
         ROLE_REDACTOR:      [ROLE_USER]
