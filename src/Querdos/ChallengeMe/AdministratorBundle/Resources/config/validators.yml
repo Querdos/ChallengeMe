@@ -3,8 +3,6 @@ services:
         class: Querdos\ChallengeMe\AdministratorBundle\Validator\Constraints\UsernameExistsValidator
         calls:
             - [ setAdminManager,      [ '@challengeme.manager.administrator' ]]
-            - [ setModeratorManager,  [ '@challengeme.manager.moderator' ]]
-            - [ setRedactorManager,   [ '@challengeme.manager.redactor' ]]
         tags:
             - { name: validator.constraint_validator }
 
@@ -12,8 +10,6 @@ services:
         class: Querdos\ChallengeMe\AdministratorBundle\Validator\Constraints\EmailExistsValidator
         calls:
             - [ setAdminManager,      [ '@challengeme.manager.administrator' ]]
-            - [ setModeratorManager,  [ '@challengeme.manager.moderator' ]]
-            - [ setRedactorManager,   [ '@challengeme.manager.redactor' ]]
         tags:
             - { name: validator.constraint_validator }
 
@@ -22,19 +18,13 @@ services:
         calls:
             - [ setValidator,         ['@validator'] ]
             - [ setAdminManager,      ['@challengeme.manager.administrator'] ]
-            - [ setModeratorManager,  ['@challengeme.manager.moderator']]
-            - [ setRedactorManager,   ['@challengeme.manager.redactor']]
     challengeme.validator.moderator:
         class: Querdos\ChallengeMe\AdministratorBundle\Validator\ModeratorValidator
         calls:
             - [ setValidator,         ['@validator'] ]
-            - [ setModeratorManager,  ['@challengeme.manager.moderator'] ]
             - [ setAdminManager,      ['@challengeme.manager.administrator'] ]
-            - [ setRedactorManager,   ['@challengeme.manager.redactor']]
     challengeme.validator.redactor:
         class: Querdos\ChallengeMe\AdministratorBundle\Validator\RedactorValidator
         calls:
             - [ setValidator,         ['@validator'] ]
-            - [ setModeratorManager,  ['@challengeme.manager.moderator'] ]
             - [ setAdminManager,      ['@challengeme.manager.administrator']]
-            - [ setRedactorManager,   ['@challengeme.manager.redactor']]
