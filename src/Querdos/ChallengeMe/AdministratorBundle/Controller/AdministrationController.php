@@ -28,13 +28,11 @@ class AdministrationController extends Controller
     {
         // retrieving managers
         $adminManager       = $this->get('challengeme.manager.administrator');
-        $moderatorManager   = $this->get('challengeme.manager.moderator');
-        $redacManager       = $this->get('challengeme.manager.redactor');
 
         return array(
             'adminCount'    => count($adminManager->all()),
-            'modoCount'     => count($moderatorManager->all()),
-            'redacCount'    => count($redacManager->all())
+            'modoCount'     => 0, // TODO: Modo Count
+            'redacCount'    => 0  // TODO: Redac Count
         );
     }
 

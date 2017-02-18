@@ -6,20 +6,6 @@ services:
             - [ setPasswordEncoder, ['@security.password_encoder']]
             - [ setEntityManager,   ['@doctrine.orm.entity_manager']]
 
-    challengeme.manager.moderator:
-        class: Querdos\ChallengeMe\AdministratorBundle\Manager\ModeratorManager
-        calls:
-            - [ setRepository,      ['@challengeme.repository.moderator']]
-            - [ setPasswordEncoder, ['@security.password_encoder']]
-            - [ setEntityManager,   ['@doctrine.orm.entity_manager']]
-
-    challengeme.manager.redactor:
-        class: Querdos\ChallengeMe\AdministratorBundle\Manager\RedactorManager
-        calls:
-            - [ setRepository,      ['@challengeme.repository.redactor']]
-            - [ setPasswordEncoder, ['@security.password_encoder']]
-            - [ setEntityManager,   ['@doctrine.orm.entity_manager']]
-
     challengeme.manager.personal_information:
         class: Querdos\ChallengeMe\AdministratorBundle\Manager\PersonalInformationManager
         calls:

@@ -57,11 +57,15 @@ class FormAuthenticator extends AbstractGuardAuthenticator
      */
     public function getUser($credentials, UserProviderInterface $userProvider)
     {
-        foreach ($userProvider->getProviders() as $provider) {
+        if (null !== $userLoaded = $userProvider->loadUserByUsername($credentials['username'])) {
+            return $userLoaded;
+        }
+
+        /*foreach ($userProvider->getProviders() as $provider) {
             if (null !== $userLoaded = $provider->loadUserByUsername($credentials['username'])) {
                 return $userLoaded;
             }
-        }
+        }*/
 
         throw new CustomUserMessageAuthenticationException($this->failMessage);
     }
