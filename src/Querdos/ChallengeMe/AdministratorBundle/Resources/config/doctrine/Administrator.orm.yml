@@ -35,4 +35,8 @@ Querdos\ChallengeMe\AdministratorBundle\Entity\Administrator:
             targetEntity: Querdos\ChallengeMe\AdministratorBundle\Entity\InfoUser
             cascade:      [ "persist", "remove" ]
 
+        role:
+            targetEntity: Querdos\ChallengeMe\AdministratorBundle\Entity\Role
+            cascade:      [ "persist", "remove" ]
+
     lifecycleCallbacks: {  }

@@ -10,3 +10,8 @@ services:
         class: Querdos\ChallengeMe\AdministratorBundle\Manager\PersonalInformationManager
         calls:
             - [ setRepository,      ['@challengeme.repository.personal_information'] ]
+
+    challengeme.manager.role:
+        class: Querdos\ChallengeMe\AdministratorBundle\Manager\RoleManager
+        calls:
+            -  [ setRepository,     [ '@challengeme.repository.role' ] ]

@@ -8,7 +8,6 @@
 
 namespace Querdos\ChallengeMe\AdministratorBundle\Security\Provider;
 
-
 use Querdos\ChallengeMe\AdministratorBundle\Entity\Administrator;
 use Querdos\ChallengeMe\AdministratorBundle\Manager\AdministratorManager;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
@@ -30,7 +29,8 @@ class AdministratorProvider implements UserProviderInterface
 
     public function refreshUser(UserInterface $user)
     {
-        if (!$user instanceof Administrator) {
+        if (!$user instanceof Administrator)
+        {
             throw new UnsupportedUserException(
                 sprintf('Instances of "%s" are not supported.', get_class($user))
             );

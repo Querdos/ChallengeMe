@@ -9,8 +9,6 @@ namespace Querdos\ChallengeMe\AdministratorBundle\Validator\Constraints;
 
 
 use Querdos\ChallengeMe\AdministratorBundle\Manager\AdministratorManager;
-use Querdos\ChallengeMe\AdministratorBundle\Manager\ModeratorManager;
-use Querdos\ChallengeMe\AdministratorBundle\Manager\RedactorManager;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 
@@ -22,16 +20,6 @@ class UsernameExistsValidator extends ConstraintValidator
     private $adminManager;
 
     /**
-     * @var ModeratorManager $moderatorManager
-     */
-    private $moderatorManager;
-
-    /**
-     * @var RedactorManager $redactorManager
-     */
-    private $redactorManager;
-
-    /**
      * Checks if the passed value is valid.
      *
      * @param mixed $value The value that should be validated
@@ -41,13 +29,7 @@ class UsernameExistsValidator extends ConstraintValidator
     {
         if (
             // Check from admin repository
-            null !== $this->adminManager->checkUsername($value) ||
-
-            // Check from moderator repository
-            null !== $this->moderatorManager->checkUsername($value) ||
-
-            // Check from redactor repository
-            null !== $this->redactorManager->checkUsername($value)
+            null !== $this->adminManager->checkUsername($value)
         ) {
             $this
                 ->context
@@ -63,21 +45,5 @@ class UsernameExistsValidator extends ConstraintValidator
     public function setAdminManager($adminManager)
     {
         $this->adminManager = $adminManager;
-    }
-
-    /**
-     * @param ModeratorManager $moderatorManager
-     */
-    public function setModeratorManager($moderatorManager)
-    {
-        $this->moderatorManager = $moderatorManager;
-    }
-
-    /**
-     * @param RedactorManager $redactorManager
-     */
-    public function setRedactorManager($redactorManager)
-    {
-        $this->redactorManager = $redactorManager;
     }
 }

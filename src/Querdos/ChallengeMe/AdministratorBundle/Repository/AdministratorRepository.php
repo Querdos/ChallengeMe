@@ -9,6 +9,7 @@ namespace Querdos\ChallengeMe\AdministratorBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
 use Querdos\ChallengeMe\AdministratorBundle\Entity\Administrator;
+use Symfony\Component\VarDumper\VarDumper;
 
 /**
  * AdministratorRepository
@@ -39,6 +40,7 @@ class AdministratorRepository extends EntityRepository
             ->setParameter("username", $username)
         ;
 
+        VarDumper::dump($query->getQuery()->getOneOrNullResult());
         return $query
             ->getQuery()
             ->getOneOrNullResult();

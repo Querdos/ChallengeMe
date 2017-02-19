@@ -1,35 +1,30 @@
 services:
     challengeme.repository.administrator:
         class:      Querdos\ChallengeMe\AdministratorBundle\Repository\AdministratorRepository
-        factory:    ["@doctrine.orm.entity_manager", "getRepository"]
-        arguments:  ["AdminBundle:Administrator"]
-    
-    challengeme.repository.moderator:
-        class:      Querdos\ChallengeMe\AdministratorBundle\Repository\ModeratorRepository
-        factory:    ["@doctrine.orm.entity_manager", "getRepository"]
-        arguments:  ["AdminBundle:Moderator"]
-        
-    challengeme.repository.redactor:
-        class:      Querdos\ChallengeMe\AdministratorBundle\Repository\RedactorRepository
-        factory:    ["@doctrine.orm.entity_manager", "getRepository"]
-        arguments:  ["AdminBundle:Redactor"]
+        factory:    [ "@doctrine.orm.entity_manager", "getRepository" ]
+        arguments:  [ "AdminBundle:Administrator" ]
     
     challengeme.repository.info_user:
         class:      Querdos\ChallengeMe\AdministratorBundle\Repository\InfoUserRepository
-        factory:    ["@doctrine.orm.entity_manager", "getRepository"]
-        arguments:  ["AdminBundle:InfoUser"]
+        factory:    [ "@doctrine.orm.entity_manager", "getRepository" ]
+        arguments:  [ "AdminBundle:InfoUser" ]
 
     challengeme.repository.personal_information:
         class:      Querdos\ChallengeMe\AdministratorBundle\Repository\PersonalInformationRepository
-        factory:    ["@doctrine.orm.entity_manager", "getRepository"]
-        arguments:  ["AdminBundle:PersonalInformation"]
+        factory:    [ "@doctrine.orm.entity_manager", "getRepository" ]
+        arguments:  [ "AdminBundle:PersonalInformation" ]
 
     challengeme.repository.social:
         class:      Querdos\ChallengeMe\AdministratorBundle\Repository\SocialRepository
-        factory:    ["@doctrine.orm.entity_manager", "getRepository"]
-        arguments:  ["AdminBundle:Social"]
+        factory:    [ "@doctrine.orm.entity_manager", "getRepository" ]
+        arguments:  [ "AdminBundle:Social" ]
 
     challengeme.repository.skill:
         class:      Querdos\ChallengeMe\AdministratorBundle\Repository\SkillRepository
-        factory:    ["@doctrine.orm.entity_manager", "getRepository"]
-        arguments:  ["AdminBundle:Skill"]
+        factory:    [ "@doctrine.orm.entity_manager", "getRepository" ]
+        arguments:  [ "AdminBundle:Skill" ]
+
+    challengeme.repository.role:
+        class:      Querdos\ChallengeMe\AdministratorBundle\Entity\Role
+        factory:    [ "@doctrine.orm.entity_manager", "getRepository" ]
+        arguments:  [ "AdminBundle:Role" ]

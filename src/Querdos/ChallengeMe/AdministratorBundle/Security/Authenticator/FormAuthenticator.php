@@ -19,6 +19,7 @@ use Symfony\Component\Security\Core\Tests\Encoder\PasswordEncoder;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Symfony\Component\Security\Guard\AbstractGuardAuthenticator;
+use Symfony\Component\VarDumper\VarDumper;
 
 class FormAuthenticator extends AbstractGuardAuthenticator
 {
@@ -57,10 +58,10 @@ class FormAuthenticator extends AbstractGuardAuthenticator
      */
     public function getUser($credentials, UserProviderInterface $userProvider)
     {
-        if (null !== $userLoaded = $userProvider->loadUserByUsername($credentials['username'])) {
+        if (null !== $userLoaded = $userProvider->loadUserByUsername($credentials['username']))
+        {
             return $userLoaded;
         }
-
         /*foreach ($userProvider->getProviders() as $provider) {
             if (null !== $userLoaded = $provider->loadUserByUsername($credentials['username'])) {
                 return $userLoaded;

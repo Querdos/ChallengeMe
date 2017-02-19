@@ -7,14 +7,12 @@
 
 namespace Querdos\ChallengeMe\AdministratorBundle\DataFixtures\ORM;
 
-
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Querdos\ChallengeMe\AdministratorBundle\Entity\Administrator;
 use Querdos\ChallengeMe\AdministratorBundle\Entity\InfoUser;
-use Querdos\ChallengeMe\AdministratorBundle\Entity\Moderator;
-use Querdos\ChallengeMe\AdministratorBundle\Entity\Redactor;
+use Querdos\ChallengeMe\AdministratorBundle\Entity\Role;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Security\Core\Tests\Encoder\PasswordEncoder;
@@ -32,26 +30,30 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface, C
      */
     public function load(ObjectManager $manager)
     {
+        // roles
+        /** @var Role $roleAdmin */
+        $roleAdmin          = $this->getReference('role-admin');
+        /** @var Role $roleRedactor */
+        $roleRedactor       = $this->getReference('role-redactor');
+        /** @var Role $roleModerator */
+        $roleModerator      = $this->getReference('role-moderator');
+
         // Initial objects
-        $userAdmin      = new Administrator();
-        $userModerator  = new Moderator();
-        $userRedactor   = new Redactor();
+        $userAdmin          = new Administrator();
 
         /** @var PasswordEncoder $encoder */
         $encoder            = $this->container->get('security.password_encoder');
 
         $passwordAdmin      = $encoder->encodePassword($userAdmin, 'admin');
-        $passwordModerator  = $encoder->encodePassword($userModerator, 'moderator');
-        $passwordRedactor   = $encoder->encodePassword($userRedactor, 'redactor');
+        $passwordModo       = $encoder->encodePassword($userAdmin, 'modo');
+        $passwordRedac      = $encoder->encodePassword($userAdmin, 'redac');
 
         /** @var InfoUser $infoAdmin */
-        $infoAdmin      = $this->getReference('admin-info');
-
-        /** @var InfoUser $infoModerator */
-        $infoModerator  = $this->getReference('moderator-info');
-
-        /** @var InfoUser $infoRedactor */
-        $infoRedactor   = $this->getReference('redactor-info');
+        $infoAdmin          = $this->getReference('admin-info');
+        /** @var InfoUser $infoModo */
+        $infoModo           = $this->getReference('moderator-info');
+        /** @var InfoUser $infoRedac */
+        $infoRedac          = $this->getReference('redactor-info');
 
         // Hidrating admin
         $userAdmin
@@ -59,30 +61,37 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface, C
             ->setEmail('admin@challengeme.com')
             ->setEmailBack('admin@gmail.com')
             ->setPassword($passwordAdmin)
-            ->setInfoUser($infoAdmin);
-        ;
-
-        // Hidrating moderator
-        $userModerator
-            ->setUsername('moderator')
-            ->setEmail('moderator@challengeme.com')
-            ->setEmailBack('moderator@gmail.com')
-            ->setPassword($passwordModerator)
-            ->setInfoUser($infoModerator)
-        ;
-
-        // Hidrating redactor
-        $userRedactor
-            ->setUsername('redactor')
-            ->setEmail('redactor@challengeme.com')
-            ->setEmailBack('redactor@gmail.com')
-            ->setPassword($passwordRedactor)
-            ->setInfoUser($infoRedactor)
+            ->setInfoUser($infoAdmin)
+            ->setRole($roleAdmin)
         ;
 
         $manager->persist($userAdmin);
-        $manager->persist($userModerator);
-        $manager->persist($userRedactor);
+
+        // Hidrating moderator
+        $userAdmin = new Administrator();
+        $userAdmin
+            ->setUsername('moderator')
+            ->setEmail('moderator@challengeme.com')
+            ->setEmailBack('moderator@gmail.com')
+            ->setPassword($passwordModo)
+            ->setInfoUser($infoModo)
+            ->setRole($roleModerator)
+        ;
+
+        $manager->persist($userAdmin);
+
+        // Hidrating redactor
+        $userAdmin = new Administrator();
+        $userAdmin
+            ->setUsername('redactor')
+            ->setEmail('redactor@challengeme.com')
+            ->setEmailBack('redactor@gmail.com')
+            ->setPassword($passwordRedac)
+            ->setInfoUser($infoRedac)
+            ->setRole($roleRedactor)
+        ;
+
+        $manager->persist($userAdmin);
         $manager->flush();
     }
 
@@ -93,7 +102,7 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface, C
      */
     public function getOrder()
     {
-        return 2;
+        return 3;
     }
 
     public function setContainer(ContainerInterface $containerInterface = null)

@@ -7,7 +7,6 @@
 
 namespace Querdos\ChallengeMe\AdministratorBundle\DataFixtures\ORM;
 
-
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -28,7 +27,8 @@ class LoadInfoUserData extends AbstractFixture implements OrderedFixtureInterfac
         // Admin
         $infoUser
             ->setFirstName("Admin")
-            ->setBirthday(new \DateTime());
+            ->setBirthday(new \DateTime())
+        ;
         
         $manager->persist($infoUser);
         $manager->flush();
@@ -67,6 +67,6 @@ class LoadInfoUserData extends AbstractFixture implements OrderedFixtureInterfac
      */
     public function getOrder()
     {
-        return 1;
+        return 2;
     }
 }

@@ -1,0 +1,17 @@
+Querdos\ChallengeMe\AdministratorBundle\Entity\Role:
+    type:             entity
+    table:            cm_admin_roles
+    repositoryClass:  Querdos\ChallengeMe\AdministratorBundle\Repository\RoleRepository
+    id:
+        id:
+            type:       integer
+            id:         true
+            generator:
+                strategy: AUTO
+    fields:
+        value:
+            type:     string
+            length:   '20'
+            unique:   true
+
+    lifecycleCallbacks: {  }

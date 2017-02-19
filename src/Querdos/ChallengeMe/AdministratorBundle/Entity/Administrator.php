@@ -45,11 +45,24 @@ class Administrator implements UserInterface, \Serializable
     private $emailBack;
 
     /**
+     * @var Role
+     */
+    private $role;
+
+    /**
      * @var InfoUser
      */
     private $infoUser;
 
-    public function __construct($id = "", $username = "", $email = "", $password = "")
+    /**
+     * Administrator constructor.
+     * @param string    $id
+     * @param string    $username
+     * @param string    $email
+     * @param string    $password
+     * @param array     $role
+     */
+    public function __construct($id = "", $username = "", $email = "", $password = "", $role = null)
     {
         $this->id           = $id;
         $this->username     = $username;
@@ -57,7 +70,8 @@ class Administrator implements UserInterface, \Serializable
         $this->emailBack    = "";
         $this->password     = $password;
 
-        $this->infoUser = new InfoUser();
+        $role == null ? $this->role = new Role() : $this->role = $role;
+        $this->infoUser     = new InfoUser();
     }
 
     /**
@@ -271,6 +285,24 @@ class Administrator implements UserInterface, \Serializable
     {
         $this->plainPassword = $plainPassword;
 
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getRole()
+    {
+        return array($this->role->getValue());
+    }
+
+    /**
+     * @param   Role    $role
+     * @return          $this
+     */
+    public function setRole($role)
+    {
+        $this->role = $role;
         return $this;
     }
 }
