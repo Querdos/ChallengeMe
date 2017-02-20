@@ -11,6 +11,7 @@ namespace Querdos\ChallengeMe\AdministratorBundle\Manager;
 
 use Doctrine\ORM\EntityManager;
 use Querdos\ChallengeMe\AdministratorBundle\Entity\Administrator;
+use Querdos\ChallengeMe\AdministratorBundle\Entity\Role;
 use Querdos\ChallengeMe\AdministratorBundle\Repository\AdministratorRepository;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoder;
 use Symfony\Component\Security\Core\Tests\Encoder\PasswordEncoder;
@@ -107,6 +108,36 @@ class AdministratorManager implements AdministratorManagerInterface
     public function all()
     {
         return $this->repository->findAll();
+    }
+
+    /**
+     * Return all administrators (ROLE_ADMIN)
+     *
+     * @return Administrator[]
+     */
+    public function getAllAdmin()
+    {
+        return $this->repository->all(Role::ROLE_ADMIN);
+    }
+
+    /**
+     * Return all moderators (ROLE_MODERATOR)
+     *
+     * @return Administrator[]
+     */
+    public function getAllModerators()
+    {
+        return $this->repository->all(Role::ROLE_MODERATOR);
+    }
+
+    /**
+     * Return all redactors (ROLE_REDACTOR)
+     *
+     * @return Administrator[]
+     */
+    public function getAllRedactors()
+    {
+        return $this->repository->all(Role::ROLE_REDACTOR);
     }
 
     /**

@@ -9,7 +9,7 @@ namespace Querdos\ChallengeMe\AdministratorBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
 use Querdos\ChallengeMe\AdministratorBundle\Entity\Administrator;
-use Symfony\Component\VarDumper\VarDumper;
+use Querdos\ChallengeMe\AdministratorBundle\Entity\Role;
 
 /**
  * AdministratorRepository
@@ -145,5 +145,69 @@ class AdministratorRepository extends EntityRepository
         return $query
             ->getQuery()
             ->getOneOrNullResult();
+    }
+
+    /**
+     * Return a list of all administrators, depending on their role.
+     *
+     * Allowed role:
+     *      ROLE_ADMIN
+     *      ROLE_MODERATOR
+     *      ROLE_REDACTOR
+     *
+     * @param   string $role
+     * @return  array
+     * @throws  \Exception
+     */
+    public function all($role)
+    {
+        $query = $this->getEntityManager()->createQueryBuilder();
+
+        switch ($role){
+            case Role::ROLE_ADMIN:
+                $query
+                    ->select("admin")
+                    ->from("AdminBundle:Administrator", "admin")
+
+                    ->join("admin.role", "role")
+                    ->where("role.value = :rolename")
+
+                    ->setParameter("rolename", $role)
+                ;
+            break;
+
+            case Role::ROLE_MODERATOR:
+                $query
+                    ->select("admin")
+                    ->from("AdminBundle:Administrator", "admin")
+
+                    ->join("admin.role", "role")
+                    ->where("role.value = :rolename")
+
+                    ->setParameter("rolename", $role)
+                ;
+            break;
+
+            case Role::ROLE_REDACTOR:
+                $query
+                    ->select("admin")
+                    ->from("AdminBundle:Administrator", "admin")
+
+                    ->join("admin.role", "role")
+                    ->where("role.value = :rolename")
+
+                    ->setParameter("rolename", $role)
+                ;
+            break;
+
+            default:
+                throw new \Exception("Role not recognized.");
+            break;
+        }
+
+        return $query
+            ->getQuery()
+            ->getArrayResult()
+        ;
     }
 }

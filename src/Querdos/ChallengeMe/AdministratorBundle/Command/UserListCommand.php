@@ -28,16 +28,6 @@ class UserListCommand extends ContainerAwareCommand
     private $adminManager;
 
     /**
-     * @var ModeratorManager $this->moderatorManager
-     */
-    private $moderatorManager;
-
-    /**
-     * @var RedactorManager $redactorManager
-     */
-    private $redactorManager;
-
-    /**
      * {@inheritdoc}
      */
     protected function initialize(InputInterface $input, OutputInterface $output)
