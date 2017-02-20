@@ -93,7 +93,7 @@ class AdministratorManager implements AdministratorManagerInterface
     	
     	// Checking if already persisted
     	if (!$unitOfWork->isEntityScheduled($admin)) {
-    		$this->entityManager->persist($amdin);
+    		$this->entityManager->persist($admin);
     	}
     	
     	// Flushing

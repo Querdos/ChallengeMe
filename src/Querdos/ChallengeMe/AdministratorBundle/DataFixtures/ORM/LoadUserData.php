@@ -12,6 +12,7 @@ use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Querdos\ChallengeMe\AdministratorBundle\Entity\Administrator;
 use Querdos\ChallengeMe\AdministratorBundle\Entity\InfoUser;
+use Querdos\ChallengeMe\AdministratorBundle\Entity\PersonalInformation;
 use Querdos\ChallengeMe\AdministratorBundle\Entity\Role;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -54,6 +55,13 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface, C
         $infoModo           = $this->getReference('moderator-info');
         /** @var InfoUser $infoRedac */
         $infoRedac          = $this->getReference('redactor-info');
+
+        $persoInfoAdmin     = new PersonalInformation();
+        $infoAdmin->setPersonalInformation($persoInfoAdmin);
+        $persoInfoModo      = new PersonalInformation();
+        $infoModo->setPersonalInformation($persoInfoModo);
+        $persoInfoRedac     = new PersonalInformation();
+        $infoRedac->setPersonalInformation($persoInfoRedac);
 
         // Hidrating admin
         $userAdmin

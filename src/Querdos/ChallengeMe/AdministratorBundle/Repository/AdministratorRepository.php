@@ -40,7 +40,6 @@ class AdministratorRepository extends EntityRepository
             ->setParameter("username", $username)
         ;
 
-        VarDumper::dump($query->getQuery()->getOneOrNullResult());
         return $query
             ->getQuery()
             ->getOneOrNullResult();
