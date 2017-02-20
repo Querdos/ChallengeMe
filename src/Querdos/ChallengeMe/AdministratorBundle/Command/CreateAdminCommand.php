@@ -10,8 +10,8 @@ namespace Querdos\ChallengeMe\AdministratorBundle\Command;
 use Querdos\ChallengeMe\AdministratorBundle\Entity\Administrator;
 use Querdos\ChallengeMe\AdministratorBundle\Entity\InfoUser;
 use Querdos\ChallengeMe\AdministratorBundle\Entity\PersonalInformation;
-use Querdos\ChallengeMe\AdministratorBundle\Entity\Role;
 use Querdos\ChallengeMe\AdministratorBundle\Manager\AdministratorManager;
+use Querdos\ChallengeMe\AdministratorBundle\Manager\RoleManager;
 use Querdos\ChallengeMe\AdministratorBundle\Validator\AdminValidator;
 use Sensio\Bundle\GeneratorBundle\Command\GeneratorCommand;
 use Sensio\Bundle\GeneratorBundle\Command\Helper\QuestionHelper;
@@ -33,6 +33,11 @@ class CreateAdminCommand extends GeneratorCommand
      * @var AdministratorManager $adminManager
      */
     private $adminManager;
+
+    /**
+     * @var RoleManager $roleManager
+     */
+    private $roleManager;
     
     /**
      * @var QuestionHelper $questionHelper
@@ -50,6 +55,8 @@ class CreateAdminCommand extends GeneratorCommand
     	// Initializing global attributes
         $this->adminValidator = $container->get('challengeme.validator.admin');
         $this->adminManager	  = $container->get('challengeme.manager.administrator');
+        $this->roleManager    = $container->get('challengeme.manager.role');
+
         $this->questionHelper = $this->getQuestionHelper();
     }
 
@@ -134,6 +141,7 @@ EOT
             ->setEmail($input->getOption('email'))
             ->setEmailBack($input->getOption('emailback'))
             ->setInfoUser($infoUser)
+            ->setRole($this->roleManager->adminRole())
         ;
 
         /*

@@ -7,10 +7,11 @@
 
 namespace Querdos\ChallengeMe\AdministratorBundle\Command;
 
+use Querdos\ChallengeMe\AdministratorBundle\Entity\Administrator;
 use Querdos\ChallengeMe\AdministratorBundle\Entity\InfoUser;
-use Querdos\ChallengeMe\AdministratorBundle\Entity\Moderator;
 use Querdos\ChallengeMe\AdministratorBundle\Entity\PersonalInformation;
-use Querdos\ChallengeMe\AdministratorBundle\Manager\ModeratorManager;
+use Querdos\ChallengeMe\AdministratorBundle\Manager\AdministratorManager;
+use Querdos\ChallengeMe\AdministratorBundle\Manager\RoleManager;
 use Querdos\ChallengeMe\AdministratorBundle\Validator\ModeratorValidator;
 use Sensio\Bundle\GeneratorBundle\Command\GeneratorCommand;
 use Sensio\Bundle\GeneratorBundle\Command\Helper\QuestionHelper;
@@ -28,9 +29,14 @@ class CreateModeratorCommand extends GeneratorCommand
     private $moderatorValidator;
 
     /**
-     * @var ModeratorManager $moderatorManager
+     * @var AdministratorManager $adminManager
      */
-    private $moderatorManager;
+    private $adminManager;
+
+    /**
+     * @var RoleManager $roleManager
+     */
+    private $roleManager;
 
     /**
      * @var QuestionHelper $this->questionHelper
@@ -46,8 +52,9 @@ class CreateModeratorCommand extends GeneratorCommand
         $container = $this->getContainer();
 
         // Retrieving validator and manager
-        $this->moderatorValidator = $container->get('challengeme.validator.moderator');
-        $this->moderatorManager   = $container->get('challengeme.manager.moderator');
+        $this->moderatorValidator   = $container->get('challengeme.validator.moderator');
+        $this->adminManager         = $container->get('challengeme.manager.administrator');
+        $this->roleManager          = $container->get('challengeme.manager.role');
 
         // Initializing the question helper
         $this->questionHelper     = $this->getQuestionHelper();
@@ -107,7 +114,7 @@ EOT
             $this->interact($input, $output);
         }
 
-        $moderator           = new Moderator();
+        $moderator           = new Administrator();
         $infoUser            = new InfoUser();
         $personalInformation = new PersonalInformation();
 
@@ -133,12 +140,13 @@ EOT
             ->setEmail($input->getOption('email'))
             ->setEmailBack($input->getOption('emailback'))
             ->setInfoUser($infoUser)
+            ->setRole($this->roleManager->moderatorRole())
         ;
         
         /*
          * Persisting the moderator
          */
-        $this->moderatorManager->create($moderator);
+        $this->adminManager->create($moderator);
 
         /*
          * Summary

@@ -7,10 +7,13 @@
 
 namespace Querdos\ChallengeMe\AdministratorBundle\Command;
 
+use Querdos\ChallengeMe\AdministratorBundle\Entity\Administrator;
 use Querdos\ChallengeMe\AdministratorBundle\Entity\InfoUser;
 use Querdos\ChallengeMe\AdministratorBundle\Entity\PersonalInformation;
 use Querdos\ChallengeMe\AdministratorBundle\Entity\Redactor;
+use Querdos\ChallengeMe\AdministratorBundle\Manager\AdministratorManager;
 use Querdos\ChallengeMe\AdministratorBundle\Manager\RedactorManager;
+use Querdos\ChallengeMe\AdministratorBundle\Manager\RoleManager;
 use Querdos\ChallengeMe\AdministratorBundle\Validator\RedactorValidator;
 use Sensio\Bundle\GeneratorBundle\Command\GeneratorCommand;
 use Sensio\Bundle\GeneratorBundle\Command\Helper\QuestionHelper;
@@ -27,9 +30,14 @@ class CreateRedactorCommand extends GeneratorCommand
 	private $redactorValidator;
 
     /**
-     * @var RedactorManager $redactorManager
+     * @var AdministratorManager $adminManager
      */
-    private $redactorManager;
+    private $adminManager;
+
+    /**
+     * @var RoleManager $roleManager
+     */
+    private $roleManager;
 
     /**
      * @var QuestionHelper $questionHelper
@@ -46,7 +54,8 @@ class CreateRedactorCommand extends GeneratorCommand
 
         // Retrieving validator and manager
 		$this->redactorValidator = $container->get('challengeme.validator.redactor');
-        $this->redactorManager   = $container->get('challengeme.manager.redactor');
+        $this->adminManager      = $container->get('challengeme.manager.administrator');
+        $this->roleManager       = $container->get('challengeme.manager.role');
 
         // Retrieving the question helper
         $this->questionHelper    = $this->getQuestionHelper();
@@ -104,7 +113,7 @@ EOT
 		}
 		
 		// Creating new objects
-		$redactor            = new Redactor();
+		$redactor            = new Administrator();
 		$infoUser            = new InfoUser();
 		$personalInformation = new PersonalInformation();
 		
@@ -130,12 +139,13 @@ EOT
 			->setEmail($input->getOption('email'))
 			->setEmailBack($input->getOption('emailback'))
 			->setInfoUser($infoUser)
+            ->setRole($this->roleManager->redactorRole())
 		;
 		
 		/*
 		 * Persisting the admin
 		 */
-		$this->redactorManager->create($redactor);
+		$this->adminManager->create($redactor);
 		
 		/*
 		 * Summary
