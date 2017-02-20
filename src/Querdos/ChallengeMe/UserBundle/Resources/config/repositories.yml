@@ -1,0 +1,30 @@
+services:
+    challengeme.repository.administrator:
+        class:      Querdos\ChallengeMe\UserBundle\Repository\AdministratorRepository
+        factory:    [ "@doctrine.orm.entity_manager", "getRepository" ]
+        arguments:  [ "UserBundle:Administrator" ]
+    
+    challengeme.repository.info_user:
+        class:      Querdos\ChallengeMe\UserBundle\Repository\InfoUserRepository
+        factory:    [ "@doctrine.orm.entity_manager", "getRepository" ]
+        arguments:  [ "UserBundle:InfoUser" ]
+
+    challengeme.repository.personal_information:
+        class:      Querdos\ChallengeMe\UserBundle\Repository\PersonalInformationRepository
+        factory:    [ "@doctrine.orm.entity_manager", "getRepository" ]
+        arguments:  [ "UserBundle:PersonalInformation" ]
+
+    challengeme.repository.social:
+        class:      Querdos\ChallengeMe\UserBundle\Repository\SocialRepository
+        factory:    [ "@doctrine.orm.entity_manager", "getRepository" ]
+        arguments:  [ "UserBundle:Social" ]
+
+    challengeme.repository.skill:
+        class:      Querdos\ChallengeMe\UserBundle\Repository\SkillRepository
+        factory:    [ "@doctrine.orm.entity_manager", "getRepository" ]
+        arguments:  [ "UserBundle:Skill" ]
+
+    challengeme.repository.role:
+        class:      Querdos\ChallengeMe\UserBundle\Entity\Role
+        factory:    [ "@doctrine.orm.entity_manager", "getRepository" ]
+        arguments:  [ "UserBundle:Role" ]

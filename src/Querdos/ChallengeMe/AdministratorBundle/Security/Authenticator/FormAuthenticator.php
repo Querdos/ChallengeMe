@@ -18,7 +18,6 @@ use Symfony\Component\Security\Core\Tests\Encoder\PasswordEncoder;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Symfony\Component\Security\Guard\AbstractGuardAuthenticator;
-use Symfony\Component\VarDumper\VarDumper;
 
 class FormAuthenticator extends AbstractGuardAuthenticator
 {

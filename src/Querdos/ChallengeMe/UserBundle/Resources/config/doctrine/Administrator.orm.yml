@@ -1,0 +1,42 @@
+Querdos\ChallengeMe\UserBundle\Entity\Administrator:
+    type:             entity
+    table:            cm_admin_administrator
+    repositoryClass:  Querdos\ChallengeMe\UserBundle\Repository\AdministratorRepository
+    id:
+        id:
+            type:       integer
+            id:         true
+            generator:
+                strategy: AUTO
+    fields:
+        username:
+            type:       string
+            length:     128
+            unique:     true
+            nullable:   false
+        password:
+            type:       string
+            length:     255
+            unique:     false
+            nullable:   false
+        email:
+            type:       string
+            length:     255
+            unique:     true
+            nullable:   false
+        emailBack:
+            type:       string
+            length:     255
+            unique:     true
+            nullable:   false
+
+    manyToOne:
+        infoUser:
+            targetEntity: Querdos\ChallengeMe\UserBundle\Entity\InfoUser
+            cascade:      [ "persist", "remove" ]
+
+        role:
+            targetEntity: Querdos\ChallengeMe\UserBundle\Entity\Role
+            cascade:      [ "persist", "remove" ]
+
+    lifecycleCallbacks: {  }

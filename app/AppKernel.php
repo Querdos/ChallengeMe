@@ -26,6 +26,7 @@ class AppKernel extends Kernel
             
             new Querdos\ChallengeMe\AdministratorBundle\AdminBundle(),
             new Querdos\ChallengeMe\LandingBundle\LandingBundle(),
+            new Querdos\ChallengeMe\UserBundle\UserBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

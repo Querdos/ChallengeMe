@@ -8,8 +8,8 @@
 
 namespace Querdos\ChallengeMe\AdministratorBundle\Security\Provider;
 
-use Querdos\ChallengeMe\AdministratorBundle\Entity\Administrator;
-use Querdos\ChallengeMe\AdministratorBundle\Manager\AdministratorManager;
+use Querdos\ChallengeMe\UserBundle\Entity\Administrator;
+use Querdos\ChallengeMe\UserBundle\Manager\AdministratorManager;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
 use Symfony\Component\Security\Core\User\UserInterface;

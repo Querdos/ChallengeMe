@@ -7,9 +7,9 @@
 
 namespace Querdos\ChallengeMe\AdministratorBundle\Controller;
 
-use Querdos\ChallengeMe\AdministratorBundle\Entity\Administrator;
-use Querdos\ChallengeMe\AdministratorBundle\Entity\Moderator;
-use Querdos\ChallengeMe\AdministratorBundle\Entity\Redactor;
+use Querdos\ChallengeMe\UserBundle\Entity\Administrator;
+use Querdos\ChallengeMe\UserBundle\Entity\Moderator;
+use Querdos\ChallengeMe\UserBundle\Entity\Redactor;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
