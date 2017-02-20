@@ -4,6 +4,7 @@
  * Date: 8/15/16
  * Time: 3:59 PM
  */
+
 namespace Querdos\ChallengeMe\AdministratorBundle\Manager;
 
 use Querdos\ChallengeMe\AdministratorBundle\Repository\PersonalInformationRepository;

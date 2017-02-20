@@ -1,6 +1,6 @@
 <?php
 /**
- * Created by Hamza ESSAYEGHG.
+ * Created by Hamza ESSAYEGH.
  * User: querdos
  * Date: 18/02/17
  * Time: 18:21

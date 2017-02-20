@@ -4,6 +4,7 @@
  * Date: 11/14/16
  * Time: 01:41 PM
  */
+
 namespace Querdos\ChallengeMe\AdministratorBundle\Entity;
 
 use Querdos\ChallengeMe\AdministratorBundle\Entity\InfoUser;
