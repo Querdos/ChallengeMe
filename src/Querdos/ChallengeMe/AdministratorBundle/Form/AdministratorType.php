@@ -82,7 +82,7 @@ class AdministratorType extends AbstractType
     {
         $resolver
             ->setDefaults(array(
-                'data_class'        => 'Querdos\ChallengeMe\AdministratorBundle\Entity\Administrator',
+                'data_class'        => 'Querdos\ChallengeMe\UserBundle\Entity\Administrator',
                 'csrf_protection'   => true,
                 'csrf_field_name'   => '_token',
                 'csrf_token_id'     => 'administrator_token',
