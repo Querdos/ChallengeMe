@@ -10,6 +10,7 @@ namespace Querdos\ChallengeMe\UserBundle\Command;
 use Querdos\ChallengeMe\UserBundle\Entity\Administrator;
 use Querdos\ChallengeMe\UserBundle\Entity\InfoUser;
 use Querdos\ChallengeMe\UserBundle\Entity\PersonalInformation;
+use Querdos\ChallengeMe\UserBundle\Entity\Role;
 use Querdos\ChallengeMe\UserBundle\Manager\AdministratorManager;
 use Querdos\ChallengeMe\UserBundle\Validator\AdminValidator;
 use Sensio\Bundle\GeneratorBundle\Command\GeneratorCommand;
@@ -58,7 +59,7 @@ class CreateAdminCommand extends GeneratorCommand
     public function configure()
     {
         $this
-            ->setName("challengeme:generate:admin")
+            ->setName("challengeme:create:admin")
             ->setDescription("Generate administrator")
 
             ->setDefinition(array(
@@ -138,7 +139,7 @@ EOT
         /*
          * Persisting the admin
          */
-        $this->adminManager->create($admin);
+        $this->adminManager->create($admin, Role::ROLE_ADMIN);
 
         /*
          * Summary

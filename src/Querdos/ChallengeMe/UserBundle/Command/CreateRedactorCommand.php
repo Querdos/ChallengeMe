@@ -56,7 +56,7 @@ class CreateRedactorCommand extends GeneratorCommand
 	public function configure() 
 	{
 		$this
-			->setName('challengeme:generate:redactor')
+			->setName('challengeme:create:redactor')
 			->setDescription('Generate a redactor')
 			
 			->setDefinition(array(

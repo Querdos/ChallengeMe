@@ -66,7 +66,7 @@ class CreateModeratorCommand extends GeneratorCommand
     public function configure()
     {
         $this
-            ->setName("challengeme:generate:moderator")
+            ->setName("challengeme:create:moderator")
             ->setDescription("Generate a moderator")
 
             ->setDefinition(array(
