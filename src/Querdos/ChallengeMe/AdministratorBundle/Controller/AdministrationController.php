@@ -1,16 +1,19 @@
 <?php
+/**
+ * Created by Hamza ESSAYEGH.
+ * Date: 6/5/16
+ * Time: 12:18 PM
+ */
 
 namespace Querdos\ChallengeMe\AdministratorBundle\Controller;
 
-use Querdos\ChallengeMe\AdministratorBundle\Entity\Administrator;
-use Querdos\ChallengeMe\AdministratorBundle\Entity\Moderator;
-use Querdos\ChallengeMe\AdministratorBundle\Entity\Redactor;
+use Querdos\ChallengeMe\UserBundle\Entity\Administrator;
 use Querdos\ChallengeMe\AdministratorBundle\Form\AdministratorType;
 use Querdos\ChallengeMe\AdministratorBundle\Form\ModeratorType;
 use Querdos\ChallengeMe\AdministratorBundle\Form\RedactorType;
-use Querdos\ChallengeMe\AdministratorBundle\Manager\AdministratorManager;
-use Querdos\ChallengeMe\AdministratorBundle\Manager\ModeratorManager;
-use Querdos\ChallengeMe\AdministratorBundle\Manager\RedactorManager;
+use Querdos\ChallengeMe\UserBundle\Manager\AdministratorManager;
+use Querdos\ChallengeMe\UserBundle\Manager\ModeratorManager;
+use Querdos\ChallengeMe\UserBundle\Manager\RedactorManager;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;

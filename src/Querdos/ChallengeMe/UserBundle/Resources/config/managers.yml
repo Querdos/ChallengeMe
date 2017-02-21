@@ -1,0 +1,17 @@
+services:
+    challengeme.manager.administrator:
+        class: Querdos\ChallengeMe\UserBundle\Manager\AdministratorManager
+        calls:
+            - [ setRepository,      ['@challengeme.repository.administrator']]
+            - [ setPasswordEncoder, ['@security.password_encoder']]
+            - [ setEntityManager,   ['@doctrine.orm.entity_manager']]
+
+    challengeme.manager.personal_information:
+        class: Querdos\ChallengeMe\UserBundle\Manager\PersonalInformationManager
+        calls:
+            - [ setRepository,      ['@challengeme.repository.personal_information'] ]
+
+    challengeme.manager.role:
+        class: Querdos\ChallengeMe\UserBundle\Manager\RoleManager
+        calls:
+            -  [ setRepository,     [ '@challengeme.repository.role' ] ]

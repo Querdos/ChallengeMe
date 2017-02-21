@@ -3,15 +3,7 @@ imports:
 
 security:
     encoders:
-        Querdos\ChallengeMe\AdministratorBundle\Entity\Administrator:
-            algorithm:  bcrypt
-            cost:       12
-
-        Querdos\ChallengeMe\AdministratorBundle\Entity\Moderator:
-            algorithm:  bcrypt
-            cost:       12
-
-        Querdos\ChallengeMe\AdministratorBundle\Entity\Redactor:
+        Querdos\ChallengeMe\UserBundle\Entity\Administrator:
             algorithm:  bcrypt
             cost:       12
 

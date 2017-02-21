@@ -1,9 +1,8 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: querdos
- * Date: 5/22/16
- * Time: 1:21 PM
+ * Created by Hamza ESSAYEGH.
+ * Date: 6/5/16
+ * Time: 12:18 PM
  */
 
 namespace Querdos\ChallengeMe\AdministratorBundle\Security\Authenticator;
@@ -19,7 +18,6 @@ use Symfony\Component\Security\Core\Tests\Encoder\PasswordEncoder;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Symfony\Component\Security\Guard\AbstractGuardAuthenticator;
-use Symfony\Component\VarDumper\VarDumper;
 
 class FormAuthenticator extends AbstractGuardAuthenticator
 {
