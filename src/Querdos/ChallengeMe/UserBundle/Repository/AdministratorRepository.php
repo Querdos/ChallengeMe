@@ -8,6 +8,7 @@
 namespace Querdos\ChallengeMe\UserBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
+use Querdos\ChallengeMe\UserBundle\Entity\Administrator;
 use Querdos\ChallengeMe\UserBundle\Entity\Role;
 use Symfony\Component\Config\Definition\Exception\Exception;
 
@@ -48,7 +49,7 @@ class AdministratorRepository extends EntityRepository
     /**
      * Return the public info of an admin
      *
-     * @param   $id
+     * @param   int     $id
      * @return  array
      */
     public function getAdminPublicInfo($id) {
@@ -73,14 +74,15 @@ class AdministratorRepository extends EntityRepository
 
         return $query
             ->getQuery()
-            ->getSingleResult();
+            ->getSingleResult()
+        ;
     }
 
     /**
      * Check username existence for an admin
      *
-     * @param   $username
-     * @return  array
+     * @param   string $username
+     * @return  Administrator | null
      */
     public function checkUsername($username) {
         $query = $this
@@ -98,14 +100,15 @@ class AdministratorRepository extends EntityRepository
 
         return $query
             ->getQuery()
-            ->getOneOrNullResult();
+            ->getOneOrNullResult()
+        ;
     }
 
     /**
      * Check email existence for an admin
      *
-     * @param   $email
-     * @return  array
+     * @param   string $email
+     * @return  string | null
      */
     public function checkEmail($email) {
         $query = $this
@@ -123,16 +126,17 @@ class AdministratorRepository extends EntityRepository
 
         return $query
             ->getQuery()
-            ->getOneOrNullResult();
+            ->getOneOrNullResult()
+        ;
     }
 
     /**
-     * Check emaiBack existance for an admin
+     * Check emailBack existance for an admin
      * (as emailBack, and check too if it exists
      * as a main email)
      *
-     * @param $email
-     * @return string|null
+     * @param  string $email
+     * @return string | null
      */
     public function checkEmailBack($email) {
         $query = $this->getEntityManager()->createQueryBuilder()
@@ -144,7 +148,8 @@ class AdministratorRepository extends EntityRepository
 
         return $query
             ->getQuery()
-            ->getOneOrNullResult();
+            ->getOneOrNullResult()
+        ;
     }
 
     /**

@@ -15,7 +15,7 @@ use Querdos\ChallengeMe\UserBundle\Repository\AdministratorRepository;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoder;
 use Symfony\Component\Security\Core\Tests\Encoder\PasswordEncoder;
 
-class AdministratorManager implements AdministratorManagerInterface
+class AdministratorManager
 {
     /**
      * @var AdministratorRepository $repository
@@ -54,8 +54,9 @@ class AdministratorManager implements AdministratorManagerInterface
     }
 
     /**
-     * {@inheritDoc}
-     * @see \Querdos\ChallengeMe\UserBundle\Manager\AdministratorManagerInterface::update()
+     * Update an administrator entity
+     *
+     * @param Administrator $admin
      */
     public function update(Administrator $admin)
     {
@@ -83,8 +84,9 @@ class AdministratorManager implements AdministratorManagerInterface
     }
 
     /**
-     * {@inheritDoc}
-     * @see \Querdos\ChallengeMe\UserBundle\Manager\AdministratorManagerInterface::delete()
+     * Remove an administrator from the database
+     *
+     * @param Administrator $admin
      */
     public function delete(Administrator $admin)
     {
@@ -101,8 +103,9 @@ class AdministratorManager implements AdministratorManagerInterface
     }
 
     /**
-     * {@inheritDoc}
-     * @see \Querdos\ChallengeMe\UserBundle\Manager\AdministratorManagerInterface::all()
+     * Return all administrators from the database
+     *
+     * @return Administrator[]
      */
     public function all()
     {
@@ -140,8 +143,9 @@ class AdministratorManager implements AdministratorManagerInterface
     }
 
     /**
-     * {@inheritDoc}
-     * @see \Querdos\ChallengeMe\UserBundle\Manager\AdministratorManagerInterface::resetPassword()
+     * Reset password for a given administrator (random uid, to be changed)
+     *
+     * @param Administrator $admin
      */
     public function resetPassword(Administrator $admin)
     {
@@ -150,8 +154,10 @@ class AdministratorManager implements AdministratorManagerInterface
     }
 
     /**
-     * {@inheritDoc}
-     * @see \Querdos\ChallengeMe\UserBundle\Manager\AdministratorManagerInterface::getAdminData()
+     * Retrieve an administrator informations, with a given username
+     *
+     * @param   string $username
+     * @return  array
      */
     public function getAdminData($username)
     {
@@ -159,16 +165,20 @@ class AdministratorManager implements AdministratorManagerInterface
     }
 
     /**
-     * {@inheritDoc}
-     * @see \Querdos\ChallengeMe\UserBundle\Manager\AdministratorManagerInterface::getAdminPublicInfo()
+     * Return an administrator public information, with a given id
+     *
+     * @param   int     $id
+     * @return  array
      */
     public function getAdminPublicInfo($id) {
         return $this->repository->getAdminPublicInfo($id);
     }
 
     /**
-     * {@inheritDoc}
-     * @see \Querdos\ChallengeMe\UserBundle\Manager\AdministratorManagerInterface::checkUsername()
+     * Check if the given username exists in database
+     *
+     * @param   string  $username
+     * @return  Administrator | null
      */
     public function checkUsername($username)
     {
@@ -176,8 +186,10 @@ class AdministratorManager implements AdministratorManagerInterface
     }
 
     /**
-     * {@inheritDoc}
-     * @see \Querdos\ChallengeMe\UserBundle\Manager\AdministratorManagerInterface::checkEmail()
+     * Check email existance for administrators
+     *
+     * @param   string $email
+     * @return  string
      */
     public function checkEmail($email)
     {
@@ -185,8 +197,10 @@ class AdministratorManager implements AdministratorManagerInterface
     }
 
     /**
-     * {@inheritDoc}
-     * @see \Querdos\ChallengeMe\UserBundle\Manager\AdministratorManagerInterface::checkEmailBack()
+     * Check if the secondary email exists for administrators
+     *
+     * @param   string $email
+     * @return  string | null
      */
     public function checkEmailBack($email)
     {
@@ -196,7 +210,7 @@ class AdministratorManager implements AdministratorManagerInterface
     /**
      * Return an administrator with a given id
      *
-     * @param  int $id
+     * @param  int              $id
      * @return Administrator
      */
     public function readById($id)
