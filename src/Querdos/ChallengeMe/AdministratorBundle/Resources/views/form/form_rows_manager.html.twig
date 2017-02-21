@@ -4,8 +4,9 @@
             {{ form_label(form) }}
             <div class="col-md-6 col-sm-6 col-xs-12">
                 {{ form_widget(form) }}
+                <small style="color: red;">{{ form_errors(form) }}</small>
             </div>
-            <small style="color: red;">{{ form_errors(form) }}</small>
         </div>
+
     {% endspaceless %}
 {% endblock form_row %}
