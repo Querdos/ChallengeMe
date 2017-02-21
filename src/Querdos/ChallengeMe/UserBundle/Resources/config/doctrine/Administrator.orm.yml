@@ -29,6 +29,10 @@ Querdos\ChallengeMe\UserBundle\Entity\Administrator:
             length:     255
             unique:     true
             nullable:   false
+        creationDate:
+            type:       date
+            nullable:   false
+            unique:     false
 
     manyToOne:
         infoUser:

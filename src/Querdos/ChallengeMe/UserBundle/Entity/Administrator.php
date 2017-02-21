@@ -55,6 +55,11 @@ class Administrator implements UserInterface, \Serializable
     private $infoUser;
 
     /**
+     * @var \DateTime
+     */
+    private $creationDate;
+
+    /**
      * Administrator constructor.
      * @param string    $id
      * @param string    $username
@@ -69,6 +74,7 @@ class Administrator implements UserInterface, \Serializable
         $this->email        = $email;
         $this->emailBack    = "";
         $this->password     = $password;
+        $this->creationDate = new \DateTime();
 
         $role == null ? $this->role = new Role() : $this->role = $role;
         $this->infoUser     = new InfoUser();
@@ -251,6 +257,7 @@ class Administrator implements UserInterface, \Serializable
     public function eraseCredentials()
     {
         $this->plainPassword = "";
+        return $this;
     }
 
     /**
@@ -304,5 +311,15 @@ class Administrator implements UserInterface, \Serializable
     {
         $this->role = $role;
         return $this;
+    }
+
+    /**
+     * Get the creation date
+     *
+     * @return \DateTime
+     */
+    public function getCreationDate()
+    {
+        return $this->creationDate;
     }
 }
