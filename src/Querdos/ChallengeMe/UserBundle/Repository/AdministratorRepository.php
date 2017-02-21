@@ -174,9 +174,11 @@ class AdministratorRepository extends EntityRepository
             ->getEntityManager()
             ->createQueryBuilder()
             ->select("admin")
+            ->addSelect("info_user")
 
             ->from("UserBundle:Administrator", "admin")
             ->join("admin.role", "role")
+            ->join("admin.infoUser", "info_user")
             ->where("role.value = :rolevalue")
 
             ->setParameter("rolevalue", $role)

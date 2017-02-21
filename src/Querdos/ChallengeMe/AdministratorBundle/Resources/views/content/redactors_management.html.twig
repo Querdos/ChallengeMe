@@ -60,8 +60,8 @@
                             {% for redactor in redactors %}
                                 {% if redactor.username != app.user.username %}
                                     <tr>
-                                        <td>{{ redactor.infoUser.firstname }}</td>
-                                        <td>{{ redactor.infoUser.lastname }}</td>
+                                        <td>{{ redactor.infoUser.firstName }}</td>
+                                        <td>{{ redactor.infoUser.lastName }}</td>
                                         <td>{{ redactor.username }}</td>
                                         <td>{{ redactor.email }}</td>
                                         <td>{{ redactor.emailBack }}</td>

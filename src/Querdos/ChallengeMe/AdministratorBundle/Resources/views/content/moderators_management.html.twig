@@ -58,8 +58,8 @@
                             {% for moderator in moderators %}
                                 {% if moderator.username != app.user.username %}
                                     <tr>
-                                        <td>{{ moderator.infoUser.firstname }}</td>
-                                        <td>{{ moderator.infoUser.lastname }}</td>
+                                        <td>{{ moderator.infoUser.firstName }}</td>
+                                        <td>{{ moderator.infoUser.lastName }}</td>
                                         <td>{{ moderator.username }}</td>
                                         <td>{{ moderator.email }}</td>
                                         <td>{{ moderator.emailBack }}</td>
