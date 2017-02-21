@@ -26,27 +26,54 @@ class AdministratorManager
      * @var UserPasswordEncoder $passwordEncoder
      */
     private $passwordEncoder;
+
+    /**
+     * @var RoleManager $roleManager
+     */
+    private $roleManager;
     
     /**
      * @var EntityManager $entityManager
      */
     private $entityManager;
-    
+
     /**
-     * Create a new administrator
-     * 
-     * {@inheritDoc}
-     * @see \Querdos\ChallengeMe\UserBundle\Manager\AdministratorManagerInterface::create()
+     * Create a new administrator, depending on the given role
+     *
+     * @param   Administrator   $admin
+     * @param   string          $role
+     * @throws \Exception
      */
-    public function create(Administrator $admin)
+    public function create(Administrator $admin, $role)
     {
+        // checking the role
+        if (false === Role::check($role)) {
+            throw new \Exception("Unrecognized role");
+        }
+
         // Encoding the password and setting it
+        // Adding the corresponding role
         $admin
             ->setPassword(
                 $this->passwordEncoder->encodePassword($admin, $admin->getPlainPassword())
             )
             ->eraseCredentials()
         ;
+
+        // setting role
+        switch ($role) {
+            case Role::ROLE_ADMIN:
+                $admin->setRole($this->roleManager->adminRole());
+            break;
+
+            case Role::ROLE_MODERATOR:
+                $admin->setRole($this->roleManager->moderatorRole());
+            break;
+
+            case Role::ROLE_REDACTOR:
+                $admin->setRole($this->roleManager->redactorRole());
+            break;
+        }
 
         // Persisting
         $this->entityManager->persist($admin);
@@ -243,12 +270,24 @@ class AdministratorManager
     /**
      * Set the entity manager
      * 
-     * @param EntityManager $entityManager
-     * @return \Querdos\ChallengeMe\UserBundle\Manager\AdministratorManager
+     * @param   EntityManager           $entityManager
+     * @return  AdministratorManager
      */
     public function setEntityManager(EntityManager $entityManager) 
     {
     	$this->entityManager = $entityManager;
     	return $this;
+    }
+
+    /**
+     * Set the role manager
+     *
+     * @param   RoleManager $roleManager
+     * @return  $this
+     */
+    public function setRoleManager(RoleManager $roleManager)
+    {
+        $this->roleManager = $roleManager;
+        return $this;
     }
 }
