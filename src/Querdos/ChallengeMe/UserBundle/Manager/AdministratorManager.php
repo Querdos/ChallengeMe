@@ -10,6 +10,7 @@ namespace Querdos\ChallengeMe\UserBundle\Manager;
 
 use Doctrine\ORM\EntityManager;
 use Querdos\ChallengeMe\UserBundle\Entity\Administrator;
+use Querdos\ChallengeMe\UserBundle\Entity\Role;
 use Querdos\ChallengeMe\UserBundle\Repository\AdministratorRepository;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoder;
 use Symfony\Component\Security\Core\Tests\Encoder\PasswordEncoder;
@@ -35,7 +36,7 @@ class AdministratorManager implements AdministratorManagerInterface
      * Create a new administrator
      * 
      * {@inheritDoc}
-     * @see \Querdos\ChallengeMe\AdministratorBundle\Manager\AdministratorManagerInterface::create()
+     * @see \Querdos\ChallengeMe\UserBundle\Manager\AdministratorManagerInterface::create()
      */
     public function create(Administrator $admin)
     {
@@ -54,7 +55,7 @@ class AdministratorManager implements AdministratorManagerInterface
 
     /**
      * {@inheritDoc}
-     * @see \Querdos\ChallengeMe\AdministratorBundle\Manager\AdministratorManagerInterface::update()
+     * @see \Querdos\ChallengeMe\UserBundle\Manager\AdministratorManagerInterface::update()
      */
     public function update(Administrator $admin)
     {
@@ -83,7 +84,7 @@ class AdministratorManager implements AdministratorManagerInterface
 
     /**
      * {@inheritDoc}
-     * @see \Querdos\ChallengeMe\AdministratorBundle\Manager\AdministratorManagerInterface::delete()
+     * @see \Querdos\ChallengeMe\UserBundle\Manager\AdministratorManagerInterface::delete()
      */
     public function delete(Administrator $admin)
     {
@@ -101,7 +102,7 @@ class AdministratorManager implements AdministratorManagerInterface
 
     /**
      * {@inheritDoc}
-     * @see \Querdos\ChallengeMe\AdministratorBundle\Manager\AdministratorManagerInterface::all()
+     * @see \Querdos\ChallengeMe\UserBundle\Manager\AdministratorManagerInterface::all()
      */
     public function all()
     {
@@ -140,7 +141,7 @@ class AdministratorManager implements AdministratorManagerInterface
 
     /**
      * {@inheritDoc}
-     * @see \Querdos\ChallengeMe\AdministratorBundle\Manager\AdministratorManagerInterface::resetPassword()
+     * @see \Querdos\ChallengeMe\UserBundle\Manager\AdministratorManagerInterface::resetPassword()
      */
     public function resetPassword(Administrator $admin)
     {
@@ -150,7 +151,7 @@ class AdministratorManager implements AdministratorManagerInterface
 
     /**
      * {@inheritDoc}
-     * @see \Querdos\ChallengeMe\AdministratorBundle\Manager\AdministratorManagerInterface::getAdminData()
+     * @see \Querdos\ChallengeMe\UserBundle\Manager\AdministratorManagerInterface::getAdminData()
      */
     public function getAdminData($username)
     {
@@ -159,7 +160,7 @@ class AdministratorManager implements AdministratorManagerInterface
 
     /**
      * {@inheritDoc}
-     * @see \Querdos\ChallengeMe\AdministratorBundle\Manager\AdministratorManagerInterface::getAdminPublicInfo()
+     * @see \Querdos\ChallengeMe\UserBundle\Manager\AdministratorManagerInterface::getAdminPublicInfo()
      */
     public function getAdminPublicInfo($id) {
         return $this->repository->getAdminPublicInfo($id);
@@ -167,7 +168,7 @@ class AdministratorManager implements AdministratorManagerInterface
 
     /**
      * {@inheritDoc}
-     * @see \Querdos\ChallengeMe\AdministratorBundle\Manager\AdministratorManagerInterface::checkUsername()
+     * @see \Querdos\ChallengeMe\UserBundle\Manager\AdministratorManagerInterface::checkUsername()
      */
     public function checkUsername($username)
     {
@@ -176,7 +177,7 @@ class AdministratorManager implements AdministratorManagerInterface
 
     /**
      * {@inheritDoc}
-     * @see \Querdos\ChallengeMe\AdministratorBundle\Manager\AdministratorManagerInterface::checkEmail()
+     * @see \Querdos\ChallengeMe\UserBundle\Manager\AdministratorManagerInterface::checkEmail()
      */
     public function checkEmail($email)
     {
@@ -185,7 +186,7 @@ class AdministratorManager implements AdministratorManagerInterface
 
     /**
      * {@inheritDoc}
-     * @see \Querdos\ChallengeMe\AdministratorBundle\Manager\AdministratorManagerInterface::checkEmailBack()
+     * @see \Querdos\ChallengeMe\UserBundle\Manager\AdministratorManagerInterface::checkEmailBack()
      */
     public function checkEmailBack($email)
     {
@@ -229,7 +230,7 @@ class AdministratorManager implements AdministratorManagerInterface
      * Set the entity manager
      * 
      * @param EntityManager $entityManager
-     * @return \Querdos\ChallengeMe\AdministratorBundle\Manager\AdministratorManager
+     * @return \Querdos\ChallengeMe\UserBundle\Manager\AdministratorManager
      */
     public function setEntityManager(EntityManager $entityManager) 
     {

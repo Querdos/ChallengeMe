@@ -8,6 +8,8 @@
 namespace Querdos\ChallengeMe\UserBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
+use Querdos\ChallengeMe\UserBundle\Entity\Role;
+use Symfony\Component\Config\Definition\Exception\Exception;
 
 /**
  * AdministratorRepository
@@ -143,5 +145,41 @@ class AdministratorRepository extends EntityRepository
         return $query
             ->getQuery()
             ->getOneOrNullResult();
+    }
+
+    /**
+     * Return all administrators, depending on the role.
+     *
+     * Allowed roles:
+     *      ROLE_ADMIN
+     *      ROLE_MODERATOR
+     *      ROLE_REDACTOR
+     *
+     * @param Role $role
+     * @return array
+     */
+    public function all($role)
+    {
+        // checking role
+        if (false === Role::check($role)) {
+            throw new Exception("Role not found.");
+        }
+
+        $query = $this
+            ->getEntityManager()
+            ->createQueryBuilder()
+            ->select("admin")
+
+            ->from("UserBundle:Administrator", "admin")
+            ->join("admin.role", "role")
+            ->where("role.value = :rolevalue")
+
+            ->setParameter("rolevalue", $role)
+        ;
+
+        return $query
+            ->getQuery()
+            ->getArrayResult()
+        ;
     }
 }

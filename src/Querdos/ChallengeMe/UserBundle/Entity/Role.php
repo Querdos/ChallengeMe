@@ -17,6 +17,15 @@ class Role
     const ROLE_REDACTOR     = "ROLE_REDACTOR";
     const ROLE_USER         = "ROLE_USER";
 
+    public static function check($value)
+    {
+        if ($value === self::ROLE_ADMIN || $value === self::ROLE_MODERATOR || $value === self::ROLE_REDACTOR || $value === self::ROLE_USER) {
+            return true;
+        }
+
+        return false;
+    }
+
     /**
      * @var int
      */
