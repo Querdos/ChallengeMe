@@ -11,14 +11,14 @@ use Querdos\ChallengeMe\UserBundle\Entity\Administrator;
 use Querdos\ChallengeMe\AdministratorBundle\Form\AdministratorType;
 use Querdos\ChallengeMe\AdministratorBundle\Form\ModeratorType;
 use Querdos\ChallengeMe\AdministratorBundle\Form\RedactorType;
+use Querdos\ChallengeMe\UserBundle\Entity\Role;
 use Querdos\ChallengeMe\UserBundle\Manager\AdministratorManager;
-use Querdos\ChallengeMe\UserBundle\Manager\ModeratorManager;
-use Querdos\ChallengeMe\UserBundle\Manager\RedactorManager;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\VarDumper\VarDumper;
 
 class AdministrationController extends Controller
 {
@@ -29,13 +29,14 @@ class AdministrationController extends Controller
      */
     public function indexAction()
     {
-        // retrieving managers
+        // retrieving admin manager
         $adminManager       = $this->get('challengeme.manager.administrator');
 
+        // TODO: Create method in manager to retrieve only the count for each kind of admin
         return array(
-            'adminCount'    => count($adminManager->all()),
-            'modoCount'     => 0, // TODO: Modo Count
-            'redacCount'    => 0  // TODO: Redac Count
+            'adminCount'    => count($adminManager->getAllAdmin()),
+            'modoCount'     => count($adminManager->getAllModerators()),
+            'redacCount'    => count($adminManager->getAllRedactors())
         );
     }
 
@@ -78,15 +79,15 @@ class AdministrationController extends Controller
         $adminManager = $this->get('challengeme.manager.administrator');
 
         return array(
-            'administrators'    => $adminManager->all()
+            'administrators'    => $adminManager->getAllAdmin()
         );
     }
 
     /**
      * @Template("AdminBundle:content:add_admin.html.twig")
      *
-     * @param Request $request
-     * @return array
+     * @param   Request $request
+     * @return  array | RedirectResponse
      */
     public function addAdminAction(Request $request)
     {
@@ -108,7 +109,7 @@ class AdministrationController extends Controller
         $form->handleRequest($request);
         if ($form->isValid()) {
             // Persisting the new administrator
-            $this->get('challengeme.manager.administrator')->create($admin);
+            $this->get('challengeme.manager.administrator')->create($admin, Role::ROLE_ADMIN);
 
             // Redirecting after success
             return $this->redirectToRoute('administration_adminsManagement');
@@ -146,8 +147,12 @@ class AdministrationController extends Controller
         ;
         
         $form->handleRequest($request);
-        if ($form->isValid()) {
-            dump($admin);die;
+        if ($form->isSubmitted()) {
+            // In case the plain password haven't been changed
+            if ($admin->getPlainPassword() === "********") {
+                $admin->eraseCredentials();
+            }
+
             // Persisting the admin
             $this->get('challengeme.manager.administrator')->update($admin);
             
@@ -198,11 +203,11 @@ class AdministrationController extends Controller
      * @return array
      */
     public function moderatorsManagementAction() {
-        /** @var ModeratorManager $moderatorManager */
-        $moderatorManager = $this->get('challengeme.manager.moderator');
+        /** @var AdministratorManager $adminManager */
+        $adminManager = $this->get('challengeme.manager.administrator');
 
         return array(
-            'moderators' => $moderatorManager->all()
+            'moderators' => $adminManager->getAllModerators()
         );
     }
 
@@ -214,7 +219,7 @@ class AdministrationController extends Controller
      */
     public function addModeratorAction(Request $request)
     {
-        $moderator  = new Moderator();
+        $moderator  = new Administrator();
         $form   = $this->createForm(ModeratorType::class, $moderator);
 
         $form
@@ -230,7 +235,7 @@ class AdministrationController extends Controller
         $form->handleRequest($request);
         if ($form->isValid()) {
             // Persisting the new administrator
-            $this->get('challengeme.manager.moderator')->create($moderator);
+            $this->get('challengeme.manager.administrator')->create($moderator, Role::ROLE_MODERATOR);
 
             // Redirecting after success
             return $this->redirectToRoute('administration_moderatorsManagement');
@@ -250,7 +255,7 @@ class AdministrationController extends Controller
      */
     public function updateModeratorAction($id, Request $request)
     {
-        // 
+        // TODO
     }
     
     /**
@@ -275,10 +280,10 @@ class AdministrationController extends Controller
         }
 
         // Retrieving admin
-        $moderator = $this->get('challengeme.manager.moderator')->readById($id);
+        $moderator = $this->get('challengeme.manager.administrator')->readById($id);
 
         // Everything correct, removing
-        $this->get('challengeme.manager.moderator')->delete($moderator);
+        $this->get('challengeme.manager.administrator')->delete($moderator);
 
         // Redirecting
         return $this->redirectToRoute('administration_moderatorsManagement');
@@ -290,11 +295,11 @@ class AdministrationController extends Controller
      * @return array
      */
     public function redactorsManagementAction() {
-        /** @var RedactorManager $redactorManager */
-        $redactorManager = $this->get('challengeme.manager.redactor');
+        /** @var AdministratorManager $adminManager*/
+        $adminManager = $this->get('challengeme.manager.administrator');
 
         return array(
-            'redactors' => $redactorManager->all()
+            'redactors' => $adminManager->getAllRedactors()
         );
     }
 
@@ -306,7 +311,7 @@ class AdministrationController extends Controller
      */
     public function addRedactorAction(Request $request)
     {
-        $redactor = new Redactor();
+        $redactor = new Administrator();
         $form     = $this->createForm(RedactorType::class, $redactor);
 
         $form
@@ -322,7 +327,7 @@ class AdministrationController extends Controller
         $form->handleRequest($request);
         if ($form->isValid()) {
             // Persisting the new redactor
-            $this->get('challengeme.manager.redactor')->create($redactor);
+            $this->get('challengeme.manager.administrator')->create($redactor, Role::ROLE_REDACTOR);
 
             // Redirecting after success
             return $this->redirectToRoute('administration_redactorsManagement');
@@ -367,10 +372,10 @@ class AdministrationController extends Controller
         }
 
         // Retrieving admin
-        $redactor = $this->get('challengeme.manager.redactor')->readById($id);
+        $redactor = $this->get('challengeme.manager.administrator')->readById($id);
 
         // Everything correct, removing
-        $this->get('challengeme.manager.redactor')->delete($redactor);
+        $this->get('challengeme.manager.administrator')->delete($redactor);
 
         // Redirecting
         return $this->redirectToRoute('administration_redactorsManagement');
@@ -419,7 +424,7 @@ class AdministrationController extends Controller
             $this->denyAccessUnlessGranted('ROLE_ADMIN', null, "You are not allowed to access this page");
 
             // Retrieving the manager
-            $manager    = $this->get('challengeme.manager.moderator');
+            $manager    = $this->get('challengeme.manager.administrator');
 
             // Retrieving admin
             $moderator  = $manager->readById($id);
@@ -437,7 +442,7 @@ class AdministrationController extends Controller
             $this->denyAccessUnlessGranted('ROLE_MODERATOR', null, "You are not allowed to access this page");
 
             // Retrieving the manager
-            $manager    = $this->get('challengeme.manager.redactor');
+            $manager    = $this->get('challengeme.manager.administrator');
 
             // Retrieving admin
             $redactor   = $manager->readById($id);

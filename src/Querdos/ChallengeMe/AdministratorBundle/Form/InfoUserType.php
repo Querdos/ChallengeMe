@@ -86,11 +86,13 @@ class InfoUserType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
-            'data_class'      => 'Querdos\ChallengeMe\UserBundle\Entity\InfoUser',
-            'csrf_protection' => true,
-            'csrf_field_name' => '_token',
-            'csrf_token_id'   => 'administrator_token',
-        ));
+        $resolver
+            ->setDefaults(array(
+                'data_class'      => 'Querdos\ChallengeMe\UserBundle\Entity\InfoUser',
+                'csrf_protection' => true,
+                'csrf_field_name' => '_token',
+                'csrf_token_id'   => 'administrator_token',
+            ))
+        ;
     }
 }

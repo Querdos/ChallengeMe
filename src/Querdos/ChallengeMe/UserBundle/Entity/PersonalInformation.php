@@ -205,5 +205,4 @@ class PersonalInformation
         $this->socials = $socials;
         return $this;
     }
-
 }
