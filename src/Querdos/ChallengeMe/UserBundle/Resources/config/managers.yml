@@ -16,3 +16,9 @@ services:
         class: Querdos\ChallengeMe\UserBundle\Manager\RoleManager
         calls:
             -  [ setRepository,     [ '@challengeme.repository.role' ] ]
+
+    challengeme.manager.private_message:
+        class: Querdos\ChallengeMe\UserBundle\Manager\PrivateMessageManager
+        calls:
+            - [ setRepository,      [ '@challengeme.repository.private_message' ] ]
+            - [ setAdminManager,    [ '@challengeme.manager.administrator' ] ]

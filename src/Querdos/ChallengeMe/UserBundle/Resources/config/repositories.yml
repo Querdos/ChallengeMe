@@ -28,3 +28,8 @@ services:
         class:      Querdos\ChallengeMe\UserBundle\Entity\Role
         factory:    [ "@doctrine.orm.entity_manager", "getRepository" ]
         arguments:  [ "UserBundle:Role" ]
+
+    challengeme.repository.private_message:
+        class:      Querdos\ChallengeMe\UserBundle\Repository\PrivateMessageRepository
+        factory:    [ "@doctrine.orm.entity_manager", "getRepository" ]
+        arguments:  [ "UserBundle:PrivateMessage" ]
