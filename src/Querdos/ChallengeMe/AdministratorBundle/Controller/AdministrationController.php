@@ -381,7 +381,41 @@ class AdministrationController extends Controller
      */
     public function updateRedactorAction($id, Request $request)
     {
-        
+        // Retrieving admin
+        $redactor = $this->get('challengeme.manager.administrator')->readById($id);
+
+        // Building the form
+        $form   = $this->createForm(AdministratorType::class, $redactor, array(
+            'create' => false
+        ));
+        $form
+            ->add('save', SubmitType::class, array(
+                'label' => 'Save',
+                'attr'  => array(
+                    'class' => 'btn btn-success'
+                ),
+                'translation_domain' => 'forms'
+            ))
+        ;
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted()) {
+            // In case the plain password haven't been changed
+            if ($redactor->getPlainPassword() === "********") {
+                $redactor->eraseCredentials();
+            }
+
+            // Persisting the admin
+            $this->get('challengeme.manager.administrator')->update($redactor);
+
+            // Redirecting to the admins management page
+            return $this->redirectToRoute('administration_redactorsManagement');
+        }
+
+        return array(
+            'username' => $redactor->getUsername(),
+            'form'     => $form->createView()
+        );
     }
     
     /**
