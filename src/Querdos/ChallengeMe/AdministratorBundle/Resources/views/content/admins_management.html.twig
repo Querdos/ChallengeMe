@@ -68,9 +68,11 @@
                                         <td>{{ admin.infoUser.birthday|date('m-d-Y') }}</td>
                                         <td align="center">
                                             <a title="{{ "a.title1" | trans | desc("Send a message") | meaning("Block a title1") }}" href="javascript:void(0)"><i class="fa fa-envelope-o fa-fw" aria-hidden="true"></i></a>
-                                            <a title="{{ "a.title2" | trans | desc("Edit") | meaning("Block a title2") }}" href="{{ path('administration_updateAdmin', {'id': admin.id}) }}"><i class="fa fa-pencil fa-fw" aria-hidden="true"></i></a>
-                                            <a title="{{ "a.title3" | trans | desc("Reset password") | meaning("Block a title3") }}" href="{{ path('administration_resetPassword', {'id': admin.id}) }}"><i class="fa fa-recycle fa-fw" aria-hidden="true"></i></a>
-                                            <a title="{{ "a.title4" | trans | desc("Remove") | meaning("Block a title4") }}" href="{{ path('administration_removeAdmin', {'id': admin.id}) }}"><i class="fa fa-times fa-fw" aria-hidden="true"></i></a>
+                                            {% if is_granted("ROLE_ADMIN") %}
+                                                <a title="{{ "a.title2" | trans | desc("Edit") | meaning("Block a title2") }}" href="{{ path('administration_updateAdmin', {'id': admin.id}) }}"><i class="fa fa-pencil fa-fw" aria-hidden="true"></i></a>
+                                                <a title="{{ "a.title3" | trans | desc("Reset password") | meaning("Block a title3") }}" href="{{ path('administration_resetPassword', {'id': admin.id}) }}"><i class="fa fa-recycle fa-fw" aria-hidden="true"></i></a>
+                                                <a title="{{ "a.title4" | trans | desc("Remove") | meaning("Block a title4") }}" href="{{ path('administration_removeAdmin', {'id': admin.id}) }}"><i class="fa fa-times fa-fw" aria-hidden="true"></i></a>
+                                            {% endif %}
                                         </td>
                                     </tr>
                                 {% endif %}
