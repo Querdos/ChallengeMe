@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:jms="urn:jms:translation" version="1.2">
-  <file date="2017-02-02T15:55:46Z" source-language="en" target-language="fr" datatype="plaintext" original="not.available">
+  <file date="2017-02-23T13:44:08Z" source-language="en" target-language="fr" datatype="plaintext" original="not.available">
     <header>
       <tool tool-id="JMSTranslationBundle" tool-name="JMSTranslationBundle" tool-version="1.1.0-DEV"/>
       <note>The source node in most cases contains the sample message as written by the developer. If it looks like a dot-delimitted string such as "form.label.firstname", then the developer has not provided a default message.</note>
@@ -9,62 +9,62 @@
       <trans-unit id="dc5f59e93d4816b29e671eadd67713131d1badea" resname="a.title1" extradata="Meaning: Block a title">
         <source>Send a message</source>
         <target>Envoyer un message</target>
-        <jms:reference-file line="73">/../src/Querdos/ChallengeMe/AdministratorBundle/Resources/views/content/redactors_management.html.twig</jms:reference-file>
+        <jms:reference-file line="70">/../src/Querdos/ChallengeMe/AdministratorBundle/Resources/views/content/redactors_management.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="20e5d541a0c1421b8172e83ae5b3361d4379b974" resname="a.title2" extradata="Meaning: Block a title">
         <source>Edit</source>
         <target>Modifier</target>
-        <jms:reference-file line="74">/../src/Querdos/ChallengeMe/AdministratorBundle/Resources/views/content/redactors_management.html.twig</jms:reference-file>
+        <jms:reference-file line="71">/../src/Querdos/ChallengeMe/AdministratorBundle/Resources/views/content/redactors_management.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="5bc59524fe585d9e1a27aa15ed026bc7a64632da" resname="a.title3" extradata="Meaning: Block a title">
         <source>Reset password</source>
         <target>Supprimer le mot de passe</target>
-        <jms:reference-file line="75">/../src/Querdos/ChallengeMe/AdministratorBundle/Resources/views/content/redactors_management.html.twig</jms:reference-file>
+        <jms:reference-file line="72">/../src/Querdos/ChallengeMe/AdministratorBundle/Resources/views/content/redactors_management.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="6bf1a028261e994b8724c462ed2e272fc3eefe31" resname="a.title4" extradata="Meaning: Block a title">
         <source>Remove</source>
         <target>Supprimer</target>
-        <jms:reference-file line="76">/../src/Querdos/ChallengeMe/AdministratorBundle/Resources/views/content/redactors_management.html.twig</jms:reference-file>
+        <jms:reference-file line="73">/../src/Querdos/ChallengeMe/AdministratorBundle/Resources/views/content/redactors_management.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="9c38dca70d0c5673b38ecf06b2e7d58c6c298a36" resname="table.setting.new-redactor" extradata="Meaning: New redactor link">
         <source>New redactor</source>
         <target>Nouveau rédacteur</target>
-        <jms:reference-file line="39">/../src/Querdos/ChallengeMe/AdministratorBundle/Resources/views/content/redactors_management.html.twig</jms:reference-file>
+        <jms:reference-file line="37">/../src/Querdos/ChallengeMe/AdministratorBundle/Resources/views/content/redactors_management.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="47b4aecc2cf588803bb5c041492274dcc73b4ca7" resname="table.th1" extradata="Meaning: table.th1">
         <source>Firstname</source>
         <target>Prénom</target>
-        <jms:reference-file line="52">/../src/Querdos/ChallengeMe/AdministratorBundle/Resources/views/content/redactors_management.html.twig</jms:reference-file>
+        <jms:reference-file line="49">/../src/Querdos/ChallengeMe/AdministratorBundle/Resources/views/content/redactors_management.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="74fa0d12d706313c705a6357ff335714d99ab526" resname="table.th2" extradata="Meaning: table.th1">
         <source>Lastname</source>
         <target>Nom</target>
-        <jms:reference-file line="53">/../src/Querdos/ChallengeMe/AdministratorBundle/Resources/views/content/redactors_management.html.twig</jms:reference-file>
+        <jms:reference-file line="50">/../src/Querdos/ChallengeMe/AdministratorBundle/Resources/views/content/redactors_management.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="0c840ae4e2c90e8c9210d689c22575796f9316e1" resname="table.th3" extradata="Meaning: table.th1">
         <source>Username</source>
         <target>Identifiant</target>
-        <jms:reference-file line="54">/../src/Querdos/ChallengeMe/AdministratorBundle/Resources/views/content/redactors_management.html.twig</jms:reference-file>
+        <jms:reference-file line="51">/../src/Querdos/ChallengeMe/AdministratorBundle/Resources/views/content/redactors_management.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="03a6f721b900de20cb8bb5b51a49bab6229318b5" resname="table.th4" extradata="Meaning: table.th1">
         <source>Email</source>
         <target>Email</target>
-        <jms:reference-file line="55">/../src/Querdos/ChallengeMe/AdministratorBundle/Resources/views/content/redactors_management.html.twig</jms:reference-file>
+        <jms:reference-file line="52">/../src/Querdos/ChallengeMe/AdministratorBundle/Resources/views/content/redactors_management.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="c501b8845211d26c93e47060baf35343c5abd5be" resname="table.th5" extradata="Meaning: table.th1">
         <source>Email (2)</source>
         <target>Email (2)</target>
-        <jms:reference-file line="56">/../src/Querdos/ChallengeMe/AdministratorBundle/Resources/views/content/redactors_management.html.twig</jms:reference-file>
+        <jms:reference-file line="53">/../src/Querdos/ChallengeMe/AdministratorBundle/Resources/views/content/redactors_management.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="58d8c9ad16d4d78e785f39a6d0fc4aa63412fb1f" resname="table.th6" extradata="Meaning: table.th1">
         <source>Birthday</source>
         <target>Anniversaire</target>
-        <jms:reference-file line="57">/../src/Querdos/ChallengeMe/AdministratorBundle/Resources/views/content/redactors_management.html.twig</jms:reference-file>
+        <jms:reference-file line="54">/../src/Querdos/ChallengeMe/AdministratorBundle/Resources/views/content/redactors_management.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="4b8d8d7501e5655538deafddb4d2494aa847a7af" resname="table.th7" extradata="Meaning: table.th1">
         <source>Actions</source>
         <target>Actions</target>
-        <jms:reference-file line="58">/../src/Querdos/ChallengeMe/AdministratorBundle/Resources/views/content/redactors_management.html.twig</jms:reference-file>
+        <jms:reference-file line="55">/../src/Querdos/ChallengeMe/AdministratorBundle/Resources/views/content/redactors_management.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="72f0049d745a7445b93ecbc90e2c1b007b36fe34" resname="table.title" extradata="Meaning: Table title">
         <source>List of redactors</source>
