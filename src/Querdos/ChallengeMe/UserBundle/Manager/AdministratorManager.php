@@ -14,6 +14,7 @@ use Querdos\ChallengeMe\UserBundle\Entity\Role;
 use Querdos\ChallengeMe\UserBundle\Repository\AdministratorRepository;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoder;
 use Symfony\Component\Security\Core\Tests\Encoder\PasswordEncoder;
+use Symfony\Component\VarDumper\VarDumper;
 
 class AdministratorManager
 {
@@ -107,6 +108,7 @@ class AdministratorManager
         
         // Flushing
         $this->entityManager->flush($admin);
+        $this->entityManager->flush($admin->getInfoUser());
         
     }
 
