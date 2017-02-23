@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:jms="urn:jms:translation" version="1.2">
-  <file date="2017-02-23T13:46:26Z" source-language="en" target-language="en" datatype="plaintext" original="not.available">
+  <file date="2017-02-23T18:14:37Z" source-language="en" target-language="en" datatype="plaintext" original="not.available">
     <header>
       <tool tool-id="JMSTranslationBundle" tool-name="JMSTranslationBundle" tool-version="1.1.0-DEV"/>
       <note>The source node in most cases contains the sample message as written by the developer. If it looks like a dot-delimitted string such as "form.label.firstname", then the developer has not provided a default message.</note>
@@ -28,12 +28,12 @@
       </trans-unit>
       <trans-unit id="2ca514ebd7c3a61fe53823a0785c326287c4ede8" resname="Français">
         <source>Français</source>
-        <target state="new">Français</target>
+        <target>French</target>
         <jms:reference-file line="76">/../src/Querdos/ChallengeMe/AdministratorBundle/Form/InfoUserType.php</jms:reference-file>
       </trans-unit>
       <trans-unit id="89b86ab0e66f527166d98df92ddbcf5416ed58f6" resname="Language">
         <source>Language</source>
-        <target state="new">Language</target>
+        <target>Language</target>
         <jms:reference-file line="66">/../src/Querdos/ChallengeMe/AdministratorBundle/Form/InfoUserType.php</jms:reference-file>
       </trans-unit>
       <trans-unit id="adec36a821f81a6990b1e65d9e4ac5fb8ee2a205" resname="Last name">
