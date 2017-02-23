@@ -249,13 +249,47 @@ class AdministrationController extends Controller
     /**
      * @Template("AdminBundle:content:update_moderator.html.twig")
      *
-     * @param $id
-     * @param Request $request
-     * @return array|RedirectResponse
+     * @param   int     $id
+     * @param   Request $request
+     * @return  array | RedirectResponse
      */
     public function updateModeratorAction($id, Request $request)
     {
-        // TODO
+        // Retrieving admin
+        $moderator = $this->get('challengeme.manager.administrator')->readById($id);
+
+        // Building the form
+        $form   = $this->createForm(AdministratorType::class, $moderator, array(
+            'create' => false
+        ));
+        $form
+            ->add('save', SubmitType::class, array(
+                'label' => 'Save',
+                'attr'  => array(
+                    'class' => 'btn btn-success'
+                ),
+                'translation_domain' => 'forms'
+            ))
+        ;
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted()) {
+            // In case the plain password haven't been changed
+            if ($moderator->getPlainPassword() === "********") {
+                $moderator->eraseCredentials();
+            }
+
+            // Persisting the admin
+            $this->get('challengeme.manager.administrator')->update($moderator);
+
+            // Redirecting to the admins management page
+            return $this->redirectToRoute('administration_moderatorsManagement');
+        }
+
+        return array(
+            'username' => $moderator->getUsername(),
+            'form'     => $form->createView()
+        );
     }
     
     /**

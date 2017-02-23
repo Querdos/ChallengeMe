@@ -119,16 +119,8 @@ class AdministratorManager
      */
     public function delete(Administrator $admin)
     {
-    	// Retrieving unit of work
-    	$unitOfWork = $this->entityManager->getUnitOfWork();
-    	
-    	// Checking if already persisted
-    	if (!$unitOfWork->isEntityScheduled($admin)) {
-    		$this->entityManager->persist($admin);
-    	}
-    	
-    	// Flushing
-    	$this->entityManager->flush($admin);
+    	$this->entityManager->remove($admin);
+    	$this->entityManager->flush();
     }
 
     /**
