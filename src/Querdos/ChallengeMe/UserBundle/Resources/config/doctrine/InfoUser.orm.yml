@@ -26,6 +26,7 @@ Querdos\ChallengeMe\UserBundle\Entity\InfoUser:
             length:     2
             unique:     false
             nullable:   false
+
     oneToOne:
         personalInformation:
             targetEntity:   Querdos\ChallengeMe\UserBundle\Entity\PersonalInformation
