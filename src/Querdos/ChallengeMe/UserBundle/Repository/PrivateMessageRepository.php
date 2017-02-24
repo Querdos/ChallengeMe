@@ -3,6 +3,8 @@
 namespace Querdos\ChallengeMe\UserBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
+use Querdos\ChallengeMe\UserBundle\Entity\Administrator;
+use Querdos\ChallengeMe\UserBundle\Entity\PrivateMessage;
 
 /**
  * PrivateMessageRepository
@@ -12,4 +14,61 @@ use Doctrine\ORM\EntityRepository;
  */
 class PrivateMessageRepository extends EntityRepository
 {
+    /**
+     * Return all messages with a given author
+     *
+     * @param   Administrator $author
+     * @return  PrivateMessage[]
+     */
+    public function getByAuthor(Administrator $author)
+    {
+        $query = $this
+            ->getEntityManager()
+            ->createQueryBuilder()
+
+            ->select("messages")
+            ->from("UserBundle:PrivateMessage", "messages")
+
+            ->where("messages.author = :author")
+            ->setParameter("author", $author)
+        ;
+
+        return $query
+            ->getQuery()
+            ->getArrayResult()
+        ;
+    }
+
+    /**
+     * Get all messages by recipient
+     *
+     * @param   Administrator       $recipient
+     * @return  PrivateMessage[]
+     */
+    public function getByRecipient(Administrator $recipient)
+    {
+        $query = $this
+            ->getEntityManager()
+            ->createQueryBuilder()
+
+            ->select("messages")
+            ->addSelect("author")
+            ->addSelect("infoAuthor")
+            ->addSelect("recipient")
+
+            ->from("UserBundle:PrivateMessage", "messages")
+
+            ->join("messages.author", "author")
+            ->join("messages.recipient", "recipient")
+            ->join("author.infoUser", "infoAuthor")
+
+            ->where("messages.recipient = :recipient")
+            ->setParameter("recipient", $recipient)
+        ;
+
+        return $query
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 }

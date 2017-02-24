@@ -33,6 +33,11 @@ class PrivateMessage
     private $recipient;
 
     /**
+     * @var string
+     */
+    private $preview;
+
+    /**
      * PrivateMessage constructor.
      *
      * @param   Administrator   $author
@@ -54,6 +59,10 @@ class PrivateMessage
         $this->recipient    = $recipient;
         $this->content      = $content;
         $this->sent         = new \DateTime();
+
+        $this->setPreview(
+            $this->getPreview()
+        );
     }
 
 
@@ -154,6 +163,32 @@ class PrivateMessage
     public function setRecipient($recipient)
     {
         $this->recipient = $recipient;
+        return $this;
+    }
+
+    /**
+     * Return a preview of the message content
+     *
+     * @return string
+     */
+    public function getPreview()
+    {
+        if (strlen($this->content) > 30) {
+            return substr($this->content, 0, 30) . "...";
+        } else {
+            return $this->content;
+        }
+    }
+
+    /**
+     * Set the preview of the message's content
+     *
+     * @param   string  $preview
+     * @return          $this
+     */
+    public function setPreview($preview)
+    {
+        $this->preview = $preview;
         return $this;
     }
 }

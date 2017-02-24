@@ -22,3 +22,4 @@ services:
         calls:
             - [ setRepository,      [ '@challengeme.repository.private_message' ] ]
             - [ setAdminManager,    [ '@challengeme.manager.administrator' ] ]
+            - [ setEntityManager,   [ '@doctrine.orm.entity_manager' ] ]

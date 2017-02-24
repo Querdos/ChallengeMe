@@ -47,7 +47,15 @@ class AdministrationController extends Controller
      */
     public function inboxAction()
     {
-        return array();
+        // retrieving all private messages with the connected user as recipient
+        $messages = $this->container
+            ->get('challengeme.manager.private_message')
+            ->readByRecipient($this->getUser())
+        ;
+
+        return array(
+            'messages' => $messages
+        );
     }
 
     /**
