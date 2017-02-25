@@ -3,7 +3,9 @@ ChallengeMe
 
 ## Introduction ##
 
-At first, it was a school initiative project for a CTF (Capture the flag) platform. The goal is to provide a complete solution for persons or organizations who wants to organize CTF events.
+At first, it was a school initiative project for a CTF (Capture the flag) platform.  
+The goal is to provide a complete solution for persons or organizations who wants  
+to organize CTF events.
 
 ## Credits ##
 
