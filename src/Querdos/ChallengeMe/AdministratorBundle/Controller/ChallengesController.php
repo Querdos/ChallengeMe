@@ -30,14 +30,15 @@ class ChallengesController extends Controller
         $categoryManager = $this->container->get("challengeme.manager.category");
 
         return array(
-            'categories'    => $categoryManager->all()
+            'categories' => $categoryManager->all()
         );
     }
 
     /**
-     * @Template("AdminBundle:content-challenges:add_category.html.twig")
+     * @Template("AdminBundle:content-challenges:category_add.html.twig")
      *
      * @param Request $request
+     *
      * @return array | RedirectResponse
      */
     public function addCategoryAction(Request $request)
@@ -50,12 +51,11 @@ class ChallengesController extends Controller
         $form
             ->add('save', SubmitType::class, array(
                 'label' => 'Save',
-                'attr'  => array(
+                'attr' => array(
                     'class' => 'btn btn-success'
                 ),
                 'translation_domain' => 'forms'
-            ))
-        ;
+            ));
 
         $form->handleRequest($request);
         if ($form->isValid()) {
@@ -71,10 +71,11 @@ class ChallengesController extends Controller
     }
 
     /**
-     * @Template("AdminBundle:content-challenges:update_category.html.twig")
+     * @Template("AdminBundle:content-challenges:category_update.html.twig")
      *
      * @param   int     $id
      * @param   Request $request
+     *
      * @return  array | RedirectResponse
      */
     public function updateCategoryAction($id, Request $request)
@@ -83,18 +84,17 @@ class ChallengesController extends Controller
         $category = $this->get('challengeme.manager.category')->readById($id);
 
         // Building the form
-        $form   = $this->createForm(CategoryType::class, $category, array(
+        $form = $this->createForm(CategoryType::class, $category, array(
             'create' => false
         ));
         $form
             ->add('save', SubmitType::class, array(
                 'label' => 'Save',
-                'attr'  => array(
+                'attr' => array(
                     'class' => 'btn btn-success'
                 ),
                 'translation_domain' => 'forms'
-            ))
-        ;
+            ));
 
         $form->handleRequest($request);
         if ($form->isSubmitted()) {
@@ -107,25 +107,27 @@ class ChallengesController extends Controller
 
         return array(
             'title' => $category->getTitle(),
-            'form'     => $form->createView()
+            'form' => $form->createView()
         );
     }
 
     /**
      * Remove a category
      *
-     * @param   int              $id
-     * @param   Request          $request
+     * @param   int     $id
+     * @param   Request $request
+     *
      * @return  RedirectResponse
      */
     public function removeCategoryAction($id, Request $request)
     {
         // Checking authorization
+        // TODO: Manage restriction in security_access_control.yml
         $this->denyAccessUnlessGranted('ROLE_MODERATOR', null, 'You are not allowed to access this page');
 
         // Retrieving url and the referer
-        $url        = $this->generateUrl('challenges_category_management');
-        $referer    = $request->server->get('HTTP_REFERER');
+        $url = $this->generateUrl('challenges_category_management');
+        $referer = $request->server->get('HTTP_REFERER');
 
         // If not from adminsManagement, redirecting without doing anything
         if (false === strstr($referer, $url)) {
