@@ -1,1 +1,6 @@
 services:
+    challengeme.manager.category:
+        class: Querdos\ChallengeMe\ChallengesBundle\Manager\CategoryManager
+        calls:
+            - [ setRepository,    ['@challengeme.repository.category'] ]
+            - [ setEntityManager, [ '@doctrine.orm.entity_manager' ] ]
