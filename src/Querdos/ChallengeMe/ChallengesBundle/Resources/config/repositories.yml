@@ -1,1 +1,5 @@
 services:
+    challengeme.repository.category:
+        class:      Querdos\ChallengeMe\ChallengesBundle\Entity\Category
+        factory:    [ "@doctrine.orm.entity_manager", "getRepository" ]
+        arguments:  [ "ChallengesBundle:Category" ]
