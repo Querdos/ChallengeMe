@@ -9,8 +9,6 @@ namespace Querdos\ChallengeMe\AdministratorBundle\Controller;
 
 use Querdos\ChallengeMe\UserBundle\Entity\Administrator;
 use Querdos\ChallengeMe\AdministratorBundle\Form\AdministratorType;
-use Querdos\ChallengeMe\AdministratorBundle\Form\ModeratorType;
-use Querdos\ChallengeMe\AdministratorBundle\Form\RedactorType;
 use Querdos\ChallengeMe\UserBundle\Entity\Role;
 use Querdos\ChallengeMe\UserBundle\Manager\AdministratorManager;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -18,7 +16,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\VarDumper\VarDumper;
 
 class AdministrationController extends Controller
 {

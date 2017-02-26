@@ -110,6 +110,37 @@ administration_resetPassword:
     methods:
         - GET
 
+########################
+# ChallengesController #
+########################
+
+challenges_category_management:
+    path:     /categories-management
+    defaults: { _controller: AdminBundle:Challenges:categoryManagement }
+    methods:
+        - GET
+
+challenges_category_add:
+    path:     /categories-management/add
+    defaults: { _controller: AdminBundle:Challenges:addCategory }
+    methods:
+        - GET
+        - POST
+
+challenges_category_update:
+    path:     /categories-management/update/{id}
+    defaults: { _controller: AdminBundle:Challenges:updateCategory }
+    methods:
+        - GET
+        - POST
+
+challenges_category_remove:
+    path:     /categories_management/remove/{id}
+    defaults: { _controller: AdminBundle:Challenges:removeCategory }
+    methods:
+        - GET
+        - POST
+
 ######################
 # SecurityController #
 ######################

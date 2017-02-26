@@ -68,6 +68,27 @@ class CategoryManager
     }
 
     /**
+     * Retrieve all categories in database
+     *
+     * @return Category[]
+     */
+    public function all()
+    {
+        return $this->repository->findAll();
+    }
+
+    /**
+     * Return a category with a given id
+     *
+     * @param   int $id
+     * @return  Category
+     */
+    public function readById($id)
+    {
+        return $this->repository->findOneById($id);
+    }
+
+    /**
      * Set the repository
      *
      * @param CategoryRepository $repository

@@ -128,7 +128,7 @@
             <div class="menu_section">
                 <h3>{{ "nav.challenges-management" | trans | desc("Challenges Management") | meaning("Challenges management button") }}</h3>
                 <ul class="nav side-menu">
-                    <li><a href="javascript:void(0)"><i class="fa fa-book"></i> {{ "nav.challenges-management-categories" | trans | desc("Categories") | meaning("Categories section") }}</a></li>
+                    <li><a href="{{ path("challenges_category_management") }}"><i class="fa fa-book"></i> {{ "nav.challenges-management-categories" | trans | desc("Categories") | meaning("Categories section") }}</a></li>
                     <li><a href="javascript:void(0)"><i class="fa fa-gavel"></i> {{ "nav.challenges-management-challenges" | trans | desc("Challenges") | meaning("Challenges section") }}</a></li>
                 </ul>
             </div>
