@@ -65,8 +65,12 @@ class ChallengesController extends Controller
             return $this->redirectToRoute('challenges_category_management');
         }
 
+        // retrieving categories
+        $categories = $this->get('challengeme.manager.category')->all();
+
         return array(
-            'form' => $form->createView()
+            'form'          => $form->createView(),
+            'categories'    => $categories
         );
     }
 
@@ -105,9 +109,13 @@ class ChallengesController extends Controller
             return $this->redirectToRoute('challenges_category_management');
         }
 
+        // retrieving categories
+        $categories = $this->get('challengeme.manager.category')->all();
+
         return array(
-            'title' => $category->getTitle(),
-            'form' => $form->createView()
+            'title'         => $category->getTitle(),
+            'form'          => $form->createView(),
+            'categories'    => $categories
         );
     }
 

@@ -126,10 +126,22 @@
 
             {# Challenges management #}
             <div class="menu_section">
-                <h3>{{ "nav.challenges-management" | trans | desc("Challenges Management") | meaning("Challenges management button") }}</h3>
+                <h3>{{ "nav.challenges-management" | trans | desc("Challenges") | meaning("Challenges management button") }}</h3>
                 <ul class="nav side-menu">
-                    <li><a href="{{ path("challenges_category_management") }}"><i class="fa fa-book"></i> {{ "nav.challenges-management-categories" | trans | desc("Categories") | meaning("Categories section") }}</a></li>
-                    <li><a href="javascript:void(0)"><i class="fa fa-gavel"></i> {{ "nav.challenges-management-challenges" | trans | desc("Challenges") | meaning("Challenges section") }}</a></li>
+                    {% if is_granted("ROLE_MODERATOR") %}
+                        <li><a href="{{ path("challenges_category_management") }}"><i class="fa fa-book"></i> {{ "nav.challenges-management-categories" | trans | desc("Categories") | meaning("Categories section") }}</a></li>
+                    {% endif %}
+                    <li><a href="javascript:void(0)"><i class="fa fa-gavel"></i> {{ "nav.challenges-management-challenges" | trans | desc("Challenges") | meaning("Challenges section") }} <span class="fa fa-chevron-down"></span></a>
+                        <ul class="nav child_menu">
+                        {% if categories|length == 0 %}
+                            <li><a href="javascript:void(0)">No category</a></li>
+                        {% else %}
+                            {% for category in categories %}
+                                <li><a href="javascript:void(0)">{{ category.title }}</a></li>
+                            {% endfor %}
+                        {% endif %}
+                        </ul>
+                    </li>
                 </ul>
             </div>
 

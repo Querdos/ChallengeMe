@@ -29,11 +29,15 @@ class AdministrationController extends Controller
         // retrieving admin manager
         $adminManager = $this->get('challengeme.manager.administrator');
 
+        // retrieving categories
+        $categories = $this->get('challengeme.manager.category')->all();
+
         // TODO: Create method in manager to retrieve only the count for each kind of admin
         return array(
-            'adminCount' => count($adminManager->getAllAdmin()),
-            'modoCount' => count($adminManager->getAllModerators()),
-            'redacCount' => count($adminManager->getAllRedactors())
+            'adminCount'    => count($adminManager->getAllAdmin()),
+            'modoCount'     => count($adminManager->getAllModerators()),
+            'redacCount'    => count($adminManager->getAllRedactors()),
+            'categories'    => $categories
         );
     }
 
@@ -49,8 +53,12 @@ class AdministrationController extends Controller
             ->get('challengeme.manager.private_message')
             ->readByRecipient($this->getUser());
 
+        // retrieving categories
+        $categories = $this->get('challengeme.manager.category')->all();
+
         return array(
-            'messages' => $messages
+            'messages'      => $messages,
+            'categories'    => $categories
         );
     }
 
@@ -61,7 +69,12 @@ class AdministrationController extends Controller
      */
     public function profileAction()
     {
-        return array();
+        // retrieving categories
+        $categories = $this->get('challengeme.manager.category')->all();
+
+        return array(
+            'categories' => $categories
+        );
     }
 
     /**
@@ -71,7 +84,12 @@ class AdministrationController extends Controller
      */
     public function playersManagementAction()
     {
-        return array();
+        // retrieving categories
+        $categories = $this->get('challengeme.manager.category')->all();
+
+        return array(
+            'categories' => $categories
+        );
     }
 
     /**
@@ -84,8 +102,12 @@ class AdministrationController extends Controller
         /** @var AdministratorManager $adminManager */
         $adminManager = $this->get('challengeme.manager.administrator');
 
+        // retrieving categories
+        $categories = $this->get('challengeme.manager.category')->all();
+
         return array(
-            'administrators' => $adminManager->getAllAdmin()
+            'administrators' => $adminManager->getAllAdmin(),
+            'categories'     => $categories
         );
     }
 
@@ -121,8 +143,12 @@ class AdministrationController extends Controller
             return $this->redirectToRoute('administration_adminsManagement');
         }
 
+        // retrieving categories
+        $categories = $this->get('challengeme.manager.category')->all();
+
         return array(
-            'form' => $form->createView()
+            'form'          => $form->createView(),
+            'categories'    => $categories
         );
     }
 
@@ -166,9 +192,13 @@ class AdministrationController extends Controller
             return $this->redirectToRoute('administration_adminsManagement');
         }
 
+        // retrieving categories
+        $categories = $this->get('challengeme.manager.category')->all();
+
         return array(
-            'username' => $admin->getUsername(),
-            'form' => $form->createView()
+            'username'      => $admin->getUsername(),
+            'form'          => $form->createView(),
+            'categories'    => $categories
         );
     }
 
@@ -215,8 +245,12 @@ class AdministrationController extends Controller
         /** @var AdministratorManager $adminManager */
         $adminManager = $this->get('challengeme.manager.administrator');
 
+        // retrieving categories
+        $categories = $this->get('challengeme.manager.category')->all();
+
         return array(
-            'moderators' => $adminManager->getAllModerators()
+            'moderators' => $adminManager->getAllModerators(),
+            'categories' => $categories
         );
     }
 
@@ -250,8 +284,12 @@ class AdministrationController extends Controller
             return $this->redirectToRoute('administration_moderatorsManagement');
         }
 
+        // retrieving categories
+        $categories = $this->get('challengeme.manager.category')->all();
+
         return array(
-            'form' => $form->createView()
+            'form'          => $form->createView(),
+            'categories'    => $categories
         );
     }
 
@@ -295,9 +333,13 @@ class AdministrationController extends Controller
             return $this->redirectToRoute('administration_moderatorsManagement');
         }
 
+        // retrieving categories
+        $categories = $this->get('challengeme.manager.category')->all();
+
         return array(
-            'username' => $moderator->getUsername(),
-            'form' => $form->createView()
+            'username'      => $moderator->getUsername(),
+            'form'          => $form->createView(),
+            'categories'    => $categories
         );
     }
 
@@ -344,8 +386,12 @@ class AdministrationController extends Controller
         /** @var AdministratorManager $adminManager */
         $adminManager = $this->get('challengeme.manager.administrator');
 
+        // retrieving categories
+        $categories = $this->get('challengeme.manager.category')->all();
+
         return array(
-            'redactors' => $adminManager->getAllRedactors()
+            'redactors'     => $adminManager->getAllRedactors(),
+            'categories'    => $categories
         );
     }
 
@@ -379,8 +425,12 @@ class AdministrationController extends Controller
             return $this->redirectToRoute('administration_redactorsManagement');
         }
 
+        // retrieving categories
+        $categories = $this->get('challengeme.manager.category')->all();
+
         return array(
-            'form' => $form->createView()
+            'form'       => $form->createView(),
+            'categories' => $categories
         );
     }
 
@@ -424,9 +474,13 @@ class AdministrationController extends Controller
             return $this->redirectToRoute('administration_redactorsManagement');
         }
 
+        // retrieving categories
+        $categories = $this->get('challengeme.manager.category')->all();
+
         return array(
-            'username' => $redactor->getUsername(),
-            'form' => $form->createView()
+            'username'      => $redactor->getUsername(),
+            'form'          => $form->createView(),
+            'categories'    => $categories
         );
     }
 
