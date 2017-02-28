@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "5ac1489155c5a95030b18587bb1f3488",
+    "content-hash": "2e4932a2b1c7d4961cb54d688d0940f4",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -1346,6 +1346,52 @@
                 "webinterface"
             ],
             "time": "2016-10-11 15:07:43"
+        },
+        {
+            "name": "kendrick/symfony-debug-toolbar-git",
+            "version": "1.4.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/kendrick-k/symfony-debug-toolbar-git.git",
+                "reference": "54c5f7e7d625be821ded152c718ee9feac498351"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/kendrick-k/symfony-debug-toolbar-git/zipball/54c5f7e7d625be821ded152c718ee9feac498351",
+                "reference": "54c5f7e7d625be821ded152c718ee9feac498351",
+                "shasum": ""
+            },
+            "require": {
+                "symfony/framework-bundle": ">=2.3",
+                "symfony/twig-bundle": ">=2.0",
+                "twig/twig": ">=1.6"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "5.5.*"
+            },
+            "type": "symfony-bundle",
+            "autoload": {
+                "psr-4": {
+                    "Kendrick\\SymfonyDebugToolbarGit\\": "."
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Kendrick"
+                }
+            ],
+            "description": "Git information into Symfony Debug Toolbar",
+            "homepage": "https://github.com/kendrick-k/symfony-debug-toolbar-git",
+            "keywords": [
+                "debug",
+                "git",
+                "symfony"
+            ],
+            "time": "2016-10-24T10:21:19+00:00"
         },
         {
             "name": "kriswallsmith/assetic",
