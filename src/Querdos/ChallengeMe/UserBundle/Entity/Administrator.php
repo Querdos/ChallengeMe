@@ -7,6 +7,7 @@
 
 namespace Querdos\ChallengeMe\UserBundle\Entity;
 
+use Querdos\ChallengeMe\ChallengesBundle\Entity\Challenge;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
@@ -58,6 +59,11 @@ class Administrator implements UserInterface, \Serializable
      * @var \DateTime
      */
     private $creationDate;
+
+    /**
+     * @var Challenge[]
+     */
+    private $challenges;
 
     /**
      * Administrator constructor.
@@ -321,5 +327,23 @@ class Administrator implements UserInterface, \Serializable
     public function getCreationDate()
     {
         return $this->creationDate;
+    }
+
+    /**
+     * @return Challenge[]
+     */
+    public function getChallenges()
+    {
+        return $this->challenges;
+    }
+
+    /**
+     * @param Challenge[] $challenges
+     * @return Administrator
+     */
+    public function setChallenges($challenges)
+    {
+        $this->challenges = $challenges;
+        return $this;
     }
 }

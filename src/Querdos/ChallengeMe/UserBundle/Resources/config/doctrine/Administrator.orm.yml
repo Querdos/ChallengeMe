@@ -42,4 +42,10 @@ Querdos\ChallengeMe\UserBundle\Entity\Administrator:
         role:
             targetEntity: Querdos\ChallengeMe\UserBundle\Entity\Role
 
+    oneToMany:
+        challenges:
+            targetEntity: Querdos\ChallengeMe\ChallengesBundle\Entity\Challenge
+            cascade:      [ "persist" ]
+            mappedBy:     challenges
+
     lifecycleCallbacks: {  }
