@@ -31,6 +31,10 @@ Querdos\ChallengeMe\ChallengesBundle\Entity\Challenge:
             type:     text
             unique:   false
             nullable: false
+        created:
+            type:     datetime
+            nullable: false
+            unique:   false
 
     manyToOne:
         category:

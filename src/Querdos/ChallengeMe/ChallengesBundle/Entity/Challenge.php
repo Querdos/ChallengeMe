@@ -49,6 +49,33 @@ class Challenge
      */
     private $author;
 
+    /**
+     * @var \DateTime
+     */
+    private $created;
+
+    /**
+     * Challenge constructor.
+     *
+     * @param string        $title
+     * @param string        $description
+     * @param int           $points
+     * @param int           $level
+     * @param string        $statement
+     * @param Category      $category
+     * @param Administrator $author
+     */
+    public function __construct($title, $description, $points, $level, $statement, Category $category, Administrator $author)
+    {
+        $this->title       = $title;
+        $this->description = $description;
+        $this->points      = $points;
+        $this->level       = $level;
+        $this->statement   = $statement;
+        $this->category    = $category;
+        $this->author      = $author;
+    }
+
 
     /**
      * Get id
@@ -210,6 +237,22 @@ class Challenge
     public function setAuthor($author)
     {
         $this->author = $author;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCreated()
+    {
+        return $this->created;
+    }
+
+    /**
+     * @param mixed $created
+     */
+    public function setCreated($created)
+    {
+        $this->created = $created;
     }
 }
 
