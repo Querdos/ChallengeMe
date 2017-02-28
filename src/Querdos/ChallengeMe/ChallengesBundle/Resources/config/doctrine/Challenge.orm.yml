@@ -1,0 +1,46 @@
+Querdos\ChallengeMe\ChallengesBundle\Entity\Challenge:
+    type:             entity
+    table:            cm_chal_challenge
+    repositoryClass:  Querdos\ChallengeMe\ChallengesBundle\Repository\ChallengeRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        title:
+            type:     string
+            length:   255
+            unique:   true
+            nullable: false
+        points:
+            type:     integer
+            unique:   false
+            nullable: false
+        level:
+            type:     integer
+            unique:   false
+            nullable: false
+        description:
+            type:     string
+            length:   255
+            unique:   false
+            nullable: false
+        statement:
+            type:     text
+            unique:   false
+            nullable: false
+
+    manyToOne:
+        category:
+            targetEntity:     Querdos\ChallengeMe\ChallengesBundle\Entity\Category
+            joinColumn:
+                nullable:     false
+
+        author:
+            targetEntity:     Querdos\ChallengeMe\UserBundle\Entity\Administrator
+            joinColumn:
+                nullable:     false
+
+    lifecycleCallbacks: {  }
