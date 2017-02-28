@@ -1,10 +1,10 @@
 challenges:
     resource: "@ChallengesBundle/Resources/config/routing.yml"
-    prefix:   /
+    prefix:   /challenges
 
 user:
     resource: "@UserBundle/Resources/config/routing.yml"
-    prefix:   /
+    prefix:   /user
 
 landing:
     resource: "@LandingBundle/Controller/"
