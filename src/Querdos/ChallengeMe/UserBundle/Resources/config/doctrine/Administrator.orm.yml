@@ -45,7 +45,7 @@ Querdos\ChallengeMe\UserBundle\Entity\Administrator:
     oneToMany:
         challenges:
             targetEntity: Querdos\ChallengeMe\ChallengesBundle\Entity\Challenge
+            mappedBy:     author
             cascade:      [ "persist" ]
-            mappedBy:     challenges
 
     lifecycleCallbacks: {  }

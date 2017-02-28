@@ -40,6 +40,7 @@ Querdos\ChallengeMe\ChallengesBundle\Entity\Challenge:
 
         author:
             targetEntity:     Querdos\ChallengeMe\UserBundle\Entity\Administrator
+            inversedBy:       challenges
             joinColumn:
                 nullable:     false
 
