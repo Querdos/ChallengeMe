@@ -141,6 +141,12 @@ challenges_category_remove:
         - GET
         - POST
 
+challenges_category_details:
+    path:     /{category_id}/challenges
+    defaults: { _controller: AdminBundle:Challenges:categoryDetails }
+    methods:
+        - GET
+
 ######################
 # SecurityController #
 ######################

@@ -151,4 +151,34 @@ class ChallengesController extends Controller
         // Redirecting
         return $this->redirectToRoute('challenges_category_management');
     }
+
+    /**
+     * @Template("AdminBundle:content-challenges:category_details.html.twig")
+     *
+     * @param $category_id
+     *
+     * @return array
+     *
+     * @internal param $category_name
+     */
+    public function categoryDetailsAction($category_id)
+    {
+        // retrieving category manager
+        $categoryManager = $this->get('challengeme.manager.category');
+
+        // retrieving categories
+        $categories = $categoryManager->all();
+
+        // retrieving the category with given id
+        $category = $categoryManager->readById($category_id);
+
+        // retrieving challenges for the retrieved category
+        $challenges = $this->get('challengeme.manager.challenge')->readByCategory($category);
+
+        return array(
+            'categories'    => $categories,
+            'category'      => $category,
+            'challenges'    => $challenges
+        );
+    }
 }

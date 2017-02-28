@@ -137,7 +137,7 @@
                             <li><a href="javascript:void(0)">No category</a></li>
                         {% else %}
                             {% for category in categories %}
-                                <li><a href="javascript:void(0)">{{ category.title }}</a></li>
+                                <li><a href="{{ path('challenges_category_details', {'category_id': category.id}) }}">{{ category.title }}</a></li>
                             {% endfor %}
                         {% endif %}
                         </ul>
