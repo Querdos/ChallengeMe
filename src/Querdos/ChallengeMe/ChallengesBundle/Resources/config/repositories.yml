@@ -3,3 +3,8 @@ services:
         class:      Querdos\ChallengeMe\ChallengesBundle\Entity\Category
         factory:    [ "@doctrine.orm.entity_manager", "getRepository" ]
         arguments:  [ "ChallengesBundle:Category" ]
+
+    challengeme.repository.challenge:
+        class:      Querdos\ChallengeMe\ChallengesBundle\Entity\Challenge
+        factory:    [ "@doctrine.orm.default_entity_manager", "getRepository" ]
+        arguments:  [ "ChallengesBundle:Challenge" ]

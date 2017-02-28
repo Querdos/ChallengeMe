@@ -8,5 +8,5 @@ services:
     challengeme.manager.challenge:
         class: Querdos\ChallengeMe\ChallengesBundle\Manager\ChallengeManager
         calls:
-            - [ setRepository,    [ '@challengeme.repository.category' ] ]
+            - [ setRepository,    [ '@challengeme.repository.challenge' ] ]
             - [ setEntityManager, [ '@doctrine.orm.entity_manager' ] ]
