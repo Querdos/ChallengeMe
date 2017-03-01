@@ -78,3 +78,13 @@ assetic:
     filters:
         cssrewrite: ~
 
+# CKEditor configuration
+ivory_ck_editor:
+    configs:
+        config_challenge:
+            toolbar: "redac_toolbar"
+            uiColor: "#ffffff"
+            toolbarCanCollapse: true
+    toolbars:
+        configs:
+            redac_toolbar: [ [ "Source", "-", "Cut", "Copy", "Paste" ], [ "Undo", "Redo" ], [ "Bold", "Italic", "Strike"], [ "Link", "Table"], [ "Maximize" ] ]

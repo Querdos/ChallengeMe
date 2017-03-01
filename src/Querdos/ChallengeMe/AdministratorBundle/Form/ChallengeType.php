@@ -8,6 +8,7 @@
 
 namespace Querdos\ChallengeMe\AdministratorBundle\Form;
 
+use Ivory\CKEditorBundle\Form\Type\CKEditorType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -83,6 +84,13 @@ class ChallengeType extends AbstractType
                 ),
                 'required' => true,
                 'translation_domain' => 'forms'
+            ))
+            ->add('statement', CKEditorType::class, array(
+                'label' => 'Statement',
+                'label_attr' => array(
+                    'class' => 'control-label col-md-3 col-sm-3 col-xs-12'
+                ),
+                'config_name' => 'config_challenge'
             ))
         ;
     }
