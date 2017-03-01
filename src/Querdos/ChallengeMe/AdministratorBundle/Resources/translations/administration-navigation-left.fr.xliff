@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:jms="urn:jms:translation" version="1.2">
-  <file date="2017-02-28T12:21:46Z" source-language="en" target-language="fr" datatype="plaintext" original="not.available">
+  <file date="2017-03-01T16:42:47Z" source-language="en" target-language="fr" datatype="plaintext" original="not.available">
     <header>
       <tool tool-id="JMSTranslationBundle" tool-name="JMSTranslationBundle" tool-version="1.1.0-DEV"/>
       <note>The source node in most cases contains the sample message as written by the developer. If it looks like a dot-delimitted string such as "form.label.firstname", then the developer has not provided a default message.</note>
@@ -19,12 +19,17 @@
       <trans-unit id="33cc68362015e2c8ee660ec159e9c4ad4a117b6b" resname="nav.challenges-management-categories" extradata="Meaning: Categories section">
         <source>Categories</source>
         <target>Gestion des catégories</target>
-        <jms:reference-file line="131">/../src/Querdos/ChallengeMe/AdministratorBundle/Resources/views/navigation/left_nav.html.twig</jms:reference-file>
+        <jms:reference-file line="132">/../src/Querdos/ChallengeMe/AdministratorBundle/Resources/views/navigation/left_nav.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="02e59c641231b78ac634202b8933505fee0a4493" resname="nav.challenges-management-challenges" extradata="Meaning: Challenges section">
         <source>Challenges</source>
         <target>Challenges</target>
-        <jms:reference-file line="132">/../src/Querdos/ChallengeMe/AdministratorBundle/Resources/views/navigation/left_nav.html.twig</jms:reference-file>
+        <jms:reference-file line="135">/../src/Querdos/ChallengeMe/AdministratorBundle/Resources/views/navigation/left_nav.html.twig</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="fdb886019056b430d1b6cb572b0da22608a1fc2c" resname="nav.challenges-management-create-challenge" extradata="Meaning: Create a new challenge button">
+        <source>Create a new challenge</source>
+        <target state="new">Create a new challenge</target>
+        <jms:reference-file line="134">/../src/Querdos/ChallengeMe/AdministratorBundle/Resources/views/navigation/left_nav.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="2f76188e051c53f416c8395e0b64746f4774802f" resname="nav.home" extradata="Meaning: Home button">
         <source>Home</source>
@@ -54,7 +59,7 @@
       <trans-unit id="296244bf27cc787b9f5f59d359e2cc7b61549333" resname="nav.players-and-teams-management" extradata="Meaning: Players and teams management butotn">
         <source><![CDATA[Players & Teams management]]></source>
         <target><![CDATA[Gestion des joueurs & équipes]]></target>
-        <jms:reference-file line="139">/../src/Querdos/ChallengeMe/AdministratorBundle/Resources/views/navigation/left_nav.html.twig</jms:reference-file>
+        <jms:reference-file line="152">/../src/Querdos/ChallengeMe/AdministratorBundle/Resources/views/navigation/left_nav.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="af5ca76138fbdcaf88024092e0d97bc259b70660" resname="nav.user-management" extradata="Meaning: User management button">
         <source>User management</source>
