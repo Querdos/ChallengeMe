@@ -9,7 +9,9 @@
 namespace Querdos\ChallengeMe\AdministratorBundle\Controller;
 
 use Querdos\ChallengeMe\AdministratorBundle\Form\CategoryType;
+use Querdos\ChallengeMe\AdministratorBundle\Form\ChallengeType;
 use Querdos\ChallengeMe\ChallengesBundle\Entity\Category;
+use Querdos\ChallengeMe\ChallengesBundle\Entity\Challenge;
 use Querdos\ChallengeMe\ChallengesBundle\Manager\CategoryManager;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -98,7 +100,8 @@ class ChallengesController extends Controller
                     'class' => 'btn btn-success'
                 ),
                 'translation_domain' => 'forms'
-            ));
+            ))
+        ;
 
         $form->handleRequest($request);
         if ($form->isSubmitted()) {
@@ -179,6 +182,57 @@ class ChallengesController extends Controller
             'categories'    => $categories,
             'category'      => $category,
             'challenges'    => $challenges
+        );
+    }
+
+    /**
+     * @Template("AdminBundle:content-challenges:challenges_add.html.twig")
+     *
+     * @param Request $request
+     *
+     * @return array|RedirectResponse
+     */
+    public function challengeAddAction(Request $request)
+    {
+        // retrieving category manager
+        $categoryManager = $this->get('challengeme.manager.category');
+
+        // retrieving categories
+        $categories = $categoryManager->all();
+
+        // creating new object to be hidrating
+        $challenge = new Challenge();
+
+        // Building the form
+        $form = $this->createForm(ChallengeType::class, $challenge, array(
+            'create' => false
+        ));
+        $form
+            ->add('save', SubmitType::class, array(
+                'label' => 'Save',
+                'attr' => array(
+                    'class' => 'btn btn-success'
+                ),
+                'translation_domain' => 'forms'
+            ))
+        ;
+
+        // handling the form
+        $form->handleRequest($request);
+        if ($form->isValid()) {
+            // setting the author
+            $challenge->setAuthor($this->getUser());
+
+            // Persisting the category
+            $this->get('challengeme.manager.challenge')->create($challenge);
+
+            // Redirecting to the admins management page
+            return $this->redirectToRoute('challenges_category_details');
+        }
+
+        return array(
+            'categories' => $categories,
+            'form'       => $form->createView()
         );
     }
 }

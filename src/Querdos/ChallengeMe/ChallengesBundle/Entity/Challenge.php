@@ -65,7 +65,7 @@ class Challenge
      * @param Category      $category
      * @param Administrator $author
      */
-    public function __construct($title, $description, $points, $level, $statement, Category $category, Administrator $author)
+    public function __construct($title = "", $description = "", $points = 0, $level = 0, $statement = "", Category $category = null, Administrator $author = null)
     {
         $this->title       = $title;
         $this->description = $description;
@@ -74,6 +74,7 @@ class Challenge
         $this->statement   = $statement;
         $this->category    = $category;
         $this->author      = $author;
+        $this->created     = new \DateTime();
     }
 
 

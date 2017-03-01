@@ -131,6 +131,7 @@
                     {% if is_granted("ROLE_MODERATOR") %}
                         <li><a href="{{ path("challenges_category_management") }}"><i class="fa fa-book"></i> {{ "nav.challenges-management-categories" | trans | desc("Categories") | meaning("Categories section") }}</a></li>
                     {% endif %}
+                    <li><a href="{{ path('challenges_challenge_add') }}"><i class="fa fa-pencil-square-o"></i> {{ "nav.challenges-management-create-challenge" | trans | desc("Create a new challenge") | meaning("Create a new challenge button") }}</a></li>
                     <li><a href="javascript:void(0)"><i class="fa fa-gavel"></i> {{ "nav.challenges-management-challenges" | trans | desc("Challenges") | meaning("Challenges section") }} <span class="fa fa-chevron-down"></span></a>
                         <ul class="nav child_menu">
                         {% if categories|length == 0 %}

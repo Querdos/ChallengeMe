@@ -147,6 +147,13 @@ challenges_category_details:
     methods:
         - GET
 
+challenges_challenge_add:
+    path:     /challenges/add
+    defaults: { _controller: AdminBundle:Challenges:challengeAdd }
+    methods:
+        - GET
+        - POST
+
 ######################
 # SecurityController #
 ######################

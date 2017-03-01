@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:jms="urn:jms:translation" version="1.2">
-  <file date="2017-02-26T16:22:38Z" source-language="en" target-language="fr" datatype="plaintext" original="not.available">
+  <file date="2017-02-28T12:21:46Z" source-language="en" target-language="fr" datatype="plaintext" original="not.available">
     <header>
       <tool tool-id="JMSTranslationBundle" tool-name="JMSTranslationBundle" tool-version="1.1.0-DEV"/>
       <note>The source node in most cases contains the sample message as written by the developer. If it looks like a dot-delimitted string such as "form.label.firstname", then the developer has not provided a default message.</note>
@@ -13,12 +13,12 @@
       </trans-unit>
       <trans-unit id="81e7dd8082743806c1afbf26dd1123d3b6eac68a" resname="nav.challenges-management" extradata="Meaning: Challenges management button">
         <source>Challenges Management</source>
-        <target>Gestion des challenges</target>
+        <target>Challenges</target>
         <jms:reference-file line="129">/../src/Querdos/ChallengeMe/AdministratorBundle/Resources/views/navigation/left_nav.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="33cc68362015e2c8ee660ec159e9c4ad4a117b6b" resname="nav.challenges-management-categories" extradata="Meaning: Categories section">
         <source>Categories</source>
-        <target>Categories</target>
+        <target>Gestion des catégories</target>
         <jms:reference-file line="131">/../src/Querdos/ChallengeMe/AdministratorBundle/Resources/views/navigation/left_nav.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="02e59c641231b78ac634202b8933505fee0a4493" resname="nav.challenges-management-challenges" extradata="Meaning: Challenges section">

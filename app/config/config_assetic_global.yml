@@ -96,6 +96,11 @@ assetic:
                 - 'assets/vendor/iCheck/icheck.min.js'
             output: 'assets/js/icheck.js'
 
+        validator_js:
+            inputs:
+                - 'assets/vendor/validator/validator.js'
+            output: 'assets/js/validator.js'
+
         # Stylesheets
         bootstrap:
             inputs:
