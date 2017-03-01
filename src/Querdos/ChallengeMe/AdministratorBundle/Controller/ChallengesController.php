@@ -219,7 +219,7 @@ class ChallengesController extends Controller
 
         // handling the form
         $form->handleRequest($request);
-        if ($form->isValid()) {
+        if ($form->isSubmitted()) {
             // setting the author
             $challenge->setAuthor($this->getUser());
 
@@ -227,7 +227,7 @@ class ChallengesController extends Controller
             $this->get('challengeme.manager.challenge')->create($challenge);
 
             // Redirecting to the admins management page
-            return $this->redirectToRoute('challenges_category_details');
+            return $this->redirectToRoute('challenges_category_details', ["category_id" => $challenge->getCategory()->getId()]);
         }
 
         return array(

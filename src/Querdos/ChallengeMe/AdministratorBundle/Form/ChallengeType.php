@@ -9,29 +9,38 @@
 namespace Querdos\ChallengeMe\AdministratorBundle\Form;
 
 use Ivory\CKEditorBundle\Form\Type\CKEditorType;
+use Querdos\ChallengeMe\ChallengesBundle\Manager\CategoryManager;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\VarDumper\VarDumper;
 
 class ChallengeType extends AbstractType
 {
-    const LEVELS = array(
-        'Very easy',
-        'Easy',
-        'Medium',
-        'Hard',
-        'Very hard'
-    );
+    /**
+     * @var CategoryManager
+     */
+    private $categoriesManager;
+
     /**
      * @param FormBuilderInterface $builder
      * @param array                $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        // retrieving categories
+        $categories = $this->categoriesManager->all();
+        $catList = array();
+
+        // building the association array for category field
+        foreach($categories as $category) {
+            $catList[$category->getTitle()] = $category;
+        }
+
+        // creating the builder
         $builder
             ->add('title', TextType::class, array(
                 'label' => 'Title',
@@ -92,6 +101,16 @@ class ChallengeType extends AbstractType
                 ),
                 'config_name' => 'config_challenge'
             ))
+            ->add('category', ChoiceType::class, array(
+                'label' => 'Category',
+                'label_attr' => array(
+                    'class' => 'control-label col-md-3 col-sm-3 col-xs-12'
+                ),
+                'attr' => array(
+                    'class' => 'form-control'
+                ),
+                'choices' => $catList
+            ))
         ;
     }
 
@@ -111,5 +130,13 @@ class ChallengeType extends AbstractType
                 'create'
             )
         ;
+    }
+
+    /**
+     * @param CategoryManager $categoriesManager
+     */
+    public function setCategoriesManager($categoriesManager)
+    {
+        $this->categoriesManager = $categoriesManager;
     }
 }
