@@ -23,6 +23,8 @@ class AppKernel extends Kernel
             new JMS\DiExtraBundle\JMSDiExtraBundle($this),
             new JMS\AopBundle\JMSAopBundle(),
             new JMS\TranslationBundle\JMSTranslationBundle(),
+
+            new Ivory\CKEditorBundle\IvoryCKEditorBundle(),
             
             new Querdos\ChallengeMe\AdministratorBundle\AdminBundle(),
             new Querdos\ChallengeMe\LandingBundle\LandingBundle(),
