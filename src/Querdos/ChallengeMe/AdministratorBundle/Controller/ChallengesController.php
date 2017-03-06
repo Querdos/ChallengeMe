@@ -60,7 +60,7 @@ class ChallengesController extends Controller
             ));
 
         $form->handleRequest($request);
-        if ($form->isValid()) {
+        if ($form->isSubmitted()) {
             // persisting the newly created category
             $this->get('challengeme.manager.category')->create($category);
 
