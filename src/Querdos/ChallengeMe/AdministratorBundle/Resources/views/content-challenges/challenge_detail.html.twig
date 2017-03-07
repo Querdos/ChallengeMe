@@ -5,8 +5,8 @@
 {% block stylesheets %}
     {{ parent() }}
 
-    {% stylesheets '@iCheck' '@datatables_css' filter='cssrewrite' %}
-    <link href="{{ asset_url }}" rel="stylesheet"/>
+    {% stylesheets '@iCheck' '@datatables_css' '@hightlightjs_css' filter='cssrewrite' %}
+        <link href="{{ asset_url }}" rel="stylesheet"/>
     {% endstylesheets %}
 {% endblock stylesheets %}
 
@@ -19,7 +19,6 @@
                     {{ challenge.title }}
                 </h3>
             </div>
-
         </div>
 
         <div class="clearfix"></div>
@@ -30,6 +29,11 @@
                 <div class="x_panel">
                     <div class="x_title">
                         <h2>{{ challenge.description }}</h2>
+                        <ul class="nav navbar-right panel_toolbox">
+                            <li class="dropdown">
+                                <a href="{{ path('challenges_challenge_update', {'challenge_id': challenge.id }) }}" title="Edit the challenge" role="button" aria-expanded="false"><i class="fa fa-pencil"></i></a>
+                            </li>
+                        </ul>
                         <div class="clearfix"></div>
                     </div>
                     <div class="x_content">
@@ -66,9 +70,14 @@
 {% endblock main_content %}
 
 {% block javascript %}
-    {% javascripts '@jquery_js' '@bootstrap_js' '@fastclick_js' '@nprogress_js' '@iCheck_js' '@datatables_js' '@customTheme_js' %}
-    <script src="{{ asset_url }}"></script>
+    {% javascripts '@highlightjs_js' '@jquery_js' '@bootstrap_js' '@fastclick_js' '@nprogress_js' '@iCheck_js' '@datatables_js' '@customTheme_js' %}
+        <script src="{{ asset_url }}"></script>
     {% endjavascripts %}
+
+    {# Script for hightlight #}
+    <script>
+        hljs.initHighlightingOnLoad();
+    </script>
 
     {# Script for the datatable #}
     <script>
