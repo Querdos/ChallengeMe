@@ -1,0 +1,3 @@
+player_homepage:
+    path:     /
+    defaults: { _controller: PlayerBundle:Default:index }

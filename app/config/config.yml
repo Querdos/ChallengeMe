@@ -3,6 +3,7 @@ imports:
     - { resource: "@LandingBundle/Resources/config/services.yml" }
     - { resource: "@UserBundle/Resources/config/services.yml" }
     - { resource: "@ChallengesBundle/Resources/config/services.yml" }
+    - { resource: "@PlayerBundle/Resources/config/services.yml" }
 
     - { resource: "config_jms.yml"}
 
