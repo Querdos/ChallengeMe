@@ -235,4 +235,39 @@ class ChallengesController extends Controller
             'form'       => $form->createView()
         );
     }
+
+    /**
+     * @Template("AdminBundle:content-challenges:challenge_detail.html.twig")
+     *
+     * @param int $category_id
+     * @param int $challenge_id
+     *
+     * @return array|RedirectResponse
+     */
+    public function challengeDetailAction($category_id, $challenge_id)
+    {
+        // retrieving all categories
+        $categories = $this
+            ->get('challengeme.manager.category')
+            ->all()
+        ;
+
+        // retrieving the category
+        $category = $this
+            ->get('challengeme.manager.category')
+            ->readById($category_id)
+        ;
+
+        // retrieving the challenge details
+        $challenge = $this
+            ->get('challengeme.manager.challenge')
+            ->readById($challenge_id)
+        ;
+
+        return array(
+            'categories'    => $categories,
+            'category'      => $category,
+            'challenge'     => $challenge
+        );
+    }
 }

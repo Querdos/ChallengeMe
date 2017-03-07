@@ -1,4 +1,4 @@
-{% trans_default_domain "challenges-category-details" %}
+{% trans_default_domain "challenges-challenge-details" %}
 
 {% extends "AdminBundle::base.html.twig" %}
 
@@ -16,7 +16,7 @@
         <div class="page-title">
             <div class="title_left">
                 <h3>
-                    {{ "title" | trans | desc("List of challenges for ") | meaning("Title") }} <b>{{ category.title }}</b>
+                    {{ challenge.title }}
                 </h3>
             </div>
 
@@ -29,11 +29,35 @@
             <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
                     <div class="x_title">
-                        <h2>{{ category.description }}</h2>
+                        <h2>{{ challenge.description }}</h2>
                         <div class="clearfix"></div>
                     </div>
                     <div class="x_content">
-                        <table id="datatable" class="table table-striped table-bordered" style="margin: auto">
+                        <div class="col-md-3">
+                            <h2>Author</h2>
+                            <p>{{ challenge.author.username }}, {{ challenge.created | date("M d Y") }}</p>
+                        </div>
+
+                        <div class="col-md-3">
+                            <h2>Points</h2>
+                            <p>{{ challenge.points }} points</p>
+                        </div>
+
+                        <div class="col-md-3">
+                            <h2>Level</h2>
+                            <p>{{ challenge.level }} / 5</p>
+                        </div>
+
+                        <div class="col-md-3">
+                            <h2>Validations</h2>
+                            {# TODO: Validations #}
+                        </div>
+
+                        <div class="col-md-12">
+                            <h2>Statement</h2>
+                            <p>{{ challenge.statement | raw }}</p>
+                        </div>
+                        {#<table id="datatable" class="table table-striped table-bordered" style="margin: auto">
                             <thead>
                             <tr>
                                 <th>{{ "table.th1" | trans | desc("Title")       | meaning("th1") }}</th>
@@ -47,7 +71,7 @@
                             <tbody>
                             {% for challenge in challenges %}
                                 <tr>
-                                    <td><a href="{{ path('challenges_challenge_details', {'category_id': category.id, 'challenge_id': challenge.id }) }}">{{ challenge.title }}</a></td>
+                                    <td>{{ challenge.title }}</td>
                                     <td>{{ challenge.description }}</td>
                                     <td>{{ challenge.points }}</td>
                                     <td>{{ challenge.level }} / 5</td>
@@ -55,7 +79,7 @@
                                 </tr>
                             {% endfor %}
                             </tbody>
-                        </table>
+                        </table>#}
                     </div>
                 </div>
             </div>

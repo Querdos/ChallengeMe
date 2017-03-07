@@ -79,6 +79,18 @@ class ChallengeManager
     }
 
     /**
+     * Retreive a specific challenge with the given id
+     *
+     * @param int $challenge_id
+     *
+     * @return Challenge
+     */
+    public function readById($challenge_id)
+    {
+        return $this->repository->findOneById($challenge_id);
+    }
+
+    /**
      * Retrieve all challenges by author
      *
      * @param Administrator $administrator
