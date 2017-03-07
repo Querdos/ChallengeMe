@@ -143,5 +143,5 @@ assetic:
 
         hightlightjs_css:
             inputs:
-                - 'assets/vendor/highlight/styles/obsidian.css'
+                - 'assets/vendor/highlightjs/styles/monokai_sublime.css'
             output: 'assets/css/highlight.css'

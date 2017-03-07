@@ -160,6 +160,13 @@ challenges_challenge_details:
     methods:
         - GET
 
+challenges_challenge_update:
+    path:     /challenges/update/{challenge_id}
+    defaults: { _controller: AdminBundle:Challenges:updateChallenge }
+    methods:
+        - GET
+        - POST
+
 ######################
 # SecurityController #
 ######################

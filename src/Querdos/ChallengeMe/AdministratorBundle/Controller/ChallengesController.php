@@ -18,6 +18,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\VarDumper\VarDumper;
 
 class ChallengesController extends Controller
 {
@@ -233,6 +234,68 @@ class ChallengesController extends Controller
         return array(
             'categories' => $categories,
             'form'       => $form->createView()
+        );
+    }
+
+    /**
+     * @Template("AdminBundle:content-challenges:challenge_update.html.twig")
+     *
+     * @param int     $challenge_id
+     * @param Request $request
+     *
+     * @return array | RedirectResponse
+     */
+    public function updateChallengeAction($challenge_id, Request $request)
+    {
+        // retrieving the challenge
+        $challenge = $this
+            ->get('challengeme.manager.challenge')
+            ->readById($challenge_id)
+        ;
+
+        // Building the form
+        $form = $this->createForm(ChallengeType::class, $challenge, array(
+            'create' => false
+        ));
+        $form
+            ->add('save', SubmitType::class, array(
+                'label' => 'Save',
+                'attr' => array(
+                    'class' => 'btn btn-success'
+                ),
+                'translation_domain' => 'forms'
+            ))
+        ;
+
+        // retrieving categories
+        $categories = $this
+            ->get('challengeme.manager.category')
+            ->all()
+        ;
+
+        // handling the form
+        $form->handleRequest($request);
+        if ($form->isSubmitted()) {
+            // updating
+            $this
+                ->get('challengeme.manager.challenge')
+                ->update($challenge)
+            ;
+
+            // redirecting
+            return $this->redirectToRoute(
+                'challenges_challenge_details',
+                array(
+                    'category_id'   => $challenge->getCategory()->getId(),
+                    'challenge_id'  => $challenge->getId()
+                )
+            );
+        }
+
+        // everything ok
+        return array(
+            'form'  => $form->createView(),
+            'categories' => $categories
         );
     }
 
