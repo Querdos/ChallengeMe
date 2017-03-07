@@ -55,6 +55,11 @@ class Challenge
     private $created;
 
     /**
+     * @var string
+     */
+    private $solution;
+
+    /**
      * Challenge constructor.
      *
      * @param string        $title
@@ -217,7 +222,7 @@ class Challenge
     }
 
     /**
-     * @param mixed $category
+     * @param Category $category
      */
     public function setCategory($category)
     {
@@ -241,7 +246,7 @@ class Challenge
     }
 
     /**
-     * @return mixed
+     * @return \DateTime
      */
     public function getCreated()
     {
@@ -249,11 +254,30 @@ class Challenge
     }
 
     /**
-     * @param mixed $created
+     * @param \DateTime $created
      */
     public function setCreated($created)
     {
         $this->created = $created;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSolution()
+    {
+        return $this->solution;
+    }
+
+    /**
+     * @param string $solution
+     *
+     * @return Challenge
+     */
+    public function setSolution($solution)
+    {
+        $this->solution = $solution;
+        return $this;
     }
 }
 
