@@ -80,11 +80,33 @@ assetic:
 
 # CKEditor configuration
 ivory_ck_editor:
+    plugins:
+        lineutils:
+            path:     '/ckeditor/plugins/lineutils/'
+            filename: 'plugin.js'
+
+        widget:
+            path:     '/ckeditor/plugins/widget/'
+            filename: 'plugin.js'
+
+        codesnippet:
+            path:     '/ckeditor/plugins/codesnippet/'
+            filename: 'plugin.js'
+
     configs:
         config_challenge:
             toolbar: "redac_toolbar"
             uiColor: "#ffffff"
             toolbarCanCollapse: true
+            extraPlugins: 'lineutils,widget,codesnippet'
+            codeSnippet_theme: 'monokai_sublime'
+
     toolbars:
         configs:
-            redac_toolbar: [ [ "Source", "-", "Cut", "Copy", "Paste" ], [ "Undo", "Redo" ], [ "Bold", "Italic", "Strike"], [ "Link", "Table"], [ "Maximize" ] ]
+            redac_toolbar: [
+                    ["Preview", "-", "Cut", "Copy", "Paste" ],
+                    [ "Undo", "Redo" ],
+                    [ "Bold", "Italic", "Strike"],
+                    [ "Link", "Table", "CodeSnippet"],
+                    [ "Maximize" ]
+                ]
