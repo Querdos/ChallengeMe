@@ -61,10 +61,11 @@ class SecurityController extends Controller
     /**
      * @param   Request $request
      */
-    public function logoutAction(Request $request) {
+    public function logoutAction(Request $request)
+    {
         $user = $this->getUser();
         if ($user instanceof UserInterface) {
-            $this->get('security.firewall.context')->setToken(null);
+            $this->get('security.firewall.map')->setToken(null);
             $request->getSession()->invalidate();
         }
     }

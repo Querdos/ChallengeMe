@@ -61,7 +61,7 @@ security:
         player_firewall:
             pattern:                  ^/players
             logout:
-                path:                 /player/logout
+                path:                 /players/logout
                 target:               /
             guard:
                 authenticators:
