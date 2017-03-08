@@ -44,4 +44,25 @@ class PlayerRepository extends EntityRepository
             ->getOneOrNullResult()
         ;
     }
+
+    /**
+     * Return the count of existing players in database
+     *
+     * @return int
+     */
+    public function getPlayerCount()
+    {
+        $query = $this
+            ->getEntityManager()
+            ->createQueryBuilder()
+
+            ->select('COUNT(player)')
+            ->from('UserBundle:Player', 'player')
+        ;
+
+        return $query
+            ->getQuery()
+            ->getSingleScalarResult()
+        ;
+    }
 }

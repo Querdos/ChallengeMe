@@ -116,6 +116,16 @@ class PlayerManager
     }
 
     /**
+     * Return the count of existing players in database
+     *
+     * @return int
+     */
+    public function count()
+    {
+        return $this->repository->getPlayerCount();
+    }
+
+    /**
      * Retreive all players from the database
      *
      * @return Player[]
