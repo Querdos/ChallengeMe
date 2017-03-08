@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:jms="urn:jms:translation" version="1.2">
-  <file date="2017-03-01T16:44:36Z" source-language="en" target-language="en" datatype="plaintext" original="not.available">
+  <file date="2017-03-08T09:10:21Z" source-language="en" target-language="en" datatype="plaintext" original="not.available">
     <header>
       <tool tool-id="JMSTranslationBundle" tool-name="JMSTranslationBundle" tool-version="1.1.0-DEV"/>
       <note>The source node in most cases contains the sample message as written by the developer. If it looks like a dot-delimitted string such as "form.label.firstname", then the developer has not provided a default message.</note>
@@ -91,14 +91,20 @@
         <jms:reference-file line="315">/../src/Querdos/ChallengeMe/AdministratorBundle/Controller/AdministrationController.php</jms:reference-file>
         <jms:reference-file line="412">/../src/Querdos/ChallengeMe/AdministratorBundle/Controller/AdministrationController.php</jms:reference-file>
         <jms:reference-file line="456">/../src/Querdos/ChallengeMe/AdministratorBundle/Controller/AdministrationController.php</jms:reference-file>
-        <jms:reference-file line="212">/../src/Querdos/ChallengeMe/AdministratorBundle/Controller/ChallengesController.php</jms:reference-file>
-        <jms:reference-file line="55">/../src/Querdos/ChallengeMe/AdministratorBundle/Controller/ChallengesController.php</jms:reference-file>
-        <jms:reference-file line="98">/../src/Querdos/ChallengeMe/AdministratorBundle/Controller/ChallengesController.php</jms:reference-file>
+        <jms:reference-file line="213">/../src/Querdos/ChallengeMe/AdministratorBundle/Controller/ChallengesController.php</jms:reference-file>
+        <jms:reference-file line="262">/../src/Querdos/ChallengeMe/AdministratorBundle/Controller/ChallengesController.php</jms:reference-file>
+        <jms:reference-file line="56">/../src/Querdos/ChallengeMe/AdministratorBundle/Controller/ChallengesController.php</jms:reference-file>
+        <jms:reference-file line="99">/../src/Querdos/ChallengeMe/AdministratorBundle/Controller/ChallengesController.php</jms:reference-file>
       </trans-unit>
       <trans-unit id="6d5594bbd41350ef631584f2bef07c4ed61d537e" resname="Secondary email">
         <source>Secondary email</source>
         <target>Secondary email</target>
         <jms:reference-file line="61">/../src/Querdos/ChallengeMe/AdministratorBundle/Form/AdministratorType.php</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="b4f91bdb0e1b0e40fff4debcd0fea22f1999f491" resname="Solution">
+        <source>Solution</source>
+        <target>Solution</target>
+        <jms:reference-file line="115">/../src/Querdos/ChallengeMe/AdministratorBundle/Form/ChallengeType.php</jms:reference-file>
       </trans-unit>
       <trans-unit id="768e0c1c69573fb588f61f1308a015c11468e05f" resname="Title">
         <source>Title</source>
