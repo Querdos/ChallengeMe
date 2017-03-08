@@ -59,10 +59,13 @@ abstract class BaseUser
 
     /**
      * @param int $id
+     *
+     * @return $this
      */
     public function setId($id)
     {
         $this->id = $id;
+        return $this;
     }
 
     /**
@@ -75,10 +78,13 @@ abstract class BaseUser
 
     /**
      * @param string $username
+     *
+     * @return $this
      */
     public function setUsername($username)
     {
         $this->username = $username;
+        return $this;
     }
 
     /**
@@ -91,10 +97,13 @@ abstract class BaseUser
 
     /**
      * @param string $plainPassword
+     *
+     * @return $this
      */
     public function setPlainPassword($plainPassword)
     {
         $this->plainPassword = $plainPassword;
+        return $this;
     }
 
     /**
@@ -107,10 +116,13 @@ abstract class BaseUser
 
     /**
      * @param string $password
+     *
+     * @return $this
      */
     public function setPassword($password)
     {
         $this->password = $password;
+        return $this;
     }
 
     /**
@@ -123,10 +135,13 @@ abstract class BaseUser
 
     /**
      * @param string $email
+     *
+     * @return $this
      */
     public function setEmail($email)
     {
         $this->email = $email;
+        return $this;
     }
 
     /**

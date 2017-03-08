@@ -98,6 +98,12 @@ class Administrator extends BaseUser implements UserInterface, \Serializable
         return array($this->role->getValue());
     }
 
+    public function setRole(Role $role)
+    {
+        $this->role = $role;
+        return $this;
+    }
+
     /**
      * {@inheritdoc}
      */
