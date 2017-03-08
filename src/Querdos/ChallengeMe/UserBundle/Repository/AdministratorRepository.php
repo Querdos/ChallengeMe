@@ -190,4 +190,82 @@ class AdministratorRepository extends EntityRepository
             ->getArrayResult()
         ;
     }
+
+    /**
+     * Return the count of existant administrators in database
+     *
+     * @return int
+     */
+    public function getAdminCount()
+    {
+        $query = $this
+            ->getEntityManager()
+            ->createQueryBuilder()
+
+            ->select('COUNT(admin)')
+            ->from('UserBundle:Administrator', 'admin')
+
+            ->join('admin.role', 'role')
+            ->where('role.value = :role_admin')
+
+            ->setParameter('role_admin', Role::ROLE_ADMIN);
+        ;
+
+        return $query
+            ->getQuery()
+            ->getSingleScalarResult()
+        ;
+    }
+
+    /**
+     * Return the count of existant moderators in database
+     *
+     * @return int
+     */
+    public function getModoCount()
+    {
+        $query = $this
+            ->getEntityManager()
+            ->createQueryBuilder()
+
+            ->select('COUNT(admin)')
+            ->from('UserBundle:Administrator', 'admin')
+
+            ->join('admin.role', 'role')
+            ->where('role.value = :role_admin')
+
+            ->setParameter('role_admin', Role::ROLE_MODERATOR);
+        ;
+
+        return $query
+            ->getQuery()
+            ->getSingleScalarResult()
+        ;
+    }
+
+    /**
+     * Return the count of existing redactors in database
+     *
+     * @return int
+     */
+    public function getRedacCount()
+    {
+        $query = $this
+            ->getEntityManager()
+            ->createQueryBuilder()
+
+            ->select('COUNT(admin)')
+            ->from('UserBundle:Administrator', 'admin')
+
+            ->join('admin.role', 'role')
+            ->where('role.value = :role_admin')
+
+            ->setParameter('role_admin', Role::ROLE_REDACTOR);
+        ;
+
+        return $query
+            ->getQuery()
+            ->getSingleScalarResult()
+        ;
+    }
 }

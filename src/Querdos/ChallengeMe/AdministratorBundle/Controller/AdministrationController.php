@@ -32,11 +32,10 @@ class AdministrationController extends Controller
         // retrieving categories
         $categories = $this->get('challengeme.manager.category')->all();
 
-        // TODO: Create method in manager to retrieve only the count for each kind of admin
         return array(
-            'adminCount'    => count($adminManager->getAllAdmin()),
-            'modoCount'     => count($adminManager->getAllModerators()),
-            'redacCount'    => count($adminManager->getAllRedactors()),
+            'adminCount'    => $adminManager->adminCount(),
+            'modoCount'     => $adminManager->modoCount(),
+            'redacCount'    => $adminManager->redacCount(),
             'categories'    => $categories
         );
     }

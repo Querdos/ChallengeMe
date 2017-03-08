@@ -246,6 +246,36 @@ class AdministratorManager
     {
     	return $this->repository->findOneById($id);
     }
+
+    /**
+     * Return the count of administrators in database
+     *
+     * @return int
+     */
+    public function adminCount()
+    {
+        return $this->repository->getAdminCount();
+    }
+
+    /**
+     * Return the count of moderators in database
+     *
+     * @return int
+     */
+    public function modoCount()
+    {
+        return $this->repository->getModoCount();
+    }
+
+    /**
+     * Return the count of redactors in database
+     *
+     * @return int
+     */
+    public function redacCount()
+    {
+        return $this->repository->getRedacCount();
+    }
     
     /**
      * Setting the password encoder
