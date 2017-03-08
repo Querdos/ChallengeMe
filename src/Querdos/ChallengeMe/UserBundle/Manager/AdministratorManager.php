@@ -13,6 +13,7 @@ use Querdos\ChallengeMe\UserBundle\Entity\Administrator;
 use Querdos\ChallengeMe\UserBundle\Entity\Role;
 use Querdos\ChallengeMe\UserBundle\Repository\AdministratorRepository;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoder;
+use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
 use Symfony\Component\Security\Core\Tests\Encoder\PasswordEncoder;
 use Symfony\Component\VarDumper\VarDumper;
 
@@ -177,12 +178,19 @@ class AdministratorManager
     /**
      * Retrieve an administrator informations, with a given username
      *
+     * @throws  UsernameNotFoundException
      * @param   string $username
-     * @return  array
+     * @return  Administrator
      */
     public function getAdminData($username)
     {
-        return $this->repository->getAdminData($username);
+        if (null === ($adminData = $this->repository->getAdminData($username))) {
+            throw new UsernameNotFoundException(
+                "$username doesn't exist"
+            );
+        }
+
+        return $adminData;
     }
 
     /**

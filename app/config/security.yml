@@ -7,6 +7,10 @@ security:
             algorithm:  bcrypt
             cost:       12
 
+        Querdos\ChallengeMe\UserBundle\Entity\Player:
+            algorithm:  bcrypt
+            cost:       12
+
         Symfony\Component\Security\Core\User\User:
             algorithm:  bcrypt
             cost:       12
@@ -14,6 +18,9 @@ security:
     providers:
         administrator_provider:
             id: challengeme.provider.admin
+
+        player_provider:
+            id: challengeme.provider.player
 
     role_hierarchy:
         ROLE_REDACTOR:      [ROLE_USER]

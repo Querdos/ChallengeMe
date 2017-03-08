@@ -20,8 +20,8 @@ class AdministratorRepository extends EntityRepository
     /**
      * Get the admin username, password and email
      *
-     * @param   $username
-     * @return  array
+     * @param   string $username
+     * @return  null | Administrator
      */
     public function getAdminData($username) {
         $query = $this
@@ -43,7 +43,8 @@ class AdministratorRepository extends EntityRepository
 
         return $query
             ->getQuery()
-            ->getOneOrNullResult();
+            ->getOneOrNullResult()
+        ;
     }
 
     /**

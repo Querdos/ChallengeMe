@@ -1,26 +1,28 @@
 <?php
 /**
- * Created by Hamza ESSAYEGH.
+ * Created by Hamza ESSAYEGH
  * User: Querdos
- * Date: 5/22/16
- * Time: 2:24 PM
+ * Date: 3/8/17
+ * Time: 11:48 AM
  */
 
-namespace Querdos\ChallengeMe\AdministratorBundle\Security\Provider;
+namespace Querdos\ChallengeMe\PlayerBundle\Security\Provider;
 
-use Querdos\ChallengeMe\UserBundle\Entity\Administrator;
-use Querdos\ChallengeMe\UserBundle\Manager\AdministratorManager;
+
+use Querdos\ChallengeMe\UserBundle\Entity\Player;
+use Querdos\ChallengeMe\UserBundle\Manager\PlayerManager;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 
-class AdministratorProvider implements UserProviderInterface
+class PlayerProvider implements UserProviderInterface
 {
+
     /**
-     * @var AdministratorManager
+     * @var PlayerManager
      */
-    private $adminManager;
+    private $playerManager;
 
     /**
      * Loads the user for the given username.
@@ -36,7 +38,7 @@ class AdministratorProvider implements UserProviderInterface
      */
     public function loadUserByUsername($username)
     {
-        return $this->adminManager->getAdminData($username);
+        return $this->playerManager->getPlayerData($username);
     }
 
     /**
@@ -55,31 +57,32 @@ class AdministratorProvider implements UserProviderInterface
      */
     public function refreshUser(UserInterface $user)
     {
-        if (!$user instanceof Administrator)
-        {
+        if (!$user instanceof Player) {
             throw new UnsupportedUserException(
-                sprintf('Instances of "%s" are not supported.', get_class($user))
+                sprintf('Instances of "%s" are not supported', get_class($user))
             );
         }
 
         return $this->loadUserByUsername($user->getUsername());
     }
 
+    /**
+     * Whether this provider supports the given user class.
+     *
+     * @param string $class
+     *
+     * @return bool
+     */
     public function supportsClass($class)
     {
-        return $class === "UserBundle\\Entity\\Administrator";
+        return $class === "UserBundle\\Entity\\Player";
     }
 
     /**
-     * @param AdministratorManager $adminManager
+     * @param PlayerManager $playerManager
      */
-    public function setAdminManager($adminManager)
+    public function setPlayerManager($playerManager)
     {
-        $this->adminManager = $adminManager;
-    }
-
-    public function getClassName()
-    {
-        return $this->getClassName();
+        $this->playerManager = $playerManager;
     }
 }

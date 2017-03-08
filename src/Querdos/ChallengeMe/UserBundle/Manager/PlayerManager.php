@@ -11,6 +11,7 @@ namespace Querdos\ChallengeMe\UserBundle\Manager;
 use Doctrine\ORM\EntityManager;
 use Querdos\ChallengeMe\UserBundle\Entity\Player;
 use Querdos\ChallengeMe\UserBundle\Repository\PlayerRepository;
+use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
 use Symfony\Component\Security\Core\Tests\Encoder\PasswordEncoder;
 
 class PlayerManager
@@ -95,6 +96,23 @@ class PlayerManager
     {
         $this->entityManager->remove($player);
         $this->entityManager->flush($player);
+    }
+
+    /**
+     * @param string $username
+     *
+     * @throws UsernameNotFoundException
+     * @return null|Player
+     */
+    public function getPlayerData($username)
+    {
+        if (null === ($playerData = $this->repository->getPlayerData($username))){
+            throw new UsernameNotFoundException(
+                "$username not in database"
+            );
+        }
+
+        return $playerData;
     }
 
     /**
