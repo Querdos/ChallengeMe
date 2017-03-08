@@ -7,6 +7,7 @@
 
 namespace Querdos\ChallengeMe\AdministratorBundle\Security\Authenticator;
 
+use Querdos\ChallengeMe\AdministratorBundle\Security\Provider\AdministratorProvider;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,6 +19,7 @@ use Symfony\Component\Security\Core\Tests\Encoder\PasswordEncoder;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Symfony\Component\Security\Guard\AbstractGuardAuthenticator;
+use Symfony\Component\VarDumper\VarDumper;
 
 class FormAuthenticator extends AbstractGuardAuthenticator
 {
@@ -53,18 +55,20 @@ class FormAuthenticator extends AbstractGuardAuthenticator
 
     /**
      * {@inheritdoc}
+     *
+     * For the user provider, see security.yml
+     *      - 0 => AdministratorProvider
+     *      - 1 => PlayerProvider
      */
     public function getUser($credentials, UserProviderInterface $userProvider)
     {
-        if (null !== $userLoaded = $userProvider->loadUserByUsername($credentials['username']))
+        /** @var AdministratorProvider $adminProvider */
+        $adminProvider = $userProvider->getProviders()[0];
+
+        if (null !== $userLoaded = $adminProvider->loadUserByUsername($credentials['username']))
         {
             return $userLoaded;
         }
-        /*foreach ($userProvider->getProviders() as $provider) {
-            if (null !== $userLoaded = $provider->loadUserByUsername($credentials['username'])) {
-                return $userLoaded;
-            }
-        }*/
 
         throw new CustomUserMessageAuthenticationException($this->failMessage);
     }
