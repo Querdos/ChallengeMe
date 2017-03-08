@@ -58,6 +58,39 @@ class LoadInfoUserData extends AbstractFixture implements OrderedFixtureInterfac
         $manager->flush();
 
         $this->addReference('redactor-info', $infoUser);
+
+        // Player 1
+        $infoUser
+            ->setFirstName('Player 1')
+            ->setBirthday(new \DateTime())
+        ;
+
+        $manager->persist($infoUser);
+        $manager->flush();
+
+        $this->addReference('player1-info', $infoUser);
+
+        // Player 2
+        $infoUser
+            ->setFirstName('Player 2')
+            ->setBirthday(new \DateTime())
+        ;
+
+        $manager->persist($infoUser);
+        $manager->flush();
+
+        $this->addReference('player2-info', $infoUser);
+
+        // Player 3
+        $infoUser
+            ->setFirstName('Player 2')
+            ->setBirthday(new \DateTime())
+        ;
+
+        $manager->persist($infoUser);
+        $manager->flush();
+
+        $this->addReference('player3-info', $infoUser);
     }
 
     /**

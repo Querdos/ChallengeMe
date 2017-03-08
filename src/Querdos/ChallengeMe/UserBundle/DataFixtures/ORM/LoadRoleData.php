@@ -38,11 +38,6 @@ class LoadRoleData extends AbstractFixture implements OrderedFixtureInterface
         $manager->persist($role);
         $this->addReference('role-redactor', $role);
 
-        // User
-        $role = new Role(Role::ROLE_USER);
-        $manager->persist($role);
-        $this->addReference('role-user', $role);
-
         $manager->flush();
     }
 
