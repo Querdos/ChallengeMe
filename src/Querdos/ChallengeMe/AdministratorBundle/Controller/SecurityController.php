@@ -31,17 +31,7 @@ class SecurityController extends Controller
 
         // Checking Admin
         if ($user instanceof Administrator) {
-            return $this->redirectToRoute('admin_homepage');
-        }
-
-        // Checking moderator
-        if ($user instanceof Moderator) {
-            return $this->redirectToRoute('moderator_homepage');
-        }
-
-        // Checking redactor
-        if ($user instanceof Redactor) {
-            return $this->redirectToRoute('redactor_homepage');
+            return $this->redirectToRoute('administration_homepage');
         }
 
         return $this->redirectToRoute('administration_login');
@@ -50,12 +40,12 @@ class SecurityController extends Controller
     /**
      * @Template("AdminBundle:security:login.html.twig")
      *
-     * @return  array
+     * @return  array | RedirectResponse
      */
     public function loginAction() {
         $user = $this->getUser();
         if ($user instanceof UserInterface) {
-            return $this->redirectToRoute('admin_homepage');
+            return $this->redirectToRoute('administration_homepage');
         }
 
         /** @var AuthenticationException $exception */
@@ -70,8 +60,7 @@ class SecurityController extends Controller
     public function loginCheckAction() {}
 
     /**
-     * @param   Request         $request
-     * @return  RedirectResponse
+     * @param   Request $request
      */
     public function logoutAction(Request $request) {
         $user = $this->getUser();
