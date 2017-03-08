@@ -1,5 +1,1 @@
 services:
-    challengeme.provider.player:
-        class: Querdos\ChallengeMe\PlayerBundle\Security\Provider\PlayerProvider
-        calls:
-            - [ setPlayerManager, '@challengeme.manager.player'']
