@@ -18,6 +18,11 @@ security:
             cost:       12
 
     providers:
+        # Chain provider
+        chain_provider:
+            chain:
+                providers: [ administrator_provider, player_provider ]
+
         # administrator provider
         administrator_provider:
             id: challengeme.provider.admin
@@ -27,10 +32,10 @@ security:
             id: challengeme.provider.player
 
     role_hierarchy:
-        ROLE_REDACTOR:      [ROLE_USER]
-        ROLE_MODERATOR:     [ROLE_USER, ROLE_REDACTOR]
-        ROLE_ADMIN:         [ROLE_USER, ROLE_MODERATOR, ROLE_REDACTOR]
-        ROLE_SUPER_ADMIN:   [ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
+        ROLE_REDACTOR:      [ ROLE_USER ]
+        ROLE_MODERATOR:     [ ROLE_USER, ROLE_REDACTOR ]
+        ROLE_ADMIN:         [ ROLE_USER, ROLE_MODERATOR, ROLE_REDACTOR ]
+        ROLE_SUPER_ADMIN:   [ ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH ]
 
     firewalls:
         # disables authentication for assets and the profiler, adapt it according to your needs
@@ -51,7 +56,16 @@ security:
                 target:               /
             guard:
                 authenticators:
-                    - challengeme.form_authenticator
+                    - challengeme.admin.form_authenticator
+
+        player_firewall:
+            pattern:                  ^/players
+            logout:
+                path:                 /player/logout
+                target:               /
+            guard:
+                authenticators:
+                    - challengeme.player.form_authenticator
 
         # Firewall for the landing zone
         landing_firewall:

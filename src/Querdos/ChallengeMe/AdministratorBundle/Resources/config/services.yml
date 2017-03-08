@@ -8,8 +8,8 @@ services:
         calls:
             - [ setAdminManager,      ['@challengeme.manager.administrator'] ]
 
-    challengeme.form_authenticator:
+    challengeme.admin.form_authenticator:
         class: Querdos\ChallengeMe\AdministratorBundle\Security\Authenticator\FormAuthenticator
         calls:
             - [ setContainer,         ['@service_container'] ]
-            - [ setRouter,            ['@router']]
+            - [ setRouter,            ['@router'] ]

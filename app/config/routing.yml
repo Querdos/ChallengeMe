@@ -1,6 +1,6 @@
 player:
     resource: "@PlayerBundle/Resources/config/routing.yml"
-    prefix:   /player
+    prefix:   /players
 
 challenges:
     resource: "@ChallengesBundle/Resources/config/routing.yml"
