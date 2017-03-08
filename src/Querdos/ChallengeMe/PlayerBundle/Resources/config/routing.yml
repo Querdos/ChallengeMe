@@ -1,3 +1,21 @@
+##################
+#   Main pages   #
+##################
 player_homepage:
     path:     /
-    defaults: { _controller: PlayerBundle:Default:index }
+    defaults: { _controller: PlayerBundle:Player:index }
+
+######################
+# SecurityController #
+######################
+player_login:
+    path:     /login
+    defaults: { _controller: PlayerBundle:Security:login }
+
+player_login_check:
+    path:     /login_check
+    defaults: { _controller: PlayerBundle:Security:loginCheck }
+
+player_logout:
+    path:     /logout
+    defaults: { _controller: PlayerBundle:Security:logout }
