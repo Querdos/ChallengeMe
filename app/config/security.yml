@@ -3,10 +3,12 @@ imports:
 
 security:
     encoders:
+        # Encoder for the administrator entity
         Querdos\ChallengeMe\UserBundle\Entity\Administrator:
             algorithm:  bcrypt
             cost:       12
 
+        # Encoder for the player entity
         Querdos\ChallengeMe\UserBundle\Entity\Player:
             algorithm:  bcrypt
             cost:       12
@@ -16,9 +18,11 @@ security:
             cost:       12
 
     providers:
+        # administrator provider
         administrator_provider:
             id: challengeme.provider.admin
 
+        # player provider
         player_provider:
             id: challengeme.provider.player
 
