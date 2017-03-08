@@ -1,0 +1,42 @@
+Querdos\ChallengeMe\UserBundle\Entity\Player:
+    type:             entity
+    table:            cm_user_player
+    repositoryClass:  Querdos\ChallengeMe\UserBundle\Repository\PlayerRepository
+    id:
+        id:
+            type:       integer
+            id:         true
+            generator:
+                strategy: AUTO
+    fields:
+        username:
+            type:       string
+            length:     128
+            unique:     true
+            nullable:   false
+        password:
+            type:       string
+            length:     255
+            unique:     false
+            nullable:   false
+        email:
+            type:       string
+            length:     255
+            unique:     true
+            nullable:   false
+        emailBack:
+            type:       string
+            length:     255
+            unique:     true
+            nullable:   false
+        creationDate:
+            type:       date
+            nullable:   false
+            unique:     false
+
+    manyToOne:
+        infoUser:
+            targetEntity: Querdos\ChallengeMe\UserBundle\Entity\InfoUser
+            cascade:      [ "persist", "remove" ]
+
+    lifecycleCallbacks: {  }

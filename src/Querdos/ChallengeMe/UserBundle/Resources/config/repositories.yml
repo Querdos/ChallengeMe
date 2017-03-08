@@ -33,3 +33,8 @@ services:
         class:      Querdos\ChallengeMe\UserBundle\Repository\PrivateMessageRepository
         factory:    [ "@doctrine.orm.entity_manager", "getRepository" ]
         arguments:  [ "UserBundle:PrivateMessage" ]
+
+    challengeme.repository.player:
+        class:      Querdos\ChallengeMe\UserBundle\Repository\PlayerRepository
+        factory:    [ "@doctrine.orm.entity_manager", "getRepository" ]
+        arguments:  [ "UserBundle:Player" ]

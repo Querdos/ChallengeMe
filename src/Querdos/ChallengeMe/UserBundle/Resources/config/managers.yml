@@ -23,3 +23,10 @@ services:
             - [ setRepository,      [ '@challengeme.repository.private_message' ] ]
             - [ setAdminManager,    [ '@challengeme.manager.administrator' ] ]
             - [ setEntityManager,   [ '@doctrine.orm.entity_manager' ] ]
+
+    challengeme.manager.player:
+        class: Querdos\ChallengeMe\UserBundle\Manager\PlayerManager
+        calls:
+            - [ setRepository,      [ '@challengeme.repository.player' ] ]
+            - [ setEntityManager,   [ '@doctrine.orm.entity_manager' ] ]
+            - [ setPasswordEncoder, [ '@security.password_encoder']]

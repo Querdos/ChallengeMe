@@ -27,13 +27,14 @@ class Administrator extends BaseUser implements UserInterface, \Serializable
 
     /**
      * Administrator constructor.
-     * @param string    $id
-     * @param string    $username
-     * @param string    $email
-     * @param string    $password
-     * @param array     $role
+     *
+     * @param string $id
+     * @param string $username
+     * @param string $email
+     * @param string $password
+     * @param Role   $role
      */
-    public function __construct($id = "", $username = "", $email = "", $password = "", $role = null)
+    public function __construct($id = "", $username = "", $email = "", $password = "", Role $role = null)
     {
         $this->id           = $id;
         $this->username     = $username;
@@ -98,6 +99,11 @@ class Administrator extends BaseUser implements UserInterface, \Serializable
         return array($this->role->getValue());
     }
 
+    /**
+     * @param Role $role
+     *
+     * @return $this
+     */
     public function setRole(Role $role)
     {
         $this->role = $role;
