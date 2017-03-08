@@ -115,6 +115,18 @@ class ChallengeManager
     }
 
     /**
+     * Return the count of existing challenges
+     *
+     * @param Category|null $category
+     *
+     * @return int
+     */
+    public function count(Category $category = null)
+    {
+        return $this->repository->getChallengesCount($category);
+    }
+
+    /**
      * Set the repository
      *
      * @param ChallengeRepository $repository

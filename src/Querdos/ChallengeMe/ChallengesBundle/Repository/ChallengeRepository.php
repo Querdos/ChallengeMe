@@ -3,6 +3,7 @@
 namespace Querdos\ChallengeMe\ChallengesBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
+use Querdos\ChallengeMe\ChallengesBundle\Entity\Category;
 
 /**
  * ChallengeRepository
@@ -12,4 +13,35 @@ use Doctrine\ORM\EntityRepository;
  */
 class ChallengeRepository extends EntityRepository
 {
+    /**
+     * Return the count of challenges with the given category
+     * If no specified category, return the count of all challenge
+     *
+     * @param Category|null $category
+     * @return int
+     */
+    public function getChallengesCount(Category $category = null)
+    {
+        $query = $this
+            ->getEntityManager()
+            ->createQueryBuilder()
+
+            ->select('COUNT(chal)')
+            ->from('ChallengesBundle:Challenge', 'chal')
+        ;
+
+        // If a category is given
+        if (null !== $category) {
+            $query
+                ->join('chal.category', 'cat')
+                ->where('cat = :category')
+                ->setParameter('category', $category)
+            ;
+        }
+
+        return $query
+            ->getQuery()
+            ->getSingleScalarResult()
+        ;
+    }
 }

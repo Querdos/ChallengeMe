@@ -89,6 +89,16 @@ class CategoryManager
     }
 
     /**
+     * Return the count of existing categories
+     *
+     * @return int
+     */
+    public function count()
+    {
+        return $this->repository->getCategoryCount();
+    }
+
+    /**
      * Set the repository
      *
      * @param CategoryRepository $repository

@@ -12,4 +12,24 @@ use Doctrine\ORM\EntityRepository;
  */
 class CategoryRepository extends EntityRepository
 {
+    /**
+     * Return the count of existing categories
+     *
+     * @return int
+     */
+    public function getCategoryCount()
+    {
+        $query = $this
+            ->getEntityManager()
+            ->createQueryBuilder()
+            ->select('COUNT(cat)')
+
+            ->from('ChallengesBundle:Category', 'cat')
+        ;
+
+        return $query
+            ->getQuery()
+            ->getSingleScalarResult()
+        ;
+    }
 }
