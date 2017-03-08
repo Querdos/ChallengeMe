@@ -60,6 +60,7 @@ class LoadInfoUserData extends AbstractFixture implements OrderedFixtureInterfac
         $this->addReference('redactor-info', $infoUser);
 
         // Player 1
+        $infoUser = new InfoUser();
         $infoUser
             ->setFirstName('Player 1')
             ->setBirthday(new \DateTime())
@@ -71,6 +72,7 @@ class LoadInfoUserData extends AbstractFixture implements OrderedFixtureInterfac
         $this->addReference('player1-info', $infoUser);
 
         // Player 2
+        $infoUser = new InfoUser();
         $infoUser
             ->setFirstName('Player 2')
             ->setBirthday(new \DateTime())
@@ -82,6 +84,7 @@ class LoadInfoUserData extends AbstractFixture implements OrderedFixtureInterfac
         $this->addReference('player2-info', $infoUser);
 
         // Player 3
+        $infoUser = new InfoUser();
         $infoUser
             ->setFirstName('Player 2')
             ->setBirthday(new \DateTime())
