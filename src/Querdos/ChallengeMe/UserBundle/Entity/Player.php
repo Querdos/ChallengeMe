@@ -15,6 +15,11 @@ class Player extends BaseUser implements UserInterface, \Serializable
 {
 
     /**
+     * @var Team
+     */
+    private $team;
+
+    /**
      * Administrator constructor.
      *
      * @param string $id
@@ -77,6 +82,29 @@ class Player extends BaseUser implements UserInterface, \Serializable
     public function eraseCredentials()
     {
         $this->plainPassword = "";
+        return $this;
+    }
+
+    /**
+     * Return the team of the player
+     *
+     * @return Team
+     */
+    public function getTeam()
+    {
+        return $this->team;
+    }
+
+    /**
+     * Set the team for the player
+     *
+     * @param $team
+     *
+     * @return $this
+     */
+    public function setTeam($team)
+    {
+        $this->team = $team;
         return $this;
     }
 }

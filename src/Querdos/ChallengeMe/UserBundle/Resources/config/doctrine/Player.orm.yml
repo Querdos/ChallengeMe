@@ -39,4 +39,10 @@ Querdos\ChallengeMe\UserBundle\Entity\Player:
             targetEntity: Querdos\ChallengeMe\UserBundle\Entity\InfoUser
             cascade:      [ "persist", "remove" ]
 
+        team:
+            targetEntity: Querdos\ChallengeMe\UserBundle\Entity\Team
+            inversedBy:   players
+            joinColumn:
+                nullable: true
+
     lifecycleCallbacks: {  }

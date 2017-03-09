@@ -1,0 +1,28 @@
+Querdos\ChallengeMe\UserBundle\Entity\Team:
+    type:             entity
+    table:            cm_user_team
+    repositoryClass:  Querdos\ChallengeMe\PlayerBundle\Repository\TeamRepository
+    id:
+        id:
+            type:         integer
+            id:           true
+            generator:
+                strategy: AUTO
+    fields:
+        name:
+            type:         string
+            length:       255
+            unique:       true
+            nullable:     false
+        points:
+            type:         integer
+            nullable:     false
+            unique:       false
+
+    oneToMany:
+        players:
+            targetEntity: Querdos\ChallengeMe\UserBundle\Entity\Player
+            mappedBy:     team
+            cascade:      [ "persist" ]
+
+    lifecycleCallbacks: {  }
