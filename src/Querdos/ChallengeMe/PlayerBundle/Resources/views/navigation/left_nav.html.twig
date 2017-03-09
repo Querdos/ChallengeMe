@@ -75,27 +75,14 @@
             </div>
 
             {# Players & teams management #}
-            {% if is_granted('ROLE_MODERATOR') %}
             <div class="menu_section">
-                <h3>{{ "nav.players-and-teams-management" | trans | desc("Players & Teams management") | meaning("Players and teams management butotn") }}</h3>
+                <h3>{{ "nav.players-and-teams-management" | trans | desc("Players & Teams") | meaning("Players and teams management butotn") }}</h3>
                 <ul class="nav side-menu">
-                    <li><a><i class="fa fa-bug"></i> Additional Pages <span class="fa fa-chevron-down"></span></a>
-                        <ul class="nav child_menu">
-                            <li><a href="e_commerce.html">E-commerce</a>
-                            </li>
-                            <li><a href="projects.html">Projects</a>
-                            </li>
-                            <li><a href="project_detail.html">Project Detail</a>
-                            </li>
-                            <li><a href="contacts.html">Contacts</a>
-                            </li>
-                            <li><a href="profile.html">Profile</a>
-                            </li>
-                        </ul>
-                    </li>
+                    <li><a href="javascript:void(0)"><i class="fa fa-group"></i> Challengers</a></li>
+                    <li><a href="javascript:void(0)"><i class="fa fa-list"></i> Teams on the field</a></li>
+                    <li><a href="javascript:void(0)"><i class="fa fa-rebel"></i> My Team</a></li>
                 </ul>
             </div>
-            {% endif %}
 
         </div>
         {# /sidebar menu #}
@@ -111,7 +98,7 @@
             <a data-toggle="tooltip" data-placement="top" title="Lock">
                 <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
             </a>
-            <a data-toggle="tooltip" data-placement="top" title="Logout">
+            <a data-toggle="tooltip" data-placement="top" title="Logout" href="{{ path('player_logout') }}">
                 <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
             </a>
         </div>
