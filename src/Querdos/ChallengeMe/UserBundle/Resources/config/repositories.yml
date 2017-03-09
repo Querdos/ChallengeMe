@@ -38,3 +38,8 @@ services:
         class:      Querdos\ChallengeMe\UserBundle\Repository\PlayerRepository
         factory:    [ "@doctrine.orm.entity_manager", "getRepository" ]
         arguments:  [ "UserBundle:Player" ]
+
+    challengeme.repository.team:
+        class:      Querdos\ChallengeMe\UserBundle\Repository\TeamRepository
+        factory:    [ "@doctrine.orm.entity_manager", "getRepository" ]
+        arguments:  [ "UserBundle:Repository" ]
