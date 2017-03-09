@@ -1,0 +1,58 @@
+{% trans_default_domain "players-login" %}
+
+{% extends "PlayerBundle::base.html.twig" %}
+
+{% block head %}
+    {{ parent() }}
+
+    {% javascripts '@jquery_js' %}
+        <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock head %}
+
+{% block body %}
+    <body style="background:#F7F7F7;">
+    <div class="">
+        <a class="hiddenanchor" id="toregister"></a>
+        <a class="hiddenanchor" id="tologin"></a>
+
+        <div id="wrapper">
+            <div id="login" class=" form">
+                <section class="login_content">
+                    <form action="{{ path('player_login_check') }}" method="post">
+                        <h1>{{ "title" | trans | desc("Member Zone") | meaning("Title") }}</h1>
+                        {% if error %}
+                            <div class="alert alert-danger alert-dismissible fade in" role="alert">
+                                {{ error.messageKey|trans(error.messageData, 'security') }}
+                            </div>
+                        {% endif %}
+                        <div>
+                            <input type="text" class="form-control" placeholder="{{ "placeholder.username" | trans | desc("Username") | meaning("Username's placeholder") }}" required="" id="username" name="_username" value="" />
+                        </div>
+                        <div>
+                            <input type="password" class="form-control" placeholder="{{ "placeholder.password" | trans | desc("Password") | meaning("Password's placeholder") }}" id="password" name="_password" required="" />
+                        </div>
+                        <div>
+                            <button type="submit">{{ "button.login" | trans | desc("Login") | meaning("Login button") }}</button>
+                            <a class="reset_pass" href="#">{{ "text.lost-password" | trans | desc("Lost your password?") | meaning("Text for lost password") }}</a>
+                        </div>
+
+                        <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+                        <div class="clearfix"></div>
+                        <div class="separator">
+                            <div class="clearfix"></div>
+                            <br />
+                            <div>
+                                <h1><i class="fa fa-shield" style="font-size: 26px;"></i> ChallengeMe</h1>
+                                <p>©{{ "now"|date("Y") }} {{ "copyrights" | trans | desc("All Rights Reserved.") | meaning("Copyrights") }} <br>ChallengeMe | ESIEA | Hamza ESSAYEGH (Querdos)</p>
+                            </div>
+                        </div>
+                    </form>
+                </section>
+            </div>
+        </div>
+    </div>
+
+    </body>
+{% endblock body %}

@@ -3,11 +3,28 @@
 namespace Querdos\ChallengeMe\PlayerBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 class PlayerController extends Controller
 {
+    /**
+     * @Template("PlayerBundle:content:dashboard.html.twig")
+     *
+     * @return array
+     */
     public function indexAction()
     {
-        return $this->render('PlayerBundle:Default:index.html.twig');
+        // retreiving managers
+        $categoryManager  = $this->get('challengeme.manager.category');
+        $challengeManager = $this->get('challengeme.manager.challenge');
+        $playerManager    = $this->get('challengeme.manager.player');
+
+        // returning array
+        return array(
+            'categories'        => $categoryManager->all(),
+            'categoryCount'     => $categoryManager->count(),
+            'challengesCount'   => $challengeManager->count(),
+            'playerCount'       => $playerManager->count()
+        );
     }
 }
