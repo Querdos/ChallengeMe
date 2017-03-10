@@ -9,6 +9,10 @@ player_players_list:
     path:     /challengers
     defaults: { _controller: PlayerBundle:Player:playersList }
 
+player_teams_list:
+    path:     /teams
+    defaults: { _controller: PlayerBundle:Player:teamsList }
+
 ######################
 # SecurityController #
 ######################
