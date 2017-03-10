@@ -17,13 +17,13 @@ use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
 use Symfony\Component\Security\Core\Tests\Encoder\PasswordEncoder;
 use Symfony\Component\VarDumper\VarDumper;
 
-class AdministratorManager
+/**
+ * Class AdministratorManager
+ *
+ * @package Querdos\ChallengeMe\UserBundle\Manager
+ */
+class AdministratorManager extends BaseManager
 {
-    /**
-     * @var AdministratorRepository $repository
-     */
-    private $repository;
-
     /**
      * @var UserPasswordEncoder $passwordEncoder
      */
@@ -33,26 +33,16 @@ class AdministratorManager
      * @var RoleManager $roleManager
      */
     private $roleManager;
-    
-    /**
-     * @var EntityManager $entityManager
-     */
-    private $entityManager;
 
     /**
-     * Create a new administrator, depending on the given role
+     * Create a new administrator
      *
-     * @param   Administrator   $admin
-     * @param   string          $role
+     * @param   Administrator $admin
+     *
      * @throws \Exception
      */
-    public function create(Administrator $admin, $role)
+    public function create($admin)
     {
-        // checking the role
-        if (false === Role::check($role)) {
-            throw new \Exception("Unrecognized role");
-        }
-
         // Encoding the password and setting it
         // Adding the corresponding role
         $admin
@@ -62,76 +52,35 @@ class AdministratorManager
             ->eraseCredentials()
         ;
 
-        // setting role
-        switch ($role) {
-            case Role::ROLE_ADMIN:
-                $admin->setRole($this->roleManager->adminRole());
-            break;
-
-            case Role::ROLE_MODERATOR:
-                $admin->setRole($this->roleManager->moderatorRole());
-            break;
-
-            case Role::ROLE_REDACTOR:
-                $admin->setRole($this->roleManager->redactorRole());
-            break;
-        }
-
-        // Persisting
-        $this->entityManager->persist($admin);
-        $this->entityManager->flush($admin);
+        parent::create($admin);
     }
 
     /**
-     * Update an administrator entity
+     * Update an existing administrator
      *
      * @param Administrator $admin
      */
-    public function update(Administrator $admin)
+    public function update($admin)
     {
-        // If the plain password is not empty <=> resetting password
-        if ("" !== $admin->getPlainPassword()) {
+        // checking if the password has been modified
+        if ($admin->getPlainPassword() !== "") {
             $admin
                 ->setPassword(
-                    $this->passwordEncoder->encodePassword($admin, $admin->getPlainPassword())
+                    $this->passwordEncoder->encodePassword(
+                        $admin,
+                        $admin->getPlainPassword()
+                    )
                 )
                 ->eraseCredentials()
             ;
         }
 
-        // Retrieving unit of work
-        $unitOfWork = $this->entityManager->getUnitOfWork();
+        // heritage
+        parent::update($admin);
 
-        // Checking if already persisted
-        if (!$unitOfWork->isEntityScheduled($admin)) {
-        	$this->entityManager->persist($admin);
-        }
-        
-        // Flushing
-        $this->entityManager->flush($admin);
+        // persisting info user
         $this->entityManager->flush($admin->getInfoUser());
-        
-    }
 
-    /**
-     * Remove an administrator from the database
-     *
-     * @param Administrator $admin
-     */
-    public function delete(Administrator $admin)
-    {
-        $this->entityManager->remove($admin);
-    	$this->entityManager->flush();
-    }
-
-    /**
-     * Return all administrators from the database
-     *
-     * @return Administrator[]
-     */
-    public function all()
-    {
-        return $this->repository->findAll();
     }
 
     /**
@@ -199,7 +148,8 @@ class AdministratorManager
      * @param   int     $id
      * @return  array
      */
-    public function getAdminPublicInfo($id) {
+    public function getAdminPublicInfo($id)
+    {
         return $this->repository->getAdminPublicInfo($id);
     }
 
@@ -234,17 +184,6 @@ class AdministratorManager
     public function checkEmailBack($email)
     {
         return $this->repository->checkEmailBack($email);
-    }
-
-    /**
-     * Return an administrator with a given id
-     *
-     * @param  int              $id
-     * @return Administrator
-     */
-    public function readById($id)
-    {
-    	return $this->repository->findOneById($id);
     }
 
     /**
@@ -285,30 +224,6 @@ class AdministratorManager
     public function setPasswordEncoder($passwordEncoder)
     {
         $this->passwordEncoder = $passwordEncoder;
-    }
-
-    /**
-     * Set the repository
-     *
-     * @param AdministratorRepository $repository
-     * @return AdministratorManager
-     */
-    public function setRepository(AdministratorRepository $repository)
-    {
-    	$this->repository = $repository;
-    	return $this;
-    }
-    
-    /**
-     * Set the entity manager
-     * 
-     * @param   EntityManager           $entityManager
-     * @return  AdministratorManager
-     */
-    public function setEntityManager(EntityManager $entityManager) 
-    {
-    	$this->entityManager = $entityManager;
-    	return $this;
     }
 
     /**

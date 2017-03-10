@@ -135,6 +135,11 @@ class AdministrationController extends Controller
 
         $form->handleRequest($request);
         if ($form->isValid()) {
+            // setting admin role
+            $admin->setRole(
+                $this->get('challengeme.manager.role')->adminRole()
+            );
+
             // Persisting the new administrator
             $this->get('challengeme.manager.administrator')->create($admin, Role::ROLE_ADMIN);
 
@@ -275,9 +280,14 @@ class AdministrationController extends Controller
             ));
 
         $form->handleRequest($request);
-        if ($form->isValid()) {
+        if ($form->isSubmitted()) {
+            // setting moderator role
+            $moderator->setRole(
+                $this->get('challengeme.manager.role')->moderatorRole()
+            );
+
             // Persisting the new administrator
-            $this->get('challengeme.manager.administrator')->create($moderator, Role::ROLE_MODERATOR);
+            $this->get('challengeme.manager.administrator')->create($moderator);
 
             // Redirecting after success
             return $this->redirectToRoute('administration_moderatorsManagement');
@@ -416,9 +426,14 @@ class AdministrationController extends Controller
             ));
 
         $form->handleRequest($request);
-        if ($form->isValid()) {
+        if ($form->isSubmitted()) {
+            // setting the redactor
+            $redactor->setRole(
+                $this->get('challengeme.manager.role')->redactorRole()
+            );
+
             // Persisting the new redactor
-            $this->get('challengeme.manager.administrator')->create($redactor, Role::ROLE_REDACTOR);
+            $this->get('challengeme.manager.administrator')->create($redactor);
 
             // Redirecting after success
             return $this->redirectToRoute('administration_redactorsManagement');

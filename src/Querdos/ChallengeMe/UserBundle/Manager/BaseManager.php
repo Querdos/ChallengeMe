@@ -17,19 +17,19 @@ abstract class BaseManager
     /**
      * @var EntityManager
      */
-    private $entityManager;
+    protected $entityManager;
 
     /**
      * @var EntityRepository
      */
-    private $repository;
+    protected $repository;
 
     /**
      * Create a new entity in database
      *
      * @param $entity
      */
-    protected function create($entity)
+    public function create($entity)
     {
         $this->entityManager->persist($entity);
         $this->entityManager->flush($entity);
@@ -40,7 +40,7 @@ abstract class BaseManager
      *
      * @param $entity
      */
-    protected function update($entity)
+    public function update($entity)
     {
         // retrieving unit of work
         $unitOfWork = $this->entityManager->getUnitOfWork();
@@ -58,10 +58,32 @@ abstract class BaseManager
      *
      * @param $entity
      */
-    protected function delete($entity)
+    public function delete($entity)
     {
         $this->entityManager->remove($entity);
         $this->entityManager->flush($entity);
+    }
+
+    /**
+     * Return all existing entities from database
+     *
+     * @return array
+     */
+    public function all()
+    {
+        return $this->repository->findAll();
+    }
+
+    /**
+     * Return an entity with a given ID
+     *
+     * @param $id
+     *
+     * @return mixed
+     */
+    public function readById($id)
+    {
+        return $this->repository->findOneById($id);
     }
 
     /**
