@@ -27,4 +27,23 @@ class PlayerController extends Controller
             'playerCount'       => $playerManager->count()
         );
     }
+
+    /**
+     * @Template("PlayerBundle:content-players:player_players_list.html.twig")
+     *
+     * @return array
+     */
+    public function playersListAction()
+    {
+        // retrieving categories
+        $categories = $this->get('challengeme.manager.category')->all();
+
+        // retrieving players
+        $players    = $this->get('challengeme.manager.player')->all();
+
+        return array(
+            'categories' => $categories,
+            'players'    => $players
+        );
+    }
 }

@@ -5,6 +5,10 @@ player_homepage:
     path:     /
     defaults: { _controller: PlayerBundle:Player:index }
 
+player_players_list:
+    path:     /challengers
+    defaults: { _controller: PlayerBundle:Player:playersList }
+
 ######################
 # SecurityController #
 ######################
