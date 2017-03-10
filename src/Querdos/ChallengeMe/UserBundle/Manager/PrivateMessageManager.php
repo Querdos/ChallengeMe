@@ -14,63 +14,12 @@ use Querdos\ChallengeMe\UserBundle\Entity\Administrator;
 use Querdos\ChallengeMe\UserBundle\Entity\PrivateMessage;
 use Querdos\ChallengeMe\UserBundle\Repository\PrivateMessageRepository;
 
-class PrivateMessageManager
+class PrivateMessageManager extends BaseManager
 {
-    /**
-     * @var PrivateMessageRepository $repository
-     */
-    private $repository;
-
     /**
      * @var AdministratorManager $adminManager
      */
     private $adminManager;
-
-    /**
-     * @var EntityManager $entityManager
-     */
-    private $entityManager;
-
-    /**
-     * Create a new private message in database
-     *
-     * @param PrivateMessage $privateMessage
-     */
-    public function create(PrivateMessage $privateMessage)
-    {
-        $this->entityManager->persist($privateMessage);
-        $this->entityManager->flush($privateMessage);
-    }
-
-    /**
-     * Update a private message
-     *
-     * @param PrivateMessage $privateMessage
-     */
-    public function update(PrivateMessage $privateMessage)
-    {
-        // Retrieving unit of work
-        $unitOfWork = $this->entityManager->getUnitOfWork();
-
-        // Checking if already persisted
-        if (!$unitOfWork->isEntityScheduled($privateMessage)) {
-            $this->entityManager->persist($privateMessage);
-        }
-
-        // Flushing
-        $this->entityManager->flush($privateMessage);
-    }
-
-    /**
-     * Remove a private message from database
-     *
-     * @param PrivateMessage $privateMessage
-     */
-    public function delete(PrivateMessage $privateMessage)
-    {
-        $this->entityManager->remove($privateMessage);
-        $this->entityManager->flush($privateMessage);
-    }
 
     /**
      * Retrieve all private messages with a given author
@@ -93,13 +42,6 @@ class PrivateMessageManager
     {
         return $this->repository->getByRecipient($recipient);
     }
-    /**
-     * @param PrivateMessageRepository $repository
-     */
-    public function setRepository($repository)
-    {
-        $this->repository = $repository;
-    }
 
     /**
      * @param AdministratorManager $adminManager
@@ -107,13 +49,5 @@ class PrivateMessageManager
     public function setAdminManager($adminManager)
     {
         $this->adminManager = $adminManager;
-    }
-
-    /**
-     * @param EntityManager $entityManager
-     */
-    public function setEntityManager($entityManager)
-    {
-        $this->entityManager = $entityManager;
     }
 }

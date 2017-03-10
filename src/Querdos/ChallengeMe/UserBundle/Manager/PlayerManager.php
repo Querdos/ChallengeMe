@@ -14,18 +14,8 @@ use Querdos\ChallengeMe\UserBundle\Repository\PlayerRepository;
 use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
 use Symfony\Component\Security\Core\Tests\Encoder\PasswordEncoder;
 
-class PlayerManager
+class PlayerManager extends BaseManager
 {
-    /**
-     * @var PlayerRepository $repository
-     */
-    private $repository;
-
-    /**
-     * @var EntityManager
-     */
-    private $entityManager;
-
     /**
      * @var PasswordEncoder
      */
@@ -36,7 +26,7 @@ class PlayerManager
      *
      * @param Player $player
      */
-    public function create(Player $player)
+    public function create($player)
     {
         // encoding the password and setting ti
         // erasing credential then
@@ -50,10 +40,8 @@ class PlayerManager
             ->eraseCredentials()
         ;
 
-        // persisting and flushing
-        $this->entityManager->persist($player);
-        $this->entityManager->flush($player);
-
+        // heritage
+        parent::create($player);
     }
 
     /**
@@ -61,7 +49,7 @@ class PlayerManager
      *
      * @param Player $player
      */
-    public function update(Player $player)
+    public function update($player)
     {
         // if the plain password is not empty <=> resetting
         if ("" !== $player->getPlainPassword()) {
@@ -74,28 +62,11 @@ class PlayerManager
             ;
         }
 
-        // retrieving unit of work
-        $unitOfWork = $this->entityManager->getUnitOfWork();
+        // heritage
+        parent::update($player);
 
-        // checking if already persisted
-        if (!$unitOfWork->isEntityScheduled($player)) {
-            $this->entityManager->persist($player);
-        }
-
-        // flushing
-        $this->entityManager->flush($player);
+        // flushing info user
         $this->entityManager->flush($player->getInfoUser());
-    }
-
-    /**
-     * Remove a player from the database
-     *
-     * @param Player $player
-     */
-    public function delete(Player $player)
-    {
-        $this->entityManager->remove($player);
-        $this->entityManager->flush($player);
     }
 
     /**
@@ -123,32 +94,6 @@ class PlayerManager
     public function count()
     {
         return $this->repository->getPlayerCount();
-    }
-
-    /**
-     * Retreive all players from the database
-     *
-     * @return Player[]
-     */
-    public function all()
-    {
-        return $this->repository->findAll();
-    }
-
-    /**
-     * @param PlayerRepository $repository
-     */
-    public function setRepository($repository)
-    {
-        $this->repository = $repository;
-    }
-
-    /**
-     * @param EntityManager $entityManager
-     */
-    public function setEntityManager($entityManager)
-    {
-        $this->entityManager = $entityManager;
     }
 
     /**

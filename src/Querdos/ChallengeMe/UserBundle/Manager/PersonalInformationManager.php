@@ -7,29 +7,18 @@
 
 namespace Querdos\ChallengeMe\UserBundle\Manager;
 
-use Querdos\ChallengeMe\UserBundle\Repository\PersonalInformationRepository;
+use Querdos\ChallengeMe\UserBundle\Entity\PersonalInformation;
 use Symfony\Component\Security\Core\User\UserInterface;
 
-class PersonalInformationManager
+class PersonalInformationManager extends BaseManager
 {
     /**
-     * @var PersonalInformationRepository
-     */
-    private $repository;
-
-    /**
-     * Set the repository
+     * Read Personal Information for a given user
      *
-     * @param PersonalInformationRepository $repository
+     * @param UserInterface $user
      *
-     * @return $this
+     * @return PersonalInformation
      */
-    public function setRepository(PersonalInformationRepository $repository)
-    {
-        $this->repository = $repository;
-        return $this;
-    }
-
     public function readForUser(UserInterface $user)
     {
         return $this->repository->readForUser($user);
