@@ -57,8 +57,12 @@ class PlayerController extends Controller
         // retrieving categories
         $categories = $this->get('challengeme.manager.category')->all();
 
+        // retrieving all teams
+        $teams      = $this->get('challengeme.manager.team')->all();
+
         return array(
-            'categories' => $categories
+            'categories' => $categories,
+            'teams'      => $teams
         );
     }
 }

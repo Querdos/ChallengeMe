@@ -52,8 +52,16 @@
                                         <td>{{ player.infoUser.firstName }}</td>
                                         <td>{{ player.infoUser.lastName }}</td>
                                         <td>{{ player.username }}</td>
-                                        <td></td>
-                                        <td></td>
+                                        <td>
+                                            {% if player.team is null %}
+                                                No team
+                                            {% else %}
+                                                {{ player.team.name }}
+                                            {% endif %}
+                                        </td>
+                                        <td align="center">
+                                            <a title="{{ "a.title1" | trans | desc("Send a message") | meaning("Block a title1") }}" href="javascript:void(0)"><i class="fa fa-envelope-o fa-fw" aria-hidden="true"></i></a>
+                                        </td>
                                     </tr>
                                 {% endif %}
                             {% endfor %}

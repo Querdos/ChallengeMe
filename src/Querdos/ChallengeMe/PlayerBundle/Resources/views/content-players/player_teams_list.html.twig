@@ -31,15 +31,6 @@
                 <div class="x_panel">
                     <div class="x_title">
                         <h2>{{ "table.title" | trans | desc("Teams on the field") | meaning("Title for the table") }}</h2>
-                        <ul class="nav navbar-right panel_toolbox">
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                                <ul class="dropdown-menu" role="menu">
-                                    <li><a href="#">{{ "table.setting.new-admin" | trans | desc("New admin") | meaning("New admin link") }}</a>
-                                    </li>
-                                </ul>
-                            </li>
-                        </ul>
                         <div class="clearfix"></div>
                     </div>
                     <div class="x_content">
@@ -48,24 +39,22 @@
                             <tr>
                                 <th>{{ "table.th1" | trans | desc("Name")       | meaning("th1") }}</th>
                                 <th>{{ "table.th2" | trans | desc("Leader")     | meaning("th2") }}</th>
-                                <th>{{ "table.th3" | trans | desc("Points")   | meaning("th3") }}</th>
+                                <th>{{ "table.th3" | trans | desc("Points")     | meaning("th3") }}</th>
                                 <th>{{ "table.th4" | trans | desc("Rank")       | meaning("th4") }}</th>
                                 <th>{{ "table.th4" | trans | desc("Action")     | meaning("th5") }}</th>
                             </tr>
                             </thead>
 
                             <tbody>
-                            {#{% for player in players %}
-                                {% if player.username != app.user.username %}
+                                {% for team in teams %}
                                     <tr>
-                                        <td>{{ player.infoUser.firstName }}</td>
-                                        <td>{{ player.infoUser.lastName }}</td>
-                                        <td>{{ player.username }}</td>
-                                        <td></td>
-                                        <td></td>
+                                        <td>{{ team.name }}</td>
+                                        <td>{{ team.leader.username }}</td>
+                                        <td>{{ team.points }}</td>
+                                        <td>{# TODO: Team's rank #}</td>
+                                        <td>{# TODO: Actions #}</td>
                                     </tr>
-                                {% endif %}
-                            {% endfor %}#}
+                                {% endfor %}
                             </tbody>
                         </table>
                     </div>
