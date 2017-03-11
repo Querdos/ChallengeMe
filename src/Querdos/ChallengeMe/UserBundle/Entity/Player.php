@@ -107,4 +107,14 @@ class Player extends BaseUser implements UserInterface, \Serializable
         $this->team = $team;
         return $this;
     }
+
+    /**
+     * Return true if the player has a team
+     *
+     * @return bool
+     */
+    public function hasTeam()
+    {
+        return $this->getTeam() !== null;
+    }
 }

@@ -18,11 +18,25 @@ Querdos\ChallengeMe\UserBundle\Entity\Team:
             type:         integer
             nullable:     false
             unique:       false
+        created:
+            type:         datetime
+            nullable:     false
+            unique:       false
 
     oneToMany:
         players:
             targetEntity: Querdos\ChallengeMe\UserBundle\Entity\Player
             mappedBy:     team
             cascade:      [ "persist" ]
+
+    oneToOne:
+        leader:
+            targetEntity: Querdos\ChallengeMe\UserBundle\Entity\Player
+            cascade:      [ "persist" ]
+            joinColumn:
+                name:                 leader
+                referencedColumnName: id
+                onDelete:             cascade
+                nullable:             false
 
     lifecycleCallbacks: {  }
