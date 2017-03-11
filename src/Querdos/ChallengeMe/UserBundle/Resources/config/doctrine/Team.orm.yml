@@ -1,7 +1,7 @@
 Querdos\ChallengeMe\UserBundle\Entity\Team:
     type:             entity
     table:            cm_user_team
-    repositoryClass:  Querdos\ChallengeMe\PlayerBundle\Repository\TeamRepository
+    repositoryClass:  Querdos\ChallengeMe\UserBundle\Repository\TeamRepository
     id:
         id:
             type:         integer
