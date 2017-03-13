@@ -65,4 +65,19 @@ class PlayerController extends Controller
             'teams'      => $teams
         );
     }
+
+    /**
+     * @Template("PlayerBundle:content-players:player_my_team.html.twig")
+     *
+     * @return array
+     */
+    public function myTeamAction()
+    {
+        // retrieving categories
+        $categories = $this->get('challengeme.manager.category')->all();
+
+        return array(
+            'categories' => $categories
+        );
+    }
 }

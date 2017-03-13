@@ -1,0 +1,96 @@
+{% trans_default_domain "players-my-team" %}
+
+{% extends "PlayerBundle::base.html.twig" %}
+
+{% block stylesheets %}
+    {{ parent() }}
+
+    {% stylesheets '@iCheck' '@datatables_css' '@pnotify_css' filter='cssrewrite' %}
+    <link href="{{ asset_url }}" rel="stylesheet"/>
+    {% endstylesheets %}
+{% endblock stylesheets %}
+
+{% block main_content %}
+    <div class="">
+
+        <div class="page-title">
+            <div class="title_left">
+                <h3>
+                    {{ "title" | trans | desc("My Team") | meaning("Title") }}
+                </h3>
+            </div>
+
+        </div>
+
+        <div class="clearfix"></div>
+
+        <div class="row">
+            {# List of administrators #}
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2>{{ "table.title" | trans | desc("Details and information about your team") | meaning("Title for the table") }}</h2>
+                        <div class="clearfix"></div>
+                    </div>
+
+                    <div class="x_content">
+                        {# If no team #}
+                        {% if app.user.team is null %}
+                            <div class="col-md-55">
+                                <div class="thumbnail">
+                                    <div class="image view view-first">
+                                        {% image '@pic_create_team' %}
+                                            <img style="width: 100%; display: block;" src="{{ asset_url }}" alt="image" />
+                                        {% endimage %}
+                                    </div>
+                                    <div class="caption">
+                                        <p align="center"><a href="javascript:void(0);">Create a team</a></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-55">
+                                <div class="thumbnail">
+                                    <div class="image view view-first">
+                                        {% image '@pic_join_team' %}
+                                            <img style="width: 100%; display: block;" src="{{ asset_url }}" alt="image" />
+                                        {% endimage %}
+                                    </div>
+                                    <div class="caption">
+                                        <p align="center"><a href="javascript:void(0);">Join a team</a></p>
+                                    </div>
+                                </div>
+                            </div>
+                        {% else %}
+                            {# TODO: Team information #}
+                            <div></div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+{% endblock main_content %}
+
+{% block javascript %}
+    {% javascripts '@jquery_js' '@bootstrap_js' '@fastclick_js' '@nprogress_js' '@iCheck_js' '@datatables_js' '@customTheme_js' '@pnotify_js'%}
+    <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+
+    <script>
+        var hasATeam = true;
+        {% if app.user.team is null %}
+            hasATeam = false;
+        {% endif %}
+        $(document).ready(function() {
+            if (false === hasATeam) {
+                new PNotify({
+                    title:      'You have not team !',
+                    text:       'You must be in a team to participate in challenges',
+                    type:       'info',
+                    styling:    'bootstrap3'
+                });
+            }
+        });
+    </script>
+{% endblock javascript %}

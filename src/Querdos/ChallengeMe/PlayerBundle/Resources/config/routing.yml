@@ -13,6 +13,10 @@ player_teams_list:
     path:     /teams
     defaults: { _controller: PlayerBundle:Player:teamsList }
 
+player_my_team:
+    path:     /my-team
+    defaults: { _controller: PlayerBundle:Player:myTeam }
+
 ######################
 # SecurityController #
 ######################
