@@ -4,6 +4,7 @@ namespace Querdos\ChallengeMe\PlayerBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\HttpFoundation\Request;
 
 class PlayerController extends Controller
 {
@@ -72,6 +73,23 @@ class PlayerController extends Controller
      * @return array
      */
     public function myTeamAction()
+    {
+        // retrieving categories
+        $categories = $this->get('challengeme.manager.category')->all();
+
+        return array(
+            'categories' => $categories
+        );
+    }
+
+    /**
+     * @Template("PlayerBundle:content-players:player_create_team.html.twig")
+     *
+     * @param Request $request
+     *
+     * @return array
+     */
+    public function createTeamAction(Request $request)
     {
         // retrieving categories
         $categories = $this->get('challengeme.manager.category')->all();

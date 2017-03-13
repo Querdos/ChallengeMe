@@ -4,18 +4,34 @@
 player_homepage:
     path:     /
     defaults: { _controller: PlayerBundle:Player:index }
+    methods:
+        - GET
 
 player_players_list:
     path:     /challengers
     defaults: { _controller: PlayerBundle:Player:playersList }
+    methods:
+        - GET
 
 player_teams_list:
     path:     /teams
     defaults: { _controller: PlayerBundle:Player:teamsList }
+    methods:
+        - GET
 
 player_my_team:
     path:     /my-team
     defaults: { _controller: PlayerBundle:Player:myTeam }
+    methods:
+        - GET
+        - POST
+
+player_create_team:
+    path:     /create-a-team
+    defaults: { _controller: PlayerBundle:Player:createTeam }
+    methods:
+        - GET
+        - POST
 
 ######################
 # SecurityController #

@@ -44,7 +44,7 @@
                                         {% endimage %}
                                     </div>
                                     <div class="caption">
-                                        <p align="center"><a href="javascript:void(0);">Create a team</a></p>
+                                        <p align="center"><a href="{{ path('player_create_team') }}">Create a team</a></p>
                                     </div>
                                 </div>
                             </div>
@@ -56,7 +56,7 @@
                                         {% endimage %}
                                     </div>
                                     <div class="caption">
-                                        <p align="center"><a href="javascript:void(0);">Join a team</a></p>
+                                        <p align="center"><a href="{{ path('player_teams_list') }}">Join a team</a></p>
                                     </div>
                                 </div>
                             </div>
@@ -85,7 +85,7 @@
         $(document).ready(function() {
             if (false === hasATeam) {
                 new PNotify({
-                    title:      'You have not team !',
+                    title:      'You have no team !',
                     text:       'You must be in a team to participate in challenges',
                     type:       'info',
                     styling:    'bootstrap3'
