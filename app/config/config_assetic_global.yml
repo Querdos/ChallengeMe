@@ -106,6 +106,13 @@ assetic:
                 - 'assets/vendor/highlightjs/highlight.pack.js'
             output: 'assets/js/highlight.js'
 
+        pnotify_js:
+            inputs:
+                - 'assets/vendor/pnotify/dist/pnotify.js'
+                - 'assets/vendor/pnotify/dist/pnotify.buttons.js'
+                - 'assets/vendor/pnotify/dist/pnotify.nonblock.js'
+            output: 'assets/js/pnotify.js'
+
         # Stylesheets
         bootstrap:
             inputs:
@@ -145,3 +152,18 @@ assetic:
             inputs:
                 - 'assets/vendor/highlightjs/styles/monokai_sublime.css'
             output: 'assets/css/highlight.css'
+
+        pnotify_css:
+            inputs:
+                - 'assets/vendor/pnotify/dist/pnotify.css'
+                - 'assets/vendor/pnotify/dist/pnotify.buttons.css'
+            output: 'assets/css/pnotify.css'
+
+        # Images
+        pic_create_team:
+            input: '@PlayerBundle/Resources/public/images/create_team.jpeg'
+            output: 'assets/images/create_team.jpeg'
+
+        pic_join_team:
+            input: '@PlayerBundle/Resources/public/images/join_team.jpg'
+            output: 'assets/images/join_team.jpg'
