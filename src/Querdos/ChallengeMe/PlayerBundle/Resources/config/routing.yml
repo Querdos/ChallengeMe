@@ -26,13 +26,6 @@ player_my_team:
         - GET
         - POST
 
-player_create_team:
-    path:     /create-a-team
-    defaults: { _controller: PlayerBundle:Player:createTeam }
-    methods:
-        - GET
-        - POST
-
 ######################
 # SecurityController #
 ######################

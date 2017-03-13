@@ -2,9 +2,14 @@
 
 namespace Querdos\ChallengeMe\PlayerBundle\Controller;
 
+use Querdos\ChallengeMe\PlayerBundle\Form\TeamType;
+use Querdos\ChallengeMe\UserBundle\Entity\Team;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\VarDumper\VarDumper;
 
 class PlayerController extends Controller
 {
@@ -70,32 +75,56 @@ class PlayerController extends Controller
     /**
      * @Template("PlayerBundle:content-players:player_my_team.html.twig")
      *
-     * @return array
-     */
-    public function myTeamAction()
-    {
-        // retrieving categories
-        $categories = $this->get('challengeme.manager.category')->all();
-
-        return array(
-            'categories' => $categories
-        );
-    }
-
-    /**
-     * @Template("PlayerBundle:content-players:player_create_team.html.twig")
-     *
      * @param Request $request
      *
-     * @return array
+     * @return array | RedirectResponse
      */
-    public function createTeamAction(Request $request)
+    public function myTeamAction(Request $request)
     {
         // retrieving categories
         $categories = $this->get('challengeme.manager.category')->all();
 
-        return array(
+        $dataToReturn = array(
             'categories' => $categories
         );
+
+        // creating the form only if the user has no team
+        if (false === $this->getUser()->hasTeam()) {
+            // object for the team to be eventually created
+            $team = new Team();
+
+            // creating the form
+            $form = $this->createForm(TeamType::class, $team);
+            $form
+                ->add('save', SubmitType::class, array(
+                    'label' => 'Save',
+                    'attr' => array(
+                        'class' => 'btn btn-success'
+                    ),
+                    'translation_domain' => 'forms'
+                ));
+
+            // handling request
+            $form->handleRequest($request);
+            if ($form->isSubmitted()) {
+                // adding the current user to the team
+                $team->addPlayer($this->getUser());
+
+                // setting the current user as the leader
+                $team->setLeader($this->getUser());
+
+                // creating the team
+                $this->get('challengeme.manager.team')->create($team);
+
+                // finally redirecting to the my team page
+                return $this->redirectToRoute('player_my_team');
+            }
+
+            // adding the form to the array to return
+            $dataToReturn['form'] = $form->createView();
+        }
+
+        // returning data
+        return $dataToReturn;
     }
 }

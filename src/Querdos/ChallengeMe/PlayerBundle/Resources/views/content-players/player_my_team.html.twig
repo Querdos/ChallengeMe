@@ -36,33 +36,54 @@
                     <div class="x_content">
                         {# If no team #}
                         {% if app.user.team is null %}
-                            <div class="col-md-55">
-                                <div class="thumbnail">
-                                    <div class="image view view-first">
-                                        {% image '@pic_create_team' %}
-                                            <img style="width: 100%; display: block;" src="{{ asset_url }}" alt="image" />
-                                        {% endimage %}
+                            {% form_theme form
+                                    '@Player/form/form_rows_manager.html.twig'
+                                    '@Player/form/form_errors_manager.html.twig'
+                            %}
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div class="col-md-55">
+                                    <div class="thumbnail">
+                                        <div class="image view view-first">
+                                            {% image '@pic_create_team' %}
+                                                <img style="width: 100%; display: block;" src="{{ asset_url }}" alt="image" />
+                                            {% endimage %}
+                                        </div>
+                                        <div class="caption">
+                                            <p align="center"><a href="javascript:void(0);" onclick="showFormTeam()">Create a team</a></p>
+                                        </div>
                                     </div>
-                                    <div class="caption">
-                                        <p align="center"><a href="{{ path('player_create_team') }}">Create a team</a></p>
+                                </div>
+                                <div class="col-md-55">
+                                    <div class="thumbnail">
+                                        <div class="image view view-first">
+                                            {% image '@pic_join_team' %}
+                                                <img style="width: 100%; display: block;" src="{{ asset_url }}" alt="image" />
+                                            {% endimage %}
+                                        </div>
+                                        <div class="caption">
+                                            <p align="center"><a href="{{ path('player_teams_list') }}">Join a team</a></p>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-55">
-                                <div class="thumbnail">
-                                    <div class="image view view-first">
-                                        {% image '@pic_join_team' %}
-                                            <img style="width: 100%; display: block;" src="{{ asset_url }}" alt="image" />
-                                        {% endimage %}
+
+                            <div id="form_create_team" style="display: none;">
+                                {{ form_start(form, {'id': 'demo-form2', 'attr': {'class': 'form-horizontal form-label-left'}}) }}
+                                    {{ form_row(form.name) }}
+
+                                    <div class="ln_solid"></div>
+
+                                    <div class="form-group">
+                                        <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                                            <button type="button" onclick="showFormTeam()" class="btn btn-primary">{{ "form.cancel-button" | trans | desc("Cancel") | meaning("Cancel button") }}</button>
+                                            {{ form_widget(form.save) }}
+                                        </div>
                                     </div>
-                                    <div class="caption">
-                                        <p align="center"><a href="{{ path('player_teams_list') }}">Join a team</a></p>
-                                    </div>
-                                </div>
+                                {{ form_end(form) }}
                             </div>
                         {% else %}
                             {# TODO: Team information #}
-                            <div></div>
+                            <div>I have a team !</div>
                         {% endif %}
                     </div>
                 </div>
@@ -82,6 +103,7 @@
         {% if app.user.team is null %}
             hasATeam = false;
         {% endif %}
+
         $(document).ready(function() {
             if (false === hasATeam) {
                 new PNotify({
@@ -92,5 +114,10 @@
                 });
             }
         });
+
+        // function to show on the form for team creation
+        function showFormTeam() {
+            $("#form_create_team").slideToggle();
+        }
     </script>
 {% endblock javascript %}

@@ -51,6 +51,8 @@ class Team
         $this->points  = $points;
         $this->players = $players;
         $this->leader  = $leader;
+
+        $this->created = new \DateTime();
     }
 
     /**
@@ -119,17 +121,6 @@ class Team
     }
 
     /**
-     * @param Player[] $players
-     *
-     * @return $this
-     */
-    public function setPlayers($players)
-    {
-        $this->players = $players;
-        return $this;
-    }
-
-    /**
      * Add a player to the team
      *
      * @param Player $player
@@ -139,6 +130,7 @@ class Team
     public function addPlayer($player)
     {
         $this->players[] = $player;
+
         return $this;
     }
 
