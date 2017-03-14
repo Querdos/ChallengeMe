@@ -1,11 +1,12 @@
 imports:
-    - { resource: "@AdminBundle/Resources/config/services.yml" }
-    - { resource: "@LandingBundle/Resources/config/services.yml" }
-    - { resource: "@UserBundle/Resources/config/services.yml" }
+    - { resource: "@AdminBundle/Resources/config/services.yml"      }
+    - { resource: "@LandingBundle/Resources/config/services.yml"    }
+    - { resource: "@UserBundle/Resources/config/services.yml"       }
     - { resource: "@ChallengesBundle/Resources/config/services.yml" }
-    - { resource: "@PlayerBundle/Resources/config/services.yml" }
+    - { resource: "@PlayerBundle/Resources/config/services.yml"     }
 
-    - { resource: "config_jms.yml"}
+    - { resource: "config_jms.yml"  }
+    - { resource: "config_vich.yml" }
 
 # Put parameters here that don't need to change on each machine where the app is deployed
 # http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
@@ -111,17 +112,3 @@ ivory_ck_editor:
                     [ "Link", "Table", "CodeSnippet"],
                     [ "Maximize" ]
                 ]
-
-# Vich Uploader Bundle
-vich_uploader:
-    db_driver: orm
-
-    mappings:
-        team_avatar:
-            uri_prefix:           '/player/avatars'
-            upload_destination:   '%kernel.root_dir%/../web/uploads'
-
-            inject_on_load:       false # should the file be deleted when the entity is removed
-            delete_on_update:     true  # should the file be deleted when a new file is uploaded
-            delete_on_remove:     true  # should the file be injected into the uploadable entity when it is
-                                        # loaded from the data store

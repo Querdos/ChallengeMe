@@ -9,8 +9,17 @@
 namespace Querdos\ChallengeMe\UserBundle\Entity;
 
 
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
+/**
+ * Class Player
+ *
+ * @Vich\Uploadable
+ *
+ * @package Querdos\ChallengeMe\UserBundle\Entity
+ */
 class Player extends BaseUser implements UserInterface, \Serializable
 {
 
@@ -18,6 +27,23 @@ class Player extends BaseUser implements UserInterface, \Serializable
      * @var Team
      */
     private $team;
+
+    /**
+     * @Vich\UploadableField(mapping="player_avatar", fileNameProperty="avatarName")
+     *
+     * @var File
+     */
+    private $avatar;
+
+    /**
+     * @var string
+     */
+    private $avatarName;
+
+    /**
+     * @var \DateTime
+     */
+    private $updatedAt;
 
     /**
      * Administrator constructor.
@@ -116,5 +142,53 @@ class Player extends BaseUser implements UserInterface, \Serializable
     public function hasTeam()
     {
         return $this->getTeam() !== null;
+    }
+
+    /**
+     * Set the avatar for the current player
+     *
+     * @param File $avatar
+     *
+     * @return $this
+     */
+    public function setAvatar(File $avatar = null)
+    {
+        $this->avatar = $avatar;
+        if ($avatar) {
+            $this->updatedAt = new \DateTimeImmutable();
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return File|null
+     */
+    public function getAvatar()
+    {
+        return $this->avatar;
+    }
+
+    /**
+     * Set the avatar name
+     *
+     * @param string $name
+     *
+     * @return $this
+     */
+    public function setAvatarName($name)
+    {
+        $this->avatarName = $name;
+        return $this;
+    }
+
+    /**
+     * Get the avatar name
+     *
+     * @return string
+     */
+    public function getAvatarName()
+    {
+        return $this->avatarName;
     }
 }
