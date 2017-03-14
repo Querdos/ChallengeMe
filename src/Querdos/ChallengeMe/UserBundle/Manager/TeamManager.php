@@ -33,4 +33,14 @@ class TeamManager extends BaseManager
         $this->entityManager->persist($team->getLeader());
         $this->entityManager->flush($team->getLeader());
     }
+
+    /**
+     * Return the count of all existing teams in database
+     *
+     * @return int
+     */
+    public function count()
+    {
+        return $this->repository->count();
+    }
 }

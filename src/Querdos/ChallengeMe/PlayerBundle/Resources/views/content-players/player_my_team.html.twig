@@ -8,6 +8,9 @@
     {% stylesheets
             '@pnotify_css'
             '@dropzone_css'
+            '@iCheck'
+            '@datatables_css'
+
             filter='cssrewrite'
     %}
     <link href="{{ asset_url }}" rel="stylesheet"/>
@@ -95,11 +98,7 @@
                                                 <img class="img-responsive avatar-view" src="{{ asset_url }}" alt="Avatar" title="Change the avatar" data-toggle="modal" data-target=".bs-example-modal-sm">
                                             {% endimage %}
                                         {% else %}
-                                            {% set image_path = "uploads/"~team.avatarName %}
-                                            <img class="img-responsive avatar-view" src="{{ asset('uploads/' ~ team.avatarName) }}" alt="Avatar" title="Change the avatar" data-toggle="modal" data-target=".bs-example-modal-sm">
-                                            {#{% image image_path %}
-                                                <img class="img-responsive avatar-view" src="{{ asset_url }}" alt="Avatar" title="Change the avatar" data-toggle="modal" data-target=".bs-example-modal-sm">
-                                            {% endimage %}#}
+                                            <img class="img-responsive avatar-view" src="{{ asset(avatarPath) }}" alt="Avatar" title="Change the avatar" data-toggle="modal" data-target=".bs-example-modal-sm">
                                         {% endif %}
 
                                         {# Modal with the avatar upload form #}
@@ -265,7 +264,6 @@
                                     </div>
                                 </div>
                             </div>
-
 
                             {# Team activity report #}
                             <div class="col-md-9 col-sm-9 col-xs-12">

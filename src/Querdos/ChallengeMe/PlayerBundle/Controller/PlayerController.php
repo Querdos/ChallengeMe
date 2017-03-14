@@ -25,13 +25,15 @@ class PlayerController extends Controller
         $categoryManager  = $this->get('challengeme.manager.category');
         $challengeManager = $this->get('challengeme.manager.challenge');
         $playerManager    = $this->get('challengeme.manager.player');
+        $teamManager      = $this->get('challengeme.manager.team');
 
         // returning array
         return array(
             'categories'        => $categoryManager->all(),
             'categoryCount'     => $categoryManager->count(),
             'challengesCount'   => $challengeManager->count(),
-            'playerCount'       => $playerManager->count()
+            'playerCount'       => $playerManager->count(),
+            'teamCount'         => $teamManager->count()
         );
     }
 
@@ -148,9 +150,13 @@ class PlayerController extends Controller
                 return $this->redirectToRoute('player_my_team');
             }
 
+            $helper = $this->get('vich_uploader.templating.helper.uploader_helper');
+            $avatarPath = $helper->asset($team, 'avatar');
+
             // the user has a team
             $dataToReturn['team']       = $team;
             $dataToReturn['formAvatar'] = $formAvatar->createView();
+            $dataToReturn['avatarPath'] = $avatarPath;
         }
 
         // returning data

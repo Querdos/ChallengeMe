@@ -12,4 +12,24 @@ use Doctrine\ORM\EntityRepository;
  */
 class TeamRepository extends EntityRepository
 {
+    /**
+     * Return the count of all existing teams
+     *
+     * @return int
+     */
+    public function count()
+    {
+        $query = $this
+            ->getEntityManager()
+            ->createQueryBuilder()
+
+            ->select('COUNT(team)')
+            ->from('UserBundle:Team', 'team')
+        ;
+
+        return $query
+            ->getQuery()
+            ->getSingleScalarResult()
+        ;
+    }
 }
