@@ -122,6 +122,9 @@ class PlayerController extends Controller
 
             // adding the form to the array to return
             $dataToReturn['form'] = $form->createView();
+        } else {
+            // the user has a team
+            $dataToReturn['team'] = $this->getUser()->getTeam();
         }
 
         // returning data

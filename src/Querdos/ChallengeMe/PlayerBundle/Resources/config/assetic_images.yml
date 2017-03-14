@@ -1,0 +1,13 @@
+assetic:
+    assets:
+        pic_create_team:
+            input:  '@PlayerBundle/Resources/public/images/create_team.jpeg'
+            output: 'assets/player/images/create_team.jpeg'
+
+        pic_join_team:
+            input:  '@PlayerBundle/Resources/public/images/join_team.jpg'
+            output: 'assets/player/images/join_team.jpg'
+
+        pic_team_base_logo:
+            input:  '@PlayerBundle/Resources/public/images/team_base_logo.png'
+            output: 'assets/player/images/team_base_logo.png'

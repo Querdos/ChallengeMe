@@ -1,3 +1,8 @@
+imports:
+    - { resource: assetic_js.yml      }
+    - { resource: assetic_css.yml     }
+    - { resource: assetic_images.yml  }
+
 services:
     challengeme.provider.player:
         class: Querdos\ChallengeMe\PlayerBundle\Security\Provider\PlayerProvider
