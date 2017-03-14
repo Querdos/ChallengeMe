@@ -2,6 +2,9 @@
 
 namespace Querdos\ChallengeMe\UserBundle\Entity;
 
+use Symfony\Component\HttpFoundation\File\File;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
+
 /**
  * Team
  */
@@ -36,6 +39,23 @@ class Team
      * @var \DateTime
      */
     private $created;
+
+    /**
+     * @Vich\UploadableField(mapping="team_avatar"  , fileNameProperty="avatarName")
+     *
+     * @var File
+     */
+    private $avatar;
+
+    /**
+     * @var string
+     */
+    private $avatarName;
+
+    /**
+     * @var \DateTime
+     */
+    private $updatedAt;
 
     /**
      * Team constructor.
@@ -178,5 +198,46 @@ class Team
     {
         $this->created = $created;
         return $this;
+    }
+
+    /**
+     * @param File|null $file
+     *
+     * @return $this
+     */
+    public function setAvatar(File $file = null)
+    {
+        $this->avatar = $file;
+        if ($file) {
+            $this->updatedAt = new \DateTimeImmutable();
+        }
+        return $this;
+    }
+
+    /**
+     * @return File | null
+     */
+    public function getAvatar()
+    {
+        return $this->avatar;
+    }
+
+    /**
+     * @param $name
+     *
+     * @return Team
+     */
+    public function setAvatarName($name)
+    {
+        $this->avatarName = $name;
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getAvatarName()
+    {
+        return $this->avatarName;
     }
 }

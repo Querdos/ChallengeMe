@@ -111,3 +111,17 @@ ivory_ck_editor:
                     [ "Link", "Table", "CodeSnippet"],
                     [ "Maximize" ]
                 ]
+
+# Vich Uploader Bundle
+vich_uploader:
+    db_driver: orm
+
+    mappings:
+        team_avatar:
+            uri_prefix:           '/player/avatars'
+            upload_destination:   '%kernel.root_dir%/../web/images/uploads'
+
+            inject_on_load:       false # should the file be deleted when the entity is removed
+            delete_on_update:     true  # should the file be deleted when a new file is uploaded
+            delete_on_remove:     true  # should the file be injected into the uploadable entity when it is
+                                        # loaded from the data store

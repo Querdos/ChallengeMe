@@ -22,6 +22,15 @@ Querdos\ChallengeMe\UserBundle\Entity\Team:
             type:         datetime
             nullable:     false
             unique:       false
+        avatarName:
+            type:         string
+            length:       255
+            nullable:     true
+            unique:       false
+        updatedAt:
+            type:         datetime
+            nullable:     true
+            unique:       false
 
     oneToMany:
         players:

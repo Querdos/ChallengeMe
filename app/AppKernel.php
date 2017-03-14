@@ -25,7 +25,9 @@ class AppKernel extends Kernel
             new JMS\TranslationBundle\JMSTranslationBundle(),
 
             new Ivory\CKEditorBundle\IvoryCKEditorBundle(),
-            
+
+            new Vich\UploaderBundle\VichUploaderBundle(),
+
             new Querdos\ChallengeMe\AdministratorBundle\AdminBundle(),
             new Querdos\ChallengeMe\LandingBundle\LandingBundle(),
             new Querdos\ChallengeMe\UserBundle\UserBundle(),
