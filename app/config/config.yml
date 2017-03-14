@@ -119,7 +119,7 @@ vich_uploader:
     mappings:
         team_avatar:
             uri_prefix:           '/player/avatars'
-            upload_destination:   '%kernel.root_dir%/../web/images/uploads'
+            upload_destination:   '%kernel.root_dir%/../web/uploads'
 
             inject_on_load:       false # should the file be deleted when the entity is removed
             delete_on_update:     true  # should the file be deleted when a new file is uploaded

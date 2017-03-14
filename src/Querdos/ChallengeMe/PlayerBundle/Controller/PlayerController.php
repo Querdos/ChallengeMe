@@ -3,6 +3,7 @@
 namespace Querdos\ChallengeMe\PlayerBundle\Controller;
 
 use Querdos\ChallengeMe\PlayerBundle\Form\TeamType;
+use Querdos\ChallengeMe\PlayerBundle\Form\UploadAvatarType;
 use Querdos\ChallengeMe\UserBundle\Entity\Team;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -123,8 +124,33 @@ class PlayerController extends Controller
             // adding the form to the array to return
             $dataToReturn['form'] = $form->createView();
         } else {
+            // retrieving the user's team
+            $team = $this->getUser()->getTeam();
+
+            // creating the form for the avatar
+            $formAvatar = $this->createForm(UploadAvatarType::class, $team);
+            $formAvatar
+                ->add('save', SubmitType::class, array(
+                    'label' => 'Upload',
+                    'attr' => array(
+                        'class' => 'btn btn-success'
+                    ),
+                    'translation_domain' => 'forms'
+                ))
+            ;
+
+            $formAvatar->handleRequest($request);
+            if ($formAvatar->isSubmitted()) {
+                // updating team
+                $this->get('challengeme.manager.team')->update($team);
+
+                // redirecting
+                return $this->redirectToRoute('player_my_team');
+            }
+
             // the user has a team
-            $dataToReturn['team'] = $this->getUser()->getTeam();
+            $dataToReturn['team']       = $team;
+            $dataToReturn['formAvatar'] = $formAvatar->createView();
         }
 
         // returning data

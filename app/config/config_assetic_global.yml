@@ -118,6 +118,11 @@ assetic:
                 - 'assets/vendor/moment/min/moment.min.js'
             output: 'assets/global/js/moments.js'
 
+        dropzone_js:
+            inputs:
+                - 'assets/vendor/dropzone/dist/min/dropzone.min.js'
+            output: 'assets/global/js/dropzone.js'
+
 
         # Stylesheets
         bootstrap_css:
@@ -174,3 +179,8 @@ assetic:
                 - 'assets/vendor/pnotify/dist/pnotify.css'
                 - 'assets/vendor/pnotify/dist/pnotify.buttons.css'
             output: 'assets/global/css/pnotify.css'
+
+        dropzone_css:
+            inputs:
+                - 'assets/vendor/dropzone/dist/min/dropzone.min.css'
+            output: 'assets/global/css/dropzone.css'

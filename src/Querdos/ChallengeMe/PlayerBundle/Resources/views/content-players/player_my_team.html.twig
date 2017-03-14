@@ -7,6 +7,7 @@
 
     {% stylesheets
             '@pnotify_css'
+            '@dropzone_css'
             filter='cssrewrite'
     %}
     <link href="{{ asset_url }}" rel="stylesheet"/>
@@ -89,9 +90,41 @@
                                 <div class="profile_img">
                                     <div id="crop-avatar">
                                         {# Current avatar #}
-                                        {% image '@pic_team_base_logo' %}
-                                            <img class="img-responsive avatar-view" src="{{ asset_url }}" alt="Avatar" title="Change the avatar">
-                                        {% endimage %}
+                                        {% if team.avatarName is null %}
+                                            {% image '@pic_team_base_logo' %}
+                                                <img class="img-responsive avatar-view" src="{{ asset_url }}" alt="Avatar" title="Change the avatar" data-toggle="modal" data-target=".bs-example-modal-sm">
+                                            {% endimage %}
+                                        {% else %}
+                                            {% set image_path = "uploads/"~team.avatarName %}
+                                            <img class="img-responsive avatar-view" src="{{ asset('uploads/' ~ team.avatarName) }}" alt="Avatar" title="Change the avatar" data-toggle="modal" data-target=".bs-example-modal-sm">
+                                            {#{% image image_path %}
+                                                <img class="img-responsive avatar-view" src="{{ asset_url }}" alt="Avatar" title="Change the avatar" data-toggle="modal" data-target=".bs-example-modal-sm">
+                                            {% endimage %}#}
+                                        {% endif %}
+
+                                        {# Modal with the avatar upload form #}
+                                        <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-hidden="true">
+                                            <div class="modal-dialog modal-sm">
+                                                <div class="modal-content">
+
+                                                    <div class="modal-header">
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span>
+                                                        </button>
+                                                        <h4 class="modal-title" id="myModalLabel2">Change the team's avatar</h4>
+                                                    </div>
+                                                    {{ form_start(formAvatar) }}
+                                                    <div class="modal-body">
+                                                            {{ form_row(formAvatar.avatar) }}
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                        {#<button type="button" class="btn btn-primary">Save changes</button>#}
+                                                        {{ form_row(formAvatar.save) }}
+                                                    </div>
+                                                    {{ form_end(formAvatar) }}
+                                                </div>
+                                            </div>
+                                        </div>
 
                                         {# Cropping modal #}
                                         <div class="modal fade" id="avatar-modal" aria-hidden="true" aria-labelledby="avatar-modal-label" role="dialog" tabindex="-1">
@@ -172,26 +205,6 @@
                                     <li>
                                         <i class="fa fa-area-chart"></i> <b>Rank :</b> 1
                                     </li>
-                                     {#Address (if present)#}
-                                    {#{% if personalInfo.address is not null %}
-                                        <li>
-                                            <i class="fa fa-map-marker user-profile-icon"></i> {{ personalInfo.address }}
-                                        </li>
-                                    {% endif %}
-
-                                     #}{#Job (if present)#}{#
-                                    {% if personalInfo.job is not null %}
-                                        <li>
-                                            <i class="fa fa-briefcase user-profile-icon"></i> {{ personalInfo.job }}
-                                        </li>
-                                    {% endif %}
-
-                                    {% if personalInfo.website is not null %}
-                                        <li class="m-top-xs">
-                                            <i class="fa fa-external-link user-profile-icon"></i>
-                                            <a href="{{ personalInfo.website }}" target="_blank">{{ personalInfo.website }}</a>
-                                        </li>
-                                    {% endif %}#}
                                 </ul>
 
                                 <a class="btn btn-success"><i class="fa fa-edit m-right-xs"></i>Edit Profile</a>
@@ -252,6 +265,7 @@
                                     </div>
                                 </div>
                             </div>
+
 
                             {# Team activity report #}
                             <div class="col-md-9 col-sm-9 col-xs-12">
@@ -445,6 +459,7 @@
             '@bootstrapDateRangePicker_js'
             '@pnotify_js'
             '@customTheme_js'
+            '@dropzone_js'
     %}
         <script src="{{ asset_url }}"></script>
     {% endjavascripts %}

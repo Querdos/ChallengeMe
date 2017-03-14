@@ -7,6 +7,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * Team
+ * @Vich\Uploadable
  */
 class Team
 {
@@ -41,7 +42,7 @@ class Team
     private $created;
 
     /**
-     * @Vich\UploadableField(mapping="team_avatar"  , fileNameProperty="avatarName")
+     * @Vich\UploadableField(mapping="team_avatar", fileNameProperty="avatarName")
      *
      * @var File
      */
@@ -201,7 +202,7 @@ class Team
     }
 
     /**
-     * @param File|null $file
+     * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile $file
      *
      * @return $this
      */
