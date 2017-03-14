@@ -11,7 +11,7 @@ vich_uploader:
     mappings:
         # Team's avatar
         team_avatar:
-            uri_prefix:           '/team/avatars'
+            uri_prefix:           '/uploads/team/avatars'
             upload_destination:   '%kernel.root_dir%/../web/uploads/team/avatars'
 
             inject_on_load:       false
@@ -20,7 +20,7 @@ vich_uploader:
 
         # Player's avatar
         player_avatar:
-            uri_prefix:           '/player/avatar'
+            uri_prefix:           '/uploads/player/avatar'
             upload_destination:   '%kernel.root_dir%/../web/uploads/player/avatars'
 
             inject_on_load:       false
