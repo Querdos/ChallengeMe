@@ -36,3 +36,9 @@ services:
         calls:
             - [ setRepository,      [ '@challengeme.repository.team' ]]
             - [ setEntityManager,   [ '@doctrine.orm.entity_manager' ]]
+
+    challengeme.manager.demand:
+        class: Querdos\ChallengeMe\UserBundle\Manager\DemandManager
+        calls:
+            - [ setRepository,      [ '@challengeme.repository.demand' ]]
+            - [ setEntityManager,   [ '@doctrine.orm.entity_manager' ]]

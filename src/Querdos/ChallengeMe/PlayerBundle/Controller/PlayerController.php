@@ -153,10 +153,14 @@ class PlayerController extends Controller
             $helper = $this->get('vich_uploader.templating.helper.uploader_helper');
             $avatarPath = $helper->asset($team, 'avatar');
 
+            // retrieving demands for the team
+            $demands = $this->get('challengeme.manager.demand')->readByTeam($team);
+
             // the user has a team
             $dataToReturn['team']       = $team;
             $dataToReturn['formAvatar'] = $formAvatar->createView();
             $dataToReturn['avatarPath'] = $avatarPath;
+            $dataToReturn['demands']    = $demands;
         }
 
         // returning data

@@ -383,20 +383,42 @@
                                                         <th>Firstname</th>
                                                         <th>Lastname</th>
                                                         <th>Username</th>
+                                                        <td>Status</td>
+                                                        <th>Date</th>
                                                         <th>Action</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <tr>
-                                                        <td>1</td>
-                                                        <td>New Company Takeover Review</td>
-                                                        <td>Deveint Inc</td>
-                                                        <td class="hidden-phone">18</td>
-                                                        <td class="vertical-align-mid">
-                                                            <button type="button" class="btn btn-success btn-xs">Accept</button>
-                                                            <button type="button" class="btn btn-danger btn-xs">Decline</button>
-                                                        </td>
-                                                    </tr>
+                                                    {% for demand in demands %}
+                                                        <tr>
+                                                            <td>{{ loop.index }}</td>
+                                                            <td>{{ demand.player.infoUser.firstName }}</td>
+                                                            <td>{{ demand.player.infoUser.lastName }}</td>
+                                                            <td>{{ demand.player.username }}</td>
+                                                            <td>
+                                                                {% if demand.status == 0 %}
+                                                                    <span class="label label-warning">Waiting</span>
+                                                                {% elseif demand.status == 1 %}
+                                                                    <span class="label label-danger">Declined</span>
+                                                                {% else %}
+                                                                    <span class="label label-success">Accepted</span>
+                                                                {% endif %}
+                                                            </td>
+                                                            <td>{{ demand.date | date("m/d/Y") }}</td>
+                                                            <td class="vertical-align-mid">
+                                                                {% if app.user.username == team.leader.username %}
+                                                                    {% if demand.status == 0 %}
+                                                                        <button type="button" class="btn btn-success btn-xs">Accept</button>
+                                                                        <button type="button" class="btn btn-danger btn-xs">Decline</button>
+                                                                    {% else %}
+                                                                        <button type="button" class="btn btn-info btn-xs">Clear</button>
+                                                                    {% endif %}
+                                                                {% else %}
+                                                                    Only the leader can manage demands
+                                                                {% endif %}
+                                                            </td>
+                                                        </tr>
+                                                    {% endfor %}
                                                 </tbody>
                                             </table>
                                             {# end user projects #}
@@ -437,16 +459,16 @@
 
     {# Script to launch only if the user has no team #}
     {% if app.user.team is null %}
-    <script>
-        $(document).ready(function() {
-            new PNotify({
-                title:      'You have no team !',
-                text:       'You must be in a team to participate in challenges',
-                type:       'info',
-                styling:    'bootstrap3'
+        <script>
+            $(document).ready(function() {
+                new PNotify({
+                    title:      'You have no team !',
+                    text:       'You must be in a team to participate in challenges',
+                    type:       'info',
+                    styling:    'bootstrap3'
+                });
             });
-        });
-    </script>
+        </script>
     {% endif %}
 
     <script>
