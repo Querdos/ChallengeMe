@@ -7,6 +7,7 @@ use Querdos\ChallengeMe\PlayerBundle\Form\UploadAvatarType;
 use Querdos\ChallengeMe\UserBundle\Entity\Demand;
 use Querdos\ChallengeMe\UserBundle\Entity\Player;
 use Querdos\ChallengeMe\UserBundle\Entity\Team;
+use Querdos\ChallengeMe\UserBundle\Manager\DemandManager;
 use Querdos\ChallengeMe\UserBundle\Manager\PlayerManager;
 use Querdos\ChallengeMe\UserBundle\Manager\TeamManager;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -73,9 +74,13 @@ class PlayerController extends Controller
         // retrieving all teams
         $teams      = $this->get('challengeme.manager.team')->all();
 
+        // retrieving demands for the current user
+        $demands = $this->get('challengeme.manager.demand')->allForPlayer($this->getUser());
+
         return array(
             'categories' => $categories,
-            'teams'      => $teams
+            'teams'      => $teams,
+            'demands'    => $demands
         );
     }
 
@@ -278,6 +283,26 @@ class PlayerController extends Controller
             // redirecting to homepage
             return $this->redirectToRoute('player_homepage');
         }
+    }
 
+    /**
+     * @param int $teamId
+     *
+     * @return RedirectResponse
+     */
+    public function askJoinTeamAction($teamId)
+    {
+        /** @var DemandManager $team */
+        $demandManager = $this->get('challengeme.manager.demand');
+
+        // retrieving the team
+        $team = $this->get('challengeme.manager.team')->readById($teamId);
+
+        // creating the demand
+        $demand = new Demand($this->getUser(), $team);
+        $demandManager->create($demand);
+
+        // redirecting
+        return $this->redirectToRoute('player_teams_list');
     }
 }

@@ -44,6 +44,12 @@ player_remove_from_team:
     methods:
         - GET
 
+player_ask_join_team:
+    path:     /team/{teamId}/ask-to-join
+    defaults: { _controller: PlayerBundle:Player:askJoinTeam }
+    methods:
+        - GET
+
 ######################
 # SecurityController #
 ######################

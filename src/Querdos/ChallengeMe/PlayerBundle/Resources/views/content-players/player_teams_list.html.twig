@@ -25,7 +25,6 @@
         <div class="clearfix"></div>
 
         <div class="row">
-
             {# List of administrators #}
             <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
@@ -52,7 +51,17 @@
                                         <td>{{ team.leader.username }}</td>
                                         <td>{{ team.points }}</td>
                                         <td>{# TODO: Team's rank #}</td>
-                                        <td>{# TODO: Actions #}</td>
+                                        <td align="center">
+                                            {% if not app.user.hasTeam %}
+                                                {% if team.id not in demands %}
+                                                    <a href="{{ path('player_ask_join_team', {'teamId': team.id}) }}" title="Ask to join team"><i class="fa fa-plus-square"></i></a>
+                                                {% else %}
+                                                    <a href="javascript:void(0)" title="Demand sent"><i class="fa fa-check-square"></i></a>
+                                                {% endif %}
+                                            {% else %}
+                                                You already have a team
+                                            {% endif %}
+                                        </td>
                                     </tr>
                                 {% endfor %}
                             </tbody>

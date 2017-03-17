@@ -10,6 +10,7 @@ namespace Querdos\ChallengeMe\UserBundle\Manager;
 
 use Doctrine\ORM\EntityManager;
 use Querdos\ChallengeMe\UserBundle\Entity\Demand;
+use Querdos\ChallengeMe\UserBundle\Entity\Player;
 use Querdos\ChallengeMe\UserBundle\Entity\Team;
 
 class DemandManager extends BaseManager
@@ -59,6 +60,18 @@ class DemandManager extends BaseManager
         // declining the demand and updating
         $demand->setStatus(Demand::STATUS_DECLINED);
         $this->update($demand);
+    }
+
+    /**
+     * Return all demands for the given player (only waiting demands)
+     *
+     * @param Player $player
+     *
+     * @return Demand[]
+     */
+    public function allForPlayer(Player $player)
+    {
+        return $this->repository->allForPlayer($player);
     }
 
     /**
