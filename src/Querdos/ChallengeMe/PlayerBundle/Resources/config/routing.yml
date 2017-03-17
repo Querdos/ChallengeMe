@@ -38,6 +38,12 @@ player_clear_demand:
     methods:
         - GET
 
+player_remove_from_team:
+    path:     /my-team/remove-from-team/{playerId}
+    defaults: { _controller: PlayerBundle:Player:removePlayerFromTeam }
+    methods:
+        - GET
+
 ######################
 # SecurityController #
 ######################

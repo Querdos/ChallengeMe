@@ -7,6 +7,8 @@ use Querdos\ChallengeMe\PlayerBundle\Form\UploadAvatarType;
 use Querdos\ChallengeMe\UserBundle\Entity\Demand;
 use Querdos\ChallengeMe\UserBundle\Entity\Player;
 use Querdos\ChallengeMe\UserBundle\Entity\Team;
+use Querdos\ChallengeMe\UserBundle\Manager\PlayerManager;
+use Querdos\ChallengeMe\UserBundle\Manager\TeamManager;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -243,5 +245,39 @@ class PlayerController extends Controller
 
         // everything ok, redirecting
         return $this->redirectToRoute('player_my_team');
+    }
+
+    /**
+     * @param int $playerId
+     *
+     * @return RedirectResponse
+     */
+    public function removePlayerFromTeamAction($playerId)
+    {
+        /** @var PlayerManager $playerManager */
+        $playerManager = $this->get('challengeme.manager.player');
+
+        /** @var Player $player */
+        $player = $playerManager->readById($playerId);
+
+        // checking that the current user is in the same team as the player
+        if ($this->getUser()->getTeam()->getName() === $player->getTeam()->getName()) {
+            // checking that the current user is the leader
+            if (false === $this->checkUserIsLeader($this->getUser())) {
+                // redirecting to homepage
+                return $this->redirectToRoute('player_homepage');
+            } else {
+                // finally removing the player from the team
+                $player->setTeam(null);
+                $playerManager->update($player);
+
+                // redirecting
+                return $this->redirectToRoute('player_my_team');
+            }
+        } else {
+            // redirecting to homepage
+            return $this->redirectToRoute('player_homepage');
+        }
+
     }
 }

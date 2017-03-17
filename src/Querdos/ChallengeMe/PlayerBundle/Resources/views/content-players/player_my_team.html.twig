@@ -453,7 +453,7 @@
                                                                     Member
                                                                 </td>
                                                                 <td>
-                                                                    <button type="button" class="btn btn-danger btn-xs" onclick="removePlayerFromTeam('')">Remove</button>
+                                                                    <button type="button" class="btn btn-danger btn-xs" onclick="window.location.href='{{ path('player_remove_from_team', {'playerId': player.id}) }}'">Remove</button>
                                                                 </td>
                                                             </tr>
                                                         {% endif %}
