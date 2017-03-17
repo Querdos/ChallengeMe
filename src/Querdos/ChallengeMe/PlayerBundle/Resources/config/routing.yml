@@ -32,6 +32,12 @@ player_edit_demand:
     methods:
         - GET
 
+player_clear_demand:
+    path:     /my-team/clear-demand/{demandId}
+    defaults: { _controller: PlayerBundle:Player:clearDemand }
+    methods:
+        - GET
+
 ######################
 # SecurityController #
 ######################

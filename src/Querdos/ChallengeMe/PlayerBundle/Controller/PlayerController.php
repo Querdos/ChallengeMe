@@ -5,6 +5,7 @@ namespace Querdos\ChallengeMe\PlayerBundle\Controller;
 use Querdos\ChallengeMe\PlayerBundle\Form\TeamType;
 use Querdos\ChallengeMe\PlayerBundle\Form\UploadAvatarType;
 use Querdos\ChallengeMe\UserBundle\Entity\Demand;
+use Querdos\ChallengeMe\UserBundle\Entity\Player;
 use Querdos\ChallengeMe\UserBundle\Entity\Team;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -169,6 +170,25 @@ class PlayerController extends Controller
     }
 
     /**
+     * Check if the given user is the leader of his team or not
+     *
+     * @param Player $player
+     *
+     * @return bool
+     * @throws \Exception
+     */
+    private function checkUserIsLeader(Player $player)
+    {
+        // first checking if player has a team
+        if (false === $player->hasTeam()) {
+            throw new \Exception("The player has no team");
+        }
+
+        // final checking
+        return $player->getTeam()->getLeader()->getUsername() === $player->getUsername();
+    }
+
+    /**
      * @param int $demandId
      * @param int $status
      *
@@ -183,7 +203,7 @@ class PlayerController extends Controller
         $demandManager = $this->get('challengeme.manager.demand');
 
         // checking that the current user is the leader
-        if ($demand->getTeam()->getLeader()->getUsername() !== $this->getUser()->getUsername()) {
+        if (false === $this->checkUserIsLeader($this->getUser())) {
             return $this->redirectToRoute('player_homepage');
         }
 
@@ -195,6 +215,31 @@ class PlayerController extends Controller
         } else {
             throw new \Exception("Unknown status");
         }
+
+        // everything ok, redirecting
+        return $this->redirectToRoute('player_my_team');
+    }
+
+    /**
+     * @param int $demandId
+     *
+     * @return RedirectResponse
+     */
+    public function clearDemandAction($demandId)
+    {
+        // demand manager
+        $demandManager = $this->get('challengeme.manager.demand');
+
+        // retrieving demand
+        $demand = $demandManager->readById($demandId);
+
+        // checking user is the leader
+        if (false === $this->checkUserIsLeader($this->getUser())) {
+            return $this->redirectToRoute('player_homepage');
+        }
+
+        // removing demand from database
+        $demandManager->delete($demand);
 
         // everything ok, redirecting
         return $this->redirectToRoute('player_my_team');

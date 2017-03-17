@@ -416,7 +416,7 @@
                                                                         <button type="button" class="btn btn-success btn-xs" onclick="window.location.href='{{ path('player_edit_demand', {'demandId': demand.id, 'status': 2}) }}'">Accept</button>
                                                                         <button type="button" class="btn btn-danger btn-xs"  onclick="window.location.href='{{ path('player_edit_demand', {'demandId': demand.id, 'status': 1}) }}'">Decline</button>
                                                                     {% else %}
-                                                                        <button type="button" class="btn btn-info btn-xs" onclick="">Clear</button>
+                                                                        <button type="button" class="btn btn-info btn-xs" onclick="window.location.href='{{ path('player_clear_demand', {'demandId': demand.id }) }}'">Clear</button>
                                                                     {% endif %}
                                                                 </td>
                                                             {% endif %}
