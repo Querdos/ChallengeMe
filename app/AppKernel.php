@@ -23,6 +23,10 @@ class AppKernel extends Kernel
             new JMS\DiExtraBundle\JMSDiExtraBundle($this),
             new JMS\AopBundle\JMSAopBundle(),
             new JMS\TranslationBundle\JMSTranslationBundle(),
+            new JMS\SerializerBundle\JMSSerializerBundle(),
+
+            new FOS\RestBundle\FOSRestBundle(),
+            new Nelmio\ApiDocBundle\NelmioApiDocBundle(),
 
             new Ivory\CKEditorBundle\IvoryCKEditorBundle(),
 

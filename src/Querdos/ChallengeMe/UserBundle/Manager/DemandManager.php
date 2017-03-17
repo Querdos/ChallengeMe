@@ -8,11 +8,17 @@
 
 namespace Querdos\ChallengeMe\UserBundle\Manager;
 
+use Doctrine\ORM\EntityManager;
 use Querdos\ChallengeMe\UserBundle\Entity\Demand;
 use Querdos\ChallengeMe\UserBundle\Entity\Team;
 
 class DemandManager extends BaseManager
 {
+    /**
+     * @var PlayerManager $playerManager
+     */
+    private $playerManager;
+
     /**
      * Return all demands with a given team
      *
@@ -32,7 +38,14 @@ class DemandManager extends BaseManager
      */
     public function acceptDemand(Demand $demand)
     {
+        // accepting the demand
         $demand->setStatus(Demand::STATUS_ACCEPTED);
+
+        // adding the player to the team
+        $demand->getPlayer()->setTeam($demand->getTeam());
+        $this->playerManager->update($demand->getPlayer());
+
+        // updating the demand
         $this->update($demand);
     }
 
@@ -43,7 +56,16 @@ class DemandManager extends BaseManager
      */
     public function declineDemand(Demand $demand)
     {
+        // declining the demand and updating
         $demand->setStatus(Demand::STATUS_DECLINED);
         $this->update($demand);
+    }
+
+    /**
+     * @param PlayerManager $playerManager
+     */
+    public function setPlayerManager($playerManager)
+    {
+        $this->playerManager = $playerManager;
     }
 }

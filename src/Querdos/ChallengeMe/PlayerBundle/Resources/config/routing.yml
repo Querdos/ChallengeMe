@@ -26,6 +26,12 @@ player_my_team:
         - GET
         - POST
 
+player_edit_demand:
+    path:     /my-team/edit-demand/{demandId}/status/{status}
+    defaults: { _controller: PlayerBundle:Player:editDemand }
+    methods:
+        - GET
+
 ######################
 # SecurityController #
 ######################

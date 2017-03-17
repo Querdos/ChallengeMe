@@ -13,6 +13,7 @@ use Querdos\ChallengeMe\UserBundle\Entity\Player;
 use Querdos\ChallengeMe\UserBundle\Repository\PlayerRepository;
 use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
 use Symfony\Component\Security\Core\Tests\Encoder\PasswordEncoder;
+use Symfony\Component\VarDumper\VarDumper;
 
 class PlayerManager extends BaseManager
 {
@@ -52,13 +53,14 @@ class PlayerManager extends BaseManager
     public function update($player)
     {
         // if the plain password is not empty <=> resetting
-        if ("" !== $player->getPlainPassword()) {
+        if ("" !== $player->getPlainPassword() && null !== $player->getPlainPassword()) {
             $player
                 ->setPassword(
                     $this->passwordEncoder->encodePassword(
                         $player,
                         $player->getPlainPassword())
-                )->eraseCredentials()
+                )
+                ->eraseCredentials()
             ;
         }
 

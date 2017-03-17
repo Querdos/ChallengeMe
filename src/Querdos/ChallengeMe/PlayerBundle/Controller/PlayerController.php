@@ -4,6 +4,7 @@ namespace Querdos\ChallengeMe\PlayerBundle\Controller;
 
 use Querdos\ChallengeMe\PlayerBundle\Form\TeamType;
 use Querdos\ChallengeMe\PlayerBundle\Form\UploadAvatarType;
+use Querdos\ChallengeMe\UserBundle\Entity\Demand;
 use Querdos\ChallengeMe\UserBundle\Entity\Team;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -165,5 +166,37 @@ class PlayerController extends Controller
 
         // returning data
         return $dataToReturn;
+    }
+
+    /**
+     * @param int $demandId
+     * @param int $status
+     *
+     * @return RedirectResponse
+     * @throws \Exception
+     */
+    public function editDemandAction($demandId, $status)
+    {
+        // retrieving the demand
+        /** @var Demand $demand */
+        $demand        = $this->get('challengeme.manager.demand')->readById($demandId);
+        $demandManager = $this->get('challengeme.manager.demand');
+
+        // checking that the current user is the leader
+        if ($demand->getTeam()->getLeader()->getUsername() !== $this->getUser()->getUsername()) {
+            return $this->redirectToRoute('player_homepage');
+        }
+
+        // checking the status
+        if ($status == Demand::STATUS_DECLINED) {
+            $demandManager->declineDemand($demand);
+        } else if ($status == Demand::STATUS_ACCEPTED) {
+            $demandManager->acceptDemand($demand);
+        } else {
+            throw new \Exception("Unknown status");
+        }
+
+        // everything ok, redirecting
+        return $this->redirectToRoute('player_my_team');
     }
 }

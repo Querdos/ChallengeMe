@@ -293,13 +293,16 @@
                                                 Demands
                                             </a>
                                         </li>
-                                        <li role="presentation" class="">
-                                            <a href="#tab_content3" role="tab" id="profile-tab2" data-toggle="tab" aria-expanded="false">
-                                                Profile
-                                            </a>
-                                        </li>
+                                        {% if app.user == team.leader %}
+                                            <li role="presentation" class="">
+                                                <a href="#tab_content3" role="tab" id="profile-tab2" data-toggle="tab" aria-expanded="false">
+                                                    User management
+                                                </a>
+                                            </li>
+                                        {% endif %}
                                     </ul>
                                     <div id="myTabContent" class="tab-content">
+                                        {# Recent activity tab #}
                                         <div role="tabpanel" class="tab-pane fade active in" id="tab_content1" aria-labelledby="home-tab">
 
                                             {# start recent activity #}
@@ -373,9 +376,9 @@
                                             {# end recent activity #}
 
                                         </div>
-                                        <div role="tabpanel" class="tab-pane fade" id="tab_content2" aria-labelledby="profile-tab">
 
-                                            {# start user projects #}
+                                        {# Demands tab #}
+                                        <div role="tabpanel" class="tab-pane fade" id="tab_content2" aria-labelledby="profile-tab">
                                             <table class="data table table-striped no-margin">
                                                 <thead>
                                                     <tr>
@@ -385,7 +388,9 @@
                                                         <th>Username</th>
                                                         <td>Status</td>
                                                         <th>Date</th>
-                                                        <th>Action</th>
+                                                        {% if team.leader == app.user %}
+                                                            <th>Action</th>
+                                                        {% endif %}
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -405,29 +410,58 @@
                                                                 {% endif %}
                                                             </td>
                                                             <td>{{ demand.date | date("m/d/Y") }}</td>
-                                                            <td class="vertical-align-mid">
-                                                                {% if app.user.username == team.leader.username %}
+                                                            {% if app.user == team.leader %}
+                                                                <td class="vertical-align-mid">
                                                                     {% if demand.status == 0 %}
-                                                                        <button type="button" class="btn btn-success btn-xs">Accept</button>
-                                                                        <button type="button" class="btn btn-danger btn-xs">Decline</button>
+                                                                        <button type="button" class="btn btn-success btn-xs" onclick="window.location.href='{{ path('player_edit_demand', {'demandId': demand.id, 'status': 2}) }}'">Accept</button>
+                                                                        <button type="button" class="btn btn-danger btn-xs"  onclick="window.location.href='{{ path('player_edit_demand', {'demandId': demand.id, 'status': 1}) }}'">Decline</button>
                                                                     {% else %}
-                                                                        <button type="button" class="btn btn-info btn-xs">Clear</button>
+                                                                        <button type="button" class="btn btn-info btn-xs" onclick="">Clear</button>
                                                                     {% endif %}
-                                                                {% else %}
-                                                                    Only the leader can manage demands
-                                                                {% endif %}
-                                                            </td>
+                                                                </td>
+                                                            {% endif %}
                                                         </tr>
                                                     {% endfor %}
                                                 </tbody>
                                             </table>
-                                            {# end user projects #}
+                                        </div>
 
-                                        </div>
-                                        <div role="tabpanel" class="tab-pane fade" id="tab_content3" aria-labelledby="profile-tab">
-                                            <p>xxFood truck fixie locavore, accusamus mcsweeney's marfa nulla single-origin coffee squid. Exercitation +1 labore velit, blog sartorial PBR leggings next level wes anderson artisan four loko farm-to-table craft beer twee. Qui
-                                                photo booth letterpress, commodo enim craft beer mlkshk </p>
-                                        </div>
+                                        {# User management tab #}
+                                        {% if app.user == team.leader %}
+                                            <div role="tabpanel" class="tab-pane fade" id="tab_content3" aria-labelledby="profile-tab">
+                                                <table class="data table table-striped no-margin">
+                                                    <thead>
+                                                    <tr>
+                                                        <th>#</th>
+                                                        <th>Firstname</th>
+                                                        <th>Lastname</th>
+                                                        <th>Username</th>
+                                                        <th>Role</th>
+                                                        <th>Action</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    {% for player in team.players %}
+                                                        {% if player != app.user %}
+                                                            <tr>
+                                                                <td>{{ loop.index }}</td>
+                                                                <td>{{ player.infoUser.firstName }}</td>
+                                                                <td>{{ player.infoUser.lastName }}</td>
+                                                                <td>{{ player.username }}</td>
+                                                                <td>
+                                                                    {# TODO: Members role #}
+                                                                    Member
+                                                                </td>
+                                                                <td>
+                                                                    <button type="button" class="btn btn-danger btn-xs" onclick="removePlayerFromTeam('')">Remove</button>
+                                                                </td>
+                                                            </tr>
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        {% endif %}
                                     </div>
                                 </div>
                             </div>
@@ -476,6 +510,15 @@
         function showFormTeam() {
             $("#form_create_team").slideToggle();
         }
+
+        {% if app.user == team.leader %}
+            function removePlayerFromTeam(url) {
+                $.ajax({
+                    url:    url,
+                    type:   "PATCH"
+                });
+            }
+        {% endif %}
     </script>
 
     <script>

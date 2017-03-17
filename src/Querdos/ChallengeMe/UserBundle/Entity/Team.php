@@ -4,10 +4,16 @@ namespace Querdos\ChallengeMe\UserBundle\Entity;
 
 use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use JMS\Serializer\Annotation\ExclusionPolicy;
+use JMS\Serializer\Annotation\Expose;
+use JMS\Serializer\Annotation\Groups;
+use JMS\Serializer\Annotation\VirtualProperty;
 
 /**
  * Team
  * @Vich\Uploadable
+ *
+ * @ExclusionPolicy("all")
  */
 class Team
 {
@@ -18,11 +24,15 @@ class Team
 
     /**
      * @var string
+     *
+     * @Expose
      */
     private $name;
 
     /**
      * @var int
+     *
+     * @Expose
      */
     private $points;
 

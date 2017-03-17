@@ -18,3 +18,12 @@ landing:
 admin:
     resource: "@AdminBundle/Resources/config/routing.yml"
     prefix:   /administration
+
+rest:
+    type :      rest
+    resource :  "routing_rest.yml"
+    prefix :    /api
+
+NelmioApiDocBundle:
+    resource:   "@NelmioApiDocBundle/Resources/config/routing.yml"
+    prefix:     /api/doc
