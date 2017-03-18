@@ -43,3 +43,10 @@ services:
             - [ setRepository,      [ '@challengeme.repository.demand'  ]]
             - [ setEntityManager,   [ '@doctrine.orm.entity_manager'    ]]
             - [ setPlayerManager,   [ '@challengeme.manager.demand'     ]]
+
+    challengeme.manager.player_role:
+        class: Querdos\ChallengeMe\UserBundle\Manager\PlayerRoleManager
+        calls:
+            - [ setRepository,      [ '@challengeme.repository.player_role' ]]
+            - [ setEntityManager,   [ '@doctrine.orm.entity_manager'    ]]
+

@@ -1,0 +1,23 @@
+Querdos\ChallengeMe\UserBundle\Entity\PlayerRole:
+    type:             entity
+    table:            cm_user_player_role
+    repositoryClass:  Querdos\ChallengeMe\UserBundle\Repository\PlayerRoleRepository
+    id:
+        id:
+            type:       integer
+            id:         true
+            generator:
+                strategy: AUTO
+    fields:
+        name:
+            type:     string
+            length:   255
+            unique:   false
+            nullable: false
+
+    manyToOne:
+        player:
+            targetEntity: Querdos\ChallengeMe\UserBundle\Entity\Player
+            cascade:      [ "persist" ]
+            joinColumn:
+                nullable: false

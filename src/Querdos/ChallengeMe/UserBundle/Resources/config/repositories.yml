@@ -48,3 +48,8 @@ services:
         class:      Querdos\ChallengeMe\UserBundle\Repository\DemandRepository
         factory:    [ "@doctrine.orm.entity_manager", "getRepository" ]
         arguments:  [ "UserBundle:Demand" ]
+
+    challengeme.repository.player_role:
+        class:      Querdos\ChallengeMe\UserBundle\Repository\PlayerRoleRepository
+        factory:    [ "@doctrine.orm.entity_manager", "getRepository" ]
+        arguments:  [ "UserBundle:PlayerRole" ]
