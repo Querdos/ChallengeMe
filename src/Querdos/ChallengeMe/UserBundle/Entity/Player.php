@@ -46,6 +46,11 @@ class Player extends BaseUser implements UserInterface, \Serializable
     private $updatedAt;
 
     /**
+     * @var PlayerRole
+     */
+    private $playerRole;
+
+    /**
      * Administrator constructor.
      *
      * @param string $id
@@ -190,5 +195,21 @@ class Player extends BaseUser implements UserInterface, \Serializable
     public function getAvatarName()
     {
         return $this->avatarName;
+    }
+
+    /**
+     * @return PlayerRole
+     */
+    public function getPlayerRole()
+    {
+        return $this->playerRole;
+    }
+
+    /**
+     * @param PlayerRole $playerRole
+     */
+    public function setPlayerRole($playerRole)
+    {
+        $this->playerRole = $playerRole;
     }
 }

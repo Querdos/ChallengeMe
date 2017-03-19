@@ -43,6 +43,13 @@ Querdos\ChallengeMe\UserBundle\Entity\Player:
             unique:     false
             nullable:   true
 
+    oneToOne:
+        playerRole:
+            targetEntity: Querdos\ChallengeMe\UserBundle\Entity\PlayerRole
+            cascade:      [ "persist" ]
+            joinColumn:
+                nullable: true
+
     manyToOne:
         infoUser:
             targetEntity: Querdos\ChallengeMe\UserBundle\Entity\InfoUser
