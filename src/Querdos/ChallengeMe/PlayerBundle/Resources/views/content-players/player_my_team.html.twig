@@ -296,7 +296,7 @@
                                             </li>
 
                                             <li role="presentation" class="">
-                                                <a href="#tab_content3" role="tab" id="profile-tab2" data-toggle="tab" aria-expanded="false">
+                                                <a href="#tab_content3" role="tab" id="profile-tab3" data-toggle="tab" aria-expanded="false">
                                                     Roles management
                                                 </a>
                                             </li>
@@ -338,7 +338,7 @@
                                                             <td>{{ demand.date | date("m/d/Y") }}</td>
                                                             {% if app.user == team.leader %}
                                                                 <td class="vertical-align-mid">
-                                                                    {% if demand.status == 0 %}
+                                                                    {% if   demand.status == 0 %}
                                                                         <button type="button" class="btn btn-success btn-xs" onclick="window.location.href='{{ path('player_edit_demand', {'demandId': demand.id, 'status': 2}) }}'">Accept</button>
                                                                         <button type="button" class="btn btn-danger btn-xs"  onclick="window.location.href='{{ path('player_edit_demand', {'demandId': demand.id, 'status': 1}) }}'">Decline</button>
                                                                     {% else %}
@@ -389,6 +389,63 @@
                                             </div>
 
                                             {# Roles management tab #}
+                                            <div role="tabpanel" class="tab-pane fade" id="tab_content3" aria-labelledby="profile-tab">
+                                                <table class="data table table-striped no-margin">
+                                                    <thead>
+                                                    <tr>
+                                                        <th>#</th>
+                                                        <th>Role name</th>
+                                                        <th>Action</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    {#{% for player in team.players %}
+                                                        {% if player != app.user %}
+                                                            <tr>
+                                                                <td>{{ loop.index }}</td>
+                                                                <td>{{ player.infoUser.firstName }}</td>
+                                                                <td>{{ player.infoUser.lastName }}</td>
+                                                                <td>{{ player.username }}</td>
+                                                                <td>
+                                                                    #}{# TODO: Members role #}{#
+                                                                    Member
+                                                                </td>
+                                                                <td>
+                                                                    <button type="button" class="btn btn-danger btn-xs" onclick="window.location.href='{{ path('player_remove_from_team', {'playerId': player.id}) }}'">Remove</button>
+                                                                </td>
+                                                            </tr>
+                                                        {% endif %}
+                                                    {% endfor %}#}
+                                                    </tbody>
+                                                </table>
+
+                                                <a class="btn btn-success" id="add_custom_role" data-toggle="modal" data-target=".modal-add-role"><i class="fa fa-edit m-right-xs"></i> Add a custom role</a>
+                                                <br />
+
+                                                <div class="modal fade modal-add-role" tabindex="-1" role="dialog" aria-hidden="true">
+                                                    <div class="modal-dialog modal-sm">
+                                                        <div class="modal-content">
+
+                                                            <div class="modal-header">
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span>
+                                                                </button>
+                                                                <h4 class="modal-title" id="myModalLabel2">Modal title</h4>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <h4>Text in a modal</h4>
+                                                                <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.</p>
+                                                                <p>Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla.</p>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                                <button type="button" class="btn btn-primary">Save changes</button>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
 
                                         {% endif %}
                                     </div>
