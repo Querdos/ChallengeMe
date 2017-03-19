@@ -249,19 +249,23 @@
                                             </thead>
                                             <tbody>
                                                 {% for player in team.players %}
-                                                <tr>
-                                                    <th scope="row">{{ loop.index }}</th>
-                                                    <td>{{ player.infoUser.firstname }}</td>
-                                                    <td>{{ player.infoUser.lastname }}</td>
-                                                    <td>{{ player.username }}</td>
-                                                    <td>
-                                                        {% if player.username == team.leader.username %}
-                                                            Leader
-                                                        {% else %}
-                                                            Member
-                                                        {% endif %}
-                                                    </td>
-                                                </tr>
+                                                    <tr>
+                                                        <th scope="row">{{ loop.index }}</th>
+                                                        <td>{{ player.infoUser.firstname }}</td>
+                                                        <td>{{ player.infoUser.lastname }}</td>
+                                                        <td>{{ player.username }}</td>
+                                                        <td>
+                                                            {% if player.playerRole is null %}
+                                                                {% if player == team.leader %}
+                                                                    Leader
+                                                                {% else %}
+                                                                    Member
+                                                                {% endif %}
+                                                            {% else %}
+                                                                {{ player.role }}
+                                                            {% endif %}
+                                                        </td>
+                                                    </tr>
                                                 {% endfor %}
                                             </tbody>
                                         </table>
@@ -382,8 +386,15 @@
                                                                 <td>{{ player.infoUser.lastName }}</td>
                                                                 <td>{{ player.username }}</td>
                                                                 <td>
-                                                                    {# TODO: Members role #}
-                                                                    Member
+                                                                    {% if player.playerRole is null %}
+                                                                        {% if team.leader == player %}
+                                                                            Leader
+                                                                        {% else %}
+                                                                            Member
+                                                                        {% endif %}
+                                                                    {% else %}
+                                                                        {{ player.playerRole }}
+                                                                    {% endif %}
                                                                 </td>
                                                                 <td>
                                                                     <button type="button" class="btn btn-danger btn-xs" onclick="window.location.href='{{ path('player_remove_from_team', {'playerId': player.id}) }}'">Remove</button>
