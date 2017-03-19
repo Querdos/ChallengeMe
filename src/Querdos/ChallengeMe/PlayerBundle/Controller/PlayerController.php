@@ -348,4 +348,25 @@ class PlayerController extends Controller
         // redirecting
         return $this->redirectToRoute('player_teams_list');
     }
+
+    /**
+     * @param int $roleId
+     *
+     * @return RedirectResponse
+     */
+    public function deletePlayerRoleAction($roleId)
+    {
+        // checking that user is the leader
+        if (false === $this->checkUserIsLeader($this->getUser())) {
+            return $this->redirectToRoute('player_homepage');
+        }
+
+        // retrieving custom role
+        $playerRoleManager = $this->get('challengeme.manager.player_role');
+        $playerRole        = $playerRoleManager->readById($roleId);
+
+        // deleting it and redirecting
+        $playerRoleManager->delete($playerRole);
+        return $this->redirectToRoute('player_my_team');
+    }
 }

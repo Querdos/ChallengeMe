@@ -411,7 +411,7 @@
                                                             <td>{{ loop.index }}</td>
                                                             <td>{{ role.name }}</td>
                                                             <td>
-                                                                <button type="button" class="btn btn-danger btn-xs" onclick="">Delete</button>
+                                                                <button type="button" class="btn btn-danger btn-xs" onclick="window.location.href='{{ path('player_remove_player_role', { 'roleId': role.id }) }}'">Delete</button>
                                                             </td>
                                                         </tr>
                                                     {% endfor %}

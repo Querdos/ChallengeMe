@@ -50,6 +50,12 @@ player_ask_join_team:
     methods:
         - GET
 
+player_remove_player_role:
+    path:     /team/remove-custom-role/{roleId}
+    defaults: { _controller: PlayerBundle:Player:deletePlayerRole }
+    methods:
+        - GET
+
 ######################
 # SecurityController #
 ######################
