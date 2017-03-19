@@ -2,10 +2,12 @@
 
 namespace Querdos\ChallengeMe\PlayerBundle\Controller;
 
+use Querdos\ChallengeMe\PlayerBundle\Form\PlayerRoleType;
 use Querdos\ChallengeMe\PlayerBundle\Form\TeamType;
 use Querdos\ChallengeMe\PlayerBundle\Form\UploadAvatarType;
 use Querdos\ChallengeMe\UserBundle\Entity\Demand;
 use Querdos\ChallengeMe\UserBundle\Entity\Player;
+use Querdos\ChallengeMe\UserBundle\Entity\PlayerRole;
 use Querdos\ChallengeMe\UserBundle\Entity\Team;
 use Querdos\ChallengeMe\UserBundle\Manager\DemandManager;
 use Querdos\ChallengeMe\UserBundle\Manager\PlayerManager;
@@ -15,7 +17,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\VarDumper\VarDumper;
 
 class PlayerController extends Controller
 {
@@ -136,10 +137,14 @@ class PlayerController extends Controller
             $dataToReturn['form'] = $form->createView();
         } else {
             // retrieving the user's team
-            $team = $this->getUser()->getTeam();
+            $team       = $this->getUser()->getTeam();
+            $playerRole = new PlayerRole();
 
-            // creating the form for the avatar
-            $formAvatar = $this->createForm(UploadAvatarType::class, $team);
+            // creating the form for the avatar and custom roles
+            $formAvatar     = $this->createForm(UploadAvatarType::class, $team);
+            $formPlayerRole = $this->createForm(PlayerRoleType::class, $playerRole);
+
+            // adding save button to the avatar form
             $formAvatar
                 ->add('save', SubmitType::class, array(
                     'label' => 'Upload',
@@ -150,7 +155,22 @@ class PlayerController extends Controller
                 ))
             ;
 
+            // adding save button to the custom role form
+            $formPlayerRole
+                ->add('save', SubmitType::class, array(
+                    'label' => 'Save',
+                    'attr' => array(
+                        'class' => 'btn btn-success'
+                    ),
+                    'translation_domain' => 'forms'
+                ))
+            ;
+
+            // handling form requests
             $formAvatar->handleRequest($request);
+            $formPlayerRole->handleRequest($request);
+
+            // checking if the avatar form is submitted
             if ($formAvatar->isSubmitted()) {
                 // updating team
                 $this->get('challengeme.manager.team')->update($team);
@@ -159,17 +179,40 @@ class PlayerController extends Controller
                 return $this->redirectToRoute('player_my_team');
             }
 
-            $helper = $this->get('vich_uploader.templating.helper.uploader_helper');
+            // checking if the custom role form is submitted
+            if ($formPlayerRole->isSubmitted()) {
+                // checking that the user is the leader
+                if (false === $this->checkUserIsLeader($this->getUser())) {
+                    return $this->redirectToRoute('player_homepage');
+                }
+
+                // setting the player that created the role
+                $playerRole->setTeam($this->getUser()->getTeam());
+
+                // creating the role
+                $this
+                    ->get('challengeme.manager.player_role')
+                    ->create($playerRole)
+                ;
+
+                // redirecting to the main page
+                return $this->redirectToRoute('player_my_team');
+            }
+
+            $helper     = $this->get('vich_uploader.templating.helper.uploader_helper');
             $avatarPath = $helper->asset($team, 'avatar');
 
-            // retrieving demands for the team
-            $demands = $this->get('challengeme.manager.demand')->readByTeam($team);
+            // retrieving demands and roles for the team
+            $demands     = $this->get('challengeme.manager.demand')->readByTeam($team);
+            $playerRoles = $this->get('challengeme.manager.player_role')->readByTeam($team);
 
             // the user has a team
-            $dataToReturn['team']       = $team;
-            $dataToReturn['formAvatar'] = $formAvatar->createView();
-            $dataToReturn['avatarPath'] = $avatarPath;
-            $dataToReturn['demands']    = $demands;
+            $dataToReturn['team']           = $team;
+            $dataToReturn['formAvatar']     = $formAvatar->createView();
+            $dataToReturn['formPlayerRole'] = $formPlayerRole->createView();
+            $dataToReturn['avatarPath']     = $avatarPath;
+            $dataToReturn['demands']        = $demands;
+            $dataToReturn['playerRoles']    = $playerRoles;
         }
 
         // returning data

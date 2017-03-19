@@ -22,20 +22,20 @@ class PlayerRole
     private $name;
 
     /**
-     * @var Player
+     * @var Team
      */
-    private $player;
+    private $team;
 
     /**
      * PlayerRole constructor.
      *
      * @param string $name
-     * @param Player $player
+     * @param Team   $team
      */
-    public function __construct($name = "", Player $player = null)
+    public function __construct($name = "", Team $team = null)
     {
         $this->name   = $name;
-        $this->player = $player;
+        $this->team = $team;
     }
 
     /**
@@ -77,21 +77,21 @@ class PlayerRole
     }
 
     /**
-     * @return Player
+     * @return Team
      */
-    public function getPlayer()
+    public function getTeam()
     {
-        return $this->player;
+        return $this->team;
     }
 
     /**
-     * @param Player $player
+     * @param Team $team
      *
      * @return $this
      */
-    public function setPlayer($player)
+    public function setTeam(Team $team)
     {
-        $this->player = $player;
+        $this->team = $team;
         return $this;
     }
 }

@@ -2,6 +2,13 @@
 
 {% extends "PlayerBundle::base.html.twig" %}
 
+{% if app.user == team.leader %}
+    {% form_theme formPlayerRole
+        '@Player/form/form_rows_manager.html.twig'
+        '@Player/form/form_errors_manager.html.twig'
+    %}
+{% endif %}
+
 {% block stylesheets %}
     {{ parent() }}
 
@@ -399,23 +406,15 @@
                                                     </tr>
                                                     </thead>
                                                     <tbody>
-                                                    {#{% for player in team.players %}
-                                                        {% if player != app.user %}
-                                                            <tr>
-                                                                <td>{{ loop.index }}</td>
-                                                                <td>{{ player.infoUser.firstName }}</td>
-                                                                <td>{{ player.infoUser.lastName }}</td>
-                                                                <td>{{ player.username }}</td>
-                                                                <td>
-                                                                    #}{# TODO: Members role #}{#
-                                                                    Member
-                                                                </td>
-                                                                <td>
-                                                                    <button type="button" class="btn btn-danger btn-xs" onclick="window.location.href='{{ path('player_remove_from_team', {'playerId': player.id}) }}'">Remove</button>
-                                                                </td>
-                                                            </tr>
-                                                        {% endif %}
-                                                    {% endfor %}#}
+                                                    {% for role in playerRoles %}
+                                                        <tr>
+                                                            <td>{{ loop.index }}</td>
+                                                            <td>{{ role.name }}</td>
+                                                            <td>
+                                                                <button type="button" class="btn btn-danger btn-xs" onclick="">Delete</button>
+                                                            </td>
+                                                        </tr>
+                                                    {% endfor %}
                                                     </tbody>
                                                 </table>
 
@@ -427,19 +426,23 @@
                                                         <div class="modal-content">
 
                                                             <div class="modal-header">
-                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span>
-                                                                </button>
-                                                                <h4 class="modal-title" id="myModalLabel2">Modal title</h4>
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                                                                <h4 class="modal-title" id="myModalLabel2">Adding a new custom role</h4>
                                                             </div>
+                                                            {{ form_start(formPlayerRole,  {'id': 'demo-form2', 'attr': {'class': 'form-horizontal form-label-left'}}) }}
                                                             <div class="modal-body">
-                                                                <h4>Text in a modal</h4>
-                                                                <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.</p>
-                                                                <p>Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla.</p>
+                                                                {{ form_row(formPlayerRole.name) }}
                                                             </div>
                                                             <div class="modal-footer">
-                                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                                                <button type="button" class="btn btn-primary">Save changes</button>
+                                                                <div class="col-md-6" align="center">
+                                                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                                </div>
+
+                                                                <div class="col-md-6" align="center">
+                                                                    {{ form_row(formPlayerRole.save) }}
+                                                                </div>
                                                             </div>
+                                                            {{ form_end(formPlayerRole) }}
 
                                                         </div>
                                                     </div>

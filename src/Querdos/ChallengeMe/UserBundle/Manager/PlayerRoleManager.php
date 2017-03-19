@@ -8,7 +8,20 @@
 
 namespace Querdos\ChallengeMe\UserBundle\Manager;
 
+use Querdos\ChallengeMe\UserBundle\Entity\PlayerRole;
+use Querdos\ChallengeMe\UserBundle\Entity\Team;
+
 class PlayerRoleManager extends BaseManager
 {
-    //
+    /**
+     * Return all custom roles for the given team
+     *
+     * @param Team $team
+     *
+     * @return PlayerRole[]
+     */
+    public function readByTeam(Team $team)
+    {
+        return $this->repository->readByTeam($team);
+    }
 }

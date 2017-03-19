@@ -16,8 +16,8 @@ Querdos\ChallengeMe\UserBundle\Entity\PlayerRole:
             nullable: false
 
     manyToOne:
-        player:
-            targetEntity: Querdos\ChallengeMe\UserBundle\Entity\Player
+        team:
+            targetEntity: Querdos\ChallengeMe\UserBundle\Entity\Team
             cascade:      [ "persist" ]
             joinColumn:
                 nullable: false
