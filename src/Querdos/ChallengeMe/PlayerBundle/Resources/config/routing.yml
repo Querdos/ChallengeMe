@@ -68,6 +68,12 @@ player_change_player_role:
     methods:
         - POST
 
+player_challenges:
+    path:     /challenges
+    defaults: { _controller: PlayerBundle:Player:challenges }
+    methods:
+        - GET
+
 ######################
 # SecurityController #
 ######################

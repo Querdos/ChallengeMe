@@ -1,0 +1,84 @@
+{% trans_default_domain "players-challenges" %}
+{% extends "PlayerBundle::base.html.twig" %}
+
+{% block stylesheets %}
+    {{ parent() }}
+
+    {% stylesheets
+        '@iCheck'
+        '@bootstrap_progressBar'
+        '@jVectorMap'
+
+    filter='cssrewrite'
+    %}
+    <link href="{{ asset_url }}" rel="stylesheet"/>
+    {% endstylesheets %}
+{% endblock stylesheets %}
+
+{% block main_content %}
+    <div class="">
+        <div class="page-title">
+            <div class="title_left">
+                <h3>
+                    Challenges
+                </h3>
+            </div>
+        </div>
+
+        <div class="clearfix"></div>
+
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2>List of challenges (you have yo be in a team to solve available ones)</h2>
+                        <div class="clearfix"></div>
+                    </div>
+
+                    <div class="x_content">
+                        {% for category in categories %}
+                            {% if loop.index % 2 != 0 %}
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                            {% endif %}
+
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <div class="x_panel">
+                                    <div class="x_title">
+                                        <h2>
+                                            <span class="glyphicon glyphicon-th-list"></span>
+                                            <a href="javascript:void(0)">{{ category.title }}</a>
+                                        </h2>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                    <div class="x_content">
+                                        <p>{{ category.description }}</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {% if loop.last and loop.index % 2 != 0 %}
+                                </div>
+                            {% else %}
+                                {% if loop.index % 2 == 0 %}
+                                    </div>
+                                {% endif %}
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock main_content %}
+
+{% block javascript %}
+    {% javascripts
+    '@jquery_js'
+    '@bootstrap_js'
+    '@fastclick_js'
+    '@customTheme_js'
+    %}
+    <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock %}

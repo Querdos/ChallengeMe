@@ -425,4 +425,19 @@ class PlayerController extends Controller
 
         return new JsonResponse();
     }
+
+    /**
+     * @Template("PlayerBundle:content-players:player_challenges.html.twig")
+     *
+     * @return array
+     */
+    public function challengesAction()
+    {
+        // retrieving categories
+        $categories = $this->get('challengeme.manager.category')->all();
+
+        return array(
+            'categories' => $categories
+        );
+    }
 }
