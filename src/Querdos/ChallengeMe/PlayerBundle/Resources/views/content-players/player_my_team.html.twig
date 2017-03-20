@@ -262,7 +262,7 @@
                                                                     Member
                                                                 {% endif %}
                                                             {% else %}
-                                                                {{ player.role }}
+                                                                {{ player.playerRole.name }}
                                                             {% endif %}
                                                         </td>
                                                     </tr>
@@ -288,10 +288,12 @@
                                         </div>
                                     </div>
                                 </div>
+
                                 {# start of user-activity-graph #}
                                 <div id="graph_bar" style="width:100%; height:280px;"></div>
                                 {# end of user-activity-graph #}
 
+                                {# Tab panels #}
                                 <div class="" role="tabpanel" data-example-id="togglable-tabs">
                                     <ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">
                                         <li role="presentation" class="active">
@@ -393,10 +395,11 @@
                                                                             Member
                                                                         {% endif %}
                                                                     {% else %}
-                                                                        {{ player.playerRole }}
+                                                                        {{ player.playerRole.name }}
                                                                     {% endif %}
                                                                 </td>
                                                                 <td>
+                                                                    <button type="button" class="btn btn-info btn-xs buttonChangeRole" data-toggle="modal" data-target=".set-role-for-player-modal" player_username="{{ player.username }}" player_id="{{ player.id }}">Change role</button>
                                                                     <button type="button" class="btn btn-danger btn-xs" onclick="window.location.href='{{ path('player_remove_from_team', {'playerId': player.id}) }}'">Remove</button>
                                                                 </td>
                                                             </tr>
@@ -404,6 +407,32 @@
                                                     {% endfor %}
                                                     </tbody>
                                                 </table>
+
+                                                <div class="modal fade set-role-for-player-modal" tabindex="-1" role="dialog" aria-hidden="true">
+                                                    <div class="modal-dialog modal-sm">
+                                                        <div class="modal-content">
+
+                                                            <div class="modal-header">
+                                                                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+                                                                </button>
+                                                                <h4 class="modal-title" id="titleModalRole">Changing role for </h4>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <label for="selectRole">Choose a role:</label>
+                                                                <select id="selectRole" class="form-control">
+                                                                    {% for role in playerRoles %}
+                                                                        <option value="{{ role.id }}">{{ role.name }}</option>
+                                                                    {% endfor %}
+                                                                </select>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                                <button type="button" class="btn btn-primary" id="saveRoleForPlayer">Save</button>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
 
                                             {# Roles management tab #}
@@ -460,7 +489,6 @@
                                                 </div>
 
                                             </div>
-
                                         {% endif %}
                                     </div>
                                 </div>
@@ -510,6 +538,36 @@
         function showFormTeam() {
             $("#form_create_team").slideToggle();
         }
+
+        {% if app.user == team.leader %}
+            $(document).ready(function() {
+                $(".buttonChangeRole").on('click', function() {
+                    // changing modal title
+                    $("#titleModalRole").html("Changing role for <b>" + $(this).attr("player_username") + "</b>");
+
+                    // setting player id
+                    $("#selectRole").attr("player_id", $(this).attr("player_id"));
+                });
+
+                $("#saveRoleForPlayer").on('click', function() {
+                    // retrieving data
+                    var selectRole  = $("#selectRole");
+                    var playerId    = selectRole.attr("player_id");
+                    var roleId      = selectRole.val();
+
+                    var data        = { 'playerId': playerId, 'roleId': roleId };
+
+                    // sending ajax request
+                    $.ajax({
+                        url:    "{{ path('player_change_player_role') }}",
+                        type:   "POST",
+                        data:   data
+                    }).success(function() {
+                        location.reload();
+                    })
+                });
+            });
+        {% endif %}
     </script>
 
     <script>

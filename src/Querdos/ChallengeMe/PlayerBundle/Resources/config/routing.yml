@@ -62,6 +62,12 @@ player_remove_player_role:
     methods:
         - GET
 
+player_change_player_role:
+    path:     /team/change-player-role
+    defaults: { _controller: PlayerBundle:Player:setPlayerRole }
+    methods:
+        - POST
+
 ######################
 # SecurityController #
 ######################

@@ -14,8 +14,10 @@ use Querdos\ChallengeMe\UserBundle\Manager\PlayerManager;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\VarDumper\VarDumper;
 
 class PlayerController extends Controller
 {
@@ -56,6 +58,7 @@ class PlayerController extends Controller
             'categories' => $categories
         );
     }
+
     /**
      * @Template("PlayerBundle:content-players:player_players_list.html.twig")
      *
@@ -110,6 +113,7 @@ class PlayerController extends Controller
         // retrieving categories
         $categories = $this->get('challengeme.manager.category')->all();
 
+        // adding list of categories to the array
         $dataToReturn = array(
             'categories' => $categories
         );
@@ -381,5 +385,44 @@ class PlayerController extends Controller
         // deleting it and redirecting
         $playerRoleManager->delete($playerRole);
         return $this->redirectToRoute('player_my_team');
+    }
+
+    /**
+     * @param Request $request
+     *
+     * @return JsonResponse
+     * @throws \Exception
+     */
+    public function setPlayerRoleAction(Request $request)
+    {
+        // checking user
+        if (false === $this->checkUserIsLeader($this->getUser())) {
+            throw new \Exception("You are not allowed to change players' role.");
+        }
+
+        // retrieving post data
+        $roleId   = $request->request->get('roleId');
+        $playerId = $request->request->get('playerId');
+
+        // retrieving the custom role
+        $role = $this->get('challengeme.manager.player_role')->readById($roleId);
+
+        // checking that the role is a one created by the team
+        if ($this->getUser()->getTeam()->getName() !== $role->getTeam()->getName()) {
+            throw new \Exception("You are not allowed to perform this operation.");
+        }
+
+        // retrieving the player
+        $playerManager = $this->get('challengeme.manager.player');
+        /** @var Player $player */
+        $player        = $playerManager->readById($playerId);
+
+        // setting the role
+        $player->setPlayerRole($role);
+
+        // updating
+        $playerManager->update($player);
+
+        return new JsonResponse("OK");
     }
 }
