@@ -39,6 +39,9 @@ class ChallengeSolving
     private $date_end;
 
     /**
+     * True:    The concerned challenge has been solved
+     * False:   The concerned challenge hasn't been solved
+     *
      * @var bool
      */
     private $state;
