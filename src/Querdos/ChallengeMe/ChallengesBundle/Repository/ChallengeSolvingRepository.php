@@ -29,9 +29,14 @@ class ChallengeSolvingRepository extends EntityRepository
             ->createQueryBuilder()
 
             ->select('challenge_solving')
+            ->addSelect('team')
+            ->addSelect('challenge')
+
             ->from('ChallengesBundle:ChallengeSolving', 'challenge_solving')
 
             ->join('challenge_solving.team', 'team')
+            ->join('challenge_solving.challenge', 'challenge')
+
             ->where('team = :team')
 
             ->setParameter('team', $team)

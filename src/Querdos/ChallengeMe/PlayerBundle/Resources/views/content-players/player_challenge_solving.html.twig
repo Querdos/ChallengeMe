@@ -8,6 +8,7 @@
     '@iCheck'
     '@bootstrap_progressBar'
     '@jVectorMap'
+    '@hightlightjs_css'
 
     filter='cssrewrite'
     %}
@@ -20,7 +21,7 @@
         <div class="page-title">
             <div class="title_left">
                 <h3>
-                    {{ challenge.title }}
+                    Challenge Solving
                 </h3>
             </div>
         </div>
@@ -30,11 +31,64 @@
         <div class="row">
             <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
-                    <h2 align="center">{{ challenge.description }}</h2>
+                    <div class="col-md-9 col-sm-9 col-xs-12">
 
-                    <br>
-                    <div class="x_content">
+                      <ul class="stats-overview">
+                        <li>
+                          <span class="name"> Points </span>
+                          <span class="value text-success"> {{ challenge.points }} </span>
+                        </li>
+                        <li>
+                          <span class="name"> Difficulty </span>
+                          <span class="value text-success"> {% for i in range(1, challenge.level) %}<i class="fa fa-star"></i>{% endfor %} </span>
+                        </li>
+                        <li class="hidden-phone">
+                          <span class="name"> Validations </span>
+                          <span class="value text-success"> 0 teams (0%) </span>
+                        </li>
+                      </ul>
+                      <br />
 
+                      <p>{{ challenge.statement|raw }}</p>
+                    </div>
+
+                    <div class="col-md-3 col-sm-3 col-xs-12">
+
+                        <section class="panel">
+
+                            <div class="x_title">
+                                <h2>Challenge informations</h2>
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="panel-body">
+                                <h3 class="green">{{ challenge.title }}</h3>
+
+                                <p>{{ challenge.description }}</p>
+                                <br />
+
+                                <div class="project_detail">
+
+                                    <p class="title">Author</p>
+                                    <p>{{ challenge.author.username }}</p>
+                                </div>
+
+                                <br />
+                                <h5>Related resources</h5>
+                                <ul class="list-unstyled project_files">
+                                    <li><a href=""><i class="fa fa-file-word-o"></i> Functional-requirements.docx</a>
+                                    </li>
+                                    <li><a href=""><i class="fa fa-file-pdf-o"></i> UAT.pdf</a>
+                                    </li>
+                                    <li><a href=""><i class="fa fa-mail-forward"></i> Email-from-flatbal.mln</a>
+                                    </li>
+                                    <li><a href=""><i class="fa fa-picture-o"></i> Logo.png</a>
+                                    </li>
+                                    <li><a href=""><i class="fa fa-file-word-o"></i> Contract-10_12_2014.docx</a>
+                                    </li>
+                                </ul>
+                                <br />
+                            </div>
+                        </section>
                     </div>
                 </div>
             </div>
@@ -44,11 +98,17 @@
 
 {% block javascript %}
     {% javascripts
-    '@jquery_js'
-    '@bootstrap_js'
-    '@fastclick_js'
-    '@customTheme_js'
+        '@jquery_js'
+        '@bootstrap_js'
+        '@fastclick_js'
+        '@customTheme_js'
+        '@highlightjs_js'
     %}
     <script src="{{ asset_url }}"></script>
     {% endjavascripts %}
+
+    {# Script for hightlight #}
+    <script>
+        hljs.initHighlightingOnLoad();
+    </script>
 {% endblock %}

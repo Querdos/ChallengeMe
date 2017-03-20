@@ -87,7 +87,7 @@ player_challenge_start:
         - GET
 
 player_challenge_solving:
-    path:     /solve-challenge/{challengeId}
+    path:     /solve-challenge
     defaults: { _controller: PlayerBundle:Player:challengeSolving }
     methods:
         - GET

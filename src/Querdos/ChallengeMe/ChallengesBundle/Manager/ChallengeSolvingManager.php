@@ -48,4 +48,24 @@ class ChallengeSolvingManager extends BaseManager
         // persiting
         $this->create($challengeSolving);
     }
+
+    /**
+     * Stopping the challenge for the given team
+     *
+     * @param Team $team
+     */
+    public function stopChallenge(Team $team)
+    {
+        // retrieving the challenge in progress for the team
+        $challengeSolving = $this->getChallengeInProgress($team);
+
+        // setting the date_end attribute and changing the state
+        $challengeSolving
+            ->setDateEnd(new \DateTime())
+            ->setState(true)
+        ;
+
+        // persisting
+        $this->update($challengeSolving);
+    }
 }

@@ -429,10 +429,20 @@ class PlayerController extends Controller
     /**
      * @Template("PlayerBundle:content-players:player_challenges.html.twig")
      *
-     * @return array
+     * @return array|RedirectResponse
      */
     public function challengesAction()
     {
+        // checking if a challenge is in progress for the current team
+        if (null !== $this->getUser()->getTeam()) {
+            // retrieving challenge solving manager
+            $challengeSolvingManager = $this->get('challengeme.manager.challenge_solving');
+
+            if (null !== $challengeSolvingManager->getChallengeInProgress($this->getUser()->getTeam())) {
+                return $this->redirectToRoute('player_challenge_solving');
+            }
+        }
+
         // retrieving categories
         $categories = $this->get('challengeme.manager.category')->all();
 
@@ -446,10 +456,20 @@ class PlayerController extends Controller
      *
      * @param int $categoryId
      *
-     * @return array
+     * @return array|RedirectResponse
      */
     public function challengesByCategoryAction($categoryId)
     {
+        // checking if a challenge is in progress for the current team
+        if (null !== $this->getUser()->getTeam()) {
+            // retrieving challenge solving manager
+            $challengeSolvingManager = $this->get('challengeme.manager.challenge_solving');
+
+            if (null !== $challengeSolvingManager->getChallengeInProgress($this->getUser()->getTeam())) {
+                return $this->redirectToRoute('player_challenge_solving');
+            }
+        }
+
         // retrieving the category
         $category = $this->get('challengeme.manager.category')->readById($categoryId);
 
@@ -470,23 +490,48 @@ class PlayerController extends Controller
      */
     public function startChallengeAction($challengeId)
     {
+        // redirecting if user has no team
+        if (null === $this->getUser()->getTeam()) {
+            return $this->redirectToRoute('player_homepage');
+        }
+
         // retrieving the challenge
         $challenge = $this->get('challengeme.manager.challenge')->readById($challengeId);
 
-        return $this->redirectToRoute('player_challenge_solving', array('challengeId' => $challengeId));
+        try {
+            // starting it for the current team
+            $this
+                ->get('challengeme.manager.challenge_solving')
+                ->startChallenge(
+                    $challenge,
+                    $this->getUser()->getTeam()
+                );
+        } catch (\Exception $e) {
+            // meaning that a challenge has already been started
+            return $this->redirectToRoute('player_challenge_solving');
+        }
+
+        // everything ok, redirecting
+        return $this->redirectToRoute('player_challenge_solving');
     }
 
     /**
      * @Template("PlayerBundle:content-players:player_challenge_solving.html.twig")
      *
-     * @param int $challengeId
-     *
-     * @return array
+     * @return array|RedirectResponse
      */
-    public function challengeSolvingAction($challengeId)
+    public function challengeSolvingAction()
     {
+        // retrieving challengesolving manager
+        $challengeSolvingManager = $this->get('challengeme.manager.challenge_solving');
+
+        // checking if the user's team has a challenge in progress
+        if (null === ($challengeSolving = $challengeSolvingManager->getChallengeInProgress($this->getUser()->getTeam()))) {
+            return $this->redirectToRoute('player_homepage');
+        }
+
         // retrieving the challenge
-        $challenge = $this->get('challengeme.manager.challenge')->readById($challengeId);
+        $challenge = $challengeSolving->getChallenge();
 
         return array(
             'challenge'     => $challenge
