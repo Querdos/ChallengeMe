@@ -74,6 +74,10 @@ player_challenges:
     methods:
         - GET
 
+player_challenges_category:
+    path:     /challenges/{categoryId}
+    defaults: { _controller: PlayerBundle:Player:challengesByCategory }
+
 ######################
 # SecurityController #
 ######################

@@ -440,4 +440,24 @@ class PlayerController extends Controller
             'categories' => $categories
         );
     }
+
+    /**
+     * @Template("PlayerBundle:content-players:player_challenges_by_category.html.twig")
+     *
+     * @return array
+     */
+    public function challengesByCategoryAction($categoryId)
+    {
+        // retrieving the category
+        $category = $this->get('challengeme.manager.category')->readById($categoryId);
+
+        // retrieving challenges for this category
+        $challenges = $this->get('challengeme.manager.challenge')->readByCategory($category);
+
+        // returning data
+        return array(
+            'category'      => $category,
+            'challenges'    => $challenges
+        );
+    }
 }

@@ -1,0 +1,90 @@
+{% trans_default_domain "players-challenges-by-category" %}
+{% extends "PlayerBundle::base.html.twig" %}
+
+{% block stylesheets %}
+    {{ parent() }}
+
+    {% stylesheets
+    '@iCheck'
+    '@bootstrap_progressBar'
+    '@jVectorMap'
+
+    filter='cssrewrite'
+    %}
+    <link href="{{ asset_url }}" rel="stylesheet"/>
+    {% endstylesheets %}
+{% endblock stylesheets %}
+
+{% block main_content %}
+    <div class="">
+        <div class="page-title">
+            <div class="title_left">
+                <h3>
+                    Available challenges in <b>{{ category.title }}</b>
+                </h3>
+            </div>
+        </div>
+
+        <div class="clearfix"></div>
+
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                    <h2 align="center">{{ category.description }}</h2>
+
+                    <br>
+                    <div class="x_content">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Result</th>
+                                    <th>Title</th>
+                                    <th>Validations</th>
+                                    <th>Number of points</th>
+                                    <th>Difficulty</th>
+                                    <th>Note</th>
+                                    <th>Author</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for challenge in challenges %}
+                                    <tr>
+                                        <th>
+                                            {# TODO: Check if challenge has been completed #}
+                                            <i class="fa fa-close"></i>
+                                        </th>
+                                        <td><b><a href="javascript:void(0)">{{ challenge.title }}</a></b></td>
+                                        <td>
+                                            {# TODO: Validation #}
+                                        </td>
+                                        <td>{{ challenge.points }}</td>
+                                        <td>
+                                            {% for i in range(0, challenge.level) %}
+                                                <i class="fa fa-star"></i>
+                                            {% endfor %}
+                                        </td>
+                                        <td>
+                                            {# TODO: Note #}
+                                        </td>
+                                        <td>{{ challenge.author.username }}</td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock main_content %}
+
+{% block javascript %}
+    {% javascripts
+    '@jquery_js'
+    '@bootstrap_js'
+    '@fastclick_js'
+    '@customTheme_js'
+    %}
+    <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock %}
