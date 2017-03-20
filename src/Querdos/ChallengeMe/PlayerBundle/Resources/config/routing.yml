@@ -7,6 +7,12 @@ player_homepage:
     methods:
         - GET
 
+player_profile:
+    path:     /profile
+    defaults: { _controller: PlayerBundle:Player:profile }
+    methods:
+        - GET
+
 player_players_list:
     path:     /challengers
     defaults: { _controller: PlayerBundle:Player:playersList }

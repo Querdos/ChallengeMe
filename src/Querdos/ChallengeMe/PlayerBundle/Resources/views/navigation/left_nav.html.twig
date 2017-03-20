@@ -33,26 +33,14 @@
                         <ul class="nav child_menu">
                             <li><a href="{{ path('player_homepage') }}">{{ "nav.home.dashboard" | trans | desc("Dashboard") | meaning("Dashboard button") }}</a>
                             </li>
-                            <li><a href="{{ path('administration_profile') }}">{{ "nav.home.profile" | trans | desc("Profile") | meaning("Profile button") }}</a>
+                            <li><a href="{{ path('player_profile') }}">{{ "nav.home.profile" | trans | desc("Profile") | meaning("Profile button") }}</a>
                             </li>
-                            <li><a href="{{ path('administration_inbox') }}">{{ "nav.home.private-message" | trans | desc("Private messages") | meaning("PM button") }}</a>
+                            <li><a href="javascript:void(0)">{{ "nav.home.private-message" | trans | desc("Private messages") | meaning("PM button") }}</a>
                             </li>
                             <li><a href="javascript:;">{{ "nav.home.system" | trans | desc("System") | meaning("System button") }}</a>
                             </li>
                         </ul>
                     </li>
-                    {% if is_granted('ROLE_MODERATOR') %}
-                    <li><a><i class="fa fa-user"></i> {{ "nav.user-management" | trans | desc("User management") | meaning("User management button") }} <span class="fa fa-chevron-down"></span></a>
-                        <ul class="nav child_menu">
-                            <li><a href="{{ path('administration_playersManagement') }}">{{ "nav.user-management.players" | trans | desc("Players") | meaning("Players management button") }}</a></li>
-                            {% if is_granted('ROLE_ADMIN') %}
-                                <li><a href="{{ path('administration_adminsManagement') }}">{{ "nav.user-management.administrators" | trans | desc("Administrators") | meaning("Administrators management button") }}</a></li>
-                                <li><a href="{{ path('administration_moderatorsManagement') }}">{{ "nav.user-management.moderators" | trans | desc("Moderators") | meaning("Moderators management button") }}</a></li>
-                            {% endif %}
-                            <li><a href="{{ path('administration_redactorsManagement') }}">{{ "nav.user-management.redactors" | trans | desc("Redactors") | meaning("Redactors management butotn") }}</a></li>
-                        </ul>
-                    </li>
-                    {% endif %}
                 </ul>
             </div>
 

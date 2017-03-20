@@ -11,7 +11,6 @@ use Querdos\ChallengeMe\UserBundle\Entity\PlayerRole;
 use Querdos\ChallengeMe\UserBundle\Entity\Team;
 use Querdos\ChallengeMe\UserBundle\Manager\DemandManager;
 use Querdos\ChallengeMe\UserBundle\Manager\PlayerManager;
-use Querdos\ChallengeMe\UserBundle\Manager\TeamManager;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -43,6 +42,20 @@ class PlayerController extends Controller
         );
     }
 
+    /**
+     * @Template("PlayerBundle:content:profile.html.twig")
+     *
+     * @return array
+     */
+    public function profileAction()
+    {
+        // retrieving categories
+        $categories = $this->get('challengeme.manager.category');
+
+        return array(
+            'categories' => $categories
+        );
+    }
     /**
      * @Template("PlayerBundle:content-players:player_players_list.html.twig")
      *
