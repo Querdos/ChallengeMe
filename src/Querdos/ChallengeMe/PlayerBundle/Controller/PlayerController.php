@@ -423,6 +423,6 @@ class PlayerController extends Controller
         // updating
         $playerManager->update($player);
 
-        return new JsonResponse("OK");
+        return new JsonResponse();
     }
 }

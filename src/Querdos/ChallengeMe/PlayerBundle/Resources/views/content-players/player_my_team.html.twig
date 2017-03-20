@@ -564,6 +564,13 @@
                         data:   data
                     }).success(function() {
                         location.reload();
+                    }).error(function() {
+                        new PNotify({
+                            title:      'An error occured',
+                            text:       'An error occured while trying to assign the role. If the error persists, please contact an administrator.',
+                            type:       'error',
+                            styling:    'bootstrap3'
+                        });
                     })
                 });
             });
