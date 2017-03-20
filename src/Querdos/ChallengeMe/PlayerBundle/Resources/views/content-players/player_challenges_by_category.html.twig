@@ -44,6 +44,7 @@
                                     <th>Difficulty</th>
                                     <th>Note</th>
                                     <th>Author</th>
+                                    <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -53,13 +54,13 @@
                                             {# TODO: Check if challenge has been completed #}
                                             <i class="fa fa-close"></i>
                                         </th>
-                                        <td><b><a href="javascript:void(0)">{{ challenge.title }}</a></b></td>
+                                        <td>{{ challenge.title }}</td>
                                         <td>
                                             {# TODO: Validation #}
                                         </td>
                                         <td>{{ challenge.points }}</td>
                                         <td>
-                                            {% for i in range(0, challenge.level) %}
+                                            {% for i in range(1, challenge.level) %}
                                                 <i class="fa fa-star"></i>
                                             {% endfor %}
                                         </td>
@@ -67,10 +68,37 @@
                                             {# TODO: Note #}
                                         </td>
                                         <td>{{ challenge.author.username }}</td>
+                                        <td>
+                                            {# TODO: Check if challenge has been completed #}
+                                            <button data_challenge="{{ challenge.description }}" class="btn btn-primary buttonSolveChallenge" type="button" data-toggle="modal" data-target=".modal-confirm-start-challenge" url_start="{{ path('player_challenge_start', {'challengeId': challenge.id}) }}">Solve it</button>
+                                        </td>
                                     </tr>
                                 {% endfor %}
                             </tbody>
                         </table>
+
+                        <div class="modal fade modal-confirm-start-challenge" tabindex="-1" role="dialog" aria-hidden="true">
+                            <div class="modal-dialog modal-sm">
+                                <div class="modal-content">
+
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span>
+                                        </button>
+                                        <h4 class="modal-title" id="myModalLabel2">Confirmation</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <h4>You are about to solve a new challenge</h4>
+                                        <p align="justify">If you confirm, you will begin this challenge with your team, meaning that all members will be automatically redirected to this challenge when trying to access challenges.</p>
+                                        <p align="justify">Information about this challenge: <br><b id="challengeDescription"></b></p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                        <button type="button" class="btn btn-primary" id="buttonStartChallenge">Start</button>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -87,4 +115,26 @@
     %}
     <script src="{{ asset_url }}"></script>
     {% endjavascripts %}
+
+    <script>
+        $(document).ready(function() {
+            var buttonsSolve         = $(".buttonSolveChallenge");
+            var challengeDescription = $("#challengeDescription");
+            var buttonStartChallenge = $("#buttonstartchallenge");
+
+            // on the button click
+            buttonsSolve.on('click', function() {
+                // setting description for information
+                challengeDescription.html(
+                    $(this).attr("data_challenge")
+                );
+
+                // setting onclick setting for the start button
+                buttonStartChallenge.attr(
+                    'onclick',
+                    "window.location.href='" + $(this).attr("url_start") + "'"
+                );
+            });
+        });
+    </script>
 {% endblock %}

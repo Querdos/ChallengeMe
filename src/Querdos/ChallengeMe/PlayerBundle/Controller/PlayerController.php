@@ -444,6 +444,8 @@ class PlayerController extends Controller
     /**
      * @Template("PlayerBundle:content-players:player_challenges_by_category.html.twig")
      *
+     * @param int $categoryId
+     *
      * @return array
      */
     public function challengesByCategoryAction($categoryId)
@@ -458,6 +460,36 @@ class PlayerController extends Controller
         return array(
             'category'      => $category,
             'challenges'    => $challenges
+        );
+    }
+
+    /**
+     * @param int $challengeId
+     *
+     * @return RedirectResponse
+     */
+    public function startChallengeAction($challengeId)
+    {
+        // retrieving the challenge
+        $challenge = $this->get('challengeme.manager.challenge')->readById($challengeId);
+
+        return $this->redirectToRoute('player_challenge_solving', array('challengeId' => $challengeId));
+    }
+
+    /**
+     * @Template("PlayerBundle:content-players:player_challenge_solving.html.twig")
+     *
+     * @param int $challengeId
+     *
+     * @return array
+     */
+    public function challengeSolvingAction($challengeId)
+    {
+        // retrieving the challenge
+        $challenge = $this->get('challengeme.manager.challenge')->readById($challengeId);
+
+        return array(
+            'challenge'     => $challenge
         );
     }
 }

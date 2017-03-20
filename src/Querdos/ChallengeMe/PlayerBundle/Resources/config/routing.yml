@@ -77,6 +77,20 @@ player_challenges:
 player_challenges_category:
     path:     /challenges/{categoryId}
     defaults: { _controller: PlayerBundle:Player:challengesByCategory }
+    methods:
+        - GET
+
+player_challenge_start:
+    path:     /challenge/{challengeId}/start
+    defaults: { _controller: PlayerBundle:Player:startChallenge }
+    methods:
+        - GET
+
+player_challenge_solving:
+    path:     /solve-challenge/{challengeId}
+    defaults: { _controller: PlayerBundle:Player:challengeSolving }
+    methods:
+        - GET
 
 ######################
 # SecurityController #

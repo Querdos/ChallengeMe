@@ -1,0 +1,54 @@
+{% trans_default_domain "players-challenges-solving" %}
+{% extends "PlayerBundle::base.html.twig" %}
+
+{% block stylesheets %}
+    {{ parent() }}
+
+    {% stylesheets
+    '@iCheck'
+    '@bootstrap_progressBar'
+    '@jVectorMap'
+
+    filter='cssrewrite'
+    %}
+    <link href="{{ asset_url }}" rel="stylesheet"/>
+    {% endstylesheets %}
+{% endblock stylesheets %}
+
+{% block main_content %}
+    <div class="">
+        <div class="page-title">
+            <div class="title_left">
+                <h3>
+                    {{ challenge.title }}
+                </h3>
+            </div>
+        </div>
+
+        <div class="clearfix"></div>
+
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                    <h2 align="center">{{ challenge.description }}</h2>
+
+                    <br>
+                    <div class="x_content">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock main_content %}
+
+{% block javascript %}
+    {% javascripts
+    '@jquery_js'
+    '@bootstrap_js'
+    '@fastclick_js'
+    '@customTheme_js'
+    %}
+    <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock %}
