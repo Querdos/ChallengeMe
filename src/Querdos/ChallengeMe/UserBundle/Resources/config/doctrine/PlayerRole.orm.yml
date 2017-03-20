@@ -21,3 +21,5 @@ Querdos\ChallengeMe\UserBundle\Entity\PlayerRole:
             cascade:      [ "persist" ]
             joinColumn:
                 nullable: false
+
+    lifecycleCallbacks: {}

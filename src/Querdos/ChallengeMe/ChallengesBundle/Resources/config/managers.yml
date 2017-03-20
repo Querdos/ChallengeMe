@@ -10,3 +10,9 @@ services:
         calls:
             - [ setRepository,    [ '@challengeme.repository.challenge' ] ]
             - [ setEntityManager, [ '@doctrine.orm.entity_manager' ] ]
+
+    challengeme.manager.challenge_solving:
+        class: Querdos\ChallengeMe\ChallengesBundle\Manager\ChallengeSolvingManager
+        calls:
+            - [ setRepository,    [ '@challengeme.repository.challenge_solving']]
+            - [ setEntityManager, [ '@doctrine.orm.entity_manager' ]]

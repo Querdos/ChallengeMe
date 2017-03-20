@@ -6,5 +6,10 @@ services:
 
     challengeme.repository.challenge:
         class:      Querdos\ChallengeMe\ChallengesBundle\Entity\Challenge
-        factory:    [ "@doctrine.orm.default_entity_manager", "getRepository" ]
+        factory:    [ "@doctrine.orm.entity_manager", "getRepository" ]
         arguments:  [ "ChallengesBundle:Challenge" ]
+
+    challengeme.repository.challenge_solving:
+        class:      Querdos\ChallengeMe\ChallengesBundle\Entity\ChallengeSolving
+        factory:    [ "@doctrine.orm.entity_manager", "getRepository" ]
+        arguments:  [ "ChallengesBundle:ChallengeSolving" ]
