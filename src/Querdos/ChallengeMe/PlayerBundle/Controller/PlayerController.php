@@ -534,7 +534,8 @@ class PlayerController extends Controller
         $challenge = $challengeSolving->getChallenge();
 
         return array(
-            'challenge'     => $challenge
+            'challenge'         => $challenge,
+            'challengeSolve'    => $challengeSolving
         );
     }
 }

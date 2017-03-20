@@ -43,8 +43,8 @@
                           <span class="value text-success"> {% for i in range(1, challenge.level) %}<i class="fa fa-star"></i>{% endfor %} </span>
                         </li>
                         <li class="hidden-phone">
-                          <span class="name"> Validations </span>
-                          <span class="value text-success"> 0 teams (0%) </span>
+                          <span class="name"> Time spent </span>
+                          <span class="value text-success" id="chronotime">00:00:00</span>
                         </li>
                       </ul>
                       <br />
@@ -103,6 +103,7 @@
         '@fastclick_js'
         '@customTheme_js'
         '@highlightjs_js'
+        '@moment_js'
     %}
     <script src="{{ asset_url }}"></script>
     {% endjavascripts %}
@@ -110,5 +111,29 @@
     {# Script for hightlight #}
     <script>
         hljs.initHighlightingOnLoad();
+    </script>
+
+    {# Script for the counter #}
+    <script>
+        $(document).ready(function() {
+            var timeSpent   = $("#chronotime");
+            var end;
+
+            function elapsed(end) {
+                var start = moment("{{ challengeSolve.dateStart|date("m-d-y H:i:s") }}", "MM-DD-YY HH:mm:ss");
+
+                var diff  = end.diff(start, 'seconds');
+                var seconds = diff - Math.floor(diff/60)*60;
+                var minutes = Math.floor(diff/60) - Math.floor((Math.floor(diff/60)/60))*60;
+                var hours   = Math.floor(Math.floor(diff/60)/60);
+
+                return hours + ":" + minutes + ":" + seconds;
+            }
+
+            setInterval(function() {
+                end = moment();
+                timeSpent.html(elapsed(end));
+            }, 1000);
+        });
     </script>
 {% endblock %}
