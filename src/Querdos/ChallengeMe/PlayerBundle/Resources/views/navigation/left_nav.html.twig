@@ -29,36 +29,14 @@
             <div class="menu_section">
                 <h3>General</h3>
                 <ul class="nav side-menu">
-                    <li><a><i class="fa fa-home"></i> {{ "nav.home" | trans | desc("Home") | meaning("Home button") }} <span class="fa fa-chevron-down"></span></a>
-                        <ul class="nav child_menu">
-                            <li><a href="{{ path('player_homepage') }}">{{ "nav.home.dashboard" | trans | desc("Dashboard") | meaning("Dashboard button") }}</a>
-                            </li>
-                            <li><a href="{{ path('player_profile') }}">{{ "nav.home.profile" | trans | desc("Profile") | meaning("Profile button") }}</a>
-                            </li>
-                            <li><a href="javascript:void(0)">{{ "nav.home.private-message" | trans | desc("Private messages") | meaning("PM button") }}</a>
-                            </li>
-                            <li><a href="javascript:;">{{ "nav.home.system" | trans | desc("System") | meaning("System button") }}</a>
-                            </li>
-                        </ul>
+                    <li><a href="{{ path('player_homepage') }}"><i class="fa fa-home"></i>{{ "nav.home.dashboard" | trans | desc("Dashboard") | meaning("Dashboard button") }}</a>
                     </li>
-                </ul>
-            </div>
+                    <li><a href="{{ path('player_profile') }}"><i class="fa fa-user"></i> {{ "nav.home.profile" | trans | desc("Profile") | meaning("Profile button") }}</a>
+                    </li>
+                    <li><a href="javascript:void(0)"><i class="fa fa-comments-o"></i> {{ "nav.home.private-message" | trans | desc("Private messages") | meaning("PM button") }}</a>
+                    </li>
 
-            {# Challenges management #}
-            <div class="menu_section">
-                <h3>{{ "nav.challenges-management" | trans | desc("Challenges") | meaning("Challenges management button") }}</h3>
-                <ul class="nav side-menu">
-                    <li><a href="javascript:void(0)"><i class="fa fa-gavel"></i> {{ "nav.challenges-management-challenges" | trans | desc("Challenges") | meaning("Challenges section") }} <span class="fa fa-chevron-down"></span></a>
-                        <ul class="nav child_menu">
-                        {% if categories|length == 0 %}
-                            <li><a href="javascript:void(0)">No category</a></li>
-                        {% else %}
-                            {% for category in categories %}
-                                <li><a href="{{ path('challenges_category_details', {'category_id': category.id}) }}">{{ category.title }}</a></li>
-                            {% endfor %}
-                        {% endif %}
-                        </ul>
-                    </li>
+                    <li><a href="javascript:void(0)"><i class="fa fa-gavel"></i> Challenges</a></li>
                 </ul>
             </div>
 
