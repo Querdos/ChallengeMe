@@ -73,14 +73,14 @@
                                             {% endfor %}
                                         </td>
                                         <td>
-                                            {# TODO: Note #}
+                                            {{ notes[challenge.id] }} / 5
                                         </td>
                                         <td>{{ challenge.author.username }}</td>
                                         <td>
                                             {% if challenge.id not in challengesSolved %}
                                                 <button data_challenge="{{ challenge.description }}" class="btn btn-primary buttonSolveChallenge" type="button" data-toggle="modal" data-target=".modal-confirm-start-challenge" url_start="{{ path('player_challenge_start', {'challengeId': challenge.id}) }}">Solve</button>
                                             {% else %}
-                                                <button type="button" class="btn btn-success">Rate</button>
+                                                <button type="button" class="btn btn-success buttonRateChallenge" data-toggle="modal" data-target=".modal-rate-challenge" challenge_id="{{ challenge.id}}" challenge_name="{{ challenge.title }}">Rate</button>
                                             {% endif %}
                                         </td>
                                     </tr>
@@ -88,6 +88,7 @@
                             </tbody>
                         </table>
 
+                        {# Modal for challenge starting confirmation #}
                         <div class="modal fade modal-confirm-start-challenge" tabindex="-1" role="dialog" aria-hidden="true">
                             <div class="modal-dialog modal-sm">
                                 <div class="modal-content">
@@ -110,6 +111,48 @@
                                 </div>
                             </div>
                         </div>
+
+                        {# Modal for rating a challenge #}
+                        <div class="modal fade modal-rate-challenge" tabindex="-1" role="dialog" aria-hidden="true">
+                            <div class="modal-dialog modal-sm">
+                                <div class="modal-content">
+
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span>
+                                        </button>
+                                        <h4 class="modal-title" id="modal-rate-title"></h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <h4 align="center">What mark would you give?</h4>
+                                        <p align="center">
+                                            <form id="formRating">
+                                                <label for="rating1">1</label>
+                                                <input type="radio" class="flat" name="rating" id="rating1" value="1" checked="" required />
+
+                                                <label for="rating2">2</label>
+                                                <input type="radio" class="flat" name="rating" id="rating2" value="2" />
+
+                                                <label for="rating3">3</label>
+                                                <input type="radio" class="flat" name="rating" id="rating3" value="3" />
+
+                                                <label for="rating4">4</label>
+                                                <input type="radio" class="flat" name="rating" id="rating4" value="4" />
+
+                                                <label for="rating5">5</label>
+                                                <input type="radio" class="flat" name="rating" id="rating5" value="5" />
+
+                                                <input type="hidden" id="hiddenChallengeId" name="challengeId"/>
+                                            </form>
+                                        </p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                        <button type="button" class="btn btn-primary" id="rateChallenge">Rate</button>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -123,6 +166,7 @@
     '@bootstrap_js'
     '@fastclick_js'
     '@customTheme_js'
+    '@iCheck_js'
     %}
     <script src="{{ asset_url }}"></script>
     {% endjavascripts %}
@@ -130,23 +174,51 @@
     <script>
         $(document).ready(function() {
             var buttonsSolve         = $(".buttonSolveChallenge");
-            var challengeDescription = $("#challengeDescription");
+            var buttonRate           = $(".buttonRateChallenge");
             var buttonStartChallenge = $("#buttonStartChallenge");
+            var buttonRateChallenge  = $("#rateChallenge")
 
-            // on the button click
+            var challengeDescription = $("#challengeDescription");
+            var modalRateTitle       = $("#modal-rate-title");
+
+            // on the button solve click
             buttonsSolve.on('click', function() {
                 // setting description for information
                 challengeDescription.html(
                     $(this).attr("data_challenge")
                 );
 
-                buttonStartChallenge.attr("url_start", $(this).attr("url_start"));
+                buttonStartChallenge.attr(
+                    "url_start",
+                    $(this).attr("url_start")
+                );
 
                 // setting onclick setting for the start button
                 buttonStartChallenge.attr(
                     'onclick',
                     "window.location.href='" + $(this).attr("url_start") + "'"
                 );
+            });
+
+            // on the button rate click
+            buttonRate.on('click', function() {
+                var chal_name   = $(this).attr("challenge_name");
+                var chal_id     = $(this).attr("challenge_id");
+
+                modalRateTitle.html("Rate <b>" + chal_name + "</b>");
+                $("#hiddenChallengeId").attr("value", chal_id);
+            });
+
+            buttonRateChallenge.on('click', function() {
+                // sending ajax request
+                $.ajax({
+                    url: "{{ path('player_rate_challenge') }}",
+                    type: "POST",
+                    data: $("#formRating").serialize(),
+                    success: function() {
+                        location.reload();
+                    }
+                })
             });
         });
     </script>

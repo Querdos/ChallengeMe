@@ -22,5 +22,5 @@ services:
     challengeme.manager.rating:
         class: Querdos\ChallengeMe\ChallengesBundle\Manager\RatingManager
         calls:
-            - [ setRepository,      [ '@challengeme.repository.challenge_solving'   ] ]
+            - [ setRepository,      [ '@challengeme.repository.rating'   ] ]
             - [ setEntityManager,   [ '@doctrine.orm.entity_manager'                ] ]

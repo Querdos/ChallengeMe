@@ -93,6 +93,12 @@ player_challenge_solving:
         - GET
         - POST
 
+player_rate_challenge:
+    path:     /challenge/rate
+    defaults: { _controller: PlayerBundle:Player:rateChallenge }
+    methods:
+        - POST
+
 ######################
 # SecurityController #
 ######################

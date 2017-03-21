@@ -152,4 +152,35 @@ class ChallengeSolvingRepository extends EntityRepository
             ->getSingleScalarResult()
         ;
     }
+
+    /**
+     * Check if the given team has solved the given challenge
+     *
+     * @param Team      $team
+     * @param Challenge $challenge
+     *
+     * @return bool
+     */
+    public function teamHasSolvedChallenge(Team $team, Challenge $challenge)
+    {
+        $query = $this
+            ->getEntityManager()
+            ->createQueryBuilder()
+
+            ->select('chal_sol')
+            ->from('ChallengesBundle:ChallengeSolving', 'chal_sol')
+
+            ->join('chal_sol.team', 'team')
+            ->join('chal_sol.challenge', 'challenge')
+
+            ->where('team = :team')
+            ->andWhere('challenge = :challenge')
+            ->andWhere('chal_sol.state = 1')
+
+            ->setParameter('team', $team)
+            ->setParameter('challenge', $challenge)
+        ;
+
+        return null !== $query->getQuery()->getOneOrNullResult();
+    }
 }

@@ -2,6 +2,7 @@
 
 namespace Querdos\ChallengeMe\PlayerBundle\Controller;
 
+use Querdos\ChallengeMe\ChallengesBundle\Entity\Rating;
 use Querdos\ChallengeMe\PlayerBundle\Form\PlayerRoleType;
 use Querdos\ChallengeMe\PlayerBundle\Form\SolveChallengeType;
 use Querdos\ChallengeMe\PlayerBundle\Form\TeamType;
@@ -514,6 +515,14 @@ class PlayerController extends Controller
             $validations[$challenge->getId()] = $challengeSolvingManager->getValidationForChallenge($challenge);
         }
 
+        // retrieving notes for each challenges
+        $notes = array();
+        $ratingManager = $this->get('challengeme.manager.rating');
+
+        foreach ($challenges as $challenge) {
+            $notes[$challenge->getId()] = $ratingManager->noteForChallenge($challenge);
+        }
+
         // retrieving challenges solved (ids)
         $challengesSolved = $this
             ->get('challengeme.manager.challenge_solving')
@@ -525,6 +534,7 @@ class PlayerController extends Controller
             'category'          => $category,
             'challenges'        => $challenges,
             'challengesSolved'  => $challengesSolved,
+            'notes'             => $notes,
             'validations'       => $validations
         );
     }
@@ -630,5 +640,56 @@ class PlayerController extends Controller
             'formSolution'      => $formSubmitSolution->createView(),
             'validations'       => $validations
         );
+    }
+
+    /**
+     * @param Request $request
+     *
+     * @return JsonResponse
+     * @throws \Exception
+     */
+    public function rateChallengeAction(Request $request)
+    {
+        // Checking that the user has a team
+        if (!$this->getUser()->hasTeam()) {
+            throw new \Exception("You are not allowed to perform this operation");
+        }
+
+        // retrieving the challenge
+        $challenge = $this
+            ->get('challengeme.manager.challenge')
+            ->readById($request->request->get('challengeId'))
+        ;
+
+        // checking that the team has completed this challenge
+        $solved = $this
+            ->get('challengeme.manager.challenge_solving')
+            ->teamHasSolveChallenge(
+                $this->getUser()->getTeam(),
+                $challenge
+            )
+        ;
+
+        // stopping if not solved
+        if (!$solved) {
+            throw new \Exception("You are not allowed to perform this operation");
+        }
+
+        // retrieving the mark
+        $mark = $request->request->get('rating');
+
+        // retrieving the rating manager
+        $ratingManager = $this->get('challengeme.manager.rating');
+        $rating = new Rating(
+            $challenge,
+            $this->getUser(),
+            $mark
+        );
+
+        // persisting
+        $ratingManager->create($rating);
+
+        // everything ok
+        return new JsonResponse();
     }
 }

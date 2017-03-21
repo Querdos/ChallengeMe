@@ -151,6 +151,17 @@ class ChallengeSolvingManager extends BaseManager
     }
 
     /**
+     * Check if the given team has solved the given challenge
+     *
+     * @param Team      $team
+     * @param Challenge $challenge
+     */
+    public function teamHasSolveChallenge(Team $team, Challenge $challenge)
+    {
+        return $this->repository->teamHasSolvedChallenge($team, $challenge);
+    }
+
+    /**
      * @param CategoryManager $categoryManager
      */
     public function setCategoryManager($categoryManager)
