@@ -251,4 +251,17 @@ class Team
     {
         return $this->avatarName;
     }
+
+    /**
+     * Increment the team's score with point. Default value = 1
+     *
+     * @param int $point
+     *
+     * @return $this
+     */
+    public function incrementScore($point = 1)
+    {
+        $this->points += $point;
+        return $this;
+    }
 }

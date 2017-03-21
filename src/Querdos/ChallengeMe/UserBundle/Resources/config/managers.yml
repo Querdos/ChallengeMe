@@ -31,6 +31,7 @@ services:
             - [ setEntityManager,           [ '@doctrine.orm.entity_manager'          ] ]
             - [ setPasswordEncoder,         [ '@security.password_encoder'            ] ]
             - [ setChallengeSolvingManager, ['@challengeme.manager.challenge_solving' ] ]
+            - [ setTeamManager,             ['@challengeme.manager.team'              ] ]
 
     challengeme.manager.team:
         class: Querdos\ChallengeMe\UserBundle\Manager\TeamManager

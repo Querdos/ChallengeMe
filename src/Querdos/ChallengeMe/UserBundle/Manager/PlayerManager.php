@@ -31,6 +31,11 @@ class PlayerManager extends BaseManager
     private $challengeSolvingManager;
 
     /**
+     * @var TeamManager
+     */
+    private $teamManager;
+
+    /**
      * Create a new player in database
      *
      * @param Player $player
@@ -139,10 +144,13 @@ class PlayerManager extends BaseManager
             // changing the state and the end date
             $challengeSolve
                 ->setDateEnd(new \DateTime())
-                ->setState(true);
-
-            // updating
+                ->setState(true)
+            ;
             $this->challengeSolvingManager->update($challengeSolve);
+
+            // updating the score for the team
+            $team->incrementScore($challenge->getPoints());
+            $this->teamManager->update($team);
 
             // everything ok, returning true
             return true;
@@ -158,5 +166,13 @@ class PlayerManager extends BaseManager
     public function setChallengeSolvingManager($challengeSolvingManager)
     {
         $this->challengeSolvingManager = $challengeSolvingManager;
+    }
+
+    /**
+     * @param TeamManager $teamManager
+     */
+    public function setTeamManager($teamManager)
+    {
+        $this->teamManager = $teamManager;
     }
 }
