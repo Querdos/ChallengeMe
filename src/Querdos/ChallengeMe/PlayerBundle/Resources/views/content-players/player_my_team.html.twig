@@ -217,11 +217,11 @@
                                 {# challenge completion #}
                                 <h4>Challenges completion</h4>
                                 <ul class="list-unstyled user_data">
-                                    {% for category in categories %}
+                                    {% for catName, completion in challengesCompletion %}
                                         <li>
-                                            <p>{{ category.title }}</p>
+                                            <p>{{ catName }}</p>
                                             <div class="progress progress_sm">
-                                                <div class="progress-bar bg-green" role="progressbar" data-transitiongoal="70"></div>
+                                                <div class="progress-bar bg-green" role="progressbar" data-transitiongoal="{{ completion }}"></div>
                                             </div>
                                         </li>
                                     {% endfor %}

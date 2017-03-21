@@ -35,13 +35,21 @@ class PlayerController extends Controller
         $playerManager    = $this->get('challengeme.manager.player');
         $teamManager      = $this->get('challengeme.manager.team');
 
+        // retrieving challenges completion
+        $challengeCompletion = $this
+            ->get('challengeme.manager.challenge_solving')
+            ->getChallengesCompletionForTeam(
+                $this->getUser()->getTeam()
+            )
+        ;
+
         // returning array
         return array(
-            'categories'        => $categoryManager->all(),
-            'categoryCount'     => $categoryManager->count(),
-            'challengesCount'   => $challengeManager->count(),
-            'playerCount'       => $playerManager->count(),
-            'teamCount'         => $teamManager->count()
+            'challengeCompletion'   => $challengeCompletion,
+            'categoryCount'         => $categoryManager->count(),
+            'challengesCount'       => $challengeManager->count(),
+            'playerCount'           => $playerManager->count(),
+            'teamCount'             => $teamManager->count()
         );
     }
 
@@ -100,13 +108,14 @@ class PlayerController extends Controller
      */
     public function myTeamAction(Request $request)
     {
-        // retrieving categories
-        $categories = $this->get('challengeme.manager.category')->all();
+        // retrieving challenges completion
+        $challengesCompletion = $this
+            ->get('challengeme.manager.challenge_solving')
+            ->getChallengesCompletionForTeam($this->getUser()->getTeam())
+        ;
 
-        // adding list of categories to the array
-        $dataToReturn = array(
-            'categories' => $categories
-        );
+        // adding to return
+        $dataToReturn['challengesCompletion'] = $challengesCompletion;
 
         // creating the form only if the user has no team
         if (false === $this->getUser()->hasTeam()) {
@@ -514,6 +523,8 @@ class PlayerController extends Controller
 
     /**
      * @Template("PlayerBundle:content-players:player_challenge_solving.html.twig")
+     *
+     * @param Request $request
      *
      * @return array|RedirectResponse
      */

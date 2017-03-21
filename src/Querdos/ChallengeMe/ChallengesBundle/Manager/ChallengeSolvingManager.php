@@ -9,6 +9,7 @@
 namespace Querdos\ChallengeMe\ChallengesBundle\Manager;
 
 
+use Querdos\ChallengeMe\ChallengesBundle\Entity\Category;
 use Querdos\ChallengeMe\ChallengesBundle\Entity\Challenge;
 use Querdos\ChallengeMe\ChallengesBundle\Entity\ChallengeSolving;
 use Querdos\ChallengeMe\UserBundle\Entity\Team;
@@ -16,6 +17,16 @@ use Symfony\Component\VarDumper\VarDumper;
 
 class ChallengeSolvingManager extends BaseManager
 {
+    /**
+     * @var CategoryManager
+     */
+    private $categoryManager;
+
+    /**
+     * @var ChallengeManager
+     */
+    private $challengeManager;
+
     /**
      * Retrieve an unfinished challenge for the given team
      *
@@ -80,5 +91,62 @@ class ChallengeSolvingManager extends BaseManager
     public function getChallengesSolved(Team $team)
     {
         return $this->repository->getChallengesSolved($team);
+    }
+
+    /**
+     * Return the count of solved challenges for the given category
+     *
+     * @param Team     $team
+     * @param Category $category
+     *
+     * @return int
+     */
+    private function completedChallengesForCategory(Team $team, Category $category)
+    {
+        return $this->repository->completedChallengesForCategory($team, $category);
+    }
+
+    /**
+     * Return challenges completion by the given team (by categories)
+     *      [ 'category_name' => percentage, ... ]
+     *
+     * @param Team $team
+     *
+     * @return array
+     */
+    public function getChallengesCompletionForTeam(Team $team)
+    {
+        // retrieving all categories
+        $categories = $this->categoryManager->all();
+
+        // building the return array
+        $completions = array();
+        foreach($categories as $category) { /** @var Category $category */
+            $total = $this->challengeManager->count($category);
+            if (0 != $total) {
+                $percentage                         = intval(floor($this->completedChallengesForCategory($team, $category) * 100 / $total));
+                $completions[$category->getTitle()] = $percentage;
+            } else {
+                $completions[$category->getTitle()] = 0;
+            }
+        }
+
+        return $completions;
+    }
+
+    /**
+     * @param CategoryManager $categoryManager
+     */
+    public function setCategoryManager($categoryManager)
+    {
+        $this->categoryManager = $categoryManager;
+    }
+
+    /**
+     * @param ChallengeManager $challengeManager
+     */
+    public function setChallengeManager($challengeManager)
+    {
+        $this->challengeManager = $challengeManager;
     }
 }

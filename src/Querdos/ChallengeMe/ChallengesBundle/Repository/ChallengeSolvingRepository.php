@@ -10,6 +10,7 @@ namespace Querdos\ChallengeMe\ChallengesBundle\Repository;
 
 
 use Doctrine\ORM\EntityRepository;
+use Querdos\ChallengeMe\ChallengesBundle\Entity\Category;
 use Querdos\ChallengeMe\ChallengesBundle\Entity\ChallengeSolving;
 use Querdos\ChallengeMe\UserBundle\Entity\Team;
 
@@ -85,5 +86,39 @@ class ChallengeSolvingRepository extends EntityRepository
         }
 
         return $toReturn;
+    }
+
+    /**
+     * Return the count of solved challenges for the given category
+     *
+     * @param Team     $team
+     * @param Category $category
+     *
+     * @return int
+     */
+    public function completedChallengesForCategory(Team $team, Category $category)
+    {
+        $query = $this
+            ->getEntityManager()
+            ->createQueryBuilder()
+
+            ->select('COUNT(chal_solv)')
+            ->from('ChallengesBundle:ChallengeSolving', 'chal_solv')
+
+            ->join('chal_solv.team', 'team')
+            ->join('chal_solv.challenge', 'challenge')
+
+            ->where('team = :team')
+            ->andWhere('chal_solv.state = 1')
+            ->andWhere('challenge.category = :category')
+
+            ->setParameter('team', $team)
+            ->setParameter('category', $category)
+        ;
+
+        return $query
+            ->getQuery()
+            ->getSingleScalarResult()
+        ;
     }
 }
