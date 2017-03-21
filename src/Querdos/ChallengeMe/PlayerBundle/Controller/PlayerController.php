@@ -3,6 +3,7 @@
 namespace Querdos\ChallengeMe\PlayerBundle\Controller;
 
 use Querdos\ChallengeMe\PlayerBundle\Form\PlayerRoleType;
+use Querdos\ChallengeMe\PlayerBundle\Form\SolveChallengeType;
 use Querdos\ChallengeMe\PlayerBundle\Form\TeamType;
 use Querdos\ChallengeMe\PlayerBundle\Form\UploadAvatarType;
 use Querdos\ChallengeMe\UserBundle\Entity\Demand;
@@ -509,7 +510,7 @@ class PlayerController extends Controller
      *
      * @return array|RedirectResponse
      */
-    public function challengeSolvingAction()
+    public function challengeSolvingAction(Request $request)
     {
         // retrieving challengesolving manager
         $challengeSolvingManager = $this->get('challengeme.manager.challenge_solving');
@@ -522,9 +523,29 @@ class PlayerController extends Controller
         // retrieving the challenge
         $challenge = $challengeSolving->getChallenge();
 
+        // creating a form for submitting a solution
+        $formSubmitSolution = $this->createForm(SolveChallengeType::class, $this->getUser());
+        $formSubmitSolution
+            ->add('save', SubmitType::class, array(
+                'label' => 'Send',
+                'attr' => array(
+                    'class' => 'btn btn-primary'
+                ),
+                'translation_domain' => 'forms'
+            ))
+        ;
+
+        // handling the form
+        $formSubmitSolution->handleRequest($request);
+        if ($formSubmitSolution->isSubmitted()) {
+            // TODO
+        }
+
+        // returning data
         return array(
             'challenge'         => $challenge,
-            'challengeSolve'    => $challengeSolving
+            'challengeSolve'    => $challengeSolving,
+            'formSolution'      => $formSubmitSolution->createView()
         );
     }
 }

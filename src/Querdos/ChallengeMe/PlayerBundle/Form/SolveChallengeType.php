@@ -25,12 +25,9 @@ class SolveChallengeType extends AbstractType
     {
         $builder
             ->add('solution', PasswordType::class, array(
-                'label' => 'Validation',
-                'label_attr' => array(
-                    'class'             => 'control-label col-md-3 col-sm-3 col-xs-12'
-                ),
+                'label' => 'Validation:',
                 'attr'                  => array(
-                    'class'             => 'form-control col-md-7 col-xs-12'
+                    'class'             => 'form-control'
                 ),
                 'required'              => true,
                 'translation_domain'    => 'forms'
