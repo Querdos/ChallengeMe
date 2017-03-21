@@ -51,11 +51,8 @@ class PlayerController extends Controller
      */
     public function profileAction()
     {
-        // retrieving categories
-        $categories = $this->get('challengeme.manager.category');
-
         return array(
-            'categories' => $categories
+
         );
     }
 
@@ -66,14 +63,10 @@ class PlayerController extends Controller
      */
     public function playersListAction()
     {
-        // retrieving categories
-        $categories = $this->get('challengeme.manager.category')->all();
-
         // retrieving players
         $players    = $this->get('challengeme.manager.player')->all();
 
         return array(
-            'categories' => $categories,
             'players'    => $players
         );
     }
@@ -85,9 +78,6 @@ class PlayerController extends Controller
      */
     public function teamsListAction()
     {
-        // retrieving categories
-        $categories = $this->get('challengeme.manager.category')->all();
-
         // retrieving all teams
         $teams      = $this->get('challengeme.manager.team')->all();
 
@@ -95,7 +85,6 @@ class PlayerController extends Controller
         $demands = $this->get('challengeme.manager.demand')->allForPlayer($this->getUser());
 
         return array(
-            'categories' => $categories,
             'teams'      => $teams,
             'demands'    => $demands
         );
