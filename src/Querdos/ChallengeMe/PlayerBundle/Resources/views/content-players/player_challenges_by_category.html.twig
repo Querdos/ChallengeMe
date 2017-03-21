@@ -59,7 +59,12 @@
                                         </th>
                                         <td>{{ challenge.title }}</td>
                                         <td>
-                                            {# TODO: Validation #}
+                                            {{ validations[challenge.id] }}
+                                            {% if validations[challenge.id] > 1 %}
+                                                teams
+                                            {% else %}
+                                                team
+                                            {% endif %}
                                         </td>
                                         <td>{{ challenge.points }}</td>
                                         <td>

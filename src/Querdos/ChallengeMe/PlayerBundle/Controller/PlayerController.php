@@ -502,6 +502,12 @@ class PlayerController extends Controller
         // retrieving challenges for this category
         $challenges = $this->get('challengeme.manager.challenge')->readByCategory($category);
 
+        // retrieving validations
+        $validations = array();
+        foreach($challenges as $challenge) {
+            $validations[$challenge->getId()] = $challengeSolvingManager->getValidationForChallenge($challenge);
+        }
+
         // retrieving challenges solved (ids)
         $challengesSolved = $this
             ->get('challengeme.manager.challenge_solving')
@@ -512,7 +518,8 @@ class PlayerController extends Controller
         return array(
             'category'          => $category,
             'challenges'        => $challenges,
-            'challengesSolved'  => $challengesSolved
+            'challengesSolved'  => $challengesSolved,
+            'validations'       => $validations
         );
     }
 
@@ -573,6 +580,9 @@ class PlayerController extends Controller
         // retrieving the challenge
         $challenge = $challengeSolving->getChallenge();
 
+        // retrieving validations for this challenge
+        $validations = $challengeSolvingManager->getValidationForChallenge($challenge);
+
         // creating a form for submitting a solution
         $formSubmitSolution = $this->createForm(SolveChallengeType::class, $this->getUser());
         $formSubmitSolution
@@ -611,7 +621,8 @@ class PlayerController extends Controller
         return array(
             'challenge'         => $challenge,
             'challengeSolve'    => $challengeSolving,
-            'formSolution'      => $formSubmitSolution->createView()
+            'formSolution'      => $formSubmitSolution->createView(),
+            'validations'       => $validations
         );
     }
 }

@@ -49,7 +49,7 @@
                             </li>
                             <li class="hidden-phone">
                                 <span class="name"> Time spent </span>
-                                <span class="value text-success" id="chronotime">00:00:00</span>
+                                <span class="value text-success" id="chronotime"></span>
                             </li>
                         </ul>
                         <br />
@@ -85,6 +85,9 @@
 
                                     <p class="title">Author</p>
                                     <p>{{ challenge.author.username }}</p>
+
+                                    <p class="title">Validations</p>
+                                    <p>{{ validations }} teams has solved this challenge</p>
                                 </div>
 
                                 <br />
@@ -142,7 +145,17 @@
                 var minutes = Math.floor(diff/60) - Math.floor((Math.floor(diff/60)/60))*60;
                 var hours   = Math.floor(Math.floor(diff/60)/60);
 
-                return hours + ":" + minutes + ":" + seconds;
+                var toString = "";
+                if (hours > 0) {
+                    toString += hours + " h, ";
+                }
+
+                if (minutes > 0) {
+                    toString += minutes + " min, ";
+                }
+
+                toString += seconds + " sec";
+                return toString;
             }
 
             setInterval(function() {

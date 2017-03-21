@@ -124,14 +124,30 @@ class ChallengeSolvingManager extends BaseManager
         foreach($categories as $category) { /** @var Category $category */
             $total = $this->challengeManager->count($category);
             if (0 != $total) {
-                $percentage                         = intval(floor($this->completedChallengesForCategory($team, $category) * 100 / $total));
+                $percentage = intval(
+                    floor(
+                        $this->completedChallengesForCategory($team, $category) * 100 / $total
+                    )
+                );
                 $completions[$category->getTitle()] = $percentage;
-            } else {
+            } else { // 0 means that there is no challenge yet for this category
                 $completions[$category->getTitle()] = 0;
             }
         }
 
         return $completions;
+    }
+
+    /**
+     * Return number of team that has solved the given challenge
+     *
+     * @param Challenge $challenge
+     *
+     * @return int
+     */
+    public function getValidationForChallenge(Challenge $challenge)
+    {
+        return $this->repository->validationForChallenge($challenge);
     }
 
     /**
