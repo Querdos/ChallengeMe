@@ -115,15 +115,6 @@ class PlayerController extends Controller
      */
     public function myTeamAction(Request $request)
     {
-        // retrieving challenges completion
-        $challengesCompletion = $this
-            ->get('challengeme.manager.challenge_solving')
-            ->getChallengesCompletionForTeam($this->getUser()->getTeam())
-        ;
-
-        // adding to return
-        $data['challengesCompletion'] = $challengesCompletion;
-
         // creating the form only if the user has no team
         if (false === $this->getUser()->hasTeam()) {
             // object for the team to be eventually created
@@ -158,7 +149,10 @@ class PlayerController extends Controller
 
             // adding the form to the array to return
             $data['form'] = $form->createView();
-        } else {
+        }
+
+        // otherwise, if the user has a team
+        else {
             // retrieving the user's team
             $team       = $this->getUser()->getTeam();
             $playerRole = new PlayerRole();
@@ -229,13 +223,25 @@ class PlayerController extends Controller
             $demands     = $this->get('challengeme.manager.demand')->readByTeam($team);
             $playerRoles = $this->get('challengeme.manager.player_role')->readByTeam($team);
 
+            // retrieving challenges completion
+            $challengesCompletion = $this
+                ->get('challengeme.manager.challenge_solving')
+                ->getChallengesCompletionForTeam($this->getUser()->getTeam())
+            ;
+
+            // team manager
+            $teamManager = $this->get('challengeme.manager.team');
+
             // the user has a team
-            $data['team']           = $team;
-            $data['formAvatar']     = $formAvatar->createView();
-            $data['formPlayerRole'] = $formPlayerRole->createView();
-            $data['avatarPath']     = $avatarPath;
-            $data['demands']        = $demands;
-            $data['playerRoles']    = $playerRoles;
+            $data['challengesCompletion'] = $challengesCompletion;
+            $data['team']                 = $team;
+            $data['totalTeam']            = $teamManager->count();
+            $data['rank']                 = $teamManager->getTeamRank($team);
+            $data['formAvatar']           = $formAvatar->createView();
+            $data['formPlayerRole']       = $formPlayerRole->createView();
+            $data['avatarPath']           = $avatarPath;
+            $data['demands']              = $demands;
+            $data['playerRoles']          = $playerRoles;
         }
 
         // returning data

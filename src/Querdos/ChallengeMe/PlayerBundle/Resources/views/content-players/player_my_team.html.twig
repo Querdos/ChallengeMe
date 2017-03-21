@@ -2,7 +2,7 @@
 
 {% extends "PlayerBundle::base.html.twig" %}
 
-{% if app.user == team.leader %}
+{% if app.user.hasTeam and app.user == team.leader %}
     {% form_theme formPlayerRole
         '@Player/form/form_rows_manager.html.twig'
         '@Player/form/form_errors_manager.html.twig'
@@ -209,7 +209,7 @@
 
                                     {# Rank #}
                                     <li>
-                                        <i class="fa fa-area-chart"></i> <b>Rank :</b> 1
+                                        <i class="fa fa-area-chart"></i> <b>Rank :</b> {{ rank }} / {{ totalTeam }}
                                     </li>
                                 </ul>
 
@@ -539,7 +539,7 @@
             $("#form_create_team").slideToggle();
         }
 
-        {% if app.user == team.leader %}
+        {% if app.user.hasTeam and app.user == team.leader %}
             $(document).ready(function() {
                 $(".buttonChangeRole").on('click', function() {
                     // changing modal title

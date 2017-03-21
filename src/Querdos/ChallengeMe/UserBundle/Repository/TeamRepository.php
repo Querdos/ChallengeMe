@@ -2,7 +2,9 @@
 
 namespace Querdos\ChallengeMe\UserBundle\Repository;
 
+use Doctrine\ORM\AbstractQuery;
 use Doctrine\ORM\EntityRepository;
+use Querdos\ChallengeMe\UserBundle\Entity\Team;
 
 /**
  * TeamRepository
@@ -31,5 +33,45 @@ class TeamRepository extends EntityRepository
             ->getQuery()
             ->getSingleScalarResult()
         ;
+    }
+
+    /**
+     * Return the rank for the given team
+     *
+     * @param Team $team
+     *
+     * @return int|null
+     */
+    public function teamRank(Team $team)
+    {
+        $query = $this
+            ->getEntityManager()
+            ->createQueryBuilder()
+
+            ->select('team')
+            ->from('UserBundle:Team', 'team')
+
+            ->orderBy('team.points', 'DESC')
+        ;
+
+        // retrieving the result
+        $result = $query
+            ->getQuery()
+            ->getResult()
+        ;
+
+        /**
+         * Finding the rank
+         *
+         * @var int $index
+         * @var Team $res
+         */
+        foreach($result as $index => $res) {
+            if ($res->getId() == $team->getId()) {
+                return $index+1;
+            }
+        }
+
+        return null;
     }
 }

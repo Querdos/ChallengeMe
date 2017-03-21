@@ -43,4 +43,16 @@ class TeamManager extends BaseManager
     {
         return $this->repository->count();
     }
+
+    /**
+     * Get the ranking for the given team
+     *
+     * @param Team $team
+     *
+     * @return int
+     */
+    public function getTeamRank(Team $team)
+    {
+        return $this->repository->teamRank($team);
+    }
 }
