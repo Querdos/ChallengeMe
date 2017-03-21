@@ -12,6 +12,7 @@ namespace Querdos\ChallengeMe\ChallengesBundle\Manager;
 use Querdos\ChallengeMe\ChallengesBundle\Entity\Challenge;
 use Querdos\ChallengeMe\ChallengesBundle\Entity\ChallengeSolving;
 use Querdos\ChallengeMe\UserBundle\Entity\Team;
+use Symfony\Component\VarDumper\VarDumper;
 
 class ChallengeSolvingManager extends BaseManager
 {

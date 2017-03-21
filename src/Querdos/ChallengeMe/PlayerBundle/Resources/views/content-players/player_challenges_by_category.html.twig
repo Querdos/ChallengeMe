@@ -70,7 +70,7 @@
                                         <td>{{ challenge.author.username }}</td>
                                         <td>
                                             {# TODO: Check if challenge has been completed #}
-                                            <button data_challenge="{{ challenge.description }}" class="btn btn-primary buttonSolveChallenge" type="button" data-toggle="modal" data-target=".modal-confirm-start-challenge">Solve it</button>
+                                            <button data_challenge="{{ challenge.description }}" class="btn btn-primary buttonSolveChallenge" type="button" data-toggle="modal" data-target=".modal-confirm-start-challenge" url_start="{{ path('player_challenge_start', {'challengeId': challenge.id}) }}">Solve it</button>
                                         </td>
                                     </tr>
                                 {% endfor %}
@@ -129,10 +129,12 @@
                     $(this).attr("data_challenge")
                 );
 
+                buttonStartChallenge.attr("url_start", $(this).attr("url_start"));
+
                 // setting onclick setting for the start button
                 buttonStartChallenge.attr(
                     'onclick',
-                    "window.location.href='{{ path('player_challenge_solving') }}'"
+                    "window.location.href='" + $(this).attr("url_start") + "'"
                 );
             });
         });

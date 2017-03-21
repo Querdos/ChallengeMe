@@ -91,6 +91,7 @@ player_challenge_solving:
     defaults: { _controller: PlayerBundle:Player:challengeSolving }
     methods:
         - GET
+        - POST
 
 ######################
 # SecurityController #

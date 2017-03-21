@@ -538,7 +538,23 @@ class PlayerController extends Controller
         // handling the form
         $formSubmitSolution->handleRequest($request);
         if ($formSubmitSolution->isSubmitted()) {
-            // TODO
+            // submit the solution
+            $check = $this
+                ->get('challengeme.manager.player')
+                ->checkSolution(
+                    $this->getUser()->getSolution(),
+                    $challenge,
+                    $this->getUser()->getTeam()
+                )
+            ;
+
+            // if the solution is correct
+            if (true === $check) {
+                // returning to challenges page
+                return $this->redirectToRoute('player_challenges_category', array('categoryId' => $challenge->getCategory()->getId()));
+            }
+
+            return $this->redirectToRoute('player_challenge_solving');
         }
 
         // returning data

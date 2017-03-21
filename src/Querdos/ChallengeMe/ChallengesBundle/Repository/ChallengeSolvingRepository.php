@@ -38,6 +38,7 @@ class ChallengeSolvingRepository extends EntityRepository
             ->join('challenge_solving.challenge', 'challenge')
 
             ->where('team = :team')
+            ->andWhere('challenge_solving.state = 0')
 
             ->setParameter('team', $team)
         ;
