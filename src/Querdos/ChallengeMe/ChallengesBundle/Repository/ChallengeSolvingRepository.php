@@ -48,4 +48,42 @@ class ChallengeSolvingRepository extends EntityRepository
             ->getOneOrNullResult()
         ;
     }
+
+    /**
+     * Retrieve the list of challenges solved by the given team
+     *
+     * @param Team $team
+     *
+     * @return array
+     */
+    public function getChallengesSolved(Team $team)
+    {
+        $query = $this
+            ->getEntityManager()
+            ->createQueryBuilder()
+
+            ->select('challenge.id')
+            ->from('ChallengesBundle:ChallengeSolving', 'chal_sol')
+
+            ->join('chal_sol.team', 'team')
+            ->join('chal_sol.challenge', 'challenge')
+
+            ->where('team = :team')
+            ->andWhere('chal_sol.state = 1') // state must be true
+
+            ->setParameter('team', $team)
+        ;
+
+        $results = $query
+            ->getQuery()
+            ->getArrayResult()
+        ;
+
+        $toReturn = array();
+        foreach ($results as $result) {
+            $toReturn[] = $result['id'];
+        }
+
+        return $toReturn;
+    }
 }

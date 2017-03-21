@@ -51,8 +51,11 @@
                                 {% for challenge in challenges %}
                                     <tr>
                                         <th>
-                                            {# TODO: Check if challenge has been completed #}
-                                            <i class="fa fa-close"></i>
+                                            {% if challenge.id in challengesSolved %}
+                                                <i class="fa fa-check" title="You have solved this challenge"></i>
+                                            {% else %}
+                                                <i class="fa fa-close" title="You have'nt solved this challenge yet"></i>
+                                            {% endif %}
                                         </th>
                                         <td>{{ challenge.title }}</td>
                                         <td>
@@ -69,8 +72,11 @@
                                         </td>
                                         <td>{{ challenge.author.username }}</td>
                                         <td>
-                                            {# TODO: Check if challenge has been completed #}
-                                            <button data_challenge="{{ challenge.description }}" class="btn btn-primary buttonSolveChallenge" type="button" data-toggle="modal" data-target=".modal-confirm-start-challenge" url_start="{{ path('player_challenge_start', {'challengeId': challenge.id}) }}">Solve it</button>
+                                            {% if challenge.id not in challengesSolved %}
+                                                <button data_challenge="{{ challenge.description }}" class="btn btn-primary buttonSolveChallenge" type="button" data-toggle="modal" data-target=".modal-confirm-start-challenge" url_start="{{ path('player_challenge_start', {'challengeId': challenge.id}) }}">Solve</button>
+                                            {% else %}
+                                                <button type="button" class="btn btn-success">Rate</button>
+                                            {% endif %}
                                         </td>
                                     </tr>
                                 {% endfor %}

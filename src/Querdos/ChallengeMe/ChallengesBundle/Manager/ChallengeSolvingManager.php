@@ -69,4 +69,16 @@ class ChallengeSolvingManager extends BaseManager
         // persisting
         $this->update($challengeSolving);
     }
+
+    /**
+     * Retrieve the list of challenges solved by the given team
+     *
+     * @param Team $team
+     *
+     * @return array
+     */
+    public function getChallengesSolved(Team $team)
+    {
+        return $this->repository->getChallengesSolved($team);
+    }
 }

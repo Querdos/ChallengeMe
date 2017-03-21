@@ -466,10 +466,17 @@ class PlayerController extends Controller
         // retrieving challenges for this category
         $challenges = $this->get('challengeme.manager.challenge')->readByCategory($category);
 
+        // retrieving challenges solved (ids)
+        $challengesSolved = $this
+            ->get('challengeme.manager.challenge_solving')
+            ->getChallengesSolved($this->getUser()->getTeam())
+        ;
+
         // returning data
         return array(
-            'category'      => $category,
-            'challenges'    => $challenges
+            'category'          => $category,
+            'challenges'        => $challenges,
+            'challengesSolved'  => $challengesSolved
         );
     }
 
