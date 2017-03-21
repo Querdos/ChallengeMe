@@ -13,3 +13,8 @@ services:
         class:      Querdos\ChallengeMe\ChallengesBundle\Entity\ChallengeSolving
         factory:    [ "@doctrine.orm.entity_manager", "getRepository" ]
         arguments:  [ "ChallengesBundle:ChallengeSolving" ]
+
+    challengeme.repository.rating:
+        class:      Querdos\ChallengeMe\ChallengesBundle\Entity\Rating
+        factory:    [ "@doctrine.orm.entity_manager", "getRepository" ]
+        arguments:  [ "ChallengesBundle:Rating" ]

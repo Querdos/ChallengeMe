@@ -18,3 +18,9 @@ services:
             - [ setEntityManager,   [ '@doctrine.orm.entity_manager'                ] ]
             - [ setCategoryManager, [ '@challengeme.manager.category'               ] ]
             - [ setChallengeManager,[ '@challengeme.manager.challenge'              ] ]
+
+    challengeme.manager.rating:
+        class: Querdos\ChallengeMe\ChallengesBundle\Manager\RatingManager
+        calls:
+            - [ setRepository,      [ '@challengeme.repository.challenge_solving'   ] ]
+            - [ setEntityManager,   [ '@doctrine.orm.entity_manager'                ] ]
