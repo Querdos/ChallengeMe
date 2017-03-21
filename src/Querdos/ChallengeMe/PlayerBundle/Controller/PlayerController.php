@@ -35,22 +35,29 @@ class PlayerController extends Controller
         $playerManager    = $this->get('challengeme.manager.player');
         $teamManager      = $this->get('challengeme.manager.team');
 
-        // retrieving challenges completion
-        $challengeCompletion = $this
-            ->get('challengeme.manager.challenge_solving')
-            ->getChallengesCompletionForTeam(
-                $this->getUser()->getTeam()
-            )
-        ;
+        $data['stats'] = [
+            'categoryCount'     => $categoryManager->count(),
+            'challengesCount'   => $challengeManager->count(),
+            'playerCount'       => $playerManager->count(),
+            'teamCount'         => $teamManager->count()
+        ];
+
+        // checking if the user has a team
+        if ($this->getUser()->hasTeam()) {
+            // retrieving challenges completion
+            $challengeCompletion = $this
+                ->get('challengeme.manager.challenge_solving')
+                ->getChallengesCompletionForTeam(
+                    $this->getUser()->getTeam()
+                )
+            ;
+
+            // updating data array
+            $data['challengeCompletion'] = $challengeCompletion;
+        }
 
         // returning array
-        return array(
-            'challengeCompletion'   => $challengeCompletion,
-            'categoryCount'         => $categoryManager->count(),
-            'challengesCount'       => $challengeManager->count(),
-            'playerCount'           => $playerManager->count(),
-            'teamCount'             => $teamManager->count()
-        );
+        return $data;
     }
 
     /**
@@ -115,7 +122,7 @@ class PlayerController extends Controller
         ;
 
         // adding to return
-        $dataToReturn['challengesCompletion'] = $challengesCompletion;
+        $data['challengesCompletion'] = $challengesCompletion;
 
         // creating the form only if the user has no team
         if (false === $this->getUser()->hasTeam()) {
@@ -150,7 +157,7 @@ class PlayerController extends Controller
             }
 
             // adding the form to the array to return
-            $dataToReturn['form'] = $form->createView();
+            $data['form'] = $form->createView();
         } else {
             // retrieving the user's team
             $team       = $this->getUser()->getTeam();
@@ -223,16 +230,16 @@ class PlayerController extends Controller
             $playerRoles = $this->get('challengeme.manager.player_role')->readByTeam($team);
 
             // the user has a team
-            $dataToReturn['team']           = $team;
-            $dataToReturn['formAvatar']     = $formAvatar->createView();
-            $dataToReturn['formPlayerRole'] = $formPlayerRole->createView();
-            $dataToReturn['avatarPath']     = $avatarPath;
-            $dataToReturn['demands']        = $demands;
-            $dataToReturn['playerRoles']    = $playerRoles;
+            $data['team']           = $team;
+            $data['formAvatar']     = $formAvatar->createView();
+            $data['formPlayerRole'] = $formPlayerRole->createView();
+            $data['avatarPath']     = $avatarPath;
+            $data['demands']        = $demands;
+            $data['playerRoles']    = $playerRoles;
         }
 
         // returning data
-        return $dataToReturn;
+        return $data;
     }
 
     /**
@@ -263,6 +270,11 @@ class PlayerController extends Controller
      */
     public function editDemandAction($demandId, $status)
     {
+        // the user has no team, redirecting
+        if (!$this->getUser()->hasTeam()) {
+            return $this->redirectToRoute('player_homepage');
+        }
+
         // retrieving the demand
         /** @var Demand $demand */
         $demand        = $this->get('challengeme.manager.demand')->readById($demandId);
@@ -293,6 +305,11 @@ class PlayerController extends Controller
      */
     public function clearDemandAction($demandId)
     {
+        // the user has no team, redirecting
+        if (!$this->getUser()->hasTeam()) {
+            return $this->redirectToRoute('player_homepage');
+        }
+
         // demand manager
         $demandManager = $this->get('challengeme.manager.demand');
 
@@ -318,6 +335,11 @@ class PlayerController extends Controller
      */
     public function removePlayerFromTeamAction($playerId)
     {
+        // the user has no team, redirecting
+        if (!$this->getUser()->hasTeam()) {
+            return $this->redirectToRoute('player_homepage');
+        }
+
         /** @var PlayerManager $playerManager */
         $playerManager = $this->get('challengeme.manager.player');
 
@@ -372,6 +394,11 @@ class PlayerController extends Controller
      */
     public function deletePlayerRoleAction($roleId)
     {
+        // the user has no team, redirecting
+        if (!$this->getUser()->hasTeam()) {
+            return $this->redirectToRoute('player_homepage');
+        }
+
         // checking that user is the leader
         if (false === $this->checkUserIsLeader($this->getUser())) {
             return $this->redirectToRoute('player_homepage');
@@ -530,6 +557,11 @@ class PlayerController extends Controller
      */
     public function challengeSolvingAction(Request $request)
     {
+        // the user has no team, redirecting
+        if (!$this->getUser()->hasTeam()) {
+            return $this->redirectToRoute('player_homepage');
+        }
+
         // retrieving challengesolving manager
         $challengeSolvingManager = $this->get('challengeme.manager.challenge_solving');
 

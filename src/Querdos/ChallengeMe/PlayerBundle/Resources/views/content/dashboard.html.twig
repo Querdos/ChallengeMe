@@ -20,22 +20,22 @@
     <div class="row tile_count">
         <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
             <span class="count_top"><i class="fa fa-user"></i> {{ "stats.total-users" | trans | desc("Total Categories") | meaning("Total users") }}</span>
-            <div class="count">{{ categoryCount }}</div>
+            <div class="count">{{ stats.categoryCount }}</div>
         </div>
 
         <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
             <span class="count_top"><i class="fa fa-user"></i> {{ "stats.total-admins" | trans | desc("Total Challenges") | meaning("Total admins") }}</span>
-            <div class="count">{{ challengesCount }}</div>
+            <div class="count">{{ stats.challengesCount }}</div>
         </div>
 
         <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
             <span class="count_top"><i class="fa fa-user"></i> {{ "stats.total-players" | trans | desc("Total Players") | meaning("Total Players") }}</span>
-            <div class="count">{{ playerCount }}</div>
+            <div class="count">{{ stats.playerCount }}</div>
         </div>
 
         <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
             <span class="count_top"><i class="fa fa-user"></i> {{ "stats.total-teams" | trans | desc("Total Teams") | meaning("Total Teams") }}</span>
-            <div class="count">{{ teamCount }}</div>
+            <div class="count">{{ stats.teamCount }}</div>
         </div>
 
         <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
@@ -52,6 +52,7 @@
 
     <div class="row">
         {# Challenges completion #}
+        {% if app.user.hasTeam %}
         <div class="col-md-6 col-sm-6 col-xs-12">
             <div class="x_panel tile fixed_height_320">
                 <div class="x_title">
@@ -146,6 +147,7 @@
                 </div>
             </div>
         </div>
+        {% endif %}
 
         {# To do list #}
         <div class="col-md-6 col-sm-6 col-xs-12">
