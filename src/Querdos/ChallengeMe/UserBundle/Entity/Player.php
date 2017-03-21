@@ -22,7 +22,6 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  */
 class Player extends BaseUser implements UserInterface, \Serializable
 {
-
     /**
      * @var Team
      */
@@ -49,6 +48,13 @@ class Player extends BaseUser implements UserInterface, \Serializable
      * @var PlayerRole
      */
     private $playerRole;
+
+    /**
+     * Allow the player to submit a solution for a given challenge
+     *
+     * @var string
+     */
+    private $solution;
 
     /**
      * Administrator constructor.
@@ -211,5 +217,24 @@ class Player extends BaseUser implements UserInterface, \Serializable
     public function setPlayerRole($playerRole)
     {
         $this->playerRole = $playerRole;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSolution()
+    {
+        return $this->solution;
+    }
+
+    /**
+     * @param string $solution
+     *
+     * @return $this
+     */
+    public function setSolution($solution)
+    {
+        $this->solution = $solution;
+        return $this;
     }
 }
