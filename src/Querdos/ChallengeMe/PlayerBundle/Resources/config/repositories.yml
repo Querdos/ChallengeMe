@@ -1,0 +1,5 @@
+services:
+    challengeme.repository.notification:
+        class:      Querdos\ChallengeMe\PlayerBundle\Repository\NotificationRepository
+        factory:    [ "@doctrine.orm.entity_manager", "getRepository" ]
+        arguments:  [ "PlayerBundle:Notification" ]

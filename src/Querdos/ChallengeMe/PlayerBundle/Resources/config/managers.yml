@@ -1,0 +1,6 @@
+services:
+    challengeme.manager.notification:
+        class:    Querdos\ChallengeMe\PlayerBundle\Manager\NotificationManager
+        calls:
+            - [ setEntityManager, [ '@doctrine.orm.entity_manager'          ] ]
+            - [ setRepository,    [ '@challengeme.repository.notification'  ] ]
