@@ -55,4 +55,14 @@ class TeamManager extends BaseManager
     {
         return $this->repository->teamRank($team);
     }
+
+    /**
+     * Return all teams ordered by their rank
+     *
+     * @return Team[]
+     */
+    public function getTeamsRanked()
+    {
+        return $this->repository->allRanked();
+    }
 }

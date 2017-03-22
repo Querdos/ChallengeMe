@@ -710,4 +710,18 @@ class PlayerController extends Controller
         // everything ok
         return new JsonResponse();
     }
+
+    /**
+     * @Template("PlayerBundle:content-players:player_teams_ranking.html.twig")
+     */
+    public function rankingAction()
+    {
+        // retrieving ranked team
+        $teamsRanked = $this->get('challengeme.manager.team')->getTeamsRanked();
+
+        // returning data
+        return array(
+            'teams' => $teamsRanked
+        );
+    }
 }

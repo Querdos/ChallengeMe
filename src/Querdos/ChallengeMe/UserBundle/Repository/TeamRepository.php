@@ -74,4 +74,27 @@ class TeamRepository extends EntityRepository
 
         return null;
     }
+
+    /**
+     * Return all teams ordered by their rank
+     *
+     * @return Team[]
+     */
+    public function allRanked()
+    {
+        $query = $this
+            ->getEntityManager()
+            ->createQueryBuilder()
+
+            ->select('team')
+            ->from('UserBundle:Team', 'team')
+
+            ->orderBy('team.points', 'DESC')
+        ;
+
+        return $query
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 }

@@ -99,6 +99,12 @@ player_rate_challenge:
     methods:
         - POST
 
+player_ranking:
+    path:     /teams/ranking
+    defaults: { _controller: PlayerBundle:Player:ranking }
+    methods:
+        - GET
+
 ######################
 # SecurityController #
 ######################
