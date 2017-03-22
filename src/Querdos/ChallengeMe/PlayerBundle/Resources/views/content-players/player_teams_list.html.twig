@@ -50,7 +50,7 @@
                                         <td>{{ team.name }}</td>
                                         <td>{{ team.leader.username }}</td>
                                         <td>{{ team.points }}</td>
-                                        <td>{# TODO: Team's rank #}</td>
+                                        <td>{{ ranks[team.id] }}</td>
                                         <td align="center">
                                             {% if not app.user.hasTeam %}
                                                 {% if team.id not in demands %}

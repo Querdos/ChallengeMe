@@ -99,11 +99,21 @@ class PlayerController extends Controller
         $teams      = $this->get('challengeme.manager.team')->all();
 
         // retrieving demands for the current user
-        $demands = $this->get('challengeme.manager.demand')->allForPlayer($this->getUser());
+        $demands    = $this->get('challengeme.manager.demand')->allForPlayer($this->getUser());
 
+        // retrieving ranks
+        $ranks = array();
+        $teamManager = $this->get('challengeme.manager.team');
+
+        foreach ($teams as $team) {
+            $ranks[$team->getId()] = $teamManager->getTeamRank($team);
+        }
+
+        // returning data
         return array(
             'teams'      => $teams,
-            'demands'    => $demands
+            'demands'    => $demands,
+            'ranks'      => $ranks
         );
     }
 
