@@ -478,9 +478,17 @@ class PlayerController extends Controller
 
         // retrieving categories
         $categories = $this->get('challengeme.manager.category')->all();
+        $challengeManager = $this->get('challengeme.manager.challenge');
+
+        // retrieving total challenges by categories
+        $countChallenges = array();
+        foreach ($categories as $category) {
+            $countChallenges[$category->getId()] = $challengeManager->count($category);
+        }
 
         return array(
-            'categories' => $categories
+            'categories'        => $categories,
+            'countChallenges'   => $countChallenges
         );
     }
 
