@@ -217,7 +217,7 @@ class AdministrationController extends Controller
     public function removeAdminAction($id, Request $request)
     {
         // Checking authorization
-        // TODO: Manage restriction in security_access_control.yml
+        // @mention Manage restriction in security_access_control.yml
         $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'You are not allowed to access this page');
 
         // Retrieving url and the referer
@@ -363,7 +363,7 @@ class AdministrationController extends Controller
     public function removeModeratorAction($id, Request $request)
     {
         // Checking authorization
-        // TODO: Manage restriction in security_access_control.yml
+        // @mention Manage restriction in security_access_control.yml
         $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'You are not allowed to access this page');
 
         // Retrieving url and the referer
@@ -509,7 +509,7 @@ class AdministrationController extends Controller
     public function removeRedactorAction($id, Request $request)
     {
         // Checking authorization
-        // TODO: Manage restriction in security_access_control.yml
+        // @mention Manage restriction in security_access_control.yml
         $this->denyAccessUnlessGranted('ROLE_MODERATOR', null, 'You are not allowed to access this page');
 
         // Retrieving url and the referer
@@ -552,7 +552,7 @@ class AdministrationController extends Controller
         // Resetting admin password
         if (false !== strstr($referer, $adminUrl)) {
             // Denying access
-            // TODO: Manage restriction in security_access_control.yml
+            // @mention Manage restriction in security_access_control.yml
             $this->denyAccessUnlessGranted('ROLE_ADMIN', null, "You are not allowed to access this page");
 
             // Retrieving the manager
@@ -571,7 +571,7 @@ class AdministrationController extends Controller
         } // Resetting moderator password
         else if (false !== strstr($referer, $moderatorUrl)) {
             // Denying access
-            // TODO: Manage restriction in security_access_control.yml
+            // @mention Manage restriction in security_access_control.yml
             $this->denyAccessUnlessGranted('ROLE_ADMIN', null, "You are not allowed to access this page");
 
             // Retrieving the manager
@@ -588,7 +588,7 @@ class AdministrationController extends Controller
         } // Resetting redactor password
         else if (false !== strstr($referer, $redactorUrl)) {
             // Denying access
-            // TODO: Manage restriction in security_access_control.yml
+            // @mention Manage restriction in security_access_control.yml
             $this->denyAccessUnlessGranted('ROLE_MODERATOR', null, "You are not allowed to access this page");
 
             // Retrieving the manager

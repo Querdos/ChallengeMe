@@ -114,7 +114,7 @@ class FormAuthenticator extends AbstractGuardAuthenticator
      */
     public function start(Request $request, AuthenticationException $authException = null)
     {
-        // TODO : Error message
+        // @mention Error message with the Player authenticator
         $url = $this->router->generate('player_login');
         return new RedirectResponse($url);
     }
