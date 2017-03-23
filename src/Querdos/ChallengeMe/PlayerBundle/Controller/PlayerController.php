@@ -45,8 +45,8 @@ class PlayerController extends Controller
             'teamCount'         => $teamManager->count(),
         ];
 
-        $data['notifications']       = $notificationManager->getForPlayer($this->getUser());
         $data['unreadNotifications'] = $notificationManager->getUnreadForPlayer($this->getUser());
+        $data['teamRank'] = $teamManager->getTeamRank($this->getUser()->getTeam());
 
         // checking if the user has a team
         if ($this->getUser()->hasTeam()) {
