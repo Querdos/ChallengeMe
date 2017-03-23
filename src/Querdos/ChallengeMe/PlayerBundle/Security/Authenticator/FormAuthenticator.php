@@ -15,11 +15,11 @@ use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\Exception\CustomUserMessageAuthenticationException;
+use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Security\Core\Tests\Encoder\PasswordEncoder;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Symfony\Component\Security\Guard\AbstractGuardAuthenticator;
-use Symfony\Component\VarDumper\VarDumper;
 
 class FormAuthenticator extends AbstractGuardAuthenticator
 {
@@ -70,7 +70,7 @@ class FormAuthenticator extends AbstractGuardAuthenticator
             return $userLoaded;
         }
 
-        throw new CustomUserMessageAuthenticationException($this->failMessage);
+        throw new CustomUserMessageAuthenticationException("Invalid credentials");
     }
 
     /**
@@ -105,6 +105,10 @@ class FormAuthenticator extends AbstractGuardAuthenticator
      */
     public function onAuthenticationFailure(Request $request, AuthenticationException $exception)
     {
+        // setting auth error
+        $request->getSession()->set(Security::AUTHENTICATION_ERROR, $exception);
+
+        // generating url
         $url = $this->router->generate('player_login');
         return new RedirectResponse($url);
     }
@@ -114,7 +118,6 @@ class FormAuthenticator extends AbstractGuardAuthenticator
      */
     public function start(Request $request, AuthenticationException $authException = null)
     {
-        // TODO @querdos: Error message with the Player authenticator
         $url = $this->router->generate('player_login');
         return new RedirectResponse($url);
     }

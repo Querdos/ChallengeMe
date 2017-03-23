@@ -94,7 +94,7 @@ class PlayerManager extends BaseManager
     {
         if (null === ($playerData = $this->repository->getPlayerData($username))){
             throw new UsernameNotFoundException(
-                "$username not in database"
+                "Invalid credentials"
             );
         }
 
