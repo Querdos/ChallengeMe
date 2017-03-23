@@ -206,7 +206,7 @@
 {% endblock main_content %}
 
 {% block javascript %}
-    <!-- compose -->
+    {#  compose   #}
     <div class="compose col-md-6 col-xs-12">
         <div class="compose-header">
             New Message
@@ -294,7 +294,7 @@
             <button id="send" class="btn btn-sm btn-success" type="button">Send</button>
         </div>
     </div>
-    <!-- /compose -->
+    {#  /compose   #}
 
     {% javascripts
         '@jquery_js'
@@ -307,7 +307,9 @@
         <script src="{{ asset_url }}"></script>
     {% endjavascripts %}
 
-    <!-- bootstrap-wysiwyg -->
+    {# TODO @querdos migrate javascript to separate files (player_team_ranking) #}
+
+    {#  bootstrap-wysiwyg   #}
     <script>
         $(document).ready(function() {
             function initToolbarBootstrapBindings() {
@@ -371,15 +373,15 @@
             prettyPrint();
         });
     </script>
-    <!-- /bootstrap-wysiwyg -->
+    {#  /bootstrap-wysiwyg   #}
 
-    <!-- compose -->
+    {#  compose   #}
     <script>
         $('#compose, .compose-close').click(function(){
             $('.compose').slideToggle();
         });
     </script>
-    <!-- /compose -->
+    {#  /compose   #}
 
     <script>
         function showMessage(author, content, sent) {

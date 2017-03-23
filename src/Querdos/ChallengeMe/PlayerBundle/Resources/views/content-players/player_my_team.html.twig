@@ -519,6 +519,8 @@
         <script src="{{ asset_url }}"></script>
     {% endjavascripts %}
 
+    {# TODO @querdos migrate javascript to separate files (player_team_my_team) #}
+
     {# Script to launch only if the user has no team #}
     {% if app.user.team is null %}
         <script>
@@ -577,6 +579,7 @@
         {% endif %}
     </script>
 
+    {# Morris #}
     <script>
         $(function() {
             Morris.Bar({
