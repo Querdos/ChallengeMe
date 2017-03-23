@@ -45,9 +45,10 @@ class Notification
      */
     public function __construct($content = "", Player $player = null)
     {
-        $this->content = $content;
-        $this->player = $player;
-        $this->state = false;
+        $this->content  = $content;
+        $this->player   = $player;
+        $this->state    = false;
+        $this->created  = new \DateTime();
     }
 
     /**

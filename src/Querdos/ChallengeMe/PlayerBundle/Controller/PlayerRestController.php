@@ -36,12 +36,11 @@ class PlayerRestController extends FOSRestController
     }
 
     /**
-     * TODO @querdos: API DOC
-     *
      * @param int $demandId
      *
      * @throws \Exception
      */
+    // TODO @querdos: API DOC
     public function acceptDemandAction($demandId)
     {
         /** @var DemandManager $demandManager */
@@ -74,10 +73,9 @@ class PlayerRestController extends FOSRestController
     }
 
     /**
-     * TODO @querdos: API DOC
-     *
      * @param $demandId
      */
+    // TODO @querdos: API DOC
     public function declineDemandAction($demandId)
     {
         /** @var DemandManager $demandManager */
@@ -94,12 +92,11 @@ class PlayerRestController extends FOSRestController
     }
 
     /**
-     * TODO @querdos: API DOC
-     *
      * @param int $demandId
      *
      * @throws \Exception
      */
+    // TODO @querdos: API DOC
     public function clearDemandAction($demandId)
     {
         /** @var DemandManager $demandManager */
@@ -124,12 +121,11 @@ class PlayerRestController extends FOSRestController
     }
 
     /**
-     * TODO @querdos: API DOC
-     *
      * @param $playerId
      *
      * @throws \Exception
      */
+    // TODO @querdos: API DOC
     public function removePlayerFromTeamAction($playerId)
     {
         /** @var PlayerManager $playerManager */

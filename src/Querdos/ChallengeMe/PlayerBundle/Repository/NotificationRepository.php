@@ -41,6 +41,56 @@ class NotificationRepository extends EntityRepository
             ->getQuery()
             ->getResult()
         ;
+    }
 
+    public function getUnreadForPlayer(Player $player)
+    {
+        $query = $this
+            ->getEntityManager()
+            ->createQueryBuilder()
+
+            ->select('notification')
+            ->from('PlayerBundle:Notification', 'notification')
+
+            ->join('notification.player', 'player')
+            ->where('player = :player')
+            ->andWhere('notification.state = 0')
+
+            ->setParameter('player', $player)
+        ;
+
+        return $query
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    /**
+     * Return the count of unread notifications for the given player
+     *
+     * @param Player $player
+     *
+     * @return int
+     */
+    public function getUnreadCountForPlayer(Player $player)
+    {
+        $query = $this
+            ->getEntityManager()
+            ->createQueryBuilder()
+
+            ->select('COUNT(notification)')
+            ->from('PlayerBundle:Notification', 'notification')
+
+            ->join('notification.player', 'player')
+            ->where('player = :player')
+            ->andWhere('notification.state = 0')
+
+            ->setParameter('player', $player)
+        ;
+
+        return $query
+            ->getQuery()
+            ->getSingleScalarResult()
+        ;
     }
 }

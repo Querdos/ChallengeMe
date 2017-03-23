@@ -105,6 +105,12 @@ player_ranking:
     methods:
         - GET
 
+player_set_notification_red:
+    path:     /notification/set-read
+    defaults: { _controller: PlayerBundle:Player:setNotificationRed }
+    methods:
+        - POST
+
 ######################
 # SecurityController #
 ######################

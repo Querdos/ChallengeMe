@@ -2,7 +2,9 @@
 
 namespace Querdos\ChallengeMe\PlayerBundle\Controller;
 
+use Querdos\ChallengeMe\ChallengesBundle\Entity\Category;
 use Querdos\ChallengeMe\ChallengesBundle\Entity\Rating;
+use Querdos\ChallengeMe\PlayerBundle\Entity\Notification;
 use Querdos\ChallengeMe\PlayerBundle\Form\PlayerRoleType;
 use Querdos\ChallengeMe\PlayerBundle\Form\SolveChallengeType;
 use Querdos\ChallengeMe\PlayerBundle\Form\TeamType;
@@ -19,7 +21,6 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\VarDumper\VarDumper;
 
 class PlayerController extends Controller
 {
@@ -31,17 +32,21 @@ class PlayerController extends Controller
     public function indexAction()
     {
         // retreiving managers
-        $categoryManager  = $this->get('challengeme.manager.category');
-        $challengeManager = $this->get('challengeme.manager.challenge');
-        $playerManager    = $this->get('challengeme.manager.player');
-        $teamManager      = $this->get('challengeme.manager.team');
+        $categoryManager     = $this->get('challengeme.manager.category');
+        $challengeManager    = $this->get('challengeme.manager.challenge');
+        $playerManager       = $this->get('challengeme.manager.player');
+        $teamManager         = $this->get('challengeme.manager.team');
+        $notificationManager = $this->get('challengeme.manager.notification');
 
         $data['stats'] = [
             'categoryCount'     => $categoryManager->count(),
             'challengesCount'   => $challengeManager->count(),
             'playerCount'       => $playerManager->count(),
-            'teamCount'         => $teamManager->count()
+            'teamCount'         => $teamManager->count(),
         ];
+
+        $data['notifications']       = $notificationManager->getForPlayer($this->getUser());
+        $data['unreadNotifications'] = $notificationManager->getUnreadForPlayer($this->getUser());
 
         // checking if the user has a team
         if ($this->getUser()->hasTeam()) {
@@ -68,8 +73,11 @@ class PlayerController extends Controller
      */
     public function profileAction()
     {
-        return array(
+        // retrieving the notification manager
+        $notificationManager = $this->get('challengeme.manager.notification');
 
+        return array(
+            'unreadNotifications'   => $notificationManager->getUnreadForPlayer($this->getUser())
         );
     }
 
@@ -81,10 +89,12 @@ class PlayerController extends Controller
     public function playersListAction()
     {
         // retrieving players
-        $players    = $this->get('challengeme.manager.player')->all();
+        $players             = $this->get('challengeme.manager.player')->all();
+        $notificationManager = $this->get('challengeme.manager.notification');
 
         return array(
-            'players'    => $players
+            'players'               => $players,
+            'unreadNotifications'   => $notificationManager->getUnreadForPlayer($this->getUser())
         );
     }
 
@@ -105,15 +115,20 @@ class PlayerController extends Controller
         $ranks = array();
         $teamManager = $this->get('challengeme.manager.team');
 
+        /** @var Team $team */
         foreach ($teams as $team) {
             $ranks[$team->getId()] = $teamManager->getTeamRank($team);
         }
 
+        // retrieving notifications manager
+        $notificationManager = $this->get('challengeme.manager.notification');
+
         // returning data
         return array(
-            'teams'      => $teams,
-            'demands'    => $demands,
-            'ranks'      => $ranks
+            'teams'                 => $teams,
+            'demands'               => $demands,
+            'ranks'                 => $ranks,
+            'unreadNotifications'   => $notificationManager->getUnreadForPlayer($this->getUser())
         );
     }
 
@@ -126,6 +141,10 @@ class PlayerController extends Controller
      */
     public function myTeamAction(Request $request)
     {
+        // retrieving notification manager
+        $notificationManager         = $this->get('challengeme.manager.notification');
+        $data['unreadNotifications'] = $notificationManager->getUnreadForPlayer($this->getUser());
+
         // creating the form only if the user has no team
         if (false === $this->getUser()->hasTeam()) {
             // object for the team to be eventually created
@@ -487,18 +506,23 @@ class PlayerController extends Controller
         }
 
         // retrieving categories
-        $categories = $this->get('challengeme.manager.category')->all();
+        $categories       = $this->get('challengeme.manager.category')->all();
         $challengeManager = $this->get('challengeme.manager.challenge');
 
         // retrieving total challenges by categories
         $countChallenges = array();
+        /** @var Category $category */
         foreach ($categories as $category) {
             $countChallenges[$category->getId()] = $challengeManager->count($category);
         }
 
+        // retrieving notification manager
+        $notificationManager = $this->get('challengeme.manager.notification');
+
         return array(
-            'categories'        => $categories,
-            'countChallenges'   => $countChallenges
+            'categories'            => $categories,
+            'countChallenges'       => $countChallenges,
+            'unreadNotifications'   => $notificationManager->getUnreadForPlayer($this->getUser())
         );
     }
 
@@ -511,11 +535,11 @@ class PlayerController extends Controller
      */
     public function challengesByCategoryAction($categoryId)
     {
+        // retrieving challenge solving manager
+        $challengeSolvingManager = $this->get('challengeme.manager.challenge_solving');
+
         // checking if a challenge is in progress for the current team
         if (null !== $this->getUser()->getTeam()) {
-            // retrieving challenge solving manager
-            $challengeSolvingManager = $this->get('challengeme.manager.challenge_solving');
-
             if (null !== $challengeSolvingManager->getChallengeInProgress($this->getUser()->getTeam())) {
                 return $this->redirectToRoute('player_challenge_solving');
             }
@@ -547,13 +571,18 @@ class PlayerController extends Controller
             ->getChallengesSolved($this->getUser()->getTeam())
         ;
 
+        // retrieving notification manager
+        $notificationManager = $this->get('challengeme.manager.notification');
+
         // returning data
         return array(
-            'category'          => $category,
-            'challenges'        => $challenges,
-            'challengesSolved'  => $challengesSolved,
-            'notes'             => $notes,
-            'validations'       => $validations
+            'category'              => $category,
+            'challenges'            => $challenges,
+            'challengesSolved'      => $challengesSolved,
+            'notes'                 => $notes,
+            'validations'           => $validations,
+            'notifications'         => $notificationManager->getForPlayer($this->getUser()),
+            'unreadNotifications'   => $notificationManager->getUnreadForPlayer($this->getUser())
         );
     }
 
@@ -644,6 +673,15 @@ class PlayerController extends Controller
 
             // if the solution is correct
             if (true === $check) {
+                // send a notification for the team
+                $this
+                    ->get('challengeme.manager.notification')
+                    ->sendForTeam(
+                        $this->getUser()->getTeam(),
+                        "Congratulations, your team has solved a new challenge (" . $challenge->getTitle() .")!"
+                    )
+                ;
+
                 // returning to challenges page
                 return $this->redirectToRoute('player_challenges_category', array('categoryId' => $challenge->getCategory()->getId()));
             }
@@ -651,12 +689,17 @@ class PlayerController extends Controller
             return $this->redirectToRoute('player_challenge_solving');
         }
 
+        // retrieving notifications manager
+        $notificationManager = $this->get('challengeme.manager.notification');
+
         // returning data
         return array(
-            'challenge'         => $challenge,
-            'challengeSolve'    => $challengeSolving,
-            'formSolution'      => $formSubmitSolution->createView(),
-            'validations'       => $validations
+            'challenge'             => $challenge,
+            'challengeSolve'        => $challengeSolving,
+            'formSolution'          => $formSubmitSolution->createView(),
+            'validations'           => $validations,
+            'notifications'         => $notificationManager->getForPlayer($this->getUser()),
+            'unreadNotifications'   => $notificationManager->getUnreadForPlayer($this->getUser())
         );
     }
 
@@ -717,11 +760,43 @@ class PlayerController extends Controller
     public function rankingAction()
     {
         // retrieving ranked team
-        $teamsRanked = $this->get('challengeme.manager.team')->getTeamsRanked();
+        $teamsRanked         = $this->get('challengeme.manager.team')->getTeamsRanked();
+        $notificationManager = $this->get('challengeme.manager.notification');
 
         // returning data
         return array(
-            'teams' => $teamsRanked
+            'teams'                 => $teamsRanked,
+            'notifications'         => $notificationManager->getForPlayer($this->getUser()),
+            'unreadNotifications'   => $notificationManager->getUnreadForPlayer($this->getUser())
         );
+    }
+
+    /**
+     * @param Request $request
+     *
+     * @return JsonResponse
+     * @throws \Exception
+     */
+    public function setNotificationRedAction(Request $request)
+    {
+        // retrieving parameter
+        $notificationId = $request->request->get('notificationId');
+
+        // retrieving the corresponding notification
+        $notificationManager = $this->get('challengeme.manager.notification');
+        /** @var Notification $notification */
+        $notification        = $notificationManager->readById($notificationId);
+
+        // checking that the user is correct
+        if ($notification->getPlayer()->getUsername() !== $this->getUser()->getUsername()) {
+            throw new \Exception('You are not allowed to perform this operation');
+        }
+
+        // changing the state and updating
+        $notification->setState(true);
+        $notificationManager->update($notification);
+
+        // everything ok
+        return new JsonResponse();
     }
 }

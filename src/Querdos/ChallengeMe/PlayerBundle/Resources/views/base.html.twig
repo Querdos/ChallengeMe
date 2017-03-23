@@ -17,6 +17,7 @@
                 '@bootstrap_css'
                 '@fontAwesome_css'
                 '@customTheme_css'
+                '@pnotify_css'
 
                 filter='cssrewrite'
             %}
@@ -46,7 +47,40 @@
             </div>
         </div>
 
-        {% block javascript %}{% endblock javascript %}
+        {% block javascript %}
+
+            {# Global scripts #}
+            {% javascripts '@pnotify_js' %}
+                <script src="{{ asset_url }}"></script>
+            {% endjavascripts %}
+
+            {# Unread notifications for the player #}
+            <script>
+                $(document).ready(function() {
+                    {% for notification in unreadNotifications %}
+                    new PNotify({
+                        title: 'New notification',
+                        text: '{{ notification.content }}',
+                        after_close: function(notice, timer_hide) {
+                            // sending ajax request
+                            $.ajax({
+                                url:    "{{ path('player_set_notification_red') }}",
+                                type:   "POST",
+                                data:   "notificationId=" + {{ notification.id }}
+                            })
+                        },
+                        type: 'info',
+                        styling: 'bootstrap3',
+                        hide: false,
+                        buttons: {
+                            sticker: false
+                        }
+                    });
+                    {% endfor %}
+                });
+            </script>
+
+        {% endblock javascript %}
     </body>
 {% endblock body %}
 </html>

@@ -5,9 +5,9 @@
     {{ parent() }}
 
     {% stylesheets
-    '@iCheck'
-    '@bootstrap_progressBar'
-    '@jVectorMap'
+        '@iCheck'
+        '@bootstrap_progressBar'
+        '@jVectorMap'
 
     filter='cssrewrite'
     %}
@@ -162,11 +162,11 @@
 
 {% block javascript %}
     {% javascripts
-    '@jquery_js'
-    '@bootstrap_js'
-    '@fastclick_js'
-    '@customTheme_js'
-    '@iCheck_js'
+        '@jquery_js'
+        '@bootstrap_js'
+        '@fastclick_js'
+        '@customTheme_js'
+        '@iCheck_js'
     %}
     <script src="{{ asset_url }}"></script>
     {% endjavascripts %}
