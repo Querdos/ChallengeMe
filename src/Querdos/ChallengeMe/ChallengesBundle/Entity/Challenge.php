@@ -6,6 +6,9 @@ use Querdos\ChallengeMe\UserBundle\Entity\Administrator;
 
 /**
  * Challenge
+ *
+ * TODO @querdos Add resources entity to a challenge
+ * TODO @querdos Separate the solution in a different table
  */
 class Challenge
 {
