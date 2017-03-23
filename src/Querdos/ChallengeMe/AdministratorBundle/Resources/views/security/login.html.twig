@@ -23,7 +23,7 @@
                         <h1>{{ "title" | trans | desc("Administration") | meaning("Title") }}</h1>
                         {% if error %}
                             <div class="alert alert-danger alert-dismissible fade in" role="alert">
-                                {{ error.messageKey|trans(error.messageData, 'security') }}
+                                {{ error }}
                             </div>
                         {% endif %}
                         <div>
