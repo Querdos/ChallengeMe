@@ -7,6 +7,7 @@
 
 namespace Querdos\ChallengeMe\AdministratorBundle\Form;
 
+use Querdos\ChallengeMe\UserBundle\Entity\InfoUser;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
@@ -88,7 +89,7 @@ class InfoUserType extends AbstractType
     {
         $resolver
             ->setDefaults(array(
-                'data_class'      => 'Querdos\ChallengeMe\UserBundle\Entity\InfoUser',
+                'data_class'      => InfoUser::class,
                 'csrf_protection' => true,
                 'csrf_field_name' => '_token',
                 'csrf_token_id'   => 'administrator_token',

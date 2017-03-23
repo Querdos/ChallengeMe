@@ -9,6 +9,7 @@
 namespace Querdos\ChallengeMe\AdministratorBundle\Form;
 
 use Ivory\CKEditorBundle\Form\Type\CKEditorType;
+use Querdos\ChallengeMe\ChallengesBundle\Entity\Challenge;
 use Querdos\ChallengeMe\ChallengesBundle\Manager\CategoryManager;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
@@ -132,7 +133,7 @@ class ChallengeType extends AbstractType
     {
         $resolver
             ->setDefaults(array(
-                'data_class'        => 'Querdos\ChallengeMe\ChallengesBundle\Entity\Challenge',
+                'data_class'        => Challenge::class,
                 'csrf_protection'   => true,
                 'csrf_field_name'   => '_token',
                 'csrf_token_id'     => 'administrator_token'
