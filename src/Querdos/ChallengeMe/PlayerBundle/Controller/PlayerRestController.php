@@ -22,7 +22,7 @@ use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Symfony\Component\VarDumper\VarDumper;
 
 /*
- * @mention Finish authentication with OAuth before creating web services
+ * TODO @querdos: Finish authentication with OAuth before creating web services
  */
 class PlayerRestController extends FOSRestController
 {
@@ -36,7 +36,7 @@ class PlayerRestController extends FOSRestController
     }
 
     /**
-     * @mention API DOC
+     * TODO @querdos: API DOC
      *
      * @param int $demandId
      *
@@ -74,7 +74,7 @@ class PlayerRestController extends FOSRestController
     }
 
     /**
-     * @mention API DOC
+     * TODO @querdos: API DOC
      *
      * @param $demandId
      */
@@ -94,7 +94,7 @@ class PlayerRestController extends FOSRestController
     }
 
     /**
-     * @mention API DOC
+     * TODO @querdos: API DOC
      *
      * @param int $demandId
      *
@@ -124,7 +124,7 @@ class PlayerRestController extends FOSRestController
     }
 
     /**
-     * @mention API DOC
+     * TODO @querdos: API DOC
      *
      * @param $playerId
      *
@@ -147,6 +147,6 @@ class PlayerRestController extends FOSRestController
             throw new \Exception("You are not allowed to perform this operation");
         }
 
-        // @mention Finish the removePlayerFromTeam method
+        // TODO @querdos: Finish the removePlayerFromTeam method
     }
 }

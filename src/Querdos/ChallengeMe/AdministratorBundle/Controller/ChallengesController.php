@@ -134,7 +134,7 @@ class ChallengesController extends Controller
     public function removeCategoryAction($id, Request $request)
     {
         // Checking authorization
-        // @mention Manage restriction in security_access_control.yml
+        // TODO @querdos: Manage restriction in security_access_control.yml
         $this->denyAccessUnlessGranted('ROLE_MODERATOR', null, 'You are not allowed to access this page');
 
         // Retrieving url and the referer

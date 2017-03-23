@@ -13,7 +13,7 @@ namespace Querdos\ChallengeMe\UserBundle\Entity;
  */
 class Role
 {
-    /** Super admin role (TODO: See how it can be differed from normal admin) */
+    /** Super admin role (TODO @querdos: See how it can be differed from normal admin) */
     const ROLE_SUPER_ADMIN  = "ROLE_SUPER_ADMIN";
     /** Administrator role */
     const ROLE_ADMIN        = "ROLE_ADMIN";
