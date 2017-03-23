@@ -50,7 +50,12 @@
         {% block javascript %}
 
             {# Global scripts #}
-            {% javascripts '@pnotify_js' %}
+            {% javascripts
+                '@jquery_js'
+                '@bootstrap_js'
+                '@pnotify_js'
+                '@nprogress_js'
+            %}
                 <script src="{{ asset_url }}"></script>
             {% endjavascripts %}
 

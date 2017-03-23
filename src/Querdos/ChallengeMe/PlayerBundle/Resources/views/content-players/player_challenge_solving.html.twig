@@ -116,53 +116,23 @@
 
 {% block javascript %}
     {% javascripts
-        '@jquery_js'
-        '@bootstrap_js'
         '@fastclick_js'
-        '@customTheme_js'
         '@highlightjs_js'
         '@moment_js'
+        '@customTheme_js'
+
+
+    '@challenge_solving_js'
     %}
-    <script src="{{ asset_url }}"></script>
+        <script src="{{ asset_url }}"></script>
     {% endjavascripts %}
-
-    {# TODO @querdos migrate javascript to separate files (player_challenge_solving) #}
-
-    {# Script for hightlight #}
-    <script>
-        hljs.initHighlightingOnLoad();
-    </script>
 
     {# Script for the counter #}
     <script>
         $(document).ready(function() {
-            var timeSpent   = $("#chronotime");
-            var end;
-
-            function elapsed(end) {
-                var start = moment("{{ challengeSolve.dateStart|date("m-d-y H:i:s") }}", "MM-DD-YY HH:mm:ss");
-
-                var diff  = end.diff(start, 'seconds');
-                var seconds = diff - Math.floor(diff/60)*60;
-                var minutes = Math.floor(diff/60) - Math.floor((Math.floor(diff/60)/60))*60;
-                var hours   = Math.floor(Math.floor(diff/60)/60);
-
-                var toString = "";
-                if (hours > 0) {
-                    toString += hours + " h, ";
-                }
-
-                if (minutes > 0) {
-                    toString += minutes + " min, ";
-                }
-
-                toString += seconds + " sec";
-                return toString;
-            }
-
             setInterval(function() {
                 end = moment();
-                timeSpent.html(elapsed(end));
+                timeSpent.html(elapsed("{{ challengeSolve.dateStart|date("m-d-y H:i:s") }}", end));
             }, 1000);
         });
     </script>

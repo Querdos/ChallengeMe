@@ -86,9 +86,9 @@
 {% endblock main_content %}
 
 {% block javascript %}
+    {{ parent() }}
+
     {% javascripts
-        '@jquery_js'
-        '@bootstrap_js'
         '@fastclick_js'
         '@customTheme_js'
     %}
