@@ -7,6 +7,7 @@
 
 namespace Querdos\ChallengeMe\AdministratorBundle\Form;
 
+use Querdos\ChallengeMe\UserBundle\Entity\Administrator;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
@@ -82,7 +83,7 @@ class AdministratorType extends AbstractType
     {
         $resolver
             ->setDefaults(array(
-                'data_class'        => 'Querdos\ChallengeMe\UserBundle\Entity\Administrator',
+                'data_class'        => Administrator::class,
                 'csrf_protection'   => true,
                 'csrf_field_name'   => '_token',
                 'csrf_token_id'     => 'administrator_token',

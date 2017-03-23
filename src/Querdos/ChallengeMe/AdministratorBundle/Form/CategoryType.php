@@ -8,6 +8,7 @@
 
 namespace Querdos\ChallengeMe\AdministratorBundle\Form;
 
+use Querdos\ChallengeMe\ChallengesBundle\Entity\Category;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -54,7 +55,7 @@ class CategoryType extends AbstractType
     {
         $resolver
             ->setDefaults(array(
-                'data_class' => 'Querdos\ChallengeMe\ChallengesBundle\Entity\Category',
+                'data_class' => Category::class,
                 'csrf_protection' => true,
                 'csrf_field_name' => '_token',
                 'csrf_token_id' => 'administrator_token'
