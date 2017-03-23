@@ -2,10 +2,10 @@ services:
     challengeme.manager.administrator:
         class: Querdos\ChallengeMe\UserBundle\Manager\AdministratorManager
         calls:
-            - [ setRepository,      ['@challengeme.repository.administrator'] ]
-            - [ setPasswordEncoder, ['@security.password_encoder'] ]
-            - [ setEntityManager,   ['@doctrine.orm.entity_manager'] ]
-            - [ setRoleManager,     ['@challengeme.manager.role'] ]
+            - [ setRepository,      [ '@challengeme.repository.administrator' ] ]
+            - [ setPasswordEncoder, [ '@security.password_encoder' ] ]
+            - [ setEntityManager,   [ '@doctrine.orm.entity_manager' ] ]
+            - [ setRoleManager,     [ '@challengeme.manager.role' ] ]
 
     challengeme.manager.personal_information:
         class: Querdos\ChallengeMe\UserBundle\Manager\PersonalInformationManager
@@ -36,19 +36,21 @@ services:
     challengeme.manager.team:
         class: Querdos\ChallengeMe\UserBundle\Manager\TeamManager
         calls:
-            - [ setRepository,      [ '@challengeme.repository.team' ]]
-            - [ setEntityManager,   [ '@doctrine.orm.entity_manager' ]]
+            - [ setRepository,          [ '@challengeme.repository.team' ]]
+            - [ setEntityManager,       [ '@doctrine.orm.entity_manager' ]]
+            - [ setNotificationManager, [ '@challengeme.manager.notification' ]]
 
     challengeme.manager.demand:
         class: Querdos\ChallengeMe\UserBundle\Manager\DemandManager
         calls:
-            - [ setRepository,      [ '@challengeme.repository.demand'  ]]
-            - [ setEntityManager,   [ '@doctrine.orm.entity_manager'    ]]
-            - [ setPlayerManager,   [ '@challengeme.manager.demand'     ]]
+            - [ setRepository,          [ '@challengeme.repository.demand'  ]]
+            - [ setEntityManager,       [ '@doctrine.orm.entity_manager'    ]]
+            - [ setPlayerManager,       [ '@challengeme.manager.demand'     ]]
+            - [ setNotificationManager, [ '@challengeme.manager.notification' ]]
 
     challengeme.manager.player_role:
         class: Querdos\ChallengeMe\UserBundle\Manager\PlayerRoleManager
         calls:
-            - [ setRepository,      [ '@challengeme.repository.player_role' ]]
-            - [ setEntityManager,   [ '@doctrine.orm.entity_manager'    ]]
+            - [ setRepository,          [ '@challengeme.repository.player_role' ]]
+            - [ setEntityManager,       [ '@doctrine.orm.entity_manager'    ]]
 

@@ -8,11 +8,17 @@
 
 namespace Querdos\ChallengeMe\UserBundle\Manager;
 
-
+use Querdos\ChallengeMe\PlayerBundle\Entity\Notification;
+use Querdos\ChallengeMe\PlayerBundle\Manager\NotificationManager;
 use Querdos\ChallengeMe\UserBundle\Entity\Team;
 
 class TeamManager extends BaseManager
 {
+    /**
+     * @var NotificationManager $notificationManager
+     */
+    private $notificationManager;
+
     /**
      * Create a team in database
      *
@@ -32,6 +38,48 @@ class TeamManager extends BaseManager
         // persisting the leader
         $this->entityManager->persist($team->getLeader());
         $this->entityManager->flush($team->getLeader());
+
+        // sending a notification for the leader
+        // TODO @querdos: Manage translation for the team creation (notification)
+        $this->notificationManager->create(
+            new Notification(
+                "Your team has been successfully created",
+                $team->getLeader()
+            )
+        );
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @param Team $team
+     */
+    public function update($team)
+    {
+        // extending parent method
+        parent::update($team);
+
+        // checking if the team's rank is in the top 3
+        if ($rank = $this->getTeamRank($team) <= 3) {
+            $text = "";
+            // TODO @querdos: Manage translation for a the ranking (notification)
+            switch ($rank) {
+                case 1:
+                    $text = "You're team is the first on the ranking board!";
+                    break;
+                case 2:
+                    $text = "You're team is the second on the ranking board!";
+                    break;
+                case 3:
+                    $text = "You're team is the third on the ranking board!";
+                    break;
+            }
+
+            // creating the notification for each player
+            $this->notificationManager->create(
+                new Notification($text, $team->getLeader())
+            );
+        }
     }
 
     /**
@@ -64,5 +112,13 @@ class TeamManager extends BaseManager
     public function getTeamsRanked()
     {
         return $this->repository->allRanked();
+    }
+
+    /**
+     * @param NotificationManager $notificationManager
+     */
+    public function setNotificationManager($notificationManager)
+    {
+        $this->notificationManager = $notificationManager;
     }
 }
