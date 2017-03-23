@@ -18,7 +18,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Symfony\Component\VarDumper\VarDumper;
 
 class ChallengesController extends Controller
 {
@@ -133,12 +132,8 @@ class ChallengesController extends Controller
      */
     public function removeCategoryAction($id, Request $request)
     {
-        // Checking authorization
-        // TODO @querdos: Manage restriction in security_access_control.yml
-        $this->denyAccessUnlessGranted('ROLE_MODERATOR', null, 'You are not allowed to access this page');
-
         // Retrieving url and the referer
-        $url = $this->generateUrl('challenges_category_management');
+        $url     = $this->generateUrl('challenges_category_management');
         $referer = $request->server->get('HTTP_REFERER');
 
         // If not from adminsManagement, redirecting without doing anything
@@ -162,8 +157,6 @@ class ChallengesController extends Controller
      * @param $category_id
      *
      * @return array
-     *
-     * @internal param $category_name
      */
     public function categoryDetailsAction($category_id)
     {

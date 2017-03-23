@@ -216,12 +216,10 @@ class AdministrationController extends Controller
      */
     public function removeAdminAction($id, Request $request)
     {
-        // Checking authorization
-        // TODO @querdos: Manage restriction in security_access_control.yml (removeAdminAction)
         $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'You are not allowed to access this page');
 
         // Retrieving url and the referer
-        $url = $this->generateUrl('administration_adminsManagement');
+        $url     = $this->generateUrl('administration_adminsManagement');
         $referer = $request->server->get('HTTP_REFERER');
 
         // If not from adminsManagement, redirecting without doing anything
@@ -362,10 +360,6 @@ class AdministrationController extends Controller
      */
     public function removeModeratorAction($id, Request $request)
     {
-        // Checking authorization
-        // TODO @querdos: Manage restriction in security_access_control.yml (removeModeratorAction)
-        $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'You are not allowed to access this page');
-
         // Retrieving url and the referer
         $url = $this->generateUrl('administration_moderatorsManagement');
         $referer = $request->server->get('HTTP_REFERER');
@@ -508,10 +502,6 @@ class AdministrationController extends Controller
      */
     public function removeRedactorAction($id, Request $request)
     {
-        // Checking authorization
-        // TODO @querdos: Manage restriction in security_access_control.yml (removeRedactorAction)
-        $this->denyAccessUnlessGranted('ROLE_MODERATOR', null, 'You are not allowed to access this page');
-
         // Retrieving url and the referer
         $url = $this->generateUrl('administration_redactorsManagement');
         $referer = $request->server->get('HTTP_REFERER');
@@ -545,16 +535,12 @@ class AdministrationController extends Controller
         $referer = $request->server->get('HTTP_REFERER');
 
         // Generating url
-        $adminUrl = $this->generateUrl('administration_adminsManagement');
+        $adminUrl     = $this->generateUrl('administration_adminsManagement');
         $moderatorUrl = $this->generateUrl('administration_moderatorsManagement');
-        $redactorUrl = $this->generateUrl('administration_redactorsManagement');
+        $redactorUrl  = $this->generateUrl('administration_redactorsManagement');
 
         // Resetting admin password
         if (false !== strstr($referer, $adminUrl)) {
-            // Denying access
-            // TODO @querdos: Manage restriction in security_access_control.yml (resetPasswordAction)
-            $this->denyAccessUnlessGranted('ROLE_ADMIN', null, "You are not allowed to access this page");
-
             // Retrieving the manager
             $manager = $this->get('challengeme.manager.administrator');
 
@@ -570,10 +556,6 @@ class AdministrationController extends Controller
             ));
         } // Resetting moderator password
         else if (false !== strstr($referer, $moderatorUrl)) {
-            // Denying access
-            // TODO @querdos: Manage restriction in security_access_control.yml (resetPasswordAction)
-            $this->denyAccessUnlessGranted('ROLE_ADMIN', null, "You are not allowed to access this page");
-
             // Retrieving the manager
             $manager = $this->get('challengeme.manager.administrator');
 
@@ -587,10 +569,6 @@ class AdministrationController extends Controller
             return $this->redirectToRoute('administration_moderatorsManagement');
         } // Resetting redactor password
         else if (false !== strstr($referer, $redactorUrl)) {
-            // Denying access
-            // TODO @querdos: Manage restriction in security_access_control.yml (resetPasswordAction)
-            $this->denyAccessUnlessGranted('ROLE_MODERATOR', null, "You are not allowed to access this page");
-
             // Retrieving the manager
             $manager = $this->get('challengeme.manager.administrator');
 
