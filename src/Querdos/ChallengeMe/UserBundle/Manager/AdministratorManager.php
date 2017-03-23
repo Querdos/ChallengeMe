@@ -135,7 +135,7 @@ class AdministratorManager extends BaseManager
     {
         if (null === ($adminData = $this->repository->getAdminData($username))) {
             throw new UsernameNotFoundException(
-                "$username doesn't exist"
+                "Invalid credentials"
             );
         }
 
