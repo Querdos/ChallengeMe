@@ -109,7 +109,13 @@ assetic:
         pnotify_js:
             inputs:
                 - 'assets/vendor/pnotify/dist/pnotify.js'
+                - 'assets/vendor/pnotify/dist/pnotify.animate.js'
                 - 'assets/vendor/pnotify/dist/pnotify.buttons.js'
+                - 'assets/vendor/pnotify/dist/pnotify.confirm.js'
+                - 'assets/vendor/pnotify/dist/pnotify.desktop.js'
+                - 'assets/vendor/pnotify/dist/pnotify.history.js'
+                - 'assets/vendor/pnotify/dist/pnotify.mobile.js'
+                - 'assets/vendor/pnotify/dist/pnotify.callbacks.js'
                 - 'assets/vendor/pnotify/dist/pnotify.nonblock.js'
             output: 'assets/global/js/pnotify.js'
 
@@ -178,6 +184,9 @@ assetic:
             inputs:
                 - 'assets/vendor/pnotify/dist/pnotify.css'
                 - 'assets/vendor/pnotify/dist/pnotify.buttons.css'
+                - 'assets/vendor/pnotify/dist/pnotify.brighttheme.css'
+                - 'assets/vendor/pnotify/dist/pnotify.history.css'
+                - 'assets/vendor/pnotify/dist/pnotify.mobile.css'
             output: 'assets/global/css/pnotify.css'
 
         dropzone_css:
