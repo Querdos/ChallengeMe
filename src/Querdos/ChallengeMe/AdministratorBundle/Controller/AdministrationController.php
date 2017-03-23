@@ -27,7 +27,9 @@ class AdministrationController extends Controller
     public function indexAction()
     {
         // retrieving admin manager
-        $adminManager = $this->get('challengeme.manager.administrator');
+        $adminManager  = $this->get('challengeme.manager.administrator');
+        $playerManager = $this->get('challengeme.manager.player');
+        $teamManager   = $this->get('challengeme.manager.team');
 
         // retrieving categories
         $categories = $this->get('challengeme.manager.category')->all();
@@ -36,6 +38,8 @@ class AdministrationController extends Controller
             'adminCount'    => $adminManager->adminCount(),
             'modoCount'     => $adminManager->modoCount(),
             'redacCount'    => $adminManager->redacCount(),
+            'playerCount'   => $playerManager->count(),
+            'teamCount'     => $teamManager->count(),
             'categories'    => $categories
         );
     }

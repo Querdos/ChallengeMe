@@ -320,10 +320,17 @@ class ChallengesController extends Controller
             ->readById($challenge_id)
         ;
 
+        // retrieving validations for the retrieved challenge
+        $validations = $this
+            ->get('challengeme.manager.challenge_solving')
+            ->getValidationForChallenge($challenge)
+        ;
+
         return array(
             'categories'    => $categories,
             'category'      => $category,
-            'challenge'     => $challenge
+            'challenge'     => $challenge,
+            'validations'   => $validations
         );
     }
 }
