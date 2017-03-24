@@ -46,7 +46,7 @@ class PlayerManager extends BaseManager
         // erasing credential then
         $player
             ->setPassword(
-                $this->passwordEncoder->encodePassword(
+                    $this->passwordEncoder->encodePassword(
                     $player,
                     $player->getPlainPassword()
                 )
@@ -132,7 +132,7 @@ class PlayerManager extends BaseManager
     public function checkSolution($solution, Challenge $challenge, Team $team)
     {
         // the solution is correct
-        if ($solution === $challenge->getSolution()) {
+        if ($solution === $challenge->getSolution()->getContent()) {
             // changing the status of the challenge solving
             $challengeSolve = $this->challengeSolvingManager->getChallengeInProgress($team);
 

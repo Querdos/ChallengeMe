@@ -112,16 +112,10 @@ class ChallengeType extends AbstractType
                 ),
                 'choices' => $catList
             ))
-            ->add('solution', TextType::class, array(
-                'label' => 'Solution',
-                'label_attr' => array(
-                    'class' => 'control-label col-md-3 col-sm-3 col-xs-12'
-                ),
-                'attr' => array(
-                    'class'     => 'form-control col-md-7 col-xs-12'
-                ),
-                'required'  => true,
-                'translation_domain' => 'forms'
+            ->add('solution', SolutionType::class, array(
+                'label'              => '',
+                'translation_domain' => 'forms',
+                'create'             => true
             ))
         ;
     }

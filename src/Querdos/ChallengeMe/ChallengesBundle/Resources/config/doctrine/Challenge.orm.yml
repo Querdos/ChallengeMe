@@ -35,11 +35,13 @@ Querdos\ChallengeMe\ChallengesBundle\Entity\Challenge:
             type:     datetime
             nullable: false
             unique:   false
+
+    oneToOne:
         solution:
-            type:     string
-            length:   255
-            unique:   false
-            nullable: false
+            targetEntity:     Querdos\ChallengeMe\ChallengesBundle\Entity\ChallengeSolution
+            cascade:          [ "persist", "remove" ]
+            joinColumn:
+                nullable:     false
 
     manyToOne:
         category:

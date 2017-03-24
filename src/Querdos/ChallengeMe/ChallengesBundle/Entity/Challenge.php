@@ -6,10 +6,8 @@ use Querdos\ChallengeMe\UserBundle\Entity\Administrator;
 
 /**
  * Challenge
- *
- * TODO @querdos Add resources entity to a challenge
- * TODO @querdos Separate the solution in a different table
  */
+// TODO @querdos Add resources entity to a challenge
 class Challenge
 {
     /**
@@ -58,22 +56,23 @@ class Challenge
     private $created;
 
     /**
-     * @var string
+     * @var ChallengeSolution
      */
     private $solution;
 
     /**
      * Challenge constructor.
      *
-     * @param string        $title
-     * @param string        $description
-     * @param int           $points
-     * @param int           $level
-     * @param string        $statement
-     * @param Category      $category
-     * @param Administrator $author
+     * @param string            $title
+     * @param string            $description
+     * @param int               $points
+     * @param int               $level
+     * @param string            $statement
+     * @param Category          $category
+     * @param Administrator     $author
+     * @param ChallengeSolution $solution
      */
-    public function __construct($title = "", $description = "", $points = 0, $level = 0, $statement = "", Category $category = null, Administrator $author = null)
+    public function __construct($title = "", $description = "", $points = 0, $level = 0, $statement = "", Category $category = null, Administrator $author = null, ChallengeSolution $solution = null)
     {
         $this->title       = $title;
         $this->description = $description;
@@ -83,8 +82,8 @@ class Challenge
         $this->category    = $category;
         $this->author      = $author;
         $this->created     = new \DateTime();
+        $this->solution    = $solution;
     }
-
 
     /**
      * Get id
@@ -265,7 +264,7 @@ class Challenge
     }
 
     /**
-     * @return string
+     * @return ChallengeSolution
      */
     public function getSolution()
     {
@@ -273,11 +272,11 @@ class Challenge
     }
 
     /**
-     * @param string $solution
+     * @param ChallengeSolution $solution
      *
      * @return Challenge
      */
-    public function setSolution($solution)
+    public function setSolution(ChallengeSolution $solution)
     {
         $this->solution = $solution;
         return $this;

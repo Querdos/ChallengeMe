@@ -46,7 +46,9 @@ class PlayerController extends Controller
         ];
 
         $data['unreadNotifications'] = $notificationManager->getUnreadForPlayer($this->getUser());
-        $data['teamRank'] = $teamManager->getTeamRank($this->getUser()->getTeam());
+        if ($this->getUser()->hasTeam()) {
+            $data['teamRank'] = $teamManager->getTeamRank($this->getUser()->getTeam());
+        }
 
         // checking if the user has a team
         if ($this->getUser()->hasTeam()) {

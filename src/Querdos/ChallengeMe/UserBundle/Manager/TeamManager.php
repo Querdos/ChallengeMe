@@ -50,39 +50,6 @@ class TeamManager extends BaseManager
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @param Team $team
-     */
-    public function update($team)
-    {
-        // extending parent method
-        parent::update($team);
-
-        // checking if the team's rank is in the top 3
-        if ($rank = $this->getTeamRank($team) <= 3) {
-            $text = "";
-            // TODO @querdos: Manage translation for a the ranking (notification)
-            switch ($rank) {
-                case 1:
-                    $text = "You're team is the first on the ranking board!";
-                    break;
-                case 2:
-                    $text = "You're team is the second on the ranking board!";
-                    break;
-                case 3:
-                    $text = "You're team is the third on the ranking board!";
-                    break;
-            }
-
-            // creating the notification for each player
-            $this->notificationManager->create(
-                new Notification($text, $team->getLeader())
-            );
-        }
-    }
-
-    /**
      * Return the count of all existing teams in database
      *
      * @return int
