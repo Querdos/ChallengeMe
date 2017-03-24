@@ -12,7 +12,7 @@ Querdos\ChallengeMe\ChallengesBundle\Entity\Challenge:
         title:
             type:     string
             length:   255
-            unique:   true
+            unique:   false
             nullable: false
         points:
             type:     integer
