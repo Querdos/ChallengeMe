@@ -19,4 +19,12 @@ Feel free to contact us if you want to fork the project.
 
 # Installation
 
-Please refer to the documentation part in the wiki for installation instruction.
+## Requirements ##
+
+  * PHP 5.5.9 or higher;
+  * PDO-SQLite PHP extension enabled;
+  * and the [usual Symfony application requirements](http://symfony.com/doc/current/reference/requirements.html).
+
+## Vendors installation
+
+On the challengeme root directory
