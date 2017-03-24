@@ -26,7 +26,7 @@ services:
             - [ setEntityManager,   [ '@doctrine.orm.entity_manager'                ] ]
 
     challengeme.manager.challenge_resource:
-        class: Querdos\ChallengeMe\ChallengesBundle\Manager\ChallengeManager
+        class: Querdos\ChallengeMe\ChallengesBundle\Manager\ChallengeResourceManager
         calls:
             - [ setRepository,      [ '@challengeme.repository.challenge_resource'   ] ]
             - [ setEntityManager,   [ '@doctrine.orm.entity_manager'                ] ]

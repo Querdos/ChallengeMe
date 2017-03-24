@@ -694,15 +694,33 @@ class PlayerController extends Controller
         // retrieving notifications manager
         $notificationManager = $this->get('challengeme.manager.notification');
 
+        // retrieving resources for the challenge
+        $resources = $this->get('challengeme.manager.challenge_resource')->readByChallenge($challenge);
+
         // returning data
         return array(
             'challenge'             => $challenge,
             'challengeSolve'        => $challengeSolving,
             'formSolution'          => $formSubmitSolution->createView(),
             'validations'           => $validations,
-            'notifications'         => $notificationManager->getForPlayer($this->getUser()),
-            'unreadNotifications'   => $notificationManager->getUnreadForPlayer($this->getUser())
+            'unreadNotifications'   => $notificationManager->getUnreadForPlayer($this->getUser()),
+            'resources'             => $resources
         );
+    }
+
+    /**
+     * @param int $resourceId
+     *
+     * @return \Symfony\Component\HttpFoundation\StreamedResponse
+     */
+    public function downloadResourceForChallengeAction($resourceId)
+    {
+        // retrieving the resource
+        $resource = $this->get('challengeme.manager.challenge_resource')->readById($resourceId);
+
+        // generating the download link
+        $downloadHandler = $this->get('vich_uploader.download_handler');
+        return $downloadHandler->downloadObject($resource, 'resourceFile');
     }
 
     /**

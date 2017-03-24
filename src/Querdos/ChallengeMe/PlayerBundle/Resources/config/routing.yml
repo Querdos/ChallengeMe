@@ -111,6 +111,12 @@ player_set_notification_red:
     methods:
         - POST
 
+player_download_resource:
+    path:     /challenge/download-resource/{resourceId}
+    defaults: { _controller: PlayerBundle:Player:downloadResourceForChallenge }
+    methods:
+        - GET
+
 ######################
 # SecurityController #
 ######################

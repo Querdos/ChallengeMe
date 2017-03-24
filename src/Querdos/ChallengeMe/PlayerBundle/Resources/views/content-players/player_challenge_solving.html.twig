@@ -82,7 +82,6 @@
                                 <br />
 
                                 <div class="project_detail">
-
                                     <p class="title">Author</p>
                                     <p>{{ challenge.author.username }}</p>
 
@@ -93,16 +92,11 @@
                                 <br />
                                 <h5>Related resources</h5>
                                 <ul class="list-unstyled project_files">
-                                    <li><a href=""><i class="fa fa-file-word-o"></i> Functional-requirements.docx</a>
-                                    </li>
-                                    <li><a href=""><i class="fa fa-file-pdf-o"></i> UAT.pdf</a>
-                                    </li>
-                                    <li><a href=""><i class="fa fa-mail-forward"></i> Email-from-flatbal.mln</a>
-                                    </li>
-                                    <li><a href=""><i class="fa fa-picture-o"></i> Logo.png</a>
-                                    </li>
-                                    <li><a href=""><i class="fa fa-file-word-o"></i> Contract-10_12_2014.docx</a>
-                                    </li>
+                                    {% for resource in resources %}
+                                        <li>
+                                            <a href="{{ path('player_download_resource', {'resourceId': resource.id}) }}"><i class="fa fa-file-pdf-o"></i> {{ resource.resourceName }}</a>
+                                        </li>
+                                    {% endfor %}
                                 </ul>
                                 <br />
                             </div>
@@ -115,14 +109,14 @@
 {% endblock main_content %}
 
 {% block javascript %}
+    {{ parent() }}
     {% javascripts
         '@fastclick_js'
         '@highlightjs_js'
         '@moment_js'
         '@customTheme_js'
 
-
-    '@challenge_solving_js'
+        '@challenge_solving_js'
     %}
         <script src="{{ asset_url }}"></script>
     {% endjavascripts %}
