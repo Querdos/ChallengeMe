@@ -48,4 +48,9 @@ Querdos\ChallengeMe\UserBundle\Entity\Administrator:
             mappedBy:     author
             cascade:      [ "persist" ]
 
+        resources:
+            targetEntity: Querdos\ChallengeMe\ChallengesBundle\Entity\ChallengeResource
+            mappedBy:     uploadedBy
+            cascade:      [ "persist", "remove" ]
+
     lifecycleCallbacks: {  }

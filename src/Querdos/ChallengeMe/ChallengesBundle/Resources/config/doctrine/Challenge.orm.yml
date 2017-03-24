@@ -36,6 +36,12 @@ Querdos\ChallengeMe\ChallengesBundle\Entity\Challenge:
             nullable: false
             unique:   false
 
+    oneToMany:
+        resources:
+            targetEntity:     Querdos\ChallengeMe\ChallengesBundle\Entity\ChallengeResource
+            cascade:          [ "persist", "remove" ]
+            mappedBy:         challenge
+
     oneToOne:
         solution:
             targetEntity:     Querdos\ChallengeMe\ChallengesBundle\Entity\ChallengeSolution

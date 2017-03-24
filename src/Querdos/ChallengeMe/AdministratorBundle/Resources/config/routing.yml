@@ -167,6 +167,25 @@ challenges_challenge_update:
         - GET
         - POST
 
+challenges_resource_management:
+    path:     /challenges/resources
+    defaults: { _controller: AdminBundle:Challenges:resourceManagement }
+    methods:
+        - GET
+        - POST
+
+challenges_download_resource:
+    path:     /challenges/download-resource/{resourceId}
+    defaults: { _controller: AdminBundle:Challenges:downloadResource }
+    methods:
+        - GET
+
+challenges_remove_resource:
+    path:     /challenges/remove-resource/{resourceId}
+    defaults: { _controller: AdminBundle:Challenges:removeResource }
+    methods:
+        - GET
+
 ######################
 # SecurityController #
 ######################

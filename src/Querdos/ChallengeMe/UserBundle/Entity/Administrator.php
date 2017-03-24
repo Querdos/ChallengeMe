@@ -8,6 +8,7 @@
 namespace Querdos\ChallengeMe\UserBundle\Entity;
 
 use Querdos\ChallengeMe\ChallengesBundle\Entity\Challenge;
+use Querdos\ChallengeMe\ChallengesBundle\Entity\ChallengeResource;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
@@ -24,6 +25,11 @@ class Administrator extends BaseUser implements UserInterface, \Serializable
      * @var Challenge[]
      */
     private $challenges;
+
+    /**
+     * @var ChallengeResource
+     */
+    private $resources;
 
     /**
      * Administrator constructor.
@@ -141,5 +147,24 @@ class Administrator extends BaseUser implements UserInterface, \Serializable
     public function getChallenges()
     {
         return $this->challenges;
+    }
+
+    /**
+     * @return ChallengeResource
+     */
+    public function getResources()
+    {
+        return $this->resources;
+    }
+
+    /**
+     * @param ChallengeResource $resources
+     *
+     * @return Administrator
+     */
+    public function setResources($resources)
+    {
+        $this->resources = $resources;
+        return $this;
     }
 }

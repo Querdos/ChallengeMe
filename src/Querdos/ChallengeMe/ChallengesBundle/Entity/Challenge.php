@@ -7,7 +7,6 @@ use Querdos\ChallengeMe\UserBundle\Entity\Administrator;
 /**
  * Challenge
  */
-// TODO @querdos Add resources entity to a challenge
 class Challenge
 {
     /**
@@ -59,6 +58,11 @@ class Challenge
      * @var ChallengeSolution
      */
     private $solution;
+
+    /**
+     * @var ChallengeResource[]
+     */
+    private $resources;
 
     /**
      * Challenge constructor.
@@ -279,6 +283,25 @@ class Challenge
     public function setSolution(ChallengeSolution $solution)
     {
         $this->solution = $solution;
+        return $this;
+    }
+
+    /**
+     * @return ChallengeResource[]
+     */
+    public function getResources()
+    {
+        return $this->resources;
+    }
+
+    /**
+     * @param ChallengeResource[] $resources
+     *
+     * @return Challenge
+     */
+    public function setResources($resources)
+    {
+        $this->resources = $resources;
         return $this;
     }
 }

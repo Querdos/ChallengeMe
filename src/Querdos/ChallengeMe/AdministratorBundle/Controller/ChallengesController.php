@@ -8,16 +8,23 @@
 
 namespace Querdos\ChallengeMe\AdministratorBundle\Controller;
 
+use Ivory\CKEditorBundle\Exception\Exception;
 use Querdos\ChallengeMe\AdministratorBundle\Form\CategoryType;
 use Querdos\ChallengeMe\AdministratorBundle\Form\ChallengeType;
+use Querdos\ChallengeMe\AdministratorBundle\Form\UploadChallengeResourceType;
 use Querdos\ChallengeMe\ChallengesBundle\Entity\Category;
 use Querdos\ChallengeMe\ChallengesBundle\Entity\Challenge;
+use Querdos\ChallengeMe\ChallengesBundle\Entity\ChallengeResource;
 use Querdos\ChallengeMe\ChallengesBundle\Manager\CategoryManager;
+use Querdos\ChallengeMe\UserBundle\Entity\Role;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\HttpFoundation\StreamedResponse;
+use Symfony\Component\VarDumper\VarDumper;
 
 class ChallengesController extends Controller
 {
@@ -332,5 +339,102 @@ class ChallengesController extends Controller
             'challenge'     => $challenge,
             'validations'   => $validations
         );
+    }
+
+    /**
+     * @Template("AdminBundle:content-challenges:challenge_resources_management.html.twig")
+     *
+     * @param Request $request
+     *
+     * @return array
+     */
+    public function resourceManagementAction(Request $request)
+    {
+        // retrieving categories
+        $categories = $this
+            ->get('challengeme.manager.category')
+            ->all()
+        ;
+
+        // Creating the new object for the resource
+        $challengeResource = new ChallengeResource();
+        $challengeResource->setUploadedBy($this->getUser());
+
+        $form = $this->createForm(UploadChallengeResourceType::class, $challengeResource, array(
+            'user' => $this->getUser()
+        ));
+
+        $form
+            ->add('save', SubmitType::class, array(
+                'label' => 'Upload',
+                'attr' => array(
+                    'class' => 'btn btn-success'
+                ),
+                'translation_domain' => 'forms'
+            ))
+        ;
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted()) {
+            // uploading the resource
+            $this->get('challengeme.manager.challenge_resource')->create($challengeResource);
+        }
+
+        // retrieving resources, depending on the user's role
+        if ($this->isGranted(Role::ROLE_REDACTOR)) {
+            $resources = $this->getUser()->getResources();
+        } else {
+            $resources = $this->get('challengeme.manager.challenge_resource')->all();
+        }
+
+        return array(
+            'categories'    => $categories,
+            'form'          => $form->createView(),
+            'resources'     => $resources
+        );
+    }
+
+    /**
+     * @param int $resourceId
+     *
+     * @return StreamedResponse
+     */
+    public function downloadResourceAction($resourceId)
+    {
+        // retrieving the resource
+        $resource = $this->get('challengeme.manager.challenge_resource')->readById($resourceId);
+
+        // generating the download link
+        $downloadHandler = $this->get('vich_uploader.download_handler');
+        return $downloadHandler->downloadObject($resource, 'resourceFile');
+    }
+
+    /**
+     * @param $resourceId
+     *
+     * @return RedirectResponse
+     * @throws Exception
+     */
+    public function removeResourceAction($resourceId)
+    {
+        // manager
+        $manager = $this->get('challengeme.manager.challenge_resource');
+
+        // retrieving the resource
+        /** @var ChallengeResource $resource */
+        $resource = $manager->readById($resourceId);
+
+        // checking, if redactor, that the resource is his
+        if ($this->isGranted(Role::ROLE_REDACTOR)) {
+            if ($this->getUser()->getUsername() !== $resource->getUploadedBy()->getUsername()) {
+                throw new Exception("You are not allowed to perform this operation");
+            }
+        }
+
+        // removing the resource
+        $manager->delete($resource);
+
+        // everything ok
+        return $this->redirectToRoute('challenges_resource_management');
     }
 }
