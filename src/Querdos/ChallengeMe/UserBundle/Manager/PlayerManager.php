@@ -11,6 +11,8 @@ namespace Querdos\ChallengeMe\UserBundle\Manager;
 use Doctrine\ORM\EntityManager;
 use Querdos\ChallengeMe\ChallengesBundle\Entity\Challenge;
 use Querdos\ChallengeMe\ChallengesBundle\Manager\ChallengeSolvingManager;
+use Querdos\ChallengeMe\PlayerBundle\Entity\Notification;
+use Querdos\ChallengeMe\PlayerBundle\Manager\NotificationManager;
 use Querdos\ChallengeMe\UserBundle\Entity\Player;
 use Querdos\ChallengeMe\UserBundle\Entity\Team;
 use Querdos\ChallengeMe\UserBundle\Repository\PlayerRepository;
@@ -29,6 +31,11 @@ class PlayerManager extends BaseManager
      * @var ChallengeSolvingManager
      */
     private $challengeSolvingManager;
+
+    /**
+     * @var NotificationManager
+     */
+    private $notificationManager;
 
     /**
      * @var TeamManager
@@ -167,11 +174,25 @@ class PlayerManager extends BaseManager
      */
     public function leaveTeam(Player $player)
     {
+        // retrieving needed data
+        $teamName = $player->getTeam()->getName();
+        $leader   = $player->getTeam()->getLeader();
+
         // setting null to the team
         $player->setTeam(null);
 
-        // updating
+        // updating the player in database
         $this->update($player);
+
+        // sending a notification to the player
+        $this->notificationManager->create(
+            new Notification("You have leaved successfully the team $teamName", $player)
+        );
+
+        // sending a notification to the leader
+        $this->notificationManager->create(
+            new Notification($player->getUsername() . " has leaved your team", $leader)
+        );
     }
 
     /**
@@ -188,5 +209,16 @@ class PlayerManager extends BaseManager
     public function setTeamManager($teamManager)
     {
         $this->teamManager = $teamManager;
+    }
+
+    /**
+     * @param NotificationManager $notificationManager
+     *
+     * @return PlayerManager
+     */
+    public function setNotificationManager($notificationManager)
+    {
+        $this->notificationManager = $notificationManager;
+        return $this;
     }
 }
