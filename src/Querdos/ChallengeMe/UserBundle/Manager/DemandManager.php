@@ -43,6 +43,15 @@ class DemandManager extends BaseManager
                 $demand->getTeam()->getLeader()
             )
         );
+
+        // sending notification to the player
+        // TODO @querdos: Manage translation for a new demand, sent to the leader (notification)
+        $this->notificationManager->create(
+            new Notification(
+                "Your demand has been sent",
+                $demand->getPlayer()
+            )
+        );
     }
 
     /**
