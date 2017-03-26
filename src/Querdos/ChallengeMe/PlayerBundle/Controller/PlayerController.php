@@ -2,6 +2,7 @@
 
 namespace Querdos\ChallengeMe\PlayerBundle\Controller;
 
+use Ivory\CKEditorBundle\Exception\Exception;
 use Querdos\ChallengeMe\ChallengesBundle\Entity\Category;
 use Querdos\ChallengeMe\ChallengesBundle\Entity\Rating;
 use Querdos\ChallengeMe\PlayerBundle\Entity\Notification;
@@ -818,5 +819,24 @@ class PlayerController extends Controller
 
         // everything ok
         return new JsonResponse();
+    }
+
+    /**
+     * @return RedirectResponse
+     * @throws Exception
+     */
+    public function leaveTeamAction()
+    {
+        // checking that the user is not the team leader
+        $team = $this->getUser()->getTeam();
+        if ($team->getLeader()->getUsername() === $this->getUser()->getUsername()) {
+            throw new Exception("You are not allowed to perform this operation");
+        }
+
+        // only the user can leave his own team
+        $this->get('challengeme.manager.player')->leaveTeam($this->getUser());
+
+        // redirecting to the teams list page
+        return $this->redirectToRoute('player_teams_list');
     }
 }

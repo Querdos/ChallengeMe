@@ -10,6 +10,7 @@ namespace Querdos\ChallengeMe\UserBundle\Manager;
 
 use Querdos\ChallengeMe\PlayerBundle\Entity\Notification;
 use Querdos\ChallengeMe\PlayerBundle\Manager\NotificationManager;
+use Querdos\ChallengeMe\UserBundle\Entity\Player;
 use Querdos\ChallengeMe\UserBundle\Entity\Team;
 
 class TeamManager extends BaseManager

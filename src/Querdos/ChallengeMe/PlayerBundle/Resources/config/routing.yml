@@ -117,6 +117,12 @@ player_download_resource:
     methods:
         - GET
 
+player_leave_team:
+    path:     /team/leave
+    defaults: { _controller: PlayerBundle:Player:leaveTeam }
+    methods:
+        - GET
+
 ######################
 # SecurityController #
 ######################

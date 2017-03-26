@@ -161,6 +161,20 @@ class PlayerManager extends BaseManager
     }
 
     /**
+     * Remove a player from his team
+     *
+     * @param Player $player
+     */
+    public function leaveTeam(Player $player)
+    {
+        // setting null to the team
+        $player->setTeam(null);
+
+        // updating
+        $this->update($player);
+    }
+
+    /**
      * @param ChallengeSolvingManager $challengeSolvingManager
      */
     public function setChallengeSolvingManager($challengeSolvingManager)
