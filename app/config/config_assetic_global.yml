@@ -4,54 +4,77 @@ assetic:
         jquery_js:
             inputs:
                 - 'assets/vendor/jquery/dist/jquery.min.js'
-            output: 'assets/js/jquery.js'
+            output: 'assets/global/js/jquery.js'
+
+        jquery_inputmask_js:
+            inputs:
+                - 'assets/vendor/jquery.inputmask/dist/min/jquery.inputmask.bundle.min.js'
+            output: 'assets/global/js/jquery_inputmask.js'
 
         bootstrap_js:
             inputs:
                 - 'assets/vendor/bootstrap/dist/js/bootstrap.min.js'
-            output: 'assets/js/bootstrap.js'
+            output: 'assets/global/js/bootstrap.js'
 
         bootstrapWYSIWYG_js:
             inputs:
                 - 'assets/vendor/bootstrap-wysiwyg/js/bootstrap-wysiwyg.min.js'
                 - 'assets/vendor/jquery.hotkeys/jquery.hotkeys.js'
                 - 'assets/vendor/google-code-prettify/src/prettify.js'
-            output: 'assets/js/bootstrapwysiyg.js'
+            output: 'assets/global/js/bootstrapwysiyg.js'
+
+        datatables_js:
+            inputs:
+                - 'assets/vendor/datatables.net/js/jquery.dataTables.min.js'
+                - 'assets/vendor/datatables.net-bs/js/dataTables.bootstrap.min.js'
+                - 'assets/vendor/datatables.net-buttons/js/dataTables.buttons.min.js'
+                - 'assets/vendor/datatables.net-buttons-bs/js/buttons.bootstrap.min.js'
+                - 'assets/vendor/datatables.net-buttons/js/buttons.flash.min.js'
+                - 'assets/vendor/datatables.net-buttons/js/buttons.html5.min.js'
+                - 'assets/vendor/datatables.net-buttons/js/buttons.print.min.js'
+                - 'assets/vendor/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js'
+                - 'assets/vendor/datatables.net-keytable/js/dataTables.keyTable.min.js'
+                - 'assets/vendor/datatables.net-responsive/js/dataTables.responsive.min.js'
+                - 'assets/vendor/datatables.net-responsive-bs/js/responsive.bootstrap.js'
+                - 'assets/vendor/jszip/dist/jszip.min.js'
+                - 'assets/vendor/pdfmake/build/pdfmake.min.js'
+                - 'assets/vendor/pdfmake/build/vfs_fonts.js'
+            output: 'assets/global/js/datatables.js'
 
         fastclick_js:
             inputs:
                 - 'assets/vendor/fastclick/lib/fastclick.js'
-            output: 'assets/js/fastclick.js'
+            output: 'assets/global/js/fastclick.js'
 
         nprogress_js:
             inputs:
                 - 'assets/vendor/nprogress/nprogress.js'
-            output: 'assets/js/nprogress.js'
+            output: 'assets/global/js/nprogress.js'
 
         charts_js:
             inputs:
                 - 'assets/vendor/Chart.js/dist/Chart.min.js'
-            output: 'assets/js/chart.js'
+            output: 'assets/global/js/chart.js'
 
         gauge_js:
             inputs:
                 - 'assets/vendor/gauge.js/dist/gauge.min.js'
-            ouput: 'assets/js/gauge.js'
+            ouput: 'assets/global/js/gauge.js'
 
         bootstrap_progressbar_js:
             inputs:
                 - 'assets/vendor/bootstrap-progressbar/bootstrap-progressbar.min.js'
-            output: 'assets/js/progressbar.js'
+            output: 'assets/global/js/progressbar.js'
 
         iCheck_js:
             inputs:
                 - 'assets/vendor/iCheck/icheck.min.js'
-            output: 'assets/js/icheck.js'
+            output: 'assets/global/js/icheck.js'
 
         skycons_js:
             inputs:
                 - 'assets/vendor/skycons/skycons.js'
-            output: 'assets/js/skycons.js'
+            output: 'assets/global/js/skycons.js'
 
         flot_js:
             inputs:
@@ -60,41 +83,113 @@ assetic:
                 - 'assets/vendor/Flot/jquery.flot.time.js'
                 - 'assets/vendor/Flot/jquery.flot.stack.js'
                 - 'assets/vendor/Flot/jquery.flot.resize.js'
-            output: 'assets/js/flot.js'
+            output: 'assets/global/js/flot.js'
 
         morris_js:
             inputs:
                 - 'assets/vendor/raphael/raphael.min.js'
                 - 'assets/vendor/morris.js/morris.min.js'
-            output: 'assets/js/morris.js'
+            output: 'assets/global/js/morris.js'
 
         iCheck_js:
             inputs:
                 - 'assets/vendor/iCheck/icheck.min.js'
-            output: 'assets/js/icheck.js'
+            output: 'assets/global/js/icheck.js'
+
+        validator_js:
+            inputs:
+                - 'assets/vendor/validator/validator.js'
+            output: 'assets/global/js/validator.js'
+
+        highlightjs_js:
+            inputs:
+                - 'assets/vendor/highlightjs/highlight.pack.js'
+            output: 'assets/global/js/highlight.js'
+
+        pnotify_js:
+            inputs:
+                - 'assets/vendor/pnotify/dist/pnotify.js'
+                - 'assets/vendor/pnotify/dist/pnotify.animate.js'
+                - 'assets/vendor/pnotify/dist/pnotify.buttons.js'
+                - 'assets/vendor/pnotify/dist/pnotify.confirm.js'
+                - 'assets/vendor/pnotify/dist/pnotify.desktop.js'
+                - 'assets/vendor/pnotify/dist/pnotify.history.js'
+                - 'assets/vendor/pnotify/dist/pnotify.mobile.js'
+                - 'assets/vendor/pnotify/dist/pnotify.callbacks.js'
+                - 'assets/vendor/pnotify/dist/pnotify.nonblock.js'
+            output: 'assets/global/js/pnotify.js'
+
+        moment_js:
+            inputs:
+                - 'assets/vendor/moment/min/moment.min.js'
+            output: 'assets/global/js/moments.js'
+
+        dropzone_js:
+            inputs:
+                - 'assets/vendor/dropzone/dist/min/dropzone.min.js'
+            output: 'assets/global/js/dropzone.js'
+
 
         # Stylesheets
-        bootstrap:
+        bootstrap_css:
             inputs:
                 - 'assets/vendor/bootstrap/dist/css/bootstrap.min.css'
-            output: 'assets/css/boostrap.css'
+            output: 'assets/global/css/boostrap.css'
 
         bootstrapWYSIWYG_css:
             inputs:
                 - 'assets/vendor/google-code-prettify/bin/prettify.min.css'
-            output: 'assets/css/bootstrapwysiwyg.css'
+            output: 'assets/global/css/bootstrapwysiwyg.css'
 
-        fontAwesome:
+        bootstrapDateRangePicker_css:
+            inputs:
+                - 'assets/vendor/bootstrap-daterangepicker/daterangepicker.css'
+            output: 'assets/global/css/bootstrap-date-range-picker.css'
+
+        datatables_css:
+            inputs:
+                - 'assets/vendor/datatables.net-bs/css/dataTables.bootstrap.min.css'
+                - 'assets/vendor/datatables.net-buttons-bs/css/buttons.bootstrap.min.css'
+                - 'assets/vendor/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css'
+                - 'assets/vendor/datatables.net-responsive-bs/css/responsive.bootstrap.min.css'
+                - 'assets/vendor/datatables.net-scroller-bs/css/scroller.bootstrap.min.css'
+            output: 'assets/global/css/datatables.css'
+
+        fontAwesome_css:
             inputs:
                 - 'assets/vendor/font-awesome/css/font-awesome.min.css'
-            output: 'assets/css/fontAwesome.css'
+            output: 'assets/global/css/fontAwesome.css'
 
         iCheck:
             inputs:
                 - 'assets/vendor/iCheck/skins/flat/green.css'
-            output: 'assets/css/icheck.css'
+            output: 'assets/global/css/icheck.css'
+
+        nprogress_css:
+            inputs:
+                - 'assets/vendor/nprogress/nprogress.css'
+            output: 'assets/global/css/nprogress.css'
 
         bootstrap_progressBar:
             inputs:
                 - 'assets/vendor/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css'
-            output: 'assets/css/bootstrap-progressbar.css'
+            output: 'assets/global/css/bootstrap-progressbar.css'
+
+        hightlightjs_css:
+            inputs:
+                - 'assets/vendor/highlightjs/styles/monokai_sublime.css'
+            output: 'assets/global/css/highlight.css'
+
+        pnotify_css:
+            inputs:
+                - 'assets/vendor/pnotify/dist/pnotify.css'
+                - 'assets/vendor/pnotify/dist/pnotify.buttons.css'
+                - 'assets/vendor/pnotify/dist/pnotify.brighttheme.css'
+                - 'assets/vendor/pnotify/dist/pnotify.history.css'
+                - 'assets/vendor/pnotify/dist/pnotify.mobile.css'
+            output: 'assets/global/css/pnotify.css'
+
+        dropzone_css:
+            inputs:
+                - 'assets/vendor/dropzone/dist/min/dropzone.min.css'
+            output: 'assets/global/css/dropzone.css'

@@ -1,12 +1,22 @@
 imports:
-    - { resource: managers.yml }
-
     - { resource: assetic_js.yml }
     - { resource: assetic_css.yml }
 
-    - { resource: validators.yml }
-
 services:
     challengeme.provider.admin:
-        class: Querdos\ChallengeMe\AdministratorBundle\Security\AdministratorProvider
-        arguments: ["@challengeme.manager.administrator"]
+        class: Querdos\ChallengeMe\AdministratorBundle\Security\Provider\AdministratorProvider
+        calls:
+            - [ setAdminManager,      ['@challengeme.manager.administrator'] ]
+
+    challengeme.admin.form_authenticator:
+        class: Querdos\ChallengeMe\AdministratorBundle\Security\Authenticator\FormAuthenticator
+        calls:
+            - [ setContainer,         ['@service_container'] ]
+            - [ setRouter,            ['@router'] ]
+
+    challengeme.form.type.challenge:
+        class:  Querdos\ChallengeMe\AdministratorBundle\Form\UploadChallengeResourceType
+        calls:
+            - [ setChallengeManager,  ['@challengeme.manager.challenge' ]]
+        tags:
+            - { name: form.type, alias: chall_res}

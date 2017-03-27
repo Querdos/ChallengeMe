@@ -1,0 +1,179 @@
+{% trans_default_domain "players-challenges-by-category" %}
+{% extends "PlayerBundle::base.html.twig" %}
+
+{% block stylesheets %}
+    {{ parent() }}
+
+    {% stylesheets
+        '@iCheck'
+        '@bootstrap_progressBar'
+        '@jVectorMap'
+
+    filter='cssrewrite'
+    %}
+    <link href="{{ asset_url }}" rel="stylesheet"/>
+    {% endstylesheets %}
+{% endblock stylesheets %}
+
+{% block main_content %}
+    <div class="">
+        <div class="page-title">
+            <div class="title_left">
+                <h3>
+                    Available challenges in <b>{{ category.title }}</b>
+                </h3>
+            </div>
+        </div>
+
+        <div class="clearfix"></div>
+
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                    <h2 align="center">{{ category.description }}</h2>
+
+                    <br>
+                    <div class="x_content">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Result</th>
+                                    <th>Title</th>
+                                    <th>Validations</th>
+                                    <th>Number of points</th>
+                                    <th>Difficulty</th>
+                                    <th>Note</th>
+                                    <th>Author</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for challenge in challenges %}
+                                    <tr>
+                                        <th>
+                                            {% if challenge.id in challengesSolved %}
+                                                <i class="fa fa-check" title="You have solved this challenge"></i>
+                                            {% else %}
+                                                <i class="fa fa-close" title="You have'nt solved this challenge yet"></i>
+                                            {% endif %}
+                                        </th>
+                                        <td>{{ challenge.title }}</td>
+                                        <td>
+                                            {{ validations[challenge.id] }}
+                                            {% if validations[challenge.id] > 1 %}
+                                                teams
+                                            {% else %}
+                                                team
+                                            {% endif %}
+                                        </td>
+                                        <td>{{ challenge.points }}</td>
+                                        <td>
+                                            {% for i in range(1, challenge.level) %}
+                                                <i class="fa fa-star"></i>
+                                            {% endfor %}
+                                        </td>
+                                        <td>
+                                            {{ notes[challenge.id] }} / 5
+                                        </td>
+                                        <td>{{ challenge.author.username }}</td>
+                                        <td>
+                                            {% if challenge.id not in challengesSolved %}
+                                                <button data_challenge="{{ challenge.description }}" class="btn btn-primary buttonSolveChallenge" type="button" data-toggle="modal" data-target=".modal-confirm-start-challenge" url_start="{{ path('player_challenge_start', {'challengeId': challenge.id}) }}">Solve</button>
+                                            {% else %}
+                                                <button type="button" class="btn btn-success buttonRateChallenge" data-toggle="modal" data-target=".modal-rate-challenge" challenge_id="{{ challenge.id}}" challenge_name="{{ challenge.title }}">Rate</button>
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+
+                        {# Modal for challenge starting confirmation #}
+                        <div class="modal fade modal-confirm-start-challenge" tabindex="-1" role="dialog" aria-hidden="true">
+                            <div class="modal-dialog modal-sm">
+                                <div class="modal-content">
+
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span>
+                                        </button>
+                                        <h4 class="modal-title" id="myModalLabel2">Confirmation</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <h4>You are about to solve a new challenge</h4>
+                                        <p align="justify">If you confirm, you will begin this challenge with your team, meaning that all members will be automatically redirected to this challenge when trying to access challenges.</p>
+                                        <p align="justify">Information about this challenge: <br><b id="challengeDescription"></b></p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                        <button type="button" class="btn btn-primary" id="buttonStartChallenge">Start</button>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        {# Modal for rating a challenge #}
+                        <div class="modal fade modal-rate-challenge" tabindex="-1" role="dialog" aria-hidden="true">
+                            <div class="modal-dialog modal-sm">
+                                <div class="modal-content">
+
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span>
+                                        </button>
+                                        <h4 class="modal-title" id="modal-rate-title"></h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <h4 align="center">What mark would you give?</h4>
+                                        <p align="center">
+                                            <form id="formRating">
+                                                <label for="rating1">1</label>
+                                                <input type="radio" class="flat" name="rating" id="rating1" value="1" checked="" required />
+
+                                                <label for="rating2">2</label>
+                                                <input type="radio" class="flat" name="rating" id="rating2" value="2" />
+
+                                                <label for="rating3">3</label>
+                                                <input type="radio" class="flat" name="rating" id="rating3" value="3" />
+
+                                                <label for="rating4">4</label>
+                                                <input type="radio" class="flat" name="rating" id="rating4" value="4" />
+
+                                                <label for="rating5">5</label>
+                                                <input type="radio" class="flat" name="rating" id="rating5" value="5" />
+
+                                                <input type="hidden" id="hiddenChallengeId" name="challengeId"/>
+                                            </form>
+                                        </p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                        <button type="button" class="btn btn-primary" id="rateChallenge">Rate</button>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock main_content %}
+
+{% block javascript %}
+    {{ parent() }}
+
+    {% javascripts
+        '@fastclick_js'
+        '@iCheck_js'
+        '@customTheme_js'
+
+        '@challenges_by_category_js'
+    %}
+    <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+
+    <script>
+        var url_rate_challenge = "{{ path('player_rate_challenge') }}";
+    </script>
+{% endblock %}

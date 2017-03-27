@@ -1,0 +1,173 @@
+{% trans_default_domain "players-dasbhoard" %}
+{% extends "PlayerBundle::base.html.twig" %}
+
+{% block stylesheets %}
+    {{ parent() }}
+
+    {% stylesheets
+        '@pnotify_css'
+        '@iCheck'
+        '@bootstrap_progressBar'
+        '@jVectorMap'
+
+        filter='cssrewrite'
+    %}
+        <link href="{{ asset_url }}" rel="stylesheet"/>
+    {% endstylesheets %}
+{% endblock stylesheets %}
+
+{% block main_content %}
+    {# top tiles #}
+    <div class="row tile_count">
+        <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
+            <span class="count_top"><i class="fa fa-user"></i> {{ "stats.total-users" | trans | desc("Total Categories") | meaning("Total users") }}</span>
+            <div class="count">{{ stats.categoryCount }}</div>
+        </div>
+
+        <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
+            <span class="count_top"><i class="fa fa-user"></i> {{ "stats.total-admins" | trans | desc("Total Challenges") | meaning("Total admins") }}</span>
+            <div class="count">{{ stats.challengesCount }}</div>
+        </div>
+
+        <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
+            <span class="count_top"><i class="fa fa-user"></i> {{ "stats.total-players" | trans | desc("Total Players") | meaning("Total Players") }}</span>
+            <div class="count">{{ stats.playerCount }}</div>
+        </div>
+
+        <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
+            <span class="count_top"><i class="fa fa-user"></i> {{ "stats.total-teams" | trans | desc("Total Teams") | meaning("Total Teams") }}</span>
+            <div class="count">{{ stats.teamCount }}</div>
+        </div>
+
+        <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
+            {#<span class="count_top"><i class="fa fa-user"></i> {{ "stats.total-moderators" | trans | desc("Team") | meaning("Total Moderators") }}</span>#}
+            {#<p>Commando</p>#}
+        </div>
+
+        {% if app.user.hasTeam %}
+            <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
+                <span class="count_top"><i class="fa fa-user"></i> {{ "stats.total-redactors" | trans | desc("Rank") | meaning("Total Redactors") }}</span>
+                <div class="count">{{ teamRank }}</div>
+            </div>
+        {% endif %}
+    </div>
+    {# /top tiles #}
+
+    <div class="row">
+        {# Challenges completion #}
+        {% if app.user.hasTeam %}
+        <div class="col-md-6 col-sm-6 col-xs-12">
+            <div class="x_panel tile fixed_height_320">
+                <div class="x_title">
+                    <h2>Challenges completion</h2>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <h4>Challenge completion by categories</h4>
+                    {% for catName, completion in challengeCompletion %}
+                        <div class="widget_summary">
+                            <div class="w_left w_25">
+                                <b>{{ catName }}</b>
+                            </div>
+                            <div class="w_center w_55">
+                                <div class="progress">
+                                    <div class="progress-bar bg-green" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: {{ completion }}%;">
+                                        <span class="sr-only">100% Complete</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="w_right w_20">
+                                <span>{{ completion }}%</span>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+        {# To do list #}
+        <div class="col-md-6 col-sm-6 col-xs-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>To Do List <small>Sample tasks</small></h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                        <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="#">Settings 1</a>
+                                </li>
+                                <li><a href="#">Settings 2</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li><a class="close-link"><i class="fa fa-close"></i></a>
+                        </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+
+                    <div class="">
+                        <ul class="to_do">
+                            <li>
+                                <p>
+                                    <input type="checkbox" class="flat"> Schedule meeting with new client </p>
+                            </li>
+                            <li>
+                                <p>
+                                    <input type="checkbox" class="flat"> Create email address for new intern</p>
+                            </li>
+                            <li>
+                                <p>
+                                    <input type="checkbox" class="flat"> Have IT fix the network printer</p>
+                            </li>
+                            <li>
+                                <p>
+                                    <input type="checkbox" class="flat"> Copy backups to offsite location</p>
+                            </li>
+                            <li>
+                                <p>
+                                    <input type="checkbox" class="flat"> Food truck fixie locavors mcsweeney</p>
+                            </li>
+                            <li>
+                                <p>
+                                    <input type="checkbox" class="flat"> Food truck fixie locavors mcsweeney</p>
+                            </li>
+                            <li>
+                                <p>
+                                    <input type="checkbox" class="flat"> Create email address for new intern</p>
+                            </li>
+                            <li>
+                                <p>
+                                    <input type="checkbox" class="flat"> Have IT fix the network printer</p>
+                            </li>
+                            <li>
+                                <p>
+                                    <input type="checkbox" class="flat"> Copy backups to offsite location</p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock main_content %}
+
+{% block javascript %}
+    {{ parent() }}
+
+    {% javascripts
+        '@fastclick_js'
+        '@iCheck_js'
+        '@skycons_js'
+
+        '@customTheme_js'
+
+    %}
+        <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock %}

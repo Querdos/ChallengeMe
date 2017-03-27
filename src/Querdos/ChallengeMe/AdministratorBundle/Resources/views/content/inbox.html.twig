@@ -1,3 +1,4 @@
+{% trans_default_domain "administration-inbox" %}
 {% extends "AdminBundle::base.html.twig" %}
 
 {% block stylesheets %}
@@ -8,13 +9,15 @@
     {% endstylesheets %}
 {% endblock stylesheets %}
 
+{% set message_selected = 0 %}
+
 {% block main_content %}
     <div class="">
 
         <div class="page-title">
             <div class="title_left">
                 <h3>
-                    Private messages
+                    {{ "title.main" | trans | desc("Private messages") | meaning("Private messages title") }}
                 </h3>
             </div>
         </div>
@@ -25,14 +28,15 @@
             <div class="col-md-12">
                 <div class="x_panel">
                     <div class="x_title">
-                        <h2>Inbox<small>{{ admin.firstName }} {{ admin.lastName }}</small></h2>
+                        <h2>{{ "title.inbox" | trans | desc("Inbox") | meaning("Inbox title") }}<small>{{ app.user.infoUser.firstName }} {{ app.user.infoUser.lastName }}</small></h2>
                         <div class="clearfix"></div>
                     </div>
                     <div class="x_content">
                         <div class="row">
+                            {# MAIL LIST #}
                             <div class="col-sm-3 mail_list_column">
-                                <button id="compose" class="btn btn-sm btn-success btn-block" type="button">COMPOSE</button>
-                                <a href="#">
+                                <button id="compose" class="btn btn-sm btn-success btn-block" type="button">{{ "inbox.compose" | trans | desc("COMPOSE") | meaning("Compose button") }}</button>
+                                {#<a href="#">
                                     <div class="mail_list">
                                         <div class="left">
                                             <i class="fa fa-circle"></i> <i class="fa fa-edit"></i>
@@ -119,14 +123,38 @@
                                             <p>Ut enim ad minim veniam, quis nostrud exercitation enim ad minim veniam, quis nostrud exercitation...</p>
                                         </div>
                                     </div>
+                                </a>#}
+                                {% if messages|length == 0 %}
+                                <a href="#">
+                                    <div class="mail_list">
+                                        <div class="right">
+                                            <p>No messages</p>
+                                        </div>
+                                    </div>
                                 </a>
+                                {% else %}
+                                    {% for message in messages %}
+                                        <a href="javascript:void(0)" onclick="showMessage('{{ message.author.username }}', '{{ message.content }}', '{{ message.sent|date("m/d/Y, H:i") }}')">
+                                            <div class="mail_list">
+                                                <div class="left">
+                                                    <i class="fa fa-circle"></i> <i class="fa fa-edit"></i>
+                                                </div>
+                                                <div class="right">
+                                                    <h3>{{ message.author.infoUser.firstName }} {{ message.author.infoUser.lastName }} <small>{{ message.sent | date("m/d/Y, H:i") }}</small></h3>
+                                                    <p>{{ message.preview }}</p>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    {% endfor %}
+                                {% endif %}
                             </div>
-                            <!-- /MAIL LIST -->
+                            {# /MAIL LIST #}
 
-                            <!-- CONTENT MAIL -->
-                            <div class="col-sm-9 mail_view">
-                                <div class="inbox-body">
-                                    <div class="mail_heading row">
+                            {# CONTENT MAIL #}
+                            <div class="col-sm-9 mail_view" >
+                                <div class="inbox-body" id="inbox_body">
+
+                                    <div class="mail_heading row" id="mail_header">
                                         <div class="col-md-8">
                                             <div class="btn-group">
                                                 <button class="btn btn-sm btn-primary" type="button"><i class="fa fa-reply"></i> Reply</button>
@@ -138,11 +166,9 @@
                                         <div class="col-md-4 text-right">
                                             <p class="date"> 8:02 PM 12 FEB 2014</p>
                                         </div>
-                                        <div class="col-md-12">
-                                            <h4> Donec vitae leo at sem lobortis porttitor eu consequat risus. Mauris sed congue orci. Donec ultrices faucibus rutrum.</h4>
-                                        </div>
                                     </div>
-                                    <div class="sender-info">
+
+                                    <div class="sender-info" id="mail_sender_info">
                                         <div class="row">
                                             <div class="col-md-12">
                                                 <strong>Jon Doe</strong>
@@ -152,7 +178,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="view-mail">
+                                    <div class="view-mail" id="mail_view">
                                         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
                                             Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. </p>
                                         <p>Riusmod tempor incididunt ut labor erem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
@@ -161,64 +187,7 @@
                                         <p>Modesed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
                                             velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
                                     </div>
-                                    <div class="attachment">
-                                        <p>
-                                            <span><i class="fa fa-paperclip"></i> 3 attachments — </span>
-                                            <a href="#">Download all attachments</a> |
-                                            <a href="#">View all images</a>
-                                        </p>
-                                        <ul>
-                                            <li>
-                                                <a href="#" class="atch-thumb">
-                                                    <img src="images/1.png" alt="img" />
-                                                </a>
-
-                                                <div class="file-name">
-                                                    image-name.jpg
-                                                </div>
-                                                <span>12KB</span>
-
-
-                                                <div class="links">
-                                                    <a href="#">View</a> -
-                                                    <a href="#">Download</a>
-                                                </div>
-                                            </li>
-
-                                            <li>
-                                                <a href="#" class="atch-thumb">
-                                                    <img src="images/1.png" alt="img" />
-                                                </a>
-
-                                                <div class="file-name">
-                                                    img_name.jpg
-                                                </div>
-                                                <span>40KB</span>
-
-                                                <div class="links">
-                                                    <a href="#">View</a> -
-                                                    <a href="#">Download</a>
-                                                </div>
-                                            </li>
-                                            <li>
-                                                <a href="#" class="atch-thumb">
-                                                    <img src="images/1.png" alt="img" />
-                                                </a>
-
-                                                <div class="file-name">
-                                                    img_name.jpg
-                                                </div>
-                                                <span>30KB</span>
-
-                                                <div class="links">
-                                                    <a href="#">View</a> -
-                                                    <a href="#">Download</a>
-                                                </div>
-                                            </li>
-
-                                        </ul>
-                                    </div>
-                                    <div class="btn-group">
+                                    <div class="btn-group" id="mail_footer">
                                         <button class="btn btn-sm btn-primary" type="button"><i class="fa fa-reply"></i> Reply</button>
                                         <button class="btn btn-sm btn-default" type="button"  data-placement="top" data-toggle="tooltip" data-original-title="Forward"><i class="fa fa-share"></i></button>
                                         <button class="btn btn-sm btn-default" type="button" data-placement="top" data-toggle="tooltip" data-original-title="Print"><i class="fa fa-print"></i></button>
@@ -409,6 +378,19 @@
         $('#compose, .compose-close').click(function(){
             $('.compose').slideToggle();
         });
-    </script>>
+    </script>
     <!-- /compose -->
+
+    <script>
+        function showMessage(author, content, sent) {
+            // retrieving blocks
+            var mail_header         = $("#mail_header");
+            var mail_sender_info    = $("#mail_sender_info");
+            var mail_view           = $("#mail_view");
+            var mail_footer         = $("#mail_footer");
+            var div_inbox           = $("#inbox_body");
+
+            div_inbox.fadeOut();
+        }
+    </script>
 {% endblock javascript %}

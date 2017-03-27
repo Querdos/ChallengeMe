@@ -1,3 +1,4 @@
+{% trans_default_domain "administration-navigation-top" %}
 <div class="top_nav">
 
     <div class="nav_menu">
@@ -12,22 +13,22 @@
                         {% image "@AdminBundle/Resources/public/images/img.jpg" %}
                             <img src="{{ asset_url }}" alt="">
                         {% endimage %}
-                        {{ admin.firstName }} {{ admin.lastName }}
+                        {{ app.user.infoUser.firstname }} {{ app.user.infoUser.lastname }}
                         <span class=" fa fa-angle-down"></span>
                     </a>
                     <ul class="dropdown-menu dropdown-usermenu pull-right">
-                        <li><a href="{{ path('admin_profile') }}">  Profile</a>
+                        <li><a href="{{ path('administration_profile') }}">  {{ "nav.profile" | trans | desc("Profile") | meaning("Profile button") }}</a>
                         </li>
                         <li>
                             <a href="javascript:;">
                                 <span class="badge bg-red pull-right">50%</span>
-                                <span>Settings</span>
+                                <span>{{ "nav.settings" | trans | desc("Settings") | meaning("Settings button") }}</span>
                             </a>
                         </li>
                         <li>
-                            <a href="javascript:;">Help</a>
+                            <a href="javascript:;">{{ "nav.help" | trans | desc("Help") | meaning("Help button") }}</a>
                         </li>
-                        <li><a href="{{ path('admin_logout') }}"><i class="fa fa-sign-out pull-right"></i> Log Out</a>
+                        <li><a href="{{ path('administration_logout') }}"><i class="fa fa-sign-out pull-right"></i> {{ "nav.log-out" | trans | desc("Log Out") | meaning("Log out button") }}</a>
                         </li>
                     </ul>
                 </li>
@@ -38,62 +39,7 @@
                         <span class="badge bg-green">0</span>
                     </a>
                     <ul id="menu1" class="dropdown-menu list-unstyled msg_list" role="menu">
-                        {#<li>
-                            <a>
-                        <span class="image">
-                                          <img src="images/img.jpg" alt="Profile Image" />
-                                      </span>
-                        <span>
-                                          <span>John Smith</span>
-                        <span class="time">3 mins ago</span>
-                        </span>
-                        <span class="message">
-                                          Film festivals used to be do-or-die moments for movie makers. They were where...
-                                      </span>
-                            </a>
-                        </li>#}
-                        {#<li>
-                            <a>
-                        <span class="image">
-                                          <img src="images/img.jpg" alt="Profile Image" />
-                                      </span>
-                        <span>
-                                          <span>John Smith</span>
-                        <span class="time">3 mins ago</span>
-                        </span>
-                        <span class="message">
-                                          Film festivals used to be do-or-die moments for movie makers. They were where...
-                                      </span>
-                            </a>
-                        </li>
-                        <li>
-                            <a>
-                        <span class="image">
-                                          <img src="images/img.jpg" alt="Profile Image" />
-                                      </span>
-                        <span>
-                                          <span>John Smith</span>
-                        <span class="time">3 mins ago</span>
-                        </span>
-                        <span class="message">
-                                          Film festivals used to be do-or-die moments for movie makers. They were where...
-                                      </span>
-                            </a>
-                        </li>
-                        <li>
-                            <a>
-                        <span class="image">
-                                          <img src="images/img.jpg" alt="Profile Image" />
-                                      </span>
-                        <span>
-                                          <span>John Smith</span>
-                        <span class="time">3 mins ago</span>
-                        </span>
-                        <span class="message">
-                                          Film festivals used to be do-or-die moments for movie makers. They were where...
-                                      </span>
-                            </a>
-                        </li>#}
+                        {# TODO @querdos: Update messaging #}
                         <li>
                             <div class="text-center">
                                 <a href="inbox.html">
@@ -108,5 +54,4 @@
             </ul>
         </nav>
     </div>
-
 </div>

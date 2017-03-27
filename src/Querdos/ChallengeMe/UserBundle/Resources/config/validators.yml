@@ -1,0 +1,30 @@
+services:
+    challengeme.validator.username:
+        class: Querdos\ChallengeMe\UserBundle\Validator\Constraints\UsernameExistsValidator
+        calls:
+            - [ setAdminManager,      [ '@challengeme.manager.administrator' ]]
+        tags:
+            - { name: validator.constraint_validator }
+
+    challengeme.validator.email:
+        class: Querdos\ChallengeMe\UserBundle\Validator\Constraints\EmailExistsValidator
+        calls:
+            - [ setAdminManager,      [ '@challengeme.manager.administrator' ]]
+        tags:
+            - { name: validator.constraint_validator }
+
+    challengeme.validator.admin:
+        class: Querdos\ChallengeMe\UserBundle\Validator\AdminValidator
+        calls:
+            - [ setValidator,         ['@validator'] ]
+            - [ setAdminManager,      ['@challengeme.manager.administrator'] ]
+    challengeme.validator.moderator:
+        class: Querdos\ChallengeMe\UserBundle\Validator\ModeratorValidator
+        calls:
+            - [ setValidator,         ['@validator'] ]
+            - [ setAdminManager,      ['@challengeme.manager.administrator'] ]
+    challengeme.validator.redactor:
+        class: Querdos\ChallengeMe\UserBundle\Validator\RedactorValidator
+        calls:
+            - [ setValidator,         ['@validator'] ]
+            - [ setAdminManager,      ['@challengeme.manager.administrator']]

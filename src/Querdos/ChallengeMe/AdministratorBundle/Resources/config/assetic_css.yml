@@ -3,9 +3,9 @@ assetic:
         jVectorMap:
             inputs:
                 - 'bundles/admin/css/maps/jquery-jvectormap-2.0.3.css'
-            output: 'assets/css/jvectormap.css'
+            output: 'assets/admin/css/jvectormap.css'
 
-        customTheme:
+        customTheme_css:
             inputs:
                 - 'bundles/admin/css/custom.css'
-            output: 'assets/css/custom.css'
+            output: 'assets/admin/css/custom.css'

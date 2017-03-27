@@ -1,4 +1,0 @@
-services:
-    challengeme.manager.administrator:
-        class: Querdos\ChallengeMe\AdministratorBundle\Manager\AdministratorManager
-        arguments: ["@doctrine.orm.entity_manager"]

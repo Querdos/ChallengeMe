@@ -1,6 +1,7 @@
+{% trans_default_domain "administration-footer" %}
 <footer>
     <div class="pull-right">
-        ChallengeMe - ©{{ "now"|date("Y") }} All rights reserved to Hamza ESSAYEGH (Querdos) - Bootstrap Admin Template by <a href="https://colorlib.com">Colorlib</a>
+        ChallengeMe - ©{{ "now"|date("Y") }} {{ "copyright" | trans | desc("All rights reserved") | meaning("Copyrights") }} to Hamza ESSAYEGH (Querdos) - Bootstrap Admin Template by <a href="https://colorlib.com">Colorlib</a>
     </div>
     <div class="clearfix"></div>
 </footer>

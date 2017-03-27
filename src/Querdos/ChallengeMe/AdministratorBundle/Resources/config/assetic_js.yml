@@ -6,7 +6,7 @@ assetic:
                 - '@AdminBundle/Resources/public/js/flot/date.js'
                 - '@AdminBundle/Resources/public/js/flot/jquery.flot.spline.js'
                 - '@AdminBundle/Resources/public/js/flot/curvedLines.js'
-            output: 'assets/js/flot_plugin.js'
+            output: 'assets/admin/js/flot_plugin.js'
 
         jVectorMap_js:
             inputs:
@@ -14,15 +14,15 @@ assetic:
                 - '@AdminBundle/Resources/public/js/maps/jquery-jvectormap-world-mill-en.js'
                 - '@AdminBundle/Resources/public/js/maps/jquery-jvectormap-us-aea-en.js'
                 - '@AdminBundle/Resources/public/js/maps/gdp-data.js'
-            output: 'assets/js/jvectormap.js'
+            output: 'assets/admin/js/jvectormap.js'
 
         bootstrapDateRangePicker_js:
             inputs:
                 - '@AdminBundle/Resources/public/js/moment/moment.min.js'
                 - '@AdminBundle/Resources/public/js/datepicker/daterangepicker.js'
-            output: 'assets/js/bootstrapdaterangepicker.js'
+            output: 'assets/admin/js/bootstrapdaterangepicker.js'
 
         customTheme_js:
             inputs:
                 - '@AdminBundle/Resources/public/js/custom.js'
-            output: 'assets/js/customTheme.js'
+            output: 'assets/admin/js/customTheme.js'

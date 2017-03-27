@@ -1,4 +1,6 @@
 /.idea/
+.buildpath
+.project
 /app/config/parameters.yml
 /build/
 /phpunit.xml
@@ -20,3 +22,4 @@
 /web/assetic
 /web/images
 /web/js/
+/web/uploads/

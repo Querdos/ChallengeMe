@@ -1,0 +1,311 @@
+{% trans_default_domain "players-inbox" %}
+{% extends "PlayerBundle::base.html.twig" %}
+
+{% block stylesheets %}
+    {{ parent() }}
+
+    {% stylesheets '@bootstrapWYSIWYG_css' filter='cssrewrite' %}
+        <link href="{{ asset_url }}" rel="stylesheet"/>
+    {% endstylesheets %}
+{% endblock stylesheets %}
+
+{% set message_selected = 0 %}
+
+{% block main_content %}
+    <div class="">
+
+        <div class="page-title">
+            <div class="title_left">
+                <h3>
+                    {{ "title.main" | trans | desc("Private messages") | meaning("Private messages title") }}
+                </h3>
+            </div>
+        </div>
+
+        <div class="clearfix"></div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2>{{ "title.inbox" | trans | desc("Inbox") | meaning("Inbox title") }}<small>{{ app.user.infoUser.firstName }} {{ app.user.infoUser.lastName }}</small></h2>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+                        <div class="row">
+                            {# MAIL LIST #}
+                            <div class="col-sm-3 mail_list_column">
+                                <button id="compose" class="btn btn-sm btn-success btn-block" type="button">{{ "inbox.compose" | trans | desc("COMPOSE") | meaning("Compose button") }}</button>
+                                {#<a href="#">
+                                    <div class="mail_list">
+                                        <div class="left">
+                                            <i class="fa fa-circle"></i> <i class="fa fa-edit"></i>
+                                        </div>
+                                        <div class="right">
+                                            <h3>Dennis Mugo <small>3.00 PM</small></h3>
+                                            <p>Ut enim ad minim veniam, quis nostrud exercitation enim ad minim veniam, quis nostrud exercitation...</p>
+                                        </div>
+                                    </div>
+                                </a>
+                                <a href="#">
+                                    <div class="mail_list">
+                                        <div class="left">
+                                            <i class="fa fa-star"></i>
+                                        </div>
+                                        <div class="right">
+                                            <h3>Jane Nobert <small>4.09 PM</small></h3>
+                                            <p><span class="badge">To</span> Ut enim ad minim veniam, quis nostrud exercitation enim ad minim veniam, quis nostrud exercitation...</p>
+                                        </div>
+                                    </div>
+                                </a>
+                                <a href="#">
+                                    <div class="mail_list">
+                                        <div class="left">
+                                            <i class="fa fa-circle-o"></i><i class="fa fa-paperclip"></i>
+                                        </div>
+                                        <div class="right">
+                                            <h3>Musimbi Anne <small>4.09 PM</small></h3>
+                                            <p><span class="badge">CC</span> Ut enim ad minim veniam, quis nostrud exercitation enim ad minim veniam, quis nostrud exercitation...</p>
+                                        </div>
+                                    </div>
+                                </a>
+                                <a href="#">
+                                    <div class="mail_list">
+                                        <div class="left">
+                                            <i class="fa fa-paperclip"></i>
+                                        </div>
+                                        <div class="right">
+                                            <h3>Jon Dibbs <small>4.09 PM</small></h3>
+                                            <p>Ut enim ad minim veniam, quis nostrud exercitation enim ad minim veniam, quis nostrud exercitation...</p>
+                                        </div>
+                                    </div>
+                                </a>
+                                <a href="#">
+                                    <div class="mail_list">
+                                        <div class="left">
+                                            .
+                                        </div>
+                                        <div class="right">
+                                            <h3>Debbis & Raymond <small>4.09 PM</small></h3>
+                                            <p>Ut enim ad minim veniam, quis nostrud exercitation enim ad minim veniam, quis nostrud exercitation...</p>
+                                        </div>
+                                    </div>
+                                </a>
+                                <a href="#">
+                                    <div class="mail_list">
+                                        <div class="left">
+                                            .
+                                        </div>
+                                        <div class="right">
+                                            <h3>Debbis & Raymond <small>4.09 PM</small></h3>
+                                            <p>Ut enim ad minim veniam, quis nostrud exercitation enim ad minim veniam, quis nostrud exercitation...</p>
+                                        </div>
+                                    </div>
+                                </a>
+                                <a href="#">
+                                    <div class="mail_list">
+                                        <div class="left">
+                                            <i class="fa fa-circle"></i> <i class="fa fa-edit"></i>
+                                        </div>
+                                        <div class="right">
+                                            <h3>Dennis Mugo <small>3.00 PM</small></h3>
+                                            <p>Ut enim ad minim veniam, quis nostrud exercitation enim ad minim veniam, quis nostrud exercitation...</p>
+                                        </div>
+                                    </div>
+                                </a>
+                                <a href="#">
+                                    <div class="mail_list">
+                                        <div class="left">
+                                            <i class="fa fa-star"></i>
+                                        </div>
+                                        <div class="right">
+                                            <h3>Jane Nobert <small>4.09 PM</small></h3>
+                                            <p>Ut enim ad minim veniam, quis nostrud exercitation enim ad minim veniam, quis nostrud exercitation...</p>
+                                        </div>
+                                    </div>
+                                </a>#}
+                                {% if messages|length == 0 %}
+                                <a href="#">
+                                    <div class="mail_list">
+                                        <div class="right">
+                                            <p>No messages</p>
+                                        </div>
+                                    </div>
+                                </a>
+                                {% else %}
+                                    {% for message in messages %}
+                                        <a href="javascript:void(0)" onclick="showMessage('{{ message.author.username }}', '{{ message.content }}', '{{ message.sent|date("m/d/Y, H:i") }}')">
+                                            <div class="mail_list">
+                                                <div class="left">
+                                                    <i class="fa fa-circle"></i> <i class="fa fa-edit"></i>
+                                                </div>
+                                                <div class="right">
+                                                    <h3>{{ message.author.infoUser.firstName }} {{ message.author.infoUser.lastName }} <small>{{ message.sent | date("m/d/Y, H:i") }}</small></h3>
+                                                    <p>{{ message.preview }}</p>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    {% endfor %}
+                                {% endif %}
+                            </div>
+                            {# /MAIL LIST #}
+
+                            {# CONTENT MAIL #}
+                            <div class="col-sm-9 mail_view" >
+                                <div class="inbox-body" id="inbox_body">
+
+                                    <div class="mail_heading row" id="mail_header">
+                                        <div class="col-md-8">
+                                            <div class="btn-group">
+                                                <button class="btn btn-sm btn-primary" type="button"><i class="fa fa-reply"></i> Reply</button>
+                                                <button class="btn btn-sm btn-default" type="button"  data-placement="top" data-toggle="tooltip" data-original-title="Forward"><i class="fa fa-share"></i></button>
+                                                <button class="btn btn-sm btn-default" type="button" data-placement="top" data-toggle="tooltip" data-original-title="Print"><i class="fa fa-print"></i></button>
+                                                <button class="btn btn-sm btn-default" type="button" data-placement="top" data-toggle="tooltip" data-original-title="Trash"><i class="fa fa-trash-o"></i></button>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 text-right">
+                                            <p class="date"> 8:02 PM 12 FEB 2014</p>
+                                        </div>
+                                    </div>
+
+                                    <div class="sender-info" id="mail_sender_info">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <strong>Jon Doe</strong>
+                                                <span>(jon.doe@gmail.com)</span> to
+                                                <strong>me</strong>
+                                                <a class="sender-dropdown"><i class="fa fa-chevron-down"></i></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="view-mail" id="mail_view">
+                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                                            Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. </p>
+                                        <p>Riusmod tempor incididunt ut labor erem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
+                                            nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
+                                            mollit anim id est laborum.</p>
+                                        <p>Modesed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
+                                            velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                                    </div>
+                                    <div class="btn-group" id="mail_footer">
+                                        <button class="btn btn-sm btn-primary" type="button"><i class="fa fa-reply"></i> Reply</button>
+                                        <button class="btn btn-sm btn-default" type="button"  data-placement="top" data-toggle="tooltip" data-original-title="Forward"><i class="fa fa-share"></i></button>
+                                        <button class="btn btn-sm btn-default" type="button" data-placement="top" data-toggle="tooltip" data-original-title="Print"><i class="fa fa-print"></i></button>
+                                        <button class="btn btn-sm btn-default" type="button" data-placement="top" data-toggle="tooltip" data-original-title="Trash"><i class="fa fa-trash-o"></i></button>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <!-- /CONTENT MAIL -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock main_content %}
+
+{% block javascript %}
+    {{ parent() }}
+
+    {#  compose   #}
+    <div class="compose col-md-6 col-xs-12">
+        <div class="compose-header">
+            New Message
+            <button type="button" class="close compose-close">
+                <span>×</span>
+            </button>
+        </div>
+
+        <div class="compose-body">
+            <div id="alerts"></div>
+
+            <div class="btn-toolbar editor" data-role="editor-toolbar" data-target="#editor">
+                <div class="btn-group">
+                    <a class="btn dropdown-toggle" data-toggle="dropdown" title="Font"><i class="fa fa-font"></i><b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                    </ul>
+                </div>
+
+                <div class="btn-group">
+                    <a class="btn dropdown-toggle" data-toggle="dropdown" title="Font Size"><i class="fa fa-text-height"></i>&nbsp;<b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a data-edit="fontSize 5">
+                                <p style="font-size:17px">Huge</p>
+                            </a>
+                        </li>
+                        <li>
+                            <a data-edit="fontSize 3">
+                                <p style="font-size:14px">Normal</p>
+                            </a>
+                        </li>
+                        <li>
+                            <a data-edit="fontSize 1">
+                                <p style="font-size:11px">Small</p>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="btn-group">
+                    <a class="btn" data-edit="bold" title="Bold (Ctrl/Cmd+B)"><i class="fa fa-bold"></i></a>
+                    <a class="btn" data-edit="italic" title="Italic (Ctrl/Cmd+I)"><i class="fa fa-italic"></i></a>
+                    <a class="btn" data-edit="strikethrough" title="Strikethrough"><i class="fa fa-strikethrough"></i></a>
+                    <a class="btn" data-edit="underline" title="Underline (Ctrl/Cmd+U)"><i class="fa fa-underline"></i></a>
+                </div>
+
+                <div class="btn-group">
+                    <a class="btn" data-edit="insertunorderedlist" title="Bullet list"><i class="fa fa-list-ul"></i></a>
+                    <a class="btn" data-edit="insertorderedlist" title="Number list"><i class="fa fa-list-ol"></i></a>
+                    <a class="btn" data-edit="outdent" title="Reduce indent (Shift+Tab)"><i class="fa fa-dedent"></i></a>
+                    <a class="btn" data-edit="indent" title="Indent (Tab)"><i class="fa fa-indent"></i></a>
+                </div>
+
+                <div class="btn-group">
+                    <a class="btn" data-edit="justifyleft" title="Align Left (Ctrl/Cmd+L)"><i class="fa fa-align-left"></i></a>
+                    <a class="btn" data-edit="justifycenter" title="Center (Ctrl/Cmd+E)"><i class="fa fa-align-center"></i></a>
+                    <a class="btn" data-edit="justifyright" title="Align Right (Ctrl/Cmd+R)"><i class="fa fa-align-right"></i></a>
+                    <a class="btn" data-edit="justifyfull" title="Justify (Ctrl/Cmd+J)"><i class="fa fa-align-justify"></i></a>
+                </div>
+
+                <div class="btn-group">
+                    <a class="btn dropdown-toggle" data-toggle="dropdown" title="Hyperlink"><i class="fa fa-link"></i></a>
+                    <div class="dropdown-menu input-append">
+                        <input class="span2" placeholder="URL" type="text" data-edit="createLink" />
+                        <button class="btn" type="button">Add</button>
+                    </div>
+                    <a class="btn" data-edit="unlink" title="Remove Hyperlink"><i class="fa fa-cut"></i></a>
+                </div>
+
+                <div class="btn-group">
+                    <a class="btn" title="Insert picture (or just drag & drop)" id="pictureBtn"><i class="fa fa-picture-o"></i></a>
+                    <input type="file" data-role="magic-overlay" data-target="#pictureBtn" data-edit="insertImage" />
+                </div>
+
+                <div class="btn-group">
+                    <a class="btn" data-edit="undo" title="Undo (Ctrl/Cmd+Z)"><i class="fa fa-undo"></i></a>
+                    <a class="btn" data-edit="redo" title="Redo (Ctrl/Cmd+Y)"><i class="fa fa-repeat"></i></a>
+                </div>
+            </div>
+
+            <div id="editor" class="editor-wrapper"></div>
+        </div>
+
+        <div class="compose-footer">
+            <button id="send" class="btn btn-sm btn-success" type="button">Send</button>
+        </div>
+    </div>
+    {#  /compose   #}
+
+    {% javascripts
+        '@fastclick_js'
+        '@nprogress_js'
+        '@bootstrapWYSIWYG_js'
+
+        '@customTheme_js'
+        '@inbox_js'
+    %}
+        <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock javascript %}

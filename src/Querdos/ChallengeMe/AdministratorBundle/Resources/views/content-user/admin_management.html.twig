@@ -1,0 +1,160 @@
+{% trans_default_domain "administration-admins-management" %}
+
+{% extends "AdminBundle::base.html.twig" %}
+
+{% block stylesheets %}
+    {{ parent() }}
+
+    {% stylesheets '@iCheck' '@datatables_css' filter='cssrewrite' %}
+        <link href="{{ asset_url }}" rel="stylesheet"/>
+    {% endstylesheets %}
+{% endblock stylesheets %}
+
+{% block main_content %}
+    <div class="">
+
+        <div class="page-title">
+            <div class="title_left">
+                <h3>
+                    {{ "title" | trans | desc("Administrators management") | meaning("Title") }}
+                </h3>
+            </div>
+
+        </div>
+
+        <div class="clearfix"></div>
+
+        <div class="row">
+
+            {# List of administrators #}
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2>{{ "table.title" | trans | desc("List of administrators") | meaning("Title for the table") }}</h2>
+                        <ul class="nav navbar-right panel_toolbox">
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a href="{{ path('administration_addAdmin') }}">{{ "table.setting.new-admin" | trans | desc("New admin") | meaning("New admin link") }}</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+                        <table id="datatable" class="table table-striped table-bordered" style="margin: auto">
+                            <thead>
+                            <tr>
+                                <th>{{ "table.th1" | trans | desc("Firstname") | meaning("th1") }}</th>
+                                <th>{{ "table.th2" | trans | desc("Lastname") | meaning("th2") }}</th>
+                                <th>{{ "table.th3" | trans | desc("Username") | meaning("th3") }}</th>
+                                <th>{{ "table.th4" | trans | desc("Email") | meaning("th4") }}</th>
+                                <th>{{ "table.th5" | trans | desc("Email (2)") | meaning("th5") }}</th>
+                                <th>{{ "table.th6" | trans | desc("Birthday") | meaning("th6") }}</th>
+                                <th>{{ "table.th7" | trans | desc("Actions") | meaning("th7") }}</th>
+                            </tr>
+                            </thead>
+
+                            <tbody>
+                            {% for admin in administrators %}
+                                {% if admin.username != app.user.username %}
+                                    <tr>
+                                        <td>{{ admin.infoUser.firstName }}</td>
+                                        <td>{{ admin.infoUser.lastName }}</td>
+                                        <td>{{ admin.username }}</td>
+                                        <td>{{ admin.email }}</td>
+                                        <td>{{ admin.emailBack }}</td>
+                                        <td>{{ admin.infoUser.birthday|date('m-d-Y') }}</td>
+                                        <td align="center">
+                                            <a title="{{ "a.title1" | trans | desc("Send a message") | meaning("Block a title1") }}" href="javascript:void(0)"><i class="fa fa-envelope-o fa-fw" aria-hidden="true"></i></a>
+                                            {% if is_granted("ROLE_ADMIN") %}
+                                                <a title="{{ "a.title2" | trans | desc("Edit") | meaning("Block a title2") }}" href="{{ path('administration_updateAdmin', {'id': admin.id}) }}"><i class="fa fa-pencil fa-fw" aria-hidden="true"></i></a>
+                                                <a title="{{ "a.title3" | trans | desc("Reset password") | meaning("Block a title3") }}" href="{{ path('administration_resetPassword', {'id': admin.id}) }}"><i class="fa fa-recycle fa-fw" aria-hidden="true"></i></a>
+                                                <a title="{{ "a.title4" | trans | desc("Remove") | meaning("Block a title4") }}" href="{{ path('administration_removeAdmin', {'id': admin.id}) }}"><i class="fa fa-times fa-fw" aria-hidden="true"></i></a>
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                {% endif %}
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+{% endblock main_content %}
+
+{% block javascript %}
+    {% javascripts '@jquery_js' '@bootstrap_js' '@fastclick_js' '@nprogress_js' '@iCheck_js' '@datatables_js' '@customTheme_js' %}
+        <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+
+    {# Script for the datatable #}
+    <script>
+        $(document).ready(function() {
+            var handleDataTableButtons = function() {
+                if ($("#datatable-buttons").length) {
+                    $("#datatable-buttons").DataTable({
+                        dom: "Bfrtip",
+                        buttons: [
+                            {
+                                extend: "copy",
+                                className: "btn-sm"
+                            },
+                            {
+                                extend: "csv",
+                                className: "btn-sm"
+                            },
+                            {
+                                extend: "excel",
+                                className: "btn-sm"
+                            },
+                            {
+                                extend: "pdfHtml5",
+                                className: "btn-sm"
+                            },
+                            {
+                                extend: "print",
+                                className: "btn-sm"
+                            },
+                        ],
+                        responsive: true
+                    });
+                }
+            };
+
+            TableManageButtons = function() {
+                "use strict";
+                return {
+                    init: function() {
+                        handleDataTableButtons();
+                    }
+                };
+            }();
+
+            $('#datatable').dataTable();
+            $('#datatable-keytable').DataTable({
+                keys: true
+            });
+
+            $('#datatable-responsive').DataTable();
+
+            $('#datatable-scroller').DataTable({
+                ajax: "js/datatables/json/scroller-demo.json",
+                deferRender: true,
+                scrollY: 380,
+                scrollCollapse: true,
+                scroller: true
+            });
+
+            var table = $('#datatable-fixed-header').DataTable({
+                fixedHeader: true
+            });
+
+            TableManageButtons.init();
+        });
+    </script>
+{% endblock javascript %}

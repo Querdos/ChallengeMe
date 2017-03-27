@@ -1,0 +1,42 @@
+Querdos\ChallengeMe\UserBundle\Entity\Demand:
+    type:             entity
+    table:            cm_user_demand
+    repositoryClass:  Querdos\ChallengeMe\UserBundle\Repository\DemandRepository
+    id:
+        id:
+            type:         integer
+            id:           true
+            generator:
+                strategy: AUTO
+
+    fields:
+        date:
+            type:     datetime
+            nullable: false
+            unique:   false
+        status:
+            type:     integer
+            length:   1
+            unique:   false
+            nullable: false
+
+    manyToOne:
+        team:
+            targetEntity: Querdos\ChallengeMe\UserBundle\Entity\Team
+            cascade:      [ "persist" ]
+            joinColumn:
+                name:                 team
+                referencedColumnName: id
+                onDelete:             cascade
+                nullable:             false
+
+        player:
+            targetEntity: Querdos\ChallengeMe\UserBundle\Entity\Player
+            cascade:      [ "persist" ]
+            joinColumn:
+                name:                 player
+                referencedColumnName: id
+                onDelete:             cascade
+                nullable:             false
+
+    lifecycleCallbacks: { }

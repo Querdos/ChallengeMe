@@ -1,21 +1,22 @@
 imports:
-    - { resource: parameters.yml }
-    - { resource: security.yml }
-    - { resource: services.yml }
+    - { resource: "@AdminBundle/Resources/config/services.yml"      }
+    - { resource: "@LandingBundle/Resources/config/services.yml"    }
+    - { resource: "@UserBundle/Resources/config/services.yml"       }
+    - { resource: "@ChallengesBundle/Resources/config/services.yml" }
+    - { resource: "@PlayerBundle/Resources/config/services.yml"     }
 
-    - { resource: config_assetic_global.yml }
-
-    - { resource: "@AdminBundle/Resources/config/services.yml" }
-    - { resource: "@LandingBundle/Resources/config/services.yml" }
+    - { resource: "config_jms.yml"  }
+    - { resource: "config_vich.yml" }
 
 # Put parameters here that don't need to change on each machine where the app is deployed
 # http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     locale: en
+    admin_bundle_path:  "%kernel.root_dir%/../src/Querdos/ChallengeMe/AdministratorBundle"
 
 framework:
     #esi:             ~
-    #translator:      { fallbacks: ["%locale%"] }
+    translator:      { fallbacks: ["%locale%"] }
     secret:          "%secret%"
     router:
         resource: "%kernel.root_dir%/config/routing.yml"
@@ -60,9 +61,9 @@ doctrine:
         #     path:     "%database_path%"
 
     orm:
-        auto_generate_proxy_classes: "%kernel.debug%"
-        naming_strategy: doctrine.orm.naming_strategy.underscore
-        auto_mapping: true
+        auto_generate_proxy_classes:  "%kernel.debug%"
+        naming_strategy:              doctrine.orm.naming_strategy.underscore
+        auto_mapping:                 true
 
 # Swiftmailer Configuration
 swiftmailer:
@@ -79,3 +80,57 @@ assetic:
     filters:
         cssrewrite: ~
 
+# CKEditor configuration
+ivory_ck_editor:
+    plugins:
+        lineutils:
+            path:     '/ckeditor/plugins/lineutils/'
+            filename: 'plugin.js'
+
+        widget:
+            path:     '/ckeditor/plugins/widget/'
+            filename: 'plugin.js'
+
+        codesnippet:
+            path:     '/ckeditor/plugins/codesnippet/'
+            filename: 'plugin.js'
+
+    configs:
+        config_challenge:
+            toolbar: "redac_toolbar"
+            uiColor: "#ffffff"
+            toolbarCanCollapse: true
+            extraPlugins: 'lineutils,widget,codesnippet'
+            codeSnippet_theme: 'monokai_sublime'
+
+    toolbars:
+        configs:
+            redac_toolbar: [
+                    ["Preview", "-", "Cut", "Copy", "Paste" ],
+                    [ "Undo", "Redo" ],
+                    [ "Bold", "Italic", "Strike"],
+                    [ "Link", "Table", "CodeSnippet"],
+                    [ "Maximize" ]
+                ]
+
+# Nelmio Api Doc Bundle
+nelmio_api_doc: ~
+
+# FOS REST BUNDLE
+fos_rest:
+    param_fetcher_listener: true
+    body_listener:          true
+    format_listener:        true
+    view:
+        view_response_listener: 'force'
+        formats:
+            xml:            true
+            json :          true
+        templating_formats:
+            html:           true
+        force_redirects:
+            html:           true
+        failed_validation:  HTTP_BAD_REQUEST
+        default_engine:     twig
+    routing_loader:
+        default_format:     json

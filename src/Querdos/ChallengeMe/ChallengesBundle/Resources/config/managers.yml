@@ -1,0 +1,32 @@
+services:
+    challengeme.manager.category:
+        class: Querdos\ChallengeMe\ChallengesBundle\Manager\CategoryManager
+        calls:
+            - [ setRepository,    [ '@challengeme.repository.category'] ]
+            - [ setEntityManager, [ '@doctrine.orm.entity_manager' ] ]
+
+    challengeme.manager.challenge:
+        class: Querdos\ChallengeMe\ChallengesBundle\Manager\ChallengeManager
+        calls:
+            - [ setRepository,    [ '@challengeme.repository.challenge' ] ]
+            - [ setEntityManager, [ '@doctrine.orm.entity_manager' ] ]
+
+    challengeme.manager.challenge_solving:
+        class: Querdos\ChallengeMe\ChallengesBundle\Manager\ChallengeSolvingManager
+        calls:
+            - [ setRepository,      [ '@challengeme.repository.challenge_solving'   ] ]
+            - [ setEntityManager,   [ '@doctrine.orm.entity_manager'                ] ]
+            - [ setCategoryManager, [ '@challengeme.manager.category'               ] ]
+            - [ setChallengeManager,[ '@challengeme.manager.challenge'              ] ]
+
+    challengeme.manager.rating:
+        class: Querdos\ChallengeMe\ChallengesBundle\Manager\RatingManager
+        calls:
+            - [ setRepository,      [ '@challengeme.repository.rating'   ] ]
+            - [ setEntityManager,   [ '@doctrine.orm.entity_manager'                ] ]
+
+    challengeme.manager.challenge_resource:
+        class: Querdos\ChallengeMe\ChallengesBundle\Manager\ChallengeResourceManager
+        calls:
+            - [ setRepository,      [ '@challengeme.repository.challenge_resource'   ] ]
+            - [ setEntityManager,   [ '@doctrine.orm.entity_manager'                ] ]
