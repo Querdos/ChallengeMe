@@ -52,19 +52,11 @@ class PlayerController extends Controller
             $data['teamRank'] = $teamManager->getTeamRank($this->getUser()->getTeam());
         }
 
-        // checking if the user has a team
-        if ($this->getUser()->hasTeam()) {
-            // retrieving challenges completion
-            $challengeCompletion = $this
-                ->get('challengeme.manager.challenge_solving')
-                ->getChallengesCompletionForTeam(
-                    $this->getUser()->getTeam()
-                )
-            ;
-
-            // updating data array
-            $data['challengeCompletion'] = $challengeCompletion;
-        }
+        // retrieving recent activities for current player
+        $data['playerActivities'] = $this
+            ->get('challengeme.manager.player_activity')
+            ->readForPlayer($this->getUser())
+        ;
 
         // returning array
         return $data;

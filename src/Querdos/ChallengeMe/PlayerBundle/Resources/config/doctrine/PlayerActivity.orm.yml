@@ -1,26 +1,28 @@
-Querdos\ChallengeMe\PlayerBundle\Entity\Notification:
+Querdos\ChallengeMe\PlayerBundle\Entity\PlayerActivity:
     type:             entity
-    table:            cm_player_notification
-    repositoryClass:  Querdos\ChallengeMe\PlayerBundle\Repository\NotificationRepository
+    table:            cm_player_player_activity
+    repositoryClass:  Querdos\ChallengeMe\PlayerBundle\Repository\PlayerActivityRepository
     id:
         id:
             type:         integer
             id:           true
             generator:
                 strategy: AUTO
+
     fields:
-        content:
+        title:
+            type:         string
+            length:       255
+            unique:       false
+            nullable:     false
+        description:
             type:         text
-            nullable:     false
             unique:       false
-        state:
-            type:         boolean
             nullable:     false
-            unique:       false
-        created:
+        date:
             type:         datetime
-            nullable:     false
             unique:       false
+            nullable:     false
 
     manyToOne:
         player:

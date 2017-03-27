@@ -13,7 +13,9 @@ use Querdos\ChallengeMe\ChallengesBundle\Entity\Challenge;
 use Querdos\ChallengeMe\ChallengesBundle\Entity\ChallengeSolving;
 use Querdos\ChallengeMe\ChallengesBundle\Manager\ChallengeSolvingManager;
 use Querdos\ChallengeMe\PlayerBundle\Entity\Notification;
+use Querdos\ChallengeMe\PlayerBundle\Entity\PlayerActivity;
 use Querdos\ChallengeMe\PlayerBundle\Manager\NotificationManager;
+use Querdos\ChallengeMe\PlayerBundle\Manager\PlayerActivityManager;
 use Querdos\ChallengeMe\UserBundle\Entity\Player;
 use Querdos\ChallengeMe\UserBundle\Entity\Team;
 use Querdos\ChallengeMe\UserBundle\Repository\PlayerRepository;
@@ -42,6 +44,11 @@ class PlayerManager extends BaseManager
      * @var TeamManager
      */
     private $teamManager;
+
+    /**
+     * @var PlayerActivityManager
+     */
+    private $playerActivityManager;
 
     /**
      * Create a new player in database
@@ -191,6 +198,15 @@ class PlayerManager extends BaseManager
         $this->notificationManager->create(
             new Notification($player->getUsername() . " has leaved your team", $leader)
         );
+
+        // adding the recent activity
+        $this->playerActivityManager->create(
+            new PlayerActivity(
+                "Team leaved",
+                "You have leaved your team, do not forget to find another one !",
+                $player
+            )
+        );
     }
 
     /**
@@ -217,6 +233,17 @@ class PlayerManager extends BaseManager
     public function setNotificationManager($notificationManager)
     {
         $this->notificationManager = $notificationManager;
+        return $this;
+    }
+
+    /**
+     * @param PlayerActivityManager $playerActivityManager
+     *
+     * @return PlayerManager
+     */
+    public function setPlayerActivityManager($playerActivityManager)
+    {
+        $this->playerActivityManager = $playerActivityManager;
         return $this;
     }
 }

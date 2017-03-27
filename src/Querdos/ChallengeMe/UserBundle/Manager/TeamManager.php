@@ -9,16 +9,23 @@
 namespace Querdos\ChallengeMe\UserBundle\Manager;
 
 use Querdos\ChallengeMe\PlayerBundle\Entity\Notification;
+use Querdos\ChallengeMe\PlayerBundle\Entity\PlayerActivity;
 use Querdos\ChallengeMe\PlayerBundle\Manager\NotificationManager;
+use Querdos\ChallengeMe\PlayerBundle\Manager\PlayerActivityManager;
 use Querdos\ChallengeMe\UserBundle\Entity\Player;
 use Querdos\ChallengeMe\UserBundle\Entity\Team;
 
 class TeamManager extends BaseManager
 {
     /**
-     * @var NotificationManager $notificationManager
+     * @var NotificationManager
      */
     private $notificationManager;
+
+    /**
+     * @var PlayerActivityManager
+     */
+    private $playerActivityManager;
 
     /**
      * Create a team in database
@@ -45,6 +52,15 @@ class TeamManager extends BaseManager
         $this->notificationManager->create(
             new Notification(
                 "Your team has been successfully created",
+                $team->getLeader()
+            )
+        );
+
+        // adding the created team to the player's activity
+        $this->playerActivityManager->create(
+            new PlayerActivity(
+                "Team creation",
+                "You have created your team: " . $team->getName(),
                 $team->getLeader()
             )
         );
@@ -90,5 +106,16 @@ class TeamManager extends BaseManager
     public function setNotificationManager($notificationManager)
     {
         $this->notificationManager = $notificationManager;
+    }
+
+    /**
+     * @param PlayerActivity $playerActivityManager
+     *
+     * @return TeamManager
+     */
+    public function setPlayerActivityManager($playerActivityManager)
+    {
+        $this->playerActivityManager = $playerActivityManager;
+        return $this;
     }
 }

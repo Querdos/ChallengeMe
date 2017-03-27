@@ -10,7 +10,9 @@ namespace Querdos\ChallengeMe\UserBundle\Manager;
 
 use Doctrine\ORM\EntityManager;
 use Querdos\ChallengeMe\PlayerBundle\Entity\Notification;
+use Querdos\ChallengeMe\PlayerBundle\Entity\PlayerActivity;
 use Querdos\ChallengeMe\PlayerBundle\Manager\NotificationManager;
+use Querdos\ChallengeMe\PlayerBundle\Manager\PlayerActivityManager;
 use Querdos\ChallengeMe\UserBundle\Entity\Demand;
 use Querdos\ChallengeMe\UserBundle\Entity\Player;
 use Querdos\ChallengeMe\UserBundle\Entity\Team;
@@ -26,6 +28,11 @@ class DemandManager extends BaseManager
      * @var NotificationManager $notificationManager
      */
     private $notificationManager;
+
+    /**
+     * @var PlayerActivityManager
+     */
+    private $playerActivityManager;
 
     /**
      * @param Demand $demand
@@ -91,6 +98,16 @@ class DemandManager extends BaseManager
                 $demand->getPlayer()
             )
         );
+
+        // creating recent activity for the player
+        // TODO @querdos: Manage translation for an accepted demand (notification)
+        $this->playerActivityManager->create(
+            new PlayerActivity(
+                "Team joined",
+                "You have joined " . $demand->getTeam()->getName(),
+                $demand->getPlayer()
+            )
+        );
     }
 
     /**
@@ -140,5 +157,16 @@ class DemandManager extends BaseManager
     public function setNotificationManager($notificationManager)
     {
         $this->notificationManager = $notificationManager;
+    }
+
+    /**
+     * @param PlayerActivityManager $playerActivityManager
+     *
+     * @return DemandManager
+     */
+    public function setPlayerActivityManager($playerActivityManager)
+    {
+        $this->playerActivityManager = $playerActivityManager;
+        return $this;
     }
 }
