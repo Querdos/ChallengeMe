@@ -16,6 +16,7 @@ use Querdos\ChallengeMe\UserBundle\Entity\PlayerRole;
 use Querdos\ChallengeMe\UserBundle\Entity\Team;
 use Querdos\ChallengeMe\UserBundle\Manager\DemandManager;
 use Querdos\ChallengeMe\UserBundle\Manager\PlayerManager;
+use Querdos\ChallengeMe\UserBundle\Manager\TeamManager;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -263,10 +264,15 @@ class PlayerController extends Controller
             ;
 
             // team manager
+            /** @var TeamManager $teamManager */
             $teamManager = $this->get('challengeme.manager.team');
+
+            // ranking (top 3)
+            $top3 = $teamManager->getTeamsRanked(3);
 
             // the user has a team
             $data['challengesCompletion'] = $challengesCompletion;
+            $data['top3']                 = $top3;
             $data['team']                 = $team;
             $data['totalTeam']            = $teamManager->count();
             $data['rank']                 = $teamManager->getTeamRank($team);

@@ -78,8 +78,6 @@
                         </div>
                     {% endif %}
 
-
-
                     <div class="x_content">
                         {# If no team #}
                         {% if app.user.team is null %}
@@ -247,19 +245,24 @@
                                 </ul>
 
                                 <br/>
-                                {# challenge completion #}
-                                <h4>Challenges completion</h4>
-                                <ul class="list-unstyled user_data">
-                                    {% for catName, completion in challengesCompletion %}
-                                        <li>
-                                            <p>{{ catName }}</p>
-                                            <div class="progress progress_sm">
-                                                <div class="progress-bar bg-green" role="progressbar" data-transitiongoal="{{ completion }}"></div>
-                                            </div>
-                                        </li>
+                                {# Top 3 #}
+                                <h4>Top 3 </h4>
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Team</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for team in top3 %}
+                                        <tr>
+                                            <th scope="row">{{ loop.index }}</th>
+                                            <td>{{ team.name }}</td>
+                                        </tr>
                                     {% endfor %}
-                                </ul>
-                                {# end of skills #}
+                                    </tbody>
+                                </table>
                             </div>
 
                             {# Team members #}
@@ -312,19 +315,21 @@
 
                                 <div class="profile_title">
                                     <div class="col-md-6">
-                                        <h2>Team Activity Report</h2>
+                                        <h2>Challenges completion</h2>
                                     </div>
-                                    <div class="col-md-6">
-                                        <div id="reportrange" class="pull-right" style="margin-top: 5px; background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #E6E9ED">
-                                            <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>
-                                            <span>December 30, 2014 - January 28, 2015</span> <b class="caret"></b>
-                                        </div>
-                                    </div>
+                                    {#<div class="col-md-6">#}
+                                        {#<div id="reportrange" class="pull-right" style="margin-top: 5px; background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #E6E9ED">#}
+                                            {#<i class="glyphicon glyphicon-calendar fa fa-calendar"></i>#}
+                                            {#<span>December 30, 2014 - January 28, 2015</span> <b class="caret"></b>#}
+                                        {#</div>#}
+                                    {#</div>#}
                                 </div>
 
                                 {# start of user-activity-graph #}
                                 <div id="graph_bar" style="width:100%; height:280px;"></div>
                                 {# end of user-activity-graph #}
+
+                                <br>
 
                                 {# Tab panels #}
                                 <div class="" role="tabpanel" data-example-id="togglable-tabs">
@@ -603,6 +608,29 @@
                 });
             {% endif %}
         });
+
+    // Morris bar graph
+    $(function() {
+        Morris.Bar({
+            element: 'graph_bar',
+            data: [
+                {% for catName, completion in challengesCompletion %}
+                    { "category": "{{ catName }}", "Challenges completed": {{ completion }} },
+                {% endfor %}
+            ],
+            xkey: 'category',
+            hideHover: 'auto',
+            barColors: ['#26B99A', '#34495E', '#ACADAC', '#3498DB'],
+            ykeys: ['Challenges completed'],
+            labels: ['Completed'],
+            xLabelAngle: 60,
+            resize: true
+        });
+
+        $MENU_TOGGLE.on('click', function() {
+            $(window).resize();
+        });
+    });
     </script>
 
 {% endblock javascript %}

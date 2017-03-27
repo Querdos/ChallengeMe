@@ -78,9 +78,11 @@ class TeamRepository extends EntityRepository
     /**
      * Return all teams ordered by their rank
      *
+     * @param int | null $limit
+     *
      * @return Team[]
      */
-    public function allRanked()
+    public function allRanked($limit = null)
     {
         $query = $this
             ->getEntityManager()
@@ -91,6 +93,10 @@ class TeamRepository extends EntityRepository
 
             ->orderBy('team.points', 'DESC')
         ;
+
+        if (null !== $limit) {
+            $query->setMaxResults($limit);
+        }
 
         return $query
             ->getQuery()
