@@ -74,6 +74,7 @@ class ChallengeSolvingManager extends BaseManager
         // setting the date_end attribute and changing the state
         $challengeSolving
             ->setDateEnd(new \DateTime())
+            ->setDuration()
             ->setState(true)
         ;
 
@@ -159,6 +160,29 @@ class ChallengeSolvingManager extends BaseManager
     public function teamHasSolveChallenge(Team $team, Challenge $challenge)
     {
         return $this->repository->teamHasSolvedChallenge($team, $challenge);
+    }
+
+    /**
+     * Return the list of ranked team (by time) for the given challenge
+     *
+     * @param Challenge $challenge
+     *
+     * @return array
+     */
+    public function getRankedTeamsByChallenge(Challenge $challenge)
+    {
+        return $this->repository->rankedTeamByChallenge($challenge);
+    }
+
+    /**
+     * Return the list of the 20 last teams that have solved challenges in the given category
+     *
+     * @param Category $category
+     * @return array
+     */
+    public function getLastTeamsForCategory(Category $category)
+    {
+        return $this->repository->lastTeamsForCategory($category);
     }
 
     /**

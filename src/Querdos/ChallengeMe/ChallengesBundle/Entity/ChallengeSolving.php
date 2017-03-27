@@ -9,6 +9,7 @@
 namespace Querdos\ChallengeMe\ChallengesBundle\Entity;
 
 
+use Ivory\CKEditorBundle\Exception\Exception;
 use Querdos\ChallengeMe\UserBundle\Entity\Team;
 
 class ChallengeSolving
@@ -39,6 +40,11 @@ class ChallengeSolving
     private $date_end;
 
     /**
+     * @var int
+     */
+    private $duration;
+
+    /**
      * True:    The concerned challenge has been solved
      * False:   The concerned challenge hasn't been solved
      *
@@ -59,8 +65,22 @@ class ChallengeSolving
         $this->challenge  = $challenge;
         $this->date_start = new \DateTime();
         $this->state      = $state;
+        $this->duration   = 0;
     }
 
+    /**
+     * Calculate the time taken to solve the challenge by the team
+     *
+     * @return int
+     * @throws Exception
+     */
+    private function calculateDiff()
+    {
+        if (null === $this->date_end) {
+            throw new Exception("Can't calculate duration without the date_end");
+        }
+        return ($this->date_end->getTimestamp() - $this->date_start->getTimestamp());
+    }
 
     /**
      * @return int
@@ -173,6 +193,23 @@ class ChallengeSolving
     public function setState($state)
     {
         $this->state = $state;
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getDuration()
+    {
+        return $this->duration;
+    }
+
+    /**
+     * @return ChallengeSolving
+     */
+    public function setDuration()
+    {
+        $this->duration = ($this->date_end->getTimestamp() - $this->date_start->getTimestamp());
         return $this;
     }
 }

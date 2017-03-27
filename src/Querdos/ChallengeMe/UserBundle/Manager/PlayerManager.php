@@ -10,6 +10,7 @@ namespace Querdos\ChallengeMe\UserBundle\Manager;
 
 use Doctrine\ORM\EntityManager;
 use Querdos\ChallengeMe\ChallengesBundle\Entity\Challenge;
+use Querdos\ChallengeMe\ChallengesBundle\Entity\ChallengeSolving;
 use Querdos\ChallengeMe\ChallengesBundle\Manager\ChallengeSolvingManager;
 use Querdos\ChallengeMe\PlayerBundle\Entity\Notification;
 use Querdos\ChallengeMe\PlayerBundle\Manager\NotificationManager;
@@ -141,6 +142,7 @@ class PlayerManager extends BaseManager
         // the solution is correct
         if ($solution === $challenge->getSolution()->getContent()) {
             // changing the status of the challenge solving
+            /** @var ChallengeSolving $challengeSolve */
             $challengeSolve = $this->challengeSolvingManager->getChallengeInProgress($team);
 
             // checking that a challenge is in progress for the team
@@ -148,12 +150,8 @@ class PlayerManager extends BaseManager
                 throw new \Exception("No challenge in progress...");
             }
 
-            // changing the state and the end date
-            $challengeSolve
-                ->setDateEnd(new \DateTime())
-                ->setState(true)
-            ;
-            $this->challengeSolvingManager->update($challengeSolve);
+            // stopping the challenge for the team
+            $this->challengeSolvingManager->stopChallenge($team);
 
             // updating the score for the team
             $team->incrementScore($challenge->getPoints());

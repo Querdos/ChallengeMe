@@ -14,3 +14,9 @@ services:
         calls:
             - [ setContainer, [ '@service_container' ]]
             - [ setRouter,    [ '@router' ]]
+
+    app.twig_extension:
+        class:  Querdos\ChallengeMe\PlayerBundle\Twig\PlayerExtension
+        public: false
+        tags:
+            - { name: twig.extension }

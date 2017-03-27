@@ -583,9 +583,12 @@ class PlayerController extends Controller
         // retrieving notification manager
         $notificationManager = $this->get('challengeme.manager.notification');
 
+        $lastTeams = $this->get('challengeme.manager.challenge_solving')->getLastTeamsForCategory($category);
+
         // returning data
         return array(
             'category'              => $category,
+            'lastTeams'             => $lastTeams,
             'challenges'            => $challenges,
             'challengesSolved'      => $challengesSolved,
             'notes'                 => $notes,

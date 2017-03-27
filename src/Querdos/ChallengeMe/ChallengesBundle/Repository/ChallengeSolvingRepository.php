@@ -183,4 +183,73 @@ class ChallengeSolvingRepository extends EntityRepository
 
         return null !== $query->getQuery()->getOneOrNullResult();
     }
+
+    /**
+     * Return the list of ranked team (by time) for the given challenge
+     *
+     * @param Challenge $challenge
+     *
+     * @return array
+     */
+    public function getRankedTeamsByChallenge(Challenge $challenge)
+    {
+        $query = $this
+            ->getEntityManager()
+            ->createQueryBuilder()
+
+            ->select('team.name as team, TIME_TO_SEC(timediff(challengeSolving.date_end, challengeSolving.date_start)) as duration')
+            ->from('ChallengesBundle:ChallengeSolving', 'challengeSolving')
+
+            ->join('challengeSolving.team', 'team')
+            ->join('challengeSolving.challenge', 'challenge')
+
+            ->where('challenge = :challenge')
+            ->orderBy('duration', 'DESC')
+
+            ->setParameter('challenge', $challenge)
+        ;
+
+        return $query
+            ->getQuery()
+            ->getArrayResult()
+        ;
+    }
+
+    /**
+     * Return the list of the 20 last teams that have solved challenges in the given category
+     *
+     * @param Category $category
+     *
+     * @return array
+     */
+    public function lastTeamsForCategory(Category $category)
+    {
+        $query = $this
+            ->getEntityManager()
+            ->createQueryBuilder()
+
+            ->select('team.name as _team')
+            ->addSelect('challenge.title as _challenge')
+            ->addSelect('challengeSolving.date_end as _date_end')
+            ->addSelect('challengeSolving.duration as _duration')
+
+            ->from('ChallengesBundle:ChallengeSolving', 'challengeSolving')
+
+            ->join('challengeSolving.challenge', 'challenge')
+            ->join('challenge.category', 'category')
+            ->join('challengeSolving.team', 'team')
+
+            ->where('category = :category')
+            ->orderBy('challengeSolving.date_end', 'DESC')
+
+            ->setParameter('category', $category)
+
+            ->setMaxResults(20)
+        ;
+
+        return $query
+            ->getQuery()
+            ->getArrayResult()
+        ;
+    }
 }
