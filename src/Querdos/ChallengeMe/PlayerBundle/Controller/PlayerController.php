@@ -6,6 +6,7 @@ use Ivory\CKEditorBundle\Exception\Exception;
 use Querdos\ChallengeMe\ChallengesBundle\Entity\Category;
 use Querdos\ChallengeMe\ChallengesBundle\Entity\Rating;
 use Querdos\ChallengeMe\PlayerBundle\Entity\Notification;
+use Querdos\ChallengeMe\PlayerBundle\Entity\TeamActivity;
 use Querdos\ChallengeMe\PlayerBundle\Form\PlayerRoleType;
 use Querdos\ChallengeMe\PlayerBundle\Form\SolveChallengeType;
 use Querdos\ChallengeMe\PlayerBundle\Form\TeamType;
@@ -272,6 +273,7 @@ class PlayerController extends Controller
 
             // the user has a team
             $data['challengesCompletion'] = $challengesCompletion;
+            $data['lastActivities']       = $this->get('challengeme.manager.team_activity')->readForTeam($team);
             $data['top3']                 = $top3;
             $data['team']                 = $team;
             $data['totalTeam']            = $teamManager->count();
@@ -476,6 +478,7 @@ class PlayerController extends Controller
         $playerId = $request->request->get('playerId');
 
         // retrieving the custom role
+        /** @var PlayerRole $role */
         $role = $this->get('challengeme.manager.player_role')->readById($roleId);
 
         // checking that the role is a one created by the team
@@ -489,10 +492,10 @@ class PlayerController extends Controller
         $player        = $playerManager->readById($playerId);
 
         // setting the role
-        $player->setPlayerRole($role);
-
-        // updating
-        $playerManager->update($player);
+        $this
+            ->get('challengeme.manager.player_role')
+            ->setRoleForPlayer($role, $player)
+        ;
 
         return new JsonResponse();
     }

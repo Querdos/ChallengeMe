@@ -33,6 +33,8 @@ class PlayerActivityRepository extends EntityRepository
 
             ->where('player = :player')
             ->setParameter('player', $player)
+
+            ->setMaxResults(5)
         ;
 
         return $query

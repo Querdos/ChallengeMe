@@ -206,10 +206,12 @@
                                     {% endfor %}
                                     </tbody>
                                 </table>
+
+
                             </div>
 
                             {# Team members #}
-                            <div class="col-md-9 col-sm-9 col-xs-12">
+                            <div class="col-md-5 col-sm-5 col-xs-12">
                                 <div class="x_panel">
                                     <div class="x_title">
                                         <h2>Team members</h2>
@@ -253,8 +255,32 @@
                                 </div>
                             </div>
 
+                            {# Recent activities for the team #}
+                            <div class="col-md-4 col-sm-4 col-xs-12">
+                                <div class="x_panel">
+                                    <div class="x_title">
+                                        <h2>Recent activities</h2>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                    <div class="x_content">
+                                        {% for activity in lastActivities %}
+                                            <article class="media event">
+                                                <a class="pull-left date">
+                                                    <p class="month">{{ activity.date|date("M") }}</p>
+                                                    <p class="day">{{ activity.date|date("d") }}</p>
+                                                </a>
+                                                <div class="media-body">
+                                                    <a class="title" href="#">{{ activity.title }}</a>
+                                                    <p>{{ activity.description }}</p>
+                                                </div>
+                                            </article>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+
                             {# Team activity report #}
-                            <div class="col-md-9 col-sm-9 col-xs-12">
+                            <div class="col-md-12 col-sm-12 col-xs-12">
 
                                 <div class="profile_title">
                                     <div class="col-md-6">
@@ -539,6 +565,7 @@
 
             {% if app.user.hasTeam and app.user == team.leader %}
                 var buttonPromoteConfirm = $("#buttonPromoteRoleConfirm");
+
                 $("#buttonPromote").on('click', function() {
                     // setting url
                     buttonPromoteConfirm.attr("url_promote", $(this).attr("url_promote"));

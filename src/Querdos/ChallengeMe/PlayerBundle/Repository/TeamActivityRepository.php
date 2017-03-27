@@ -34,6 +34,8 @@ class TeamActivityRepository extends EntityRepository
 
             ->where('team = :team')
             ->setParameter('team', $team)
+
+            ->setMaxResults(5)
         ;
 
         return $query

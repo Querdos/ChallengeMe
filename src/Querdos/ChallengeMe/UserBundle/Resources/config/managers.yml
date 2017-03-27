@@ -59,4 +59,7 @@ services:
         calls:
             - [ setRepository,          [ '@challengeme.repository.player_role'         ] ]
             - [ setEntityManager,       [ '@doctrine.orm.entity_manager'                ] ]
+            - [ setPlayerManager,       [ '@challengeme.manager.player'                 ] ]
+            - [ setTeamActivityManager, [ '@challengeme.manager.team_activity'          ] ]
+            - [ setNotificationManager, [ '@challengeme.manager.notification'           ] ]
 
