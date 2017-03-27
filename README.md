@@ -41,11 +41,11 @@ After these parameters entered, you can migrate your database by running the fol
 ## Optional: Load fixture (not for production)
 If you want to have a first look at the platform with fictive players, teams and challenges, with the the following set:
 
-    * 90    players
-    * 30    teams
-    * 25    categories
-    * 125   challenges
-    * Each team will have solved 75 challenges (randomly), so the ranking will be natural and not predefined
+ * 90    players
+ * 30    teams
+ * 25    categories
+ * 125   challenges
+ * Each team will have solved 75 challenges (randomly), so the ranking will be natural and not predefined
     
 You can run the following Fixture command:  
-`$ ./console doctrine:fixtures:load --fixtures=Querdos\ChallengeMe\PlayerBundle\DataFixtures`
+`$ ./console doctrine:fixtures:load --fixtures=src/Querdos/ChallengeMe/PlayerBundle/DataFixtures`
