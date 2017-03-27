@@ -123,6 +123,12 @@ player_leave_team:
     methods:
         - GET
 
+player_promote_player:
+    path:     /team/promote-player/{playerId}
+    defaults: { _controller: PlayerBundle:Player:promotePlayer }
+    methods:
+        - GET
+
 ######################
 # SecurityController #
 ######################

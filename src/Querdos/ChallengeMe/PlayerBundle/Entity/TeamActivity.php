@@ -34,7 +34,7 @@ class TeamActivity
     private $team;
 
     /**
-     * @var string
+     * @var \DateTime
      */
     private $date;
 
@@ -50,6 +50,7 @@ class TeamActivity
         $this->title       = $title;
         $this->description = $description;
         $this->team        = $team;
+        $this->date        = new \DateTime();
     }
 
     /**
@@ -129,7 +130,7 @@ class TeamActivity
     }
 
     /**
-     * @return string
+     * @return \DateTime
      */
     public function getDate()
     {
@@ -137,7 +138,7 @@ class TeamActivity
     }
 
     /**
-     * @param string $date
+     * @param \DateTime $date
      *
      * @return TeamActivity
      */

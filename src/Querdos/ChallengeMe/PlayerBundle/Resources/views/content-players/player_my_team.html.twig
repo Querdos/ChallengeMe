@@ -374,7 +374,7 @@
                                                                     {% endif %}
                                                                 </td>
                                                                 <td>
-                                                                    <button type="button" class="btn btn-success btn-xs buttonPromoteLeader" data-toggle="modal" data-target=".promote-leader-modal">Promote</button>
+                                                                    <button type="button" class="btn btn-success btn-xs buttonPromoteLeader" data-toggle="modal" data-target=".promote-leader-modal" url_promote="{{ path('player_promote_player', {'playerId': player.id}) }}" id="buttonPromote">Promote</button>
                                                                     <button type="button" class="btn btn-info btn-xs buttonChangeRole" data-toggle="modal" data-target=".set-role-for-player-modal" player_username="{{ player.username }}" player_id="{{ player.id }}">Change role</button>
                                                                     <button type="button" class="btn btn-danger btn-xs" onclick="window.location.href='{{ path('player_remove_from_team', {'playerId': player.id}) }}'">Remove</button>
                                                                 </td>
@@ -538,10 +538,15 @@
             {% endif %}
 
             {% if app.user.hasTeam and app.user == team.leader %}
-                $("#buttonPromoteRoleConfirm").on('click', function() {
+                var buttonPromoteConfirm = $("#buttonPromoteRoleConfirm");
+                $("#buttonPromote").on('click', function() {
+                    // setting url
+                    buttonPromoteConfirm.attr("url_promote", $(this).attr("url_promote"));
+                });
+
+                buttonPromoteConfirm.on('click', function() {
                     // redirecting
-                    {# TODO @querdos: Finish routing #}
-                    location.href="";
+                    location.href=$(this).attr("url_promote");
                 });
             {% endif %}
         });

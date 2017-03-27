@@ -42,6 +42,7 @@ services:
             - [ setEntityManager,         [ '@doctrine.orm.entity_manager'              ] ]
             - [ setNotificationManager,   [ '@challengeme.manager.notification'         ] ]
             - [ setPlayerActivityManager, [ '@challengeme.manager.player_activity'      ] ]
+            - [ setTeamActivityManager,   [ '@challengeme.manager.team_activity'        ] ]
 
     challengeme.manager.demand:
         class: Querdos\ChallengeMe\UserBundle\Manager\DemandManager

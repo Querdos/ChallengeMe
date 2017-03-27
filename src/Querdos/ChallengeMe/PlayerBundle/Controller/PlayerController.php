@@ -848,4 +848,40 @@ class PlayerController extends Controller
         // redirecting to the teams list page
         return $this->redirectToRoute('player_teams_list');
     }
+
+    /**
+     * @param int $playerId
+     *
+     * @return RedirectResponse
+     * @throws Exception
+     */
+    public function promotePlayerAction($playerId)
+    {
+        // checking that the current user has a team
+        if (!$this->getUser()->hasTeam()) {
+            throw new Exception("You are not allowed to perform this operation");
+        }
+        /** @var Team $team */
+        $team = $this->getUser()->getTeam();
+
+        // checking that the current user is the leader
+        if ($team->getLeader()->getUsername() !== $this->getUser()->getUsername()) {
+            throw new Exception("You are not allowed to perform this operation");
+        }
+
+        // retrieving player and checking that he is on the team
+        /** @var Player $player */
+        $player = $this->get('challengeme.manager.player')->readById($playerId);
+        if (!$player->hasTeam()) {
+            throw new Exception("The player to promote is not on the team.");
+        } else if ($player->getTeam()->getName() !== $team->getName()) {
+            throw new Exception("The player to promote is not on the team");
+        }
+
+        // promoting player
+        $this->get('challengeme.manager.team')->promote($player);
+
+        // redirecting
+        return $this->redirectToRoute('player_my_team');
+    }
 }
