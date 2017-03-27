@@ -1034,12 +1034,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/FriendsOfSymfony/FOSRestBundle.git",
-                "reference": "66b66dd5f2589f4c4453a1734f0e765aa3502fc0"
+                "reference": "906e84d62883debfe7b9753afc06840d05a5a9b4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSRestBundle/zipball/66b66dd5f2589f4c4453a1734f0e765aa3502fc0",
-                "reference": "66b66dd5f2589f4c4453a1734f0e765aa3502fc0",
+                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSRestBundle/zipball/906e84d62883debfe7b9753afc06840d05a5a9b4",
+                "reference": "906e84d62883debfe7b9753afc06840d05a5a9b4",
                 "shasum": ""
             },
             "require": {
@@ -1127,7 +1127,7 @@
             "keywords": [
                 "rest"
             ],
-            "time": "2017-03-16 16:31:08"
+            "time": "2017-03-24 21:19:50"
         },
         {
             "name": "fzaninotto/faker",
@@ -1533,16 +1533,16 @@
         },
         {
             "name": "jms/serializer",
-            "version": "1.5.0",
+            "version": "1.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/schmittjoh/serializer.git",
-                "reference": "9dc44f2924a90bf526a2e1c4bb1ce9d772a00a45"
+                "reference": "5e9008cbb0bac2986979d905a87ae48efcf578c4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/schmittjoh/serializer/zipball/9dc44f2924a90bf526a2e1c4bb1ce9d772a00a45",
-                "reference": "9dc44f2924a90bf526a2e1c4bb1ce9d772a00a45",
+                "url": "https://api.github.com/repos/schmittjoh/serializer/zipball/5e9008cbb0bac2986979d905a87ae48efcf578c4",
+                "reference": "5e9008cbb0bac2986979d905a87ae48efcf578c4",
                 "shasum": ""
             },
             "require": {
@@ -1555,6 +1555,7 @@
                 "phpoption/phpoption": "^1.1"
             },
             "conflict": {
+                "jms/serializer-bundle": "<1.2.1",
                 "twig/twig": "<1.12"
             },
             "require-dev": {
@@ -1573,12 +1574,14 @@
                 "twig/twig": "~1.12|~2.0"
             },
             "suggest": {
+                "doctrine/cache": "Required if you like to use cache functionality.",
+                "doctrine/collections": "Required if you like to use doctrine collection types as ArrayCollection.",
                 "symfony/yaml": "Required if you'd like to serialize data to YAML format."
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.5-dev"
+                    "dev-master": "1.6-dev"
                 }
             },
             "autoload": {
@@ -1605,7 +1608,7 @@
                 "serialization",
                 "xml"
             ],
-            "time": "2017-02-14T14:35:22+00:00"
+            "time": "2017-03-24T13:11:23+00:00"
         },
         {
             "name": "jms/serializer-bundle",
@@ -1614,16 +1617,16 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/schmittjoh/JMSSerializerBundle.git",
-                "reference": "790e1c9b474af522c5e3c4346b114ba16014b62b"
+                "reference": "16d8966c0f30c060d8d08e27d46b9f57d772a10c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/schmittjoh/JMSSerializerBundle/zipball/790e1c9b474af522c5e3c4346b114ba16014b62b",
-                "reference": "790e1c9b474af522c5e3c4346b114ba16014b62b",
+                "url": "https://api.github.com/repos/schmittjoh/JMSSerializerBundle/zipball/16d8966c0f30c060d8d08e27d46b9f57d772a10c",
+                "reference": "16d8966c0f30c060d8d08e27d46b9f57d772a10c",
                 "shasum": ""
             },
             "require": {
-                "jms/serializer": "^1.5",
+                "jms/serializer": "^1.6",
                 "php": ">=5.4.0",
                 "phpoption/phpoption": "^1.1.0",
                 "symfony/framework-bundle": "~2.3|~3.0"
@@ -1677,7 +1680,7 @@
                 "serialization",
                 "xml"
             ],
-            "time": "2017-03-15 10:38:06"
+            "time": "2017-03-24 13:34:00"
         },
         {
             "name": "jms/translation-bundle",
