@@ -88,6 +88,30 @@
                             </tbody>
                         </table>
 
+                        <br>
+                        <h2 align="center">Last 20 teams who solved these challenges</h2>
+<table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Team</th>
+                                    <th>Challenge</th>
+                                    <th>Date</th>
+                                    <th>Time</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for element in lastTeams %}
+                                    <tr>
+                                        <td>{{ element._team }}</td>
+                                        <td>{{ element._challenge }}</td>
+                                        <td>{{ element._date_end|date("m/d/Y") }}</td>
+                                        <td>{{ element._duration|secondsToString }}</td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+
+
                         {# Modal for challenge starting confirmation #}
                         <div class="modal fade modal-confirm-start-challenge" tabindex="-1" role="dialog" aria-hidden="true">
                             <div class="modal-dialog modal-sm">
@@ -167,6 +191,7 @@
         '@fastclick_js'
         '@iCheck_js'
         '@customTheme_js'
+        '@moment_js'
 
         '@challenges_by_category_js'
     %}
@@ -175,5 +200,9 @@
 
     <script>
         var url_rate_challenge = "{{ path('player_rate_challenge') }}";
+
+        function call(string) {
+            console.log(string);
+        }
     </script>
 {% endblock %}

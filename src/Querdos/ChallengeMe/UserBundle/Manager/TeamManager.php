@@ -9,16 +9,30 @@
 namespace Querdos\ChallengeMe\UserBundle\Manager;
 
 use Querdos\ChallengeMe\PlayerBundle\Entity\Notification;
+use Querdos\ChallengeMe\PlayerBundle\Entity\PlayerActivity;
+use Querdos\ChallengeMe\PlayerBundle\Entity\TeamActivity;
 use Querdos\ChallengeMe\PlayerBundle\Manager\NotificationManager;
+use Querdos\ChallengeMe\PlayerBundle\Manager\PlayerActivityManager;
+use Querdos\ChallengeMe\PlayerBundle\Manager\TeamActivityManager;
 use Querdos\ChallengeMe\UserBundle\Entity\Player;
 use Querdos\ChallengeMe\UserBundle\Entity\Team;
 
 class TeamManager extends BaseManager
 {
     /**
-     * @var NotificationManager $notificationManager
+     * @var NotificationManager
      */
     private $notificationManager;
+
+    /**
+     * @var PlayerActivityManager
+     */
+    private $playerActivityManager;
+
+    /**
+     * @var TeamActivityManager
+     */
+    private $teamActivityManager;
 
     /**
      * Create a team in database
@@ -48,6 +62,15 @@ class TeamManager extends BaseManager
                 $team->getLeader()
             )
         );
+
+        // adding the created team to the player's activity
+        $this->playerActivityManager->create(
+            new PlayerActivity(
+                "Team creation",
+                "You have created your team: " . $team->getName(),
+                $team->getLeader()
+            )
+        );
     }
 
     /**
@@ -72,14 +95,53 @@ class TeamManager extends BaseManager
         return $this->repository->teamRank($team);
     }
 
+    public function promote(Player $player)
+    {
+        // retrieving the team and the leader
+        $team = $player->getTeam();
+        $leader = $team->getLeader();
+
+        // setting the new leader and updating
+        $team->setLeader($player);
+        $this->update($team);
+
+        // sending notification to the new leader
+        $this->notificationManager->create(
+            new Notification(
+                "You have been promoted as a leader of your team",
+                $player
+            )
+        );
+
+        // sending notification to the old leader
+        $this->notificationManager->create(
+            new Notification(
+                "The promotion is effective, you are no longer the leader of your team",
+                $leader
+            )
+        );
+
+        // adding activity for the team
+        $this->teamActivityManager->create(
+            new TeamActivity(
+                "New leader",
+                $team->getLeader()->getUsername() . " has been promoted as the leader of the team.",
+                $team
+            )
+        );
+    }
+
+
     /**
      * Return all teams ordered by their rank
      *
+     * @param int|null $limit
+     *
      * @return Team[]
      */
-    public function getTeamsRanked()
+    public function getTeamsRanked($limit = null)
     {
-        return $this->repository->allRanked();
+        return $this->repository->allRanked($limit);
     }
 
     /**
@@ -88,5 +150,27 @@ class TeamManager extends BaseManager
     public function setNotificationManager($notificationManager)
     {
         $this->notificationManager = $notificationManager;
+    }
+
+    /**
+     * @param PlayerActivity $playerActivityManager
+     *
+     * @return TeamManager
+     */
+    public function setPlayerActivityManager($playerActivityManager)
+    {
+        $this->playerActivityManager = $playerActivityManager;
+        return $this;
+    }
+
+    /**
+     * @param TeamActivityManager $teamActivityManager
+     *
+     * @return TeamManager
+     */
+    public function setTeamActivityManager($teamActivityManager)
+    {
+        $this->teamActivityManager = $teamActivityManager;
+        return $this;
     }
 }

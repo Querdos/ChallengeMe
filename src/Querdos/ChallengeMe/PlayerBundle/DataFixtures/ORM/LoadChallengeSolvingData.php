@@ -60,6 +60,7 @@ class LoadChallengeSolvingData extends AbstractFixture implements OrderedFixture
                 $challengeSolving
                     ->setDateEnd($dateEnd = $faker->dateTimeThisMonth)
                     ->setDateStart($faker->dateTimeThisMonth($dateEnd))
+                    ->setDuration()
                 ;
 
                 // persisting the entity

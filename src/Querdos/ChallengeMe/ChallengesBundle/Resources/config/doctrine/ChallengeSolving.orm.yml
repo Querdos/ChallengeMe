@@ -20,6 +20,10 @@ Querdos\ChallengeMe\ChallengesBundle\Entity\ChallengeSolving:
         state:
             type:         boolean
             nullable:     false
+        duration:
+            type:         integer
+            nullable:     true
+            unique:       false
 
     manyToOne:
         team:

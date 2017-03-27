@@ -10,9 +10,12 @@ namespace Querdos\ChallengeMe\UserBundle\Manager;
 
 use Doctrine\ORM\EntityManager;
 use Querdos\ChallengeMe\ChallengesBundle\Entity\Challenge;
+use Querdos\ChallengeMe\ChallengesBundle\Entity\ChallengeSolving;
 use Querdos\ChallengeMe\ChallengesBundle\Manager\ChallengeSolvingManager;
 use Querdos\ChallengeMe\PlayerBundle\Entity\Notification;
+use Querdos\ChallengeMe\PlayerBundle\Entity\PlayerActivity;
 use Querdos\ChallengeMe\PlayerBundle\Manager\NotificationManager;
+use Querdos\ChallengeMe\PlayerBundle\Manager\PlayerActivityManager;
 use Querdos\ChallengeMe\UserBundle\Entity\Player;
 use Querdos\ChallengeMe\UserBundle\Entity\Team;
 use Querdos\ChallengeMe\UserBundle\Repository\PlayerRepository;
@@ -41,6 +44,11 @@ class PlayerManager extends BaseManager
      * @var TeamManager
      */
     private $teamManager;
+
+    /**
+     * @var PlayerActivityManager
+     */
+    private $playerActivityManager;
 
     /**
      * Create a new player in database
@@ -141,6 +149,7 @@ class PlayerManager extends BaseManager
         // the solution is correct
         if ($solution === $challenge->getSolution()->getContent()) {
             // changing the status of the challenge solving
+            /** @var ChallengeSolving $challengeSolve */
             $challengeSolve = $this->challengeSolvingManager->getChallengeInProgress($team);
 
             // checking that a challenge is in progress for the team
@@ -148,12 +157,8 @@ class PlayerManager extends BaseManager
                 throw new \Exception("No challenge in progress...");
             }
 
-            // changing the state and the end date
-            $challengeSolve
-                ->setDateEnd(new \DateTime())
-                ->setState(true)
-            ;
-            $this->challengeSolvingManager->update($challengeSolve);
+            // stopping the challenge for the team
+            $this->challengeSolvingManager->stopChallenge($team);
 
             // updating the score for the team
             $team->incrementScore($challenge->getPoints());
@@ -193,6 +198,15 @@ class PlayerManager extends BaseManager
         $this->notificationManager->create(
             new Notification($player->getUsername() . " has leaved your team", $leader)
         );
+
+        // adding the recent activity
+        $this->playerActivityManager->create(
+            new PlayerActivity(
+                "Team leaved",
+                "You have leaved your team, do not forget to find another one !",
+                $player
+            )
+        );
     }
 
     /**
@@ -219,6 +233,17 @@ class PlayerManager extends BaseManager
     public function setNotificationManager($notificationManager)
     {
         $this->notificationManager = $notificationManager;
+        return $this;
+    }
+
+    /**
+     * @param PlayerActivityManager $playerActivityManager
+     *
+     * @return PlayerManager
+     */
+    public function setPlayerActivityManager($playerActivityManager)
+    {
+        $this->playerActivityManager = $playerActivityManager;
         return $this;
     }
 }

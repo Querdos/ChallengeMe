@@ -6,6 +6,7 @@ use Ivory\CKEditorBundle\Exception\Exception;
 use Querdos\ChallengeMe\ChallengesBundle\Entity\Category;
 use Querdos\ChallengeMe\ChallengesBundle\Entity\Rating;
 use Querdos\ChallengeMe\PlayerBundle\Entity\Notification;
+use Querdos\ChallengeMe\PlayerBundle\Entity\TeamActivity;
 use Querdos\ChallengeMe\PlayerBundle\Form\PlayerRoleType;
 use Querdos\ChallengeMe\PlayerBundle\Form\SolveChallengeType;
 use Querdos\ChallengeMe\PlayerBundle\Form\TeamType;
@@ -16,6 +17,7 @@ use Querdos\ChallengeMe\UserBundle\Entity\PlayerRole;
 use Querdos\ChallengeMe\UserBundle\Entity\Team;
 use Querdos\ChallengeMe\UserBundle\Manager\DemandManager;
 use Querdos\ChallengeMe\UserBundle\Manager\PlayerManager;
+use Querdos\ChallengeMe\UserBundle\Manager\TeamManager;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -48,22 +50,22 @@ class PlayerController extends Controller
 
         $data['unreadNotifications'] = $notificationManager->getUnreadForPlayer($this->getUser());
         if ($this->getUser()->hasTeam()) {
-            $data['teamRank'] = $teamManager->getTeamRank($this->getUser()->getTeam());
-        }
-
-        // checking if the user has a team
-        if ($this->getUser()->hasTeam()) {
-            // retrieving challenges completion
-            $challengeCompletion = $this
-                ->get('challengeme.manager.challenge_solving')
-                ->getChallengesCompletionForTeam(
-                    $this->getUser()->getTeam()
-                )
+            $data['teamRank'] = $teamManager
+                ->getTeamRank($this->getUser()->getTeam())
             ;
 
-            // updating data array
-            $data['challengeCompletion'] = $challengeCompletion;
+            // retrieving recent activities for current team
+            $data['teamActivities'] = $this
+                ->get('challengeme.manager.team_activity')
+                ->readForTeam($this->getUser()->getTeam())
+            ;
         }
+
+        // retrieving recent activities for current player
+        $data['playerActivities'] = $this
+            ->get('challengeme.manager.player_activity')
+            ->readForPlayer($this->getUser())
+        ;
 
         // returning array
         return $data;
@@ -263,10 +265,16 @@ class PlayerController extends Controller
             ;
 
             // team manager
+            /** @var TeamManager $teamManager */
             $teamManager = $this->get('challengeme.manager.team');
+
+            // ranking (top 3)
+            $top3 = $teamManager->getTeamsRanked(3);
 
             // the user has a team
             $data['challengesCompletion'] = $challengesCompletion;
+            $data['lastActivities']       = $this->get('challengeme.manager.team_activity')->readForTeam($team);
+            $data['top3']                 = $top3;
             $data['team']                 = $team;
             $data['totalTeam']            = $teamManager->count();
             $data['rank']                 = $teamManager->getTeamRank($team);
@@ -470,6 +478,7 @@ class PlayerController extends Controller
         $playerId = $request->request->get('playerId');
 
         // retrieving the custom role
+        /** @var PlayerRole $role */
         $role = $this->get('challengeme.manager.player_role')->readById($roleId);
 
         // checking that the role is a one created by the team
@@ -483,10 +492,10 @@ class PlayerController extends Controller
         $player        = $playerManager->readById($playerId);
 
         // setting the role
-        $player->setPlayerRole($role);
-
-        // updating
-        $playerManager->update($player);
+        $this
+            ->get('challengeme.manager.player_role')
+            ->setRoleForPlayer($role, $player)
+        ;
 
         return new JsonResponse();
     }
@@ -577,9 +586,12 @@ class PlayerController extends Controller
         // retrieving notification manager
         $notificationManager = $this->get('challengeme.manager.notification');
 
+        $lastTeams = $this->get('challengeme.manager.challenge_solving')->getLastTeamsForCategory($category);
+
         // returning data
         return array(
             'category'              => $category,
+            'lastTeams'             => $lastTeams,
             'challenges'            => $challenges,
             'challengesSolved'      => $challengesSolved,
             'notes'                 => $notes,
@@ -838,5 +850,41 @@ class PlayerController extends Controller
 
         // redirecting to the teams list page
         return $this->redirectToRoute('player_teams_list');
+    }
+
+    /**
+     * @param int $playerId
+     *
+     * @return RedirectResponse
+     * @throws Exception
+     */
+    public function promotePlayerAction($playerId)
+    {
+        // checking that the current user has a team
+        if (!$this->getUser()->hasTeam()) {
+            throw new Exception("You are not allowed to perform this operation");
+        }
+        /** @var Team $team */
+        $team = $this->getUser()->getTeam();
+
+        // checking that the current user is the leader
+        if ($team->getLeader()->getUsername() !== $this->getUser()->getUsername()) {
+            throw new Exception("You are not allowed to perform this operation");
+        }
+
+        // retrieving player and checking that he is on the team
+        /** @var Player $player */
+        $player = $this->get('challengeme.manager.player')->readById($playerId);
+        if (!$player->hasTeam()) {
+            throw new Exception("The player to promote is not on the team.");
+        } else if ($player->getTeam()->getName() !== $team->getName()) {
+            throw new Exception("The player to promote is not on the team");
+        }
+
+        // promoting player
+        $this->get('challengeme.manager.team')->promote($player);
+
+        // redirecting
+        return $this->redirectToRoute('player_my_team');
     }
 }

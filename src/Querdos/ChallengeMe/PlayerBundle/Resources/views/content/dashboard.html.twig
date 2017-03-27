@@ -54,103 +54,61 @@
     {# /top tiles #}
 
     <div class="row">
-        {# Challenges completion #}
         {% if app.user.hasTeam %}
-        <div class="col-md-6 col-sm-6 col-xs-12">
-            <div class="x_panel tile fixed_height_320">
-                <div class="x_title">
-                    <h2>Challenges completion</h2>
-                    <div class="clearfix"></div>
-                </div>
-                <div class="x_content">
-                    <h4>Challenge completion by categories</h4>
-                    {% for catName, completion in challengeCompletion %}
-                        <div class="widget_summary">
-                            <div class="w_left w_25">
-                                <b>{{ catName }}</b>
-                            </div>
-                            <div class="w_center w_55">
-                                <div class="progress">
-                                    <div class="progress-bar bg-green" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: {{ completion }}%;">
-                                        <span class="sr-only">100% Complete</span>
-                                    </div>
+            {# Recent activities for the team #}
+            <div class="col-md-6 col-sm-6 col-xs-12">
+                <div class="x_panel tile">
+                    <div class="x_title">
+                        <h2>Recent activities for your team</h2>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+                        {# If no activity #}
+                        {% if teamActivities|length == 0 %}
+                            <p align="center">No recent activity</p>
+                        {% endif %}
+
+                        {% for activity in teamActivities %}
+                            <article class="media event">
+                                <a class="pull-left date">
+                                    <p class="month">{{ activity.date|date("M") }}</p>
+                                    <p class="day">{{ activity.date|date("d") }}</p>
+                                </a>
+                                <div class="media-body">
+                                    <a class="title" href="#">{{ activity.title }}</a>
+                                    <p>{{ activity.description }}</p>
                                 </div>
-                            </div>
-                            <div class="w_right w_20">
-                                <span>{{ completion }}%</span>
-                            </div>
-                            <div class="clearfix"></div>
-                        </div>
-                    {% endfor %}
+                            </article>
+                        {% endfor %}
+                    </div>
                 </div>
             </div>
-        </div>
         {% endif %}
 
-        {# To do list #}
+        {# Recent activities for the player #}
         <div class="col-md-6 col-sm-6 col-xs-12">
             <div class="x_panel">
                 <div class="x_title">
-                    <h2>To Do List <small>Sample tasks</small></h2>
-                    <ul class="nav navbar-right panel_toolbox">
-                        <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                        </li>
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                            <ul class="dropdown-menu" role="menu">
-                                <li><a href="#">Settings 1</a>
-                                </li>
-                                <li><a href="#">Settings 2</a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li><a class="close-link"><i class="fa fa-close"></i></a>
-                        </li>
-                    </ul>
+                    <h2>Recent activities for you</h2>
                     <div class="clearfix"></div>
                 </div>
                 <div class="x_content">
+                    {% if playerActivities|length == 0 %}
+                        <p align="center">No recent activity</p>
+                    {% endif %}
 
-                    <div class="">
-                        <ul class="to_do">
-                            <li>
-                                <p>
-                                    <input type="checkbox" class="flat"> Schedule meeting with new client </p>
-                            </li>
-                            <li>
-                                <p>
-                                    <input type="checkbox" class="flat"> Create email address for new intern</p>
-                            </li>
-                            <li>
-                                <p>
-                                    <input type="checkbox" class="flat"> Have IT fix the network printer</p>
-                            </li>
-                            <li>
-                                <p>
-                                    <input type="checkbox" class="flat"> Copy backups to offsite location</p>
-                            </li>
-                            <li>
-                                <p>
-                                    <input type="checkbox" class="flat"> Food truck fixie locavors mcsweeney</p>
-                            </li>
-                            <li>
-                                <p>
-                                    <input type="checkbox" class="flat"> Food truck fixie locavors mcsweeney</p>
-                            </li>
-                            <li>
-                                <p>
-                                    <input type="checkbox" class="flat"> Create email address for new intern</p>
-                            </li>
-                            <li>
-                                <p>
-                                    <input type="checkbox" class="flat"> Have IT fix the network printer</p>
-                            </li>
-                            <li>
-                                <p>
-                                    <input type="checkbox" class="flat"> Copy backups to offsite location</p>
-                            </li>
-                        </ul>
-                    </div>
+                    {% for activity in playerActivities %}
+                        <article class="media event">
+                            <a class="pull-left date">
+                                <p class="month">{{ activity.date|date("M") }}</p>
+                                <p class="day">{{ activity.date|date("d") }}</p>
+                            </a>
+                            <div class="media-body">
+                                <a class="title" href="#">{{ activity.title }}</a>
+                                <p>{{ activity.description }}</p>
+                            </div>
+                        </article>
+                    {% endfor %}
                 </div>
             </div>
         </div>
