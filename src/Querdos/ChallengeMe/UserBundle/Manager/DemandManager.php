@@ -11,8 +11,10 @@ namespace Querdos\ChallengeMe\UserBundle\Manager;
 use Doctrine\ORM\EntityManager;
 use Querdos\ChallengeMe\PlayerBundle\Entity\Notification;
 use Querdos\ChallengeMe\PlayerBundle\Entity\PlayerActivity;
+use Querdos\ChallengeMe\PlayerBundle\Entity\TeamActivity;
 use Querdos\ChallengeMe\PlayerBundle\Manager\NotificationManager;
 use Querdos\ChallengeMe\PlayerBundle\Manager\PlayerActivityManager;
+use Querdos\ChallengeMe\PlayerBundle\Manager\TeamActivityManager;
 use Querdos\ChallengeMe\UserBundle\Entity\Demand;
 use Querdos\ChallengeMe\UserBundle\Entity\Player;
 use Querdos\ChallengeMe\UserBundle\Entity\Team;
@@ -33,6 +35,11 @@ class DemandManager extends BaseManager
      * @var PlayerActivityManager
      */
     private $playerActivityManager;
+
+    /**
+     * @var TeamActivityManager
+     */
+    private $teamActivityManager;
 
     /**
      * @param Demand $demand
@@ -57,6 +64,15 @@ class DemandManager extends BaseManager
             new Notification(
                 "Your demand has been sent",
                 $demand->getPlayer()
+            )
+        );
+
+        // recent activity for the team
+        $this->teamActivityManager->create(
+            new TeamActivity(
+                "New member",
+                $demand->getPlayer()->getUsername() . " has joined the team.",
+                $demand->getTeam()
             )
         );
     }
@@ -167,6 +183,17 @@ class DemandManager extends BaseManager
     public function setPlayerActivityManager($playerActivityManager)
     {
         $this->playerActivityManager = $playerActivityManager;
+        return $this;
+    }
+
+    /**
+     * @param TeamActivityManager $teamActivityManager
+     *
+     * @return DemandManager
+     */
+    public function setTeamActivityManager($teamActivityManager)
+    {
+        $this->teamActivityManager = $teamActivityManager;
         return $this;
     }
 }

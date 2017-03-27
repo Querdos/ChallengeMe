@@ -51,6 +51,7 @@ services:
             - [ setPlayerManager,         [ '@challengeme.manager.demand'               ] ]
             - [ setNotificationManager,   [ '@challengeme.manager.notification'         ] ]
             - [ setPlayerActivityManager, [ '@challengeme.manager.demand'               ] ]
+            - [ setTeamActivityManager,   [ '@challengeme.manager.team_activity'        ] ]
 
     challengeme.manager.player_role:
         class: Querdos\ChallengeMe\UserBundle\Manager\PlayerRoleManager

@@ -66,9 +66,6 @@ class PlayerController extends Controller
             ->readForPlayer($this->getUser())
         ;
 
-        if ($this->getUser()->hasTeam()) {
-        }
-
         // returning array
         return $data;
     }
