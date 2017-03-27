@@ -48,4 +48,4 @@ If you want to have a first look at the platform with fictive players, teams and
     * Each team will have solved 75 challenges (randomly), so the ranking will be natural and not predefined
     
 You can run the following Fixture command:  
-`$ ./console doctrine:fixtures:load --fixtures=Querdos\ChallengeMe\PlayerBundle\DataFixtures`
+`$ ./console doctrine:fixtures:load --fixtures=src/Querdos/ChallengeMe/PlayerBundle/DataFixtures`
