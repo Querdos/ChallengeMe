@@ -34,6 +34,8 @@ class PlayerActivityRepository extends EntityRepository
             ->where('player = :player')
             ->setParameter('player', $player)
 
+            ->orderBy('activity.date', 'DESC')
+
             ->setMaxResults(5)
         ;
 
