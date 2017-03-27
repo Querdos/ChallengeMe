@@ -49,7 +49,15 @@ class PlayerController extends Controller
 
         $data['unreadNotifications'] = $notificationManager->getUnreadForPlayer($this->getUser());
         if ($this->getUser()->hasTeam()) {
-            $data['teamRank'] = $teamManager->getTeamRank($this->getUser()->getTeam());
+            $data['teamRank'] = $teamManager
+                ->getTeamRank($this->getUser()->getTeam())
+            ;
+
+            // retrieving recent activities for current team
+            $data['teamActivities'] = $this
+                ->get('challengeme.manager.team_activity')
+                ->readForTeam($this->getUser()->getTeam())
+            ;
         }
 
         // retrieving recent activities for current player
@@ -57,6 +65,9 @@ class PlayerController extends Controller
             ->get('challengeme.manager.player_activity')
             ->readForPlayer($this->getUser())
         ;
+
+        if ($this->getUser()->hasTeam()) {
+        }
 
         // returning array
         return $data;

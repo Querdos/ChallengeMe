@@ -63,56 +63,18 @@
                     <div class="clearfix"></div>
                 </div>
                 <div class="x_content">
-                    <article class="media event">
-                        <a class="pull-left date">
-                            <p class="month">April</p>
-                            <p class="day">23</p>
-                        </a>
-                        <div class="media-body">
-                            <a class="title" href="#">Item One Title</a>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                        </div>
-                    </article>
-                    <article class="media event">
-                        <a class="pull-left date">
-                            <p class="month">April</p>
-                            <p class="day">23</p>
-                        </a>
-                        <div class="media-body">
-                            <a class="title" href="#">Item Two Title</a>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                        </div>
-                    </article>
-                    <article class="media event">
-                        <a class="pull-left date">
-                            <p class="month">April</p>
-                            <p class="day">23</p>
-                        </a>
-                        <div class="media-body">
-                            <a class="title" href="#">Item Two Title</a>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                        </div>
-                    </article>
-                    <article class="media event">
-                        <a class="pull-left date">
-                            <p class="month">April</p>
-                            <p class="day">23</p>
-                        </a>
-                        <div class="media-body">
-                            <a class="title" href="#">Item Two Title</a>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                        </div>
-                    </article>
-                    <article class="media event">
-                        <a class="pull-left date">
-                            <p class="month">April</p>
-                            <p class="day">23</p>
-                        </a>
-                        <div class="media-body">
-                            <a class="title" href="#">Item Three Title</a>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                        </div>
-                    </article>
+                    {% for activity in teamActivities %}
+                        <article class="media event">
+                            <a class="pull-left date">
+                                <p class="month">{{ activity.date|date("M") }}</p>
+                                <p class="day">{{ activity.date|date("d") }}</p>
+                            </a>
+                            <div class="media-body">
+                                <a class="title" href="#">{{ activity.title }}</a>
+                                <p>{{ activity.description }}</p>
+                            </div>
+                        </article>
+                    {% endfor %}
                 </div>
             </div>
         </div>

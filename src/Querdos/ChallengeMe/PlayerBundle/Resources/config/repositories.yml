@@ -8,3 +8,8 @@ services:
         class:      Querdos\ChallengeMe\PlayerBundle\Repository\PlayerActivityRepository
         factory:    [ "@doctrine.orm.entity_manager", "getRepository" ]
         arguments:  [ "PlayerBundle:PlayerActivity" ]
+
+    challengeme.repository.team_activity:
+        class:      Querdos\ChallengeMe\PlayerBundle\Repository\TeamActivityRepository
+        factory:    [ "@doctrine.orm.entity_manager", "getRepository" ]
+        arguments:  [ "PlayerBundle:TeamActivity" ]
