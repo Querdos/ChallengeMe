@@ -54,33 +54,38 @@
     {# /top tiles #}
 
     <div class="row">
-        {# Challenges completion #}
         {% if app.user.hasTeam %}
-        <div class="col-md-6 col-sm-6 col-xs-12">
-            <div class="x_panel tile">
-                <div class="x_title">
-                    <h2>Recent activities for your team</h2>
-                    <div class="clearfix"></div>
-                </div>
-                <div class="x_content">
-                    {% for activity in teamActivities %}
-                        <article class="media event">
-                            <a class="pull-left date">
-                                <p class="month">{{ activity.date|date("M") }}</p>
-                                <p class="day">{{ activity.date|date("d") }}</p>
-                            </a>
-                            <div class="media-body">
-                                <a class="title" href="#">{{ activity.title }}</a>
-                                <p>{{ activity.description }}</p>
-                            </div>
-                        </article>
-                    {% endfor %}
+            {# Recent activities for the team #}
+            <div class="col-md-6 col-sm-6 col-xs-12">
+                <div class="x_panel tile">
+                    <div class="x_title">
+                        <h2>Recent activities for your team</h2>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+                        {# If no activity #}
+                        {% if teamActivities|length == 0 %}
+                            <p align="center">No recent activity</p>
+                        {% endif %}
+
+                        {% for activity in teamActivities %}
+                            <article class="media event">
+                                <a class="pull-left date">
+                                    <p class="month">{{ activity.date|date("M") }}</p>
+                                    <p class="day">{{ activity.date|date("d") }}</p>
+                                </a>
+                                <div class="media-body">
+                                    <a class="title" href="#">{{ activity.title }}</a>
+                                    <p>{{ activity.description }}</p>
+                                </div>
+                            </article>
+                        {% endfor %}
+                    </div>
                 </div>
             </div>
-        </div>
         {% endif %}
 
-        {# To do list #}
+        {# Recent activities for the player #}
         <div class="col-md-6 col-sm-6 col-xs-12">
             <div class="x_panel">
                 <div class="x_title">
@@ -88,6 +93,10 @@
                     <div class="clearfix"></div>
                 </div>
                 <div class="x_content">
+                    {% if playerActivities|length == 0 %}
+                        <p align="center">No recent activity</p>
+                    {% endif %}
+
                     {% for activity in playerActivities %}
                         <article class="media event">
                             <a class="pull-left date">

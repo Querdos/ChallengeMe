@@ -9,6 +9,7 @@
 namespace Querdos\ChallengeMe\PlayerBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
+use Querdos\ChallengeMe\PlayerBundle\Entity\PlayerActivity;
 use Querdos\ChallengeMe\UserBundle\Entity\Player;
 
 class PlayerActivityRepository extends EntityRepository 
