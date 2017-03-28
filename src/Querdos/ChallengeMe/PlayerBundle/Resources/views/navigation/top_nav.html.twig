@@ -10,9 +10,13 @@
             <ul class="nav navbar-nav navbar-right">
                 <li class="">
                     <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                        {% image "@AdminBundle/Resources/public/images/img.jpg" %}
-                            <img src="{{ asset_url }}" alt="">
-                        {% endimage %}
+                        {% if app.user.avatarName is null %}
+                            {% image "@AdminBundle/Resources/public/images/img.jpg" %}
+                                <img src="{{ asset_url }}" alt="">
+                            {% endimage %}
+                        {% else %}
+                            <img src="{{ vich_uploader_asset(app.user, 'avatar') }}" alt="avatar">
+                        {% endif %}
                         {{ app.user.infoUser.firstname }} {{ app.user.infoUser.lastname }}
                         <span class=" fa fa-angle-down"></span>
                     </a>

@@ -12,6 +12,7 @@ use Querdos\ChallengeMe\PlayerBundle\Form\PlayerRoleType;
 use Querdos\ChallengeMe\PlayerBundle\Form\SkillType;
 use Querdos\ChallengeMe\PlayerBundle\Form\SolveChallengeType;
 use Querdos\ChallengeMe\PlayerBundle\Form\TeamType;
+use Querdos\ChallengeMe\PlayerBundle\Form\UploadAvatarPlayerType;
 use Querdos\ChallengeMe\PlayerBundle\Form\UploadAvatarType;
 use Querdos\ChallengeMe\UserBundle\Entity\Demand;
 use Querdos\ChallengeMe\UserBundle\Entity\Player;
@@ -95,14 +96,31 @@ class PlayerController extends Controller
         ;
 
         // building the form for infoUser to edit
-        $infoUser = $this->getUser()->getInfoUser();
         $formInfoUser = $this
             ->createForm(InfoUserType::class, $this->getUser()->getInfoUser())
         ;
 
+        $formUploadAvatar = $this
+            ->createForm(UploadAvatarPlayerType::class, $this->getUser())
+            ->add('save', SubmitType::class, array(
+                'label' => 'Upload',
+                'attr' => array(
+                    'class' => 'btn btn-success'
+                ),
+                'translation_domain' => 'forms'
+            ))
+        ;
+
         // adding forms to the view
-        $data['formSkill']    = $formSkill->createView();
-        $data['formInfoUser'] = $formInfoUser->createView();
+        if ($this->getUser()->getAvatarName() !== null) {
+            $helper             = $this->get('vich_uploader.templating.helper.uploader_helper');
+            $avatarPath         = $helper->asset($this->getUser(), 'avatar');
+            $data['avatarPath'] = $avatarPath;
+        }
+
+        $data['formSkill']        = $formSkill->createView();
+        $data['formInfoUser']     = $formInfoUser->createView();
+        $data['formUploadAvatar'] = $formUploadAvatar->createView();
 
         // handling skill form
         $formSkill->handleRequest($request);
@@ -122,6 +140,16 @@ class PlayerController extends Controller
         // handling formInfoUser
         $formInfoUser->handleRequest($request);
         if ($formInfoUser->isSubmitted()) {
+            // submitting
+            $this->get('challengeme.manager.player')->update($this->getUser());
+
+            // redirecting
+            return $this->redirectToRoute('player_profile');
+        }
+
+        // handling formUploadAvatar
+        $formUploadAvatar->handleRequest($request);
+        if ($formUploadAvatar->isSubmitted()) {
             // submitting
             $this->get('challengeme.manager.player')->update($this->getUser());
 
