@@ -9,6 +9,7 @@ namespace Querdos\ChallengeMe\AdministratorBundle\Controller;
 
 use Querdos\ChallengeMe\UserBundle\Entity\Administrator;
 use Querdos\ChallengeMe\AdministratorBundle\Form\AdministratorType;
+use Querdos\ChallengeMe\UserBundle\Entity\Player;
 use Querdos\ChallengeMe\UserBundle\Entity\Role;
 use Querdos\ChallengeMe\UserBundle\Manager\AdministratorManager;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -607,5 +608,31 @@ class AdministrationController extends Controller
             // Redirecting
             return $this->redirectToRoute('administration_homepage');
         }
+    }
+
+    /**
+     * @param int $playerId
+     *
+     * @return RedirectResponse
+     */
+    public function blockPlayerAction($playerId)
+    {
+        // retrieving the manager
+        $manager = $this->get('challengeme.manager.player');
+
+        // retrieving the player
+        /** @var Player $player */
+        $player = $manager->readById($playerId);
+
+        // checking if the player is blocked
+        if ($player->isBlocked()) {
+            $manager->changePlayerState($player);
+        } else {
+            // blocking the user
+            $manager->changePlayerState($player);
+        }
+
+        // redirecting
+        return $this->redirectToRoute('administration_playersManagement');
     }
 }

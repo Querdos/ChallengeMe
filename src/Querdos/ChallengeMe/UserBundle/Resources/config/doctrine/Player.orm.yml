@@ -42,6 +42,10 @@ Querdos\ChallengeMe\UserBundle\Entity\Player:
             type:       datetime
             unique:     false
             nullable:   true
+        blocked:
+            type:       boolean
+            unique:     false
+            nullable:   false
 
     manyToOne:
         infoUser:

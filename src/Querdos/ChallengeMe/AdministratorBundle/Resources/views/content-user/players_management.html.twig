@@ -46,12 +46,13 @@
                         <thead>
                         <tr>
                             <th>{{ "table.th1" | trans | desc("Firstname") | meaning("th1") }}</th>
-                            <th>{{ "table.th2" | trans | desc("Lastname") | meaning("th2") }}</th>
-                            <th>{{ "table.th3" | trans | desc("Username") | meaning("th3") }}</th>
-                            <th>{{ "table.th4" | trans | desc("Email") | meaning("th4") }}</th>
+                            <th>{{ "table.th2" | trans | desc("Lastname")  | meaning("th2") }}</th>
+                            <th>{{ "table.th3" | trans | desc("Username")  | meaning("th3") }}</th>
+                            <th>{{ "table.th4" | trans | desc("Email")     | meaning("th4") }}</th>
                             <th>{{ "table.th5" | trans | desc("Email (2)") | meaning("th5") }}</th>
-                            <th>{{ "table.th6" | trans | desc("Birthday") | meaning("th6") }}</th>
-                            <th>{{ "table.th7" | trans | desc("Actions") | meaning("th7") }}</th>
+                            <th>{{ "table.th6" | trans | desc("Birthday")  | meaning("th6") }}</th>
+                            <th>{{ "table.th7" | trans | desc("Status")    | meaning("th7") }}</th>
+                            <th>{{ "table.th8" | trans | desc("Actions")   | meaning("th8") }}</th>
                         </tr>
                         </thead>
 
@@ -65,10 +66,22 @@
                                 <td>{{ player.emailBack }}</td>
                                 <td>{{ player.infoUser.birthday|date('m-d-Y') }}</td>
                                 <td align="center">
+                                    {% if player.isBlocked %}
+                                        <i title="{{ "i.title1" | trans | desc("This player is blocked") | meaning("Block i title 1") }}" class="fa fa-close"></i>
+                                    {% else %}
+                                        <i title="{{ "i.title2" | trans | desc("This player is active") | meaning("Block i title 2") }}" class="fa fa-check"></i>
+                                    {% endif %}
+                                </td>
+                                <td align="center">
                                     <a title="{{ "a.title1" | trans | desc("Send a message") | meaning("Block a title1") }}" href="javascript:void(0)"><i class="fa fa-envelope-o fa-fw" aria-hidden="true"></i></a>
                                     <a title="{{ "a.title2" | trans | desc("Edit")           | meaning("Block a title2") }}" href="javascript:void(0)"><i class="fa fa-pencil fa-fw" aria-hidden="true"></i></a>
                                     <a title="{{ "a.title3" | trans | desc("Reset password") | meaning("Block a title3") }}" href="{{ path('administration_resetPassword', {'id': player.id}) }}"><i class="fa fa-recycle fa-fw" aria-hidden="true"></i></a>
-                                    <a title="{{ "a.title4" | trans | desc("Remove")         | meaning("Block a title4") }}" href="javascript:void(0)"><i class="fa fa-times fa-fw" aria-hidden="true"></i></a>
+                                    {% if player.isBlocked %}
+                                        <a title="{{ "a.title4" | trans | desc("Unblock player")   | meaning("Block a title4") }}" href="{{ path('administration_blockPlayer', {'playerId': player.id}) }}"><i class="fa fa-unlock-alt fa-fw" aria-hidden="true"></i></a>
+                                    {% else %}
+                                        <a title="{{ "a.title4" | trans | desc("Block player")   | meaning("Block a title4") }}" href="{{ path('administration_blockPlayer', {'playerId': player.id}) }}"><i class="fa fa-ban fa-fw" aria-hidden="true"></i></a>
+                                    {% endif %}
+                                    <a title="{{ "a.title5" | trans | desc("Remove")         | meaning("Block a title5") }}" href="javascript:void(0)"><i class="fa fa-times fa-fw" aria-hidden="true"></i></a>
                                 </td>
                             </tr>
                         {% endfor %}

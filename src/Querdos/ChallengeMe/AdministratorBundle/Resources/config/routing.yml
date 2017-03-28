@@ -110,6 +110,12 @@ administration_resetPassword:
     methods:
         - GET
 
+administration_blockPlayer:
+    path:     /players-management/{playerId}
+    defaults: { _controller: AdminBundle:Administration:blockPlayer }
+    methods:
+        - GET
+
 ########################
 # ChallengesController #
 ########################

@@ -221,6 +221,20 @@ class PlayerManager extends BaseManager
     }
 
     /**
+     * For the given player, check if blocked or not and change it
+     *
+     * @param Player $player
+     */
+    public function changePlayerState(Player $player)
+    {
+        // blocking
+        $player->setBlocked(!$player->isBlocked());
+
+        // updating
+        $this->update($player);
+    }
+
+    /**
      * @param ChallengeSolvingManager $challengeSolvingManager
      */
     public function setChallengeSolvingManager($challengeSolvingManager)
