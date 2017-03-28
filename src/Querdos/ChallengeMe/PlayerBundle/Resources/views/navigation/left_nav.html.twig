@@ -10,9 +10,13 @@
         {# menu profile quick info #}
         <div class="profile">
             <div class="profile_pic">
-                {% image "@AdminBundle/Resources/public/images/img.jpg" %}
-                    <img src="{{ asset_url }}" alt="..." class="img-circle profile_img">
-                {% endimage %}
+                {% if app.user.avatarName is null %}
+                    {% image "@AdminBundle/Resources/public/images/img.jpg" %}
+                        <img src="{{ asset_url }}" alt="..." class="img-circle profile_img">
+                    {% endimage %}
+                {% else %}
+                    <img src="{{ vich_uploader_asset(app.user, 'avatar') }}" alt="avatar" class="img-circle profile_img">
+                {% endif %}
             </div>
             <div class="profile_info">
                 <span>{{ "msg.welcome" | trans | desc("Welcome,") | meaning("Welcome message") }}</span>

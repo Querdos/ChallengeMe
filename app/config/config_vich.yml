@@ -20,7 +20,7 @@ vich_uploader:
 
         # Player's avatar
         player_avatar:
-            uri_prefix:           '/uploads/player/avatar'
+            uri_prefix:           '/uploads/player/avatars'
             upload_destination:   '%kernel.root_dir%/../web/uploads/player/avatars'
 
             inject_on_load:       false

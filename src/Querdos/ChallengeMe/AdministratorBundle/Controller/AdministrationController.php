@@ -9,6 +9,7 @@ namespace Querdos\ChallengeMe\AdministratorBundle\Controller;
 
 use Querdos\ChallengeMe\UserBundle\Entity\Administrator;
 use Querdos\ChallengeMe\AdministratorBundle\Form\AdministratorType;
+use Querdos\ChallengeMe\UserBundle\Entity\Player;
 use Querdos\ChallengeMe\UserBundle\Entity\Role;
 use Querdos\ChallengeMe\UserBundle\Manager\AdministratorManager;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -81,7 +82,7 @@ class AdministrationController extends Controller
     }
 
     /**
-     * @Template("AdminBundle:content:players_management.html.twig")
+     * @Template("AdminBundle:content-user:players_management.html.twig")
      *
      * @return array
      */
@@ -90,8 +91,12 @@ class AdministrationController extends Controller
         // retrieving categories
         $categories = $this->get('challengeme.manager.category')->all();
 
+        // retrieving players
+        $players = $this->get('challengeme.manager.player')->all();
+
         return array(
-            'categories' => $categories
+            'categories' => $categories,
+            'players'    => $players
         );
     }
 
@@ -220,8 +225,6 @@ class AdministrationController extends Controller
      */
     public function removeAdminAction($id, Request $request)
     {
-        $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'You are not allowed to access this page');
-
         // Retrieving url and the referer
         $url     = $this->generateUrl('administration_adminsManagement');
         $referer = $request->server->get('HTTP_REFERER');
@@ -542,6 +545,7 @@ class AdministrationController extends Controller
         $adminUrl     = $this->generateUrl('administration_adminsManagement');
         $moderatorUrl = $this->generateUrl('administration_moderatorsManagement');
         $redactorUrl  = $this->generateUrl('administration_redactorsManagement');
+        $playersUrl   = $this->generateUrl('administration_playersManagement');
 
         // Resetting admin password
         if (false !== strstr($referer, $adminUrl)) {
@@ -584,10 +588,49 @@ class AdministrationController extends Controller
 
             // Redirecting
             return $this->redirectToRoute('administration_redactorsManagement');
-        } // Resetting admin password
+        } // Resetting player password
+        else if (false !== strstr($referer, $playersUrl)) {
+            // retrieving the manager
+            $manager = $this->get('challengeme.manager.player');
+
+            // retrieving player
+            $player = $manager->readById($id);
+
+            // reseting the password
+            $manager->resetPassword($player);
+
+            // redirecting
+            return $this->redirectToRoute('administration_playersManagement');
+        } // Otherwise, redirecting
         else {
             // Redirecting
             return $this->redirectToRoute('administration_homepage');
         }
+    }
+
+    /**
+     * @param int $playerId
+     *
+     * @return RedirectResponse
+     */
+    public function blockPlayerAction($playerId)
+    {
+        // retrieving the manager
+        $manager = $this->get('challengeme.manager.player');
+
+        // retrieving the player
+        /** @var Player $player */
+        $player = $manager->readById($playerId);
+
+        // checking if the player is blocked
+        if ($player->isBlocked()) {
+            $manager->changePlayerState($player);
+        } else {
+            // blocking the user
+            $manager->changePlayerState($player);
+        }
+
+        // redirecting
+        return $this->redirectToRoute('administration_playersManagement');
     }
 }

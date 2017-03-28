@@ -25,36 +25,43 @@
 
         {# sidebar menu #}
         <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
-            {# General #}
+            {# General section #}
             <div class="menu_section">
                 <h3>General</h3>
                 <ul class="nav side-menu">
-                    <li><a><i class="fa fa-home"></i> {{ "nav.home" | trans | desc("Home") | meaning("Home button") }} <span class="fa fa-chevron-down"></span></a>
-                        <ul class="nav child_menu">
-                            <li><a href="{{ path('administration_homepage') }}">{{ "nav.home.dashboard" | trans | desc("Dashboard") | meaning("Dashboard button") }}</a>
-                            </li>
-                            <li><a href="{{ path('administration_profile') }}">{{ "nav.home.profile" | trans | desc("Profile") | meaning("Profile button") }}</a>
-                            </li>
-                            <li><a href="{{ path('administration_inbox') }}">{{ "nav.home.private-message" | trans | desc("Private messages") | meaning("PM button") }}</a>
-                            </li>
-                            <li><a href="javascript:;">{{ "nav.home.system" | trans | desc("System") | meaning("System button") }}</a>
-                            </li>
-                        </ul>
+                    <li>
+                        <a href="{{ path('administration_homepage') }}"><i class="fa fa-dashboard"></i> {{ "nav.home.dashboard" | trans | desc("Dashboard") | meaning("Dashboard button") }}</a>
                     </li>
-                    {% if is_granted('ROLE_MODERATOR') %}
-                    <li><a><i class="fa fa-user"></i> {{ "nav.user-management" | trans | desc("User management") | meaning("User management button") }} <span class="fa fa-chevron-down"></span></a>
-                        <ul class="nav child_menu">
-                            <li><a href="{{ path('administration_playersManagement') }}">{{ "nav.user-management.players" | trans | desc("Players") | meaning("Players management button") }}</a></li>
-                            {% if is_granted('ROLE_ADMIN') %}
-                                <li><a href="{{ path('administration_adminsManagement') }}">{{ "nav.user-management.administrators" | trans | desc("Administrators") | meaning("Administrators management button") }}</a></li>
-                                <li><a href="{{ path('administration_moderatorsManagement') }}">{{ "nav.user-management.moderators" | trans | desc("Moderators") | meaning("Moderators management button") }}</a></li>
-                            {% endif %}
-                            <li><a href="{{ path('administration_redactorsManagement') }}">{{ "nav.user-management.redactors" | trans | desc("Redactors") | meaning("Redactors management butotn") }}</a></li>
-                        </ul>
+                    <li>
+                        <a href="{{ path('administration_profile') }}"><i class="fa fa-user"></i> {{ "nav.home.profile" | trans | desc("Profile") | meaning("Profile button") }}</a>
                     </li>
+                    <li>
+                        <a href="{{ path('administration_inbox') }}"><i class="fa fa-comment"></i> {{ "nav.home.private-message" | trans | desc("Private messages") | meaning("PM button") }}</a>
+                    </li>
+                    {% if is_granted("ROLE_ADMIN") %}
+                        <li>
+                            <a href="javascript:void(0)"><i class="fa fa-cog"></i> {{ "nav.home.system" | trans | desc("System") | meaning("System") }}</a>
+                        </li>
                     {% endif %}
                 </ul>
             </div>
+
+            {# User management section #}
+            {% if is_granted('ROLE_MODERATOR') %}
+                <div class="menu_section">
+                    <h3>{{ "nav.users-management" | trans | desc("Users management") | meaning("Users management") }}</h3>
+                    <ul class="nav side-menu">
+                        <li>
+                            <a href="{{ path('administration_playersManagement') }}"><i class="fa fa-users"></i> {{ "nav.user-management.players" | trans | desc("Players") | meaning("Players management button") }}</a>
+                        </li>
+                        {% if is_granted('ROLE_ADMIN') %}
+                            <li><a href="{{ path('administration_adminsManagement') }}"><i class="fa fa-users"></i> {{ "nav.user-management.administrators" | trans | desc("Administrators") | meaning("Administrators management button") }}</a></li>
+                            <li><a href="{{ path('administration_moderatorsManagement') }}"><i class="fa fa-users"></i> {{ "nav.user-management.moderators" | trans | desc("Moderators") | meaning("Moderators management button") }}</a></li>
+                        {% endif %}
+                        <li><a href="{{ path('administration_redactorsManagement') }}"><i class="fa fa-users"></i> {{ "nav.user-management.redactors" | trans | desc("Redactors") | meaning("Redactors management butotn") }}</a></li>
+                    </ul>
+                </div>
+            {% endif %}
 
             {# Challenges management #}
             <div class="menu_section">

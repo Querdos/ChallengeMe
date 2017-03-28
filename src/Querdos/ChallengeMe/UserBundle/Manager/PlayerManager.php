@@ -97,6 +97,7 @@ class PlayerManager extends BaseManager
 
         // flushing info user
         $this->entityManager->flush($player->getInfoUser());
+        $this->entityManager->flush($player->getInfoUser()->getPersonalInformation());
     }
 
     /**
@@ -124,6 +125,17 @@ class PlayerManager extends BaseManager
     public function count()
     {
         return $this->repository->getPlayerCount();
+    }
+
+    /**
+     * Reset the password for the given player
+     *
+     * @param Player $player
+     */
+    public function resetPassword(Player $player)
+    {
+        $player->setPlainPassword(uniqid());
+        $this->update($player);
     }
 
     /**
@@ -207,6 +219,20 @@ class PlayerManager extends BaseManager
                 $player
             )
         );
+    }
+
+    /**
+     * For the given player, check if blocked or not and change it
+     *
+     * @param Player $player
+     */
+    public function changePlayerState(Player $player)
+    {
+        // blocking
+        $player->setBlocked(!$player->isBlocked());
+
+        // updating
+        $this->update($player);
     }
 
     /**

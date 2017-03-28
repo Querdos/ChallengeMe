@@ -88,7 +88,15 @@
 {% endblock main_content %}
 
 {% block javascript %}
-    {% javascripts '@jquery_js' '@bootstrap_js' '@fastclick_js' '@nprogress_js' '@iCheck_js' '@datatables_js' '@customTheme_js' %}
+    {% javascripts
+        '@jquery_js'
+        '@bootstrap_js'
+        '@fastclick_js'
+        '@nprogress_js'
+        '@iCheck_js'
+        '@datatables_js'
+        '@customTheme_js'
+    %}
         <script src="{{ asset_url }}"></script>
     {% endjavascripts %}
 

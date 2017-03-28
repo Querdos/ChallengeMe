@@ -29,62 +29,34 @@
                             <div class="profile_img">
                                 <div id="crop-avatar">
                                     {# Current avatar #}
-                                    <img class="img-responsive avatar-view" src="images/picture.jpg" alt="Avatar" title="Change the avatar">
+                                    {% if app.user.avatarName is null %}
+                                        {% image "@AdminBundle/Resources/public/images/img.jpg" %}
+                                            <img class="img-responsive avatar-view" src="{{ asset_url }}" alt="Avatar" title="Change the avatar" data-toggle="modal" data-target=".bs-example-modal-sm">
+                                        {% endimage %}
+                                    {% else %}
+                                        <img class="img-responsive avatar-view" src="{{ asset(avatarPath) }}" alt="Avatar" title="Change the avatar" data-toggle="modal" data-target=".bs-example-modal-sm">
+                                    {% endif %}
 
                                     {# Cropping modal #}
-                                    <div class="modal fade" id="avatar-modal" aria-hidden="true" aria-labelledby="avatar-modal-label" role="dialog" tabindex="-1">
-                                        <div class="modal-dialog modal-lg">
+                                    <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-hidden="true">
+                                        <div class="modal-dialog modal-sm">
                                             <div class="modal-content">
-                                                <form class="avatar-form" action="crop.php" enctype="multipart/form-data" method="post">
-                                                    <div class="modal-header">
-                                                        <button class="close" data-dismiss="modal" type="button">&times;</button>
-                                                        <h4 class="modal-title" id="avatar-modal-label">Change Avatar</h4>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <div class="avatar-body">
 
-                                                            {# Upload image and data #}
-                                                            <div class="avatar-upload">
-                                                                <input class="avatar-src" name="avatar_src" type="hidden">
-                                                                <input class="avatar-data" name="avatar_data" type="hidden">
-                                                                <label for="avatarInput">Local upload</label>
-                                                                <input class="avatar-input" id="avatarInput" name="avatar_file" type="file">
-                                                            </div>
-
-                                                            {# Crop and preview #}
-                                                            <div class="row">
-                                                                <div class="col-md-9">
-                                                                    <div class="avatar-wrapper"></div>
-                                                                </div>
-                                                                <div class="col-md-3">
-                                                                    <div class="avatar-preview preview-lg"></div>
-                                                                    <div class="avatar-preview preview-md"></div>
-                                                                    <div class="avatar-preview preview-sm"></div>
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="row avatar-btns">
-                                                                <div class="col-md-9">
-                                                                    <div class="btn-group">
-                                                                        <button class="btn btn-primary" data-method="rotate" data-option="-90" type="button" title="Rotate -90 degrees">Rotate Left</button>
-                                                                        <button class="btn btn-primary" data-method="rotate" data-option="-15" type="button">-15deg</button>
-                                                                        <button class="btn btn-primary" data-method="rotate" data-option="-30" type="button">-30deg</button>
-                                                                        <button class="btn btn-primary" data-method="rotate" data-option="-45" type="button">-45deg</button>
-                                                                    </div>
-                                                                    <div class="btn-group">
-                                                                        <button class="btn btn-primary" data-method="rotate" data-option="90" type="button" title="Rotate 90 degrees">Rotate Right</button>
-                                                                        <button class="btn btn-primary" data-method="rotate" data-option="15" type="button">15deg</button>
-                                                                        <button class="btn btn-primary" data-method="rotate" data-option="30" type="button">30deg</button>
-                                                                        <button class="btn btn-primary" data-method="rotate" data-option="45" type="button">45deg</button>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-md-3">
-                                                                    <button class="btn btn-primary btn-block avatar-save" type="submit">Done</button>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </form>
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span>
+                                                    </button>
+                                                    <h4 class="modal-title" id="myModalLabel2">Change the team's avatar</h4>
+                                                </div>
+                                                {{ form_start(formUploadAvatar) }}
+                                                <div class="modal-body">
+                                                    {{ form_row(formUploadAvatar.avatar) }}
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                    {#<button type="button" class="btn btn-primary">Save changes</button>#}
+                                                    {{ form_row(formUploadAvatar.save) }}
+                                                </div>
+                                                {{ form_end(formUploadAvatar) }}
                                             </div>
                                         </div>
                                     </div>
@@ -118,41 +90,25 @@
                                 {% if personalInfo.website is not null %}
                                 <li class="m-top-xs">
                                     <i class="fa fa-external-link user-profile-icon"></i>
-                                    <a href="{{ personalInfo.website }}" target="_blank">{{ personalInfo.website }}</a>
+                                    <a href="http://{{ personalInfo.website }}" target="_blank">{{ personalInfo.website }}</a>
                                 </li>
                                 {% endif %}
                             </ul>
 
-                            <a class="btn btn-success"><i class="fa fa-edit m-right-xs"></i>Edit Profile</a>
+                            <a class="btn btn-success" id="buttonEditInformation"><i class="fa fa-edit m-right-xs"></i>Edit informations</a>
                             <br />
 
                             {# start skills #}
-                            <h4>Skills</h4>
+                            <h4>Skills <a href="javascript:void(0)" id="buttonSkillAdd"><i class="fa fa-plus-circle"></i> </a></h4>
                             <ul class="list-unstyled user_data">
+                                {% for skill in app.user.infoUser.personalInformation.skills %}
                                 <li>
-                                    <p>Web Applications</p>
+                                    <p>{{ skill.name }}</p>
                                     <div class="progress progress_sm">
-                                        <div class="progress-bar bg-green" role="progressbar" data-transitiongoal="50"></div>
+                                        <div class="progress-bar bg-green" role="progressbar" style="width: {{ skill.level }}%;"></div>
                                     </div>
                                 </li>
-                                <li>
-                                    <p>Website Design</p>
-                                    <div class="progress progress_sm">
-                                        <div class="progress-bar bg-green" role="progressbar" data-transitiongoal="70"></div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <p>Automation & Testing</p>
-                                    <div class="progress progress_sm">
-                                        <div class="progress-bar bg-green" role="progressbar" data-transitiongoal="30"></div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <p>UI / UX</p>
-                                    <div class="progress progress_sm">
-                                        <div class="progress-bar bg-green" role="progressbar" data-transitiongoal="50"></div>
-                                    </div>
-                                </li>
+                                {% endfor %}
                             </ul>
                             {# end of skills #}
 
@@ -170,6 +126,7 @@
                                     </div>
                                 </div>
                             </div>
+
                             {# start of user-activity-graph #}
                             <div id="graph_bar" style="width:100%; height:280px;"></div>
                             {# end of user-activity-graph #}
@@ -340,10 +297,141 @@
     {% javascripts
         '@fastclick_js'
         '@nprogress_js'
-        '@morris_js'
         '@bootstrap_progressbar_js'
+        '@morris_js'
         '@bootstrapDateRangePicker_js'
     %}
         <script src="{{ asset_url }}"></script>
     {% endjavascripts %}
+
+    {# New skill form #}
+    <div id="form_add_skill" style="display: none;">
+        {{ form_start(formSkill, {'attr': {'class': 'pf-form'}}) }}
+            <div class="pf-element pf-heading">
+                <h3 style="margin-top: 0;">Adding a new Skill</h3>
+            </div>
+            <div class="pf-element">
+                <label>
+                    {{ form_label(formSkill.name) }}
+                    {{ form_widget(formSkill.name) }}
+                </label>
+            </div>
+            <div class="pf-element">
+                <label>
+                    {{ form_label(formSkill.level) }}
+                    {{ form_widget(formSkill.level) }}
+                </label>
+            </div>
+            <div class="pf-element pf-buttons pf-centered">
+                <input class="pf-button btn btn-primary" type="submit" name="submit" value="Submit"/>
+                <input class="pf-button btn btn-default" type="button" name="cancel" value="Cancel"/>
+            </div>
+        {{ form_end(formSkill) }}
+    </div>
+
+    {# Information update form #}
+    <div id="form_edit_info" style="display: none;">
+        {{ form_start(formInfoUser, {'attr': {'class': 'pf-form'}}) }}
+            <div class="pf-element pf-heading">
+                <h3 style="margin-top: 0;">Adding a new Skill</h3>
+            </div>
+            <div class="pf-element">
+                <label>
+                    {{ form_label(formInfoUser.firstName) }}
+                    {{ form_widget(formInfoUser.firstName) }}
+                </label>
+            </div>
+            <div class="pf-element">
+                <label>
+                    {{ form_label(formInfoUser.lastName) }}
+                    {{ form_widget(formInfoUser.lastName) }}
+                </label>
+            </div>
+
+            <div class="pf-element">
+                <label>
+                    {{ form_label(formInfoUser.personalInformation.address) }}
+                    {{ form_widget(formInfoUser.personalInformation.address) }}
+                </label>
+            </div>
+
+
+            <div class="pf-element">
+                <label>
+                    {{ form_label(formInfoUser.personalInformation.job) }}
+                    {{ form_widget(formInfoUser.personalInformation.job) }}
+                </label>
+            </div>
+
+
+            <div class="pf-element">
+                <label>
+                    {{ form_label(formInfoUser.personalInformation.website) }}
+                    {{ form_widget(formInfoUser.personalInformation.website) }}
+                </label>
+            </div>
+
+            <div class="pf-element pf-buttons pf-centered">
+                <input class="pf-button btn btn-primary" type="submit" name="submit" value="Submit"/>
+                <input class="pf-button btn btn-default" type="button" name="cancel" value="Cancel"/>
+            </div>
+        {{ form_end(formSkill) }}
+    </div>
+
+    <script>
+        $(".progress").progressbar();
+
+        {% if error is defined %}
+            new PNotify({
+                title:      'Error',
+                text:       '{{ error }}',
+                type:       'danger',
+                styling:    'bootstrap3'
+            });
+        {% endif %}
+
+        // listener on the button skill add
+        $("#buttonSkillAdd").on('click', function() {
+            $(this).attr("disabled", true);
+            var notice = new PNotify({
+                text: $("#form_add_skill").html(),
+                icon: false,
+                width: 'auto',
+                hide: false,
+                buttons: {
+                    closer: false,
+                    sticker: false
+                },
+                insert_brs: false
+            });
+
+            // cancel button
+            notice.get().find('form.pf-form').on('click', '[name=cancel]', function () {
+                $("#buttonSkillAdd").attr("disabled", false);
+                notice.remove();
+            });
+        });
+
+        // listener on the button edit info
+        $("#buttonEditInformation").on('click', function() {
+            $(this).attr("disabled", true);
+            var notice = new PNotify({
+                text: $("#form_edit_info").html(),
+                icon: false,
+                width: 'auto',
+                hide: false,
+                buttons: {
+                    closer: false,
+                    sticker: false
+                },
+                insert_brs: false
+            });
+
+            // cancel button
+            notice.get().find('form.pf-form').on('click', '[name=cancel]', function () {
+                $("#buttonEditInformation").attr("disabled", false);
+                notice.remove();
+            });
+        });
+    </script>
 {% endblock javascript %}

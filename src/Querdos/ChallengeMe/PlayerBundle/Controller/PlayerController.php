@@ -7,13 +7,17 @@ use Querdos\ChallengeMe\ChallengesBundle\Entity\Category;
 use Querdos\ChallengeMe\ChallengesBundle\Entity\Rating;
 use Querdos\ChallengeMe\PlayerBundle\Entity\Notification;
 use Querdos\ChallengeMe\PlayerBundle\Entity\TeamActivity;
+use Querdos\ChallengeMe\PlayerBundle\Form\InfoUserType;
 use Querdos\ChallengeMe\PlayerBundle\Form\PlayerRoleType;
+use Querdos\ChallengeMe\PlayerBundle\Form\SkillType;
 use Querdos\ChallengeMe\PlayerBundle\Form\SolveChallengeType;
 use Querdos\ChallengeMe\PlayerBundle\Form\TeamType;
+use Querdos\ChallengeMe\PlayerBundle\Form\UploadAvatarPlayerType;
 use Querdos\ChallengeMe\PlayerBundle\Form\UploadAvatarType;
 use Querdos\ChallengeMe\UserBundle\Entity\Demand;
 use Querdos\ChallengeMe\UserBundle\Entity\Player;
 use Querdos\ChallengeMe\UserBundle\Entity\PlayerRole;
+use Querdos\ChallengeMe\UserBundle\Entity\Skill;
 use Querdos\ChallengeMe\UserBundle\Entity\Team;
 use Querdos\ChallengeMe\UserBundle\Manager\DemandManager;
 use Querdos\ChallengeMe\UserBundle\Manager\PlayerManager;
@@ -24,6 +28,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\VarDumper\VarDumper;
 
 class PlayerController extends Controller
 {
@@ -74,16 +79,85 @@ class PlayerController extends Controller
     /**
      * @Template("PlayerBundle:content:profile.html.twig")
      *
-     * @return array
+     * @param Request $request
+     *
+     * @return RedirectResponse
      */
-    public function profileAction()
+    public function profileAction(Request $request)
     {
         // retrieving the notification manager
-        $notificationManager = $this->get('challengeme.manager.notification');
+        $notificationManager         = $this->get('challengeme.manager.notification');
+        $data['unreadNotifications'] = $notificationManager->getUnreadForPlayer($this->getUser());
 
-        return array(
-            'unreadNotifications'   => $notificationManager->getUnreadForPlayer($this->getUser())
-        );
+        // building the form for a skill to add
+        $skill = new Skill();
+        $formSkill = $this
+            ->createForm(SkillType::class, $skill)
+        ;
+
+        // building the form for infoUser to edit
+        $formInfoUser = $this
+            ->createForm(InfoUserType::class, $this->getUser()->getInfoUser())
+        ;
+
+        $formUploadAvatar = $this
+            ->createForm(UploadAvatarPlayerType::class, $this->getUser())
+            ->add('save', SubmitType::class, array(
+                'label' => 'Upload',
+                'attr' => array(
+                    'class' => 'btn btn-success'
+                ),
+                'translation_domain' => 'forms'
+            ))
+        ;
+
+        // adding forms to the view
+        if ($this->getUser()->getAvatarName() !== null) {
+            $helper             = $this->get('vich_uploader.templating.helper.uploader_helper');
+            $avatarPath         = $helper->asset($this->getUser(), 'avatar');
+            $data['avatarPath'] = $avatarPath;
+        }
+
+        $data['formSkill']        = $formSkill->createView();
+        $data['formInfoUser']     = $formInfoUser->createView();
+        $data['formUploadAvatar'] = $formUploadAvatar->createView();
+
+        // handling skill form
+        $formSkill->handleRequest($request);
+        if ($formSkill->isSubmitted()) {
+            // checking skill level
+            if ($skill->getLevel() > 100 || $skill->getLevel() < 0) {
+                $data['error'] = "Invalid level value for the skill.";
+            }
+
+            // everything ok, adding the skill
+            $skill->setPersonalInformation($this->getUser()->getInfoUser()->getPersonalInformation());
+            $this->get('challengeme.manager.skills')->create($skill);
+
+            return $this->redirectToRoute('player_profile');
+        }
+
+        // handling formInfoUser
+        $formInfoUser->handleRequest($request);
+        if ($formInfoUser->isSubmitted()) {
+            // submitting
+            $this->get('challengeme.manager.player')->update($this->getUser());
+
+            // redirecting
+            return $this->redirectToRoute('player_profile');
+        }
+
+        // handling formUploadAvatar
+        $formUploadAvatar->handleRequest($request);
+        if ($formUploadAvatar->isSubmitted()) {
+            // submitting
+            $this->get('challengeme.manager.player')->update($this->getUser());
+
+            // redirecting
+            return $this->redirectToRoute('player_profile');
+        }
+
+        return $data;
     }
 
     /**

@@ -12,6 +12,7 @@ player_profile:
     defaults: { _controller: PlayerBundle:Player:profile }
     methods:
         - GET
+        - POST
 
 player_players_list:
     path:     /challengers
