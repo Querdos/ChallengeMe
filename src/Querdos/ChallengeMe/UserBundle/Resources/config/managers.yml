@@ -63,3 +63,8 @@ services:
             - [ setTeamActivityManager, [ '@challengeme.manager.team_activity'          ] ]
             - [ setNotificationManager, [ '@challengeme.manager.notification'           ] ]
 
+    challengeme.manager.skills:
+        class:  Querdos\ChallengeMe\UserBundle\Manager\SkillManager
+        calls:
+            - [ setRepository,          [ '@challengeme.repository.skill'               ] ]
+            - [ setEntityManager,       [ '@doctrine.orm.entity_manager'                ] ]

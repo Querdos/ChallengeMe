@@ -127,32 +127,16 @@
                             <br />
 
                             {# start skills #}
-                            <h4>Skills</h4>
+                            <h4>Skills <a href="javascript:void(0)" id="buttonSkillAdd"><i class="fa fa-plus-circle"></i> </a></h4>
                             <ul class="list-unstyled user_data">
+                                {% for skill in app.user.infoUser.personalInformation.skills %}
                                 <li>
-                                    <p>Web Applications</p>
+                                    <p>{{ skill.name }}</p>
                                     <div class="progress progress_sm">
-                                        <div class="progress-bar bg-green" role="progressbar" data-transitiongoal="50"></div>
+                                        <div class="progress-bar bg-green" role="progressbar" style="width: {{ skill.level }}%;"></div>
                                     </div>
                                 </li>
-                                <li>
-                                    <p>Website Design</p>
-                                    <div class="progress progress_sm">
-                                        <div class="progress-bar bg-green" role="progressbar" data-transitiongoal="70"></div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <p>Automation & Testing</p>
-                                    <div class="progress progress_sm">
-                                        <div class="progress-bar bg-green" role="progressbar" data-transitiongoal="30"></div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <p>UI / UX</p>
-                                    <div class="progress progress_sm">
-                                        <div class="progress-bar bg-green" role="progressbar" data-transitiongoal="50"></div>
-                                    </div>
-                                </li>
+                                {% endfor %}
                             </ul>
                             {# end of skills #}
 
@@ -340,10 +324,67 @@
     {% javascripts
         '@fastclick_js'
         '@nprogress_js'
-        '@morris_js'
         '@bootstrap_progressbar_js'
+        '@morris_js'
         '@bootstrapDateRangePicker_js'
     %}
         <script src="{{ asset_url }}"></script>
     {% endjavascripts %}
+
+    <div id="form_notice" style="display: none;">
+        {{ form_start(formSkill, {'attr': {'class': 'pf-form'}}) }}
+            <div class="pf-element pf-heading">
+                <h3 style="margin-top: 0;">Adding a new Skill</h3>
+            </div>
+            <div class="pf-element">
+                <label>
+                    {{ form_label(formSkill.name) }}
+                    {{ form_widget(formSkill.name) }}
+                </label>
+            </div>
+            <div class="pf-element">
+                <label>
+                    {{ form_label(formSkill.level) }}
+                    {{ form_widget(formSkill.level) }}
+                </label>
+            </div>
+            <div class="pf-element pf-buttons pf-centered">
+                <input class="pf-button btn btn-primary" type="submit" name="submit" value="Submit"/>
+                <input class="pf-button btn btn-default" type="button" name="cancel" value="Cancel"/>
+            </div>
+        {{ form_end(formSkill) }}
+    </div>
+
+    <script>
+        $(".progress").progressbar();
+
+        {% if error is defined %}
+            new PNotify({
+                title:      'Error',
+                text:       '{{ error }}',
+                type:       'danger',
+                styling:    'bootstrap3'
+            });
+        {% endif %}
+
+        // listener on the button skill add
+        $("#buttonSkillAdd").on('click', function() {
+            var notice = new PNotify({
+                text: $("#form_notice").html(),
+                icon: false,
+                width: 'auto',
+                hide: false,
+                buttons: {
+                    closer: false,
+                    sticker: false
+                },
+                insert_brs: false
+            });
+
+            // cancel button
+            notice.get().find('form.pf-form').on('click', '[name=cancel]', function () {
+                notice.remove();
+            });
+        });
+    </script>
 {% endblock javascript %}
