@@ -279,7 +279,8 @@ class Player extends BaseUser implements UserInterface, \Serializable, AdvancedU
      */
     public function isAccountNonExpired()
     {
-        // TODO: Implement isAccountNonExpired() method.
+        // not handled yet
+        return true;
     }
 
     /**
@@ -309,7 +310,8 @@ class Player extends BaseUser implements UserInterface, \Serializable, AdvancedU
      */
     public function isCredentialsNonExpired()
     {
-        // TODO: Implement isCredentialsNonExpired() method.
+        // Not handled yet
+        return true;
     }
 
     /**
@@ -324,6 +326,7 @@ class Player extends BaseUser implements UserInterface, \Serializable, AdvancedU
      */
     public function isEnabled()
     {
-        // TODO: Implement isEnabled() method.
+        // Not Handled yet
+        return true;
     }
 }
