@@ -127,6 +127,17 @@ class PlayerManager extends BaseManager
     }
 
     /**
+     * Reset the password for the given player
+     *
+     * @param Player $player
+     */
+    public function resetPassword(Player $player)
+    {
+        $player->setPlainPassword(uniqid());
+        $this->update($player);
+    }
+
+    /**
      * @param PasswordEncoder $passwordEncoder
      */
     public function setPasswordEncoder($passwordEncoder)

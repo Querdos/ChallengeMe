@@ -15,10 +15,7 @@
     <div class="page-title">
         <div class="title_left">
             <h3>
-                Tables
-                <small>
-                    Some examples to get you started
-                </small>
+                {{ "title" | trans | desc("Players management") | meaning("Players management") }}
             </h3>
         </div>
 
@@ -69,9 +66,9 @@
                                 <td>{{ player.infoUser.birthday|date('m-d-Y') }}</td>
                                 <td align="center">
                                     <a title="{{ "a.title1" | trans | desc("Send a message") | meaning("Block a title1") }}" href="javascript:void(0)"><i class="fa fa-envelope-o fa-fw" aria-hidden="true"></i></a>
-                                    <a title="{{ "a.title2" | trans | desc("Edit") | meaning("Block a title2") }}" href="javascript:void(0)"><i class="fa fa-pencil fa-fw" aria-hidden="true"></i></a>
-                                    <a title="{{ "a.title3" | trans | desc("Reset password") | meaning("Block a title3") }}" href="javascript:void(0)"><i class="fa fa-recycle fa-fw" aria-hidden="true"></i></a>
-                                    <a title="{{ "a.title4" | trans | desc("Remove") | meaning("Block a title4") }}" href="javascript:void(0)"><i class="fa fa-times fa-fw" aria-hidden="true"></i></a>
+                                    <a title="{{ "a.title2" | trans | desc("Edit")           | meaning("Block a title2") }}" href="javascript:void(0)"><i class="fa fa-pencil fa-fw" aria-hidden="true"></i></a>
+                                    <a title="{{ "a.title3" | trans | desc("Reset password") | meaning("Block a title3") }}" href="{{ path('administration_resetPassword', {'id': player.id}) }}"><i class="fa fa-recycle fa-fw" aria-hidden="true"></i></a>
+                                    <a title="{{ "a.title4" | trans | desc("Remove")         | meaning("Block a title4") }}" href="javascript:void(0)"><i class="fa fa-times fa-fw" aria-hidden="true"></i></a>
                                 </td>
                             </tr>
                         {% endfor %}

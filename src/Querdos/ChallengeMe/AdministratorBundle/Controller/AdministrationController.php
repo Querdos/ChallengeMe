@@ -546,6 +546,7 @@ class AdministrationController extends Controller
         $adminUrl     = $this->generateUrl('administration_adminsManagement');
         $moderatorUrl = $this->generateUrl('administration_moderatorsManagement');
         $redactorUrl  = $this->generateUrl('administration_redactorsManagement');
+        $playersUrl   = $this->generateUrl('administration_playersManagement');
 
         // Resetting admin password
         if (false !== strstr($referer, $adminUrl)) {
@@ -588,7 +589,20 @@ class AdministrationController extends Controller
 
             // Redirecting
             return $this->redirectToRoute('administration_redactorsManagement');
-        } // Resetting admin password
+        } // Resetting player password
+        else if (false !== strstr($referer, $playersUrl)) {
+            // retrieving the manager
+            $manager = $this->get('challengeme.manager.player');
+
+            // retrieving player
+            $player = $manager->readById($id);
+
+            // reseting the password
+            $manager->resetPassword($player);
+
+            // redirecting
+            return $this->redirectToRoute('administration_playersManagement');
+        } // Otherwise, redirecting
         else {
             // Redirecting
             return $this->redirectToRoute('administration_homepage');
