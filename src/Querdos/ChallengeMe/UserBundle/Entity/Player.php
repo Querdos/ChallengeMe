@@ -10,6 +10,7 @@ namespace Querdos\ChallengeMe\UserBundle\Entity;
 
 
 use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\Security\Core\User\AdvancedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
@@ -20,7 +21,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  *
  * @package Querdos\ChallengeMe\UserBundle\Entity
  */
-class Player extends BaseUser implements UserInterface, \Serializable
+class Player extends BaseUser implements UserInterface, \Serializable, AdvancedUserInterface
 {
     /**
      * @var Team
@@ -57,6 +58,14 @@ class Player extends BaseUser implements UserInterface, \Serializable
     private $solution;
 
     /**
+     * Allow the admin to block a player. If true, the player will be able to connect,
+     * but won't be able to do anything
+     *
+     * @var bool
+     */
+    private $blocked;
+
+    /**
      * Administrator constructor.
      *
      * @param string $id
@@ -74,6 +83,7 @@ class Player extends BaseUser implements UserInterface, \Serializable
         $this->creationDate = new \DateTime();
 
         $this->infoUser     = new InfoUser();
+        $this->blocked      = false; // by default, the player is not blocked
     }
 
     /**
@@ -236,5 +246,84 @@ class Player extends BaseUser implements UserInterface, \Serializable
     {
         $this->solution = $solution;
         return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isBlocked()
+    {
+        return $this->blocked;
+    }
+
+    /**
+     * @param bool $blocked
+     *
+     * @return Player
+     */
+    public function setBlocked($blocked)
+    {
+        $this->blocked = $blocked;
+        return $this;
+    }
+
+    /**
+     * Checks whether the user's account has expired.
+     *
+     * Internally, if this method returns false, the authentication system
+     * will throw an AccountExpiredException and prevent login.
+     *
+     * @return bool true if the user's account is non expired, false otherwise
+     *
+     * @see AccountExpiredException
+     */
+    public function isAccountNonExpired()
+    {
+        // TODO: Implement isAccountNonExpired() method.
+    }
+
+    /**
+     * Checks whether the user is locked.
+     *
+     * Internally, if this method returns false, the authentication system
+     * will throw a LockedException and prevent login.
+     *
+     * @return bool true if the user is not locked, false otherwise
+     *
+     * @see LockedException
+     */
+    public function isAccountNonLocked()
+    {
+        return !$this->isBlocked();
+    }
+
+    /**
+     * Checks whether the user's credentials (password) has expired.
+     *
+     * Internally, if this method returns false, the authentication system
+     * will throw a CredentialsExpiredException and prevent login.
+     *
+     * @return bool true if the user's credentials are non expired, false otherwise
+     *
+     * @see CredentialsExpiredException
+     */
+    public function isCredentialsNonExpired()
+    {
+        // TODO: Implement isCredentialsNonExpired() method.
+    }
+
+    /**
+     * Checks whether the user is enabled.
+     *
+     * Internally, if this method returns false, the authentication system
+     * will throw a DisabledException and prevent login.
+     *
+     * @return bool true if the user is enabled, false otherwise
+     *
+     * @see DisabledException
+     */
+    public function isEnabled()
+    {
+        // TODO: Implement isEnabled() method.
     }
 }
