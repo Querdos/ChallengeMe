@@ -225,8 +225,6 @@ class AdministrationController extends Controller
      */
     public function removeAdminAction($id, Request $request)
     {
-        $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'You are not allowed to access this page');
-
         // Retrieving url and the referer
         $url     = $this->generateUrl('administration_adminsManagement');
         $referer = $request->server->get('HTTP_REFERER');
