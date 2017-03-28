@@ -81,7 +81,7 @@ class AdministrationController extends Controller
     }
 
     /**
-     * @Template("AdminBundle:content:players_management.html.twig")
+     * @Template("AdminBundle:content-user:players_management.html.twig")
      *
      * @return array
      */
@@ -90,8 +90,12 @@ class AdministrationController extends Controller
         // retrieving categories
         $categories = $this->get('challengeme.manager.category')->all();
 
+        // retrieving players
+        $players = $this->get('challengeme.manager.player')->all();
+
         return array(
-            'categories' => $categories
+            'categories' => $categories,
+            'players'    => $players
         );
     }
 
