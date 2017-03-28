@@ -25,7 +25,7 @@
 
         {# sidebar menu #}
         <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
-            {# General #}
+            {# General section #}
             <div class="menu_section">
                 <h3>General</h3>
                 <ul class="nav side-menu">
@@ -38,9 +38,15 @@
                     <li>
                         <a href="{{ path('administration_inbox') }}"><i class="fa fa-comment"></i> {{ "nav.home.private-message" | trans | desc("Private messages") | meaning("PM button") }}</a>
                     </li>
+                    {% if is_granted("ROLE_ADMIN") %}
+                        <li>
+                            <a href="javascript:void(0)"><i class="fa fa-cog"></i> {{ "nav.home.system" | trans | desc("System") | meaning("System") }}</a>
+                        </li>
+                    {% endif %}
                 </ul>
             </div>
 
+            {# User management section #}
             {% if is_granted('ROLE_MODERATOR') %}
                 <div class="menu_section">
                     <h3>{{ "nav.users-management" | trans | desc("Users management") | meaning("Users management") }}</h3>
