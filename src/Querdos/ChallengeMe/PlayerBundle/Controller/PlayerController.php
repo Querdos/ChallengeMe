@@ -7,6 +7,7 @@ use Querdos\ChallengeMe\ChallengesBundle\Entity\Category;
 use Querdos\ChallengeMe\ChallengesBundle\Entity\Rating;
 use Querdos\ChallengeMe\PlayerBundle\Entity\Notification;
 use Querdos\ChallengeMe\PlayerBundle\Entity\TeamActivity;
+use Querdos\ChallengeMe\PlayerBundle\Form\InfoUserType;
 use Querdos\ChallengeMe\PlayerBundle\Form\PlayerRoleType;
 use Querdos\ChallengeMe\PlayerBundle\Form\SkillType;
 use Querdos\ChallengeMe\PlayerBundle\Form\SolveChallengeType;
@@ -93,8 +94,15 @@ class PlayerController extends Controller
             ->createForm(SkillType::class, $skill)
         ;
 
-        // adding the form to the view
-        $data['formSkill'] = $formSkill->createView();
+        // building the form for infoUser to edit
+        $infoUser = $this->getUser()->getInfoUser();
+        $formInfoUser = $this
+            ->createForm(InfoUserType::class, $this->getUser()->getInfoUser())
+        ;
+
+        // adding forms to the view
+        $data['formSkill']    = $formSkill->createView();
+        $data['formInfoUser'] = $formInfoUser->createView();
 
         // handling skill form
         $formSkill->handleRequest($request);
@@ -107,6 +115,18 @@ class PlayerController extends Controller
             // everything ok, adding the skill
             $skill->setPersonalInformation($this->getUser()->getInfoUser()->getPersonalInformation());
             $this->get('challengeme.manager.skills')->create($skill);
+
+            return $this->redirectToRoute('player_profile');
+        }
+
+        // handling formInfoUser
+        $formInfoUser->handleRequest($request);
+        if ($formInfoUser->isSubmitted()) {
+            // submitting
+            $this->get('challengeme.manager.player')->update($this->getUser());
+
+            // redirecting
+            return $this->redirectToRoute('player_profile');
         }
 
         return $data;

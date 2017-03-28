@@ -97,6 +97,7 @@ class PlayerManager extends BaseManager
 
         // flushing info user
         $this->entityManager->flush($player->getInfoUser());
+        $this->entityManager->flush($player->getInfoUser()->getPersonalInformation());
     }
 
     /**

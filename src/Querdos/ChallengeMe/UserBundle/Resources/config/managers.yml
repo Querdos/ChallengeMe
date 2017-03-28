@@ -68,3 +68,9 @@ services:
         calls:
             - [ setRepository,          [ '@challengeme.repository.skill'               ] ]
             - [ setEntityManager,       [ '@doctrine.orm.entity_manager'                ] ]
+
+    challengeme.manager.info_user:
+        class:  Querdos\ChallengeMe\UserBundle\Manager\InfoUserManager
+        calls:
+            - [ setRepository,          [ '@challengeme.repository.info_user'           ] ]
+            - [ setEntityManager,       [ '@doctrine.orm.entity_manager'                ] ]

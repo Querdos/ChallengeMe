@@ -118,12 +118,12 @@
                                 {% if personalInfo.website is not null %}
                                 <li class="m-top-xs">
                                     <i class="fa fa-external-link user-profile-icon"></i>
-                                    <a href="{{ personalInfo.website }}" target="_blank">{{ personalInfo.website }}</a>
+                                    <a href="http://{{ personalInfo.website }}" target="_blank">{{ personalInfo.website }}</a>
                                 </li>
                                 {% endif %}
                             </ul>
 
-                            <a class="btn btn-success"><i class="fa fa-edit m-right-xs"></i>Edit Profile</a>
+                            <a class="btn btn-success" id="buttonEditInformation"><i class="fa fa-edit m-right-xs"></i>Edit informations</a>
                             <br />
 
                             {# start skills #}
@@ -154,6 +154,7 @@
                                     </div>
                                 </div>
                             </div>
+
                             {# start of user-activity-graph #}
                             <div id="graph_bar" style="width:100%; height:280px;"></div>
                             {# end of user-activity-graph #}
@@ -331,7 +332,8 @@
         <script src="{{ asset_url }}"></script>
     {% endjavascripts %}
 
-    <div id="form_notice" style="display: none;">
+    {# New skill form #}
+    <div id="form_add_skill" style="display: none;">
         {{ form_start(formSkill, {'attr': {'class': 'pf-form'}}) }}
             <div class="pf-element pf-heading">
                 <h3 style="margin-top: 0;">Adding a new Skill</h3>
@@ -355,6 +357,55 @@
         {{ form_end(formSkill) }}
     </div>
 
+    {# Information update form #}
+    <div id="form_edit_info" style="display: none;">
+        {{ form_start(formInfoUser, {'attr': {'class': 'pf-form'}}) }}
+            <div class="pf-element pf-heading">
+                <h3 style="margin-top: 0;">Adding a new Skill</h3>
+            </div>
+            <div class="pf-element">
+                <label>
+                    {{ form_label(formInfoUser.firstName) }}
+                    {{ form_widget(formInfoUser.firstName) }}
+                </label>
+            </div>
+            <div class="pf-element">
+                <label>
+                    {{ form_label(formInfoUser.lastName) }}
+                    {{ form_widget(formInfoUser.lastName) }}
+                </label>
+            </div>
+
+            <div class="pf-element">
+                <label>
+                    {{ form_label(formInfoUser.personalInformation.address) }}
+                    {{ form_widget(formInfoUser.personalInformation.address) }}
+                </label>
+            </div>
+
+
+            <div class="pf-element">
+                <label>
+                    {{ form_label(formInfoUser.personalInformation.job) }}
+                    {{ form_widget(formInfoUser.personalInformation.job) }}
+                </label>
+            </div>
+
+
+            <div class="pf-element">
+                <label>
+                    {{ form_label(formInfoUser.personalInformation.website) }}
+                    {{ form_widget(formInfoUser.personalInformation.website) }}
+                </label>
+            </div>
+
+            <div class="pf-element pf-buttons pf-centered">
+                <input class="pf-button btn btn-primary" type="submit" name="submit" value="Submit"/>
+                <input class="pf-button btn btn-default" type="button" name="cancel" value="Cancel"/>
+            </div>
+        {{ form_end(formSkill) }}
+    </div>
+
     <script>
         $(".progress").progressbar();
 
@@ -369,8 +420,9 @@
 
         // listener on the button skill add
         $("#buttonSkillAdd").on('click', function() {
+            $(this).attr("disabled", true);
             var notice = new PNotify({
-                text: $("#form_notice").html(),
+                text: $("#form_add_skill").html(),
                 icon: false,
                 width: 'auto',
                 hide: false,
@@ -383,6 +435,29 @@
 
             // cancel button
             notice.get().find('form.pf-form').on('click', '[name=cancel]', function () {
+                $("#buttonSkillAdd").attr("disabled", false);
+                notice.remove();
+            });
+        });
+
+        // listener on the button edit info
+        $("#buttonEditInformation").on('click', function() {
+            $(this).attr("disabled", true);
+            var notice = new PNotify({
+                text: $("#form_edit_info").html(),
+                icon: false,
+                width: 'auto',
+                hide: false,
+                buttons: {
+                    closer: false,
+                    sticker: false
+                },
+                insert_brs: false
+            });
+
+            // cancel button
+            notice.get().find('form.pf-form').on('click', '[name=cancel]', function () {
+                $("#buttonEditInformation").attr("disabled", false);
                 notice.remove();
             });
         });
