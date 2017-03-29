@@ -1,0 +1,27 @@
+Querdos\ChallengeMe\AdministratorBundle\Entity\DatabaseDump:
+    type:             entity
+    table:            cm_admin_dump_database
+    repositoryClass:  Querdos\ChallengeMe\AdministratorBundle\Repository\DatabaseDumpRepository
+    id:
+        id:
+            type:         integer
+            id:           true
+            generator:
+                strategy: AUTO
+    fields:
+        dumpName:
+            type:         string
+            length:       255
+            unique:       true
+            nullable:     false
+        dumpSize:
+            type:         integer
+            unique:       false
+            nullable:     false
+        updatedAt:
+            type:         datetime
+            nullable:     false
+            unique:       false
+
+    lifecycleCallbacks: {}
+

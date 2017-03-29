@@ -35,3 +35,12 @@ vich_uploader:
             inject_on_load:       false
             delete_on_update:     true
             delete_on_remove:     true
+
+        # Databases dump
+        database_dump:
+            uri_prefix:           '/administration/dumps'
+            upload_destination:   '%kernel.root_dir%/../web/dumps'
+
+            inject_on_load:       false
+            delete_on_update:     true
+            delete_on_remove:     true

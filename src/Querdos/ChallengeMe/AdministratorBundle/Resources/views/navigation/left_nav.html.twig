@@ -40,7 +40,7 @@
                     </li>
                     {% if is_granted("ROLE_ADMIN") %}
                         <li>
-                            <a href="javascript:void(0)"><i class="fa fa-cog"></i> {{ "nav.home.system" | trans | desc("System") | meaning("System") }}</a>
+                            <a href="{{ path('administration_system') }}"><i class="fa fa-cog"></i> {{ "nav.home.system" | trans | desc("System") | meaning("System") }}</a>
                         </li>
                     {% endif %}
                 </ul>
