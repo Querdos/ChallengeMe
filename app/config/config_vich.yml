@@ -38,7 +38,7 @@ vich_uploader:
 
         # Databases dump
         database_dump:
-            uri_prefix:           '/administration/dumps'
+            uri_prefix:           '/dumps'
             upload_destination:   '%kernel.root_dir%/../web/dumps'
 
             inject_on_load:       false

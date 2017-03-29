@@ -8,7 +8,17 @@
 
 namespace Querdos\ChallengeMe\AdministratorBundle\Manager;
 
+use Querdos\ChallengeMe\AdministratorBundle\Entity\DatabaseDump;
+
 class DatabaseDumpManager extends BaseManager
 {
-    //
+    /**
+     * Return all database dumps ordered by date
+     *
+     * @return DatabaseDump[]
+     */
+    public function all()
+    {
+        return $this->repository->all();
+    }
 }

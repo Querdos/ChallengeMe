@@ -64,9 +64,9 @@
                                     {% for dump in dumps %}
                                         <tr>
                                             <td>
-                                                <a href="{{ vich_uploader_asset(dump, 'dumpFile') }}" target="_blank">{{ dump.dumpName }}</a>
+                                                <a href="{{ vich_uploader_asset(dump, 'dumpFile') }}" target="_blank">{{ dump.dumpFileName }}</a>
                                             </td>
-                                            <td>{{ dump.updatedAt|date("m/d/Y") }}</td>
+                                            <td>{{ dump.updatedAt|date("m/d/Y, h:i") }}</td>
                                         </tr>
                                     {% endfor %}
                                 </tbody>

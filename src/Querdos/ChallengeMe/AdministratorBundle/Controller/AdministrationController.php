@@ -681,7 +681,8 @@ class AdministrationController extends Controller
         // hydrating
         $databaseDump
             ->setDumpFile($file)
-            ->setDumpName("dump-challengeme-" . ((new \DateTime())->format("mdY")) . ".sql")
+            ->setDumpName(uniqid() . ".sql")
+            ->setDumpFileName("dump-challengeme-" . ((new \DateTime())->format("mdY")) . ".sql")
             ->setDumpSize($file->getSize())
         ;
 

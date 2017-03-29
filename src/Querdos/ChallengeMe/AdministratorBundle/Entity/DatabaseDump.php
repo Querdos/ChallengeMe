@@ -37,6 +37,11 @@ class DatabaseDump
     private $dumpName;
 
     /**
+     * @var string
+     */
+    private $dumpFileName;
+
+    /**
      * @var int
      */
     private $dumpSize;
@@ -133,5 +138,24 @@ class DatabaseDump
     public function getUpdatedAt()
     {
         return $this->updatedAt;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDumpFileName()
+    {
+        return $this->dumpFileName;
+    }
+
+    /**
+     * @param string $dumpFileName
+     *
+     * @return DatabaseDump
+     */
+    public function setDumpFileName($dumpFileName)
+    {
+        $this->dumpFileName = $dumpFileName;
+        return $this;
     }
 }
