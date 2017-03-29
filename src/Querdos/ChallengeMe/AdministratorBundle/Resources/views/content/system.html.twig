@@ -118,6 +118,13 @@
                     notice.remove();
                     buttonDownloadDump.attr("disabled", false);
                     location.reload();
+                },
+                error: function () {
+                    new PNotify({
+                        title: "Error",
+                        text: "A problem was encountered when dumping the database",
+                        styling: "bootstrap3"
+                    });
                 }
             });
 
