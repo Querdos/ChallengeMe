@@ -32,5 +32,11 @@ class AdminExtension extends Extension {
 
         // Injecting listeners
         $loader->load('listeners.yml');
+
+        // Injecting repositories
+        $loader->load('repositories.yml');
+
+        // Injecting managers
+        $loader->load('managers.yml');
 	}
 }

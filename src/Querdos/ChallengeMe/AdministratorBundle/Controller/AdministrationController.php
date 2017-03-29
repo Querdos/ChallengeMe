@@ -7,6 +7,7 @@
 
 namespace Querdos\ChallengeMe\AdministratorBundle\Controller;
 
+use Querdos\ChallengeMe\AdministratorBundle\Entity\DatabaseDump;
 use Querdos\ChallengeMe\UserBundle\Entity\Administrator;
 use Querdos\ChallengeMe\AdministratorBundle\Form\AdministratorType;
 use Querdos\ChallengeMe\UserBundle\Entity\Player;
@@ -14,9 +15,15 @@ use Querdos\ChallengeMe\UserBundle\Entity\Role;
 use Querdos\ChallengeMe\UserBundle\Manager\AdministratorManager;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
+use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
+use Symfony\Component\VarDumper\VarDumper;
 
 class AdministrationController extends Controller
 {
@@ -632,5 +639,60 @@ class AdministrationController extends Controller
 
         // redirecting
         return $this->redirectToRoute('administration_playersManagement');
+    }
+
+    /**
+     * @Template("AdminBundle:content:system.html.twig")
+     *
+     * @return array
+     */
+    public function systemAction()
+    {
+        // retrieving categories
+        $categories = $this->get('challengeme.manager.category')->all();
+
+        // retrieving dumps
+        $dumps = $this->get('challengeme.manager.database_dump')->all();
+
+        return array(
+            'categories' => $categories,
+            'dumps'      => $dumps
+        );
+    }
+
+    /**
+     * @return JsonResponse
+     */
+    public function dumpAction()
+    {
+        // retrieving mysql informations
+        $container     = $this->get('service_container');
+        $database_name = $container->getParameter('database_name');
+        $database_user = $container->getParameter('database_user');
+        $database_pwd  = $container->getParameter('database_password');
+
+        // executing the dump
+        shell_exec("mysqldump -u $database_user --password=\"$database_pwd\" --databases $database_name > /tmp/dump.sql");
+
+        // creating the dump object
+        $databaseDump = new DatabaseDump();
+        $file = new File("/tmp/dump.sql");
+
+        // hydrating
+        $databaseDump
+            ->setDumpFile($file)
+            ->setDumpName("dump-challengeme-" . ((new \DateTime())->format("mdY")) . ".sql")
+            ->setDumpSize($file->getSize())
+        ;
+
+        // moving the file and renaming it
+        $file->move(
+            $container->get('kernel')->getRootDir() . "/../web/dumps",
+            $databaseDump->getDumpName()
+        );
+
+        // persisting
+        $this->get('challengeme.manager.database_dump')->create($databaseDump);
+        return new JsonResponse();
     }
 }
