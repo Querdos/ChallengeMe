@@ -3,6 +3,8 @@ ChallengeMe
 
 ## Introduction ##
 
+**WARNING**: The platform is not ready for production yet, please wait the first release
+
 At first, it was a school initiative project for a CTF (Capture the flag) platform.
 The goal is to provide a complete solution for persons or organizations who wants 
 to organize CTF events.
@@ -31,7 +33,10 @@ On the challengeme root directory, launch PHP Vendors installation by running th
 `$ composer install`
 
 The next step will consist on installing Web vendors with the following command:  
-`$ bower isntall`
+`$ bower install`
+
+Finally, you can dump assetic assets by running the following command:  
+`$ ./console assetic:dump`
 
 ## Database configuration ##
 Now that all vendors are installed, you have to configure your `parameters.yml` file by specifying database connection.
