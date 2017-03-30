@@ -13,6 +13,7 @@ use Querdos\ChallengeMe\AdministratorBundle\Utils\DatabaseUtils;
 use Querdos\ChallengeMe\UserBundle\Entity\Administrator;
 use Querdos\ChallengeMe\AdministratorBundle\Form\AdministratorType;
 use Querdos\ChallengeMe\UserBundle\Entity\Player;
+use Querdos\ChallengeMe\UserBundle\Entity\PrivateMessage;
 use Querdos\ChallengeMe\UserBundle\Entity\Role;
 use Querdos\ChallengeMe\UserBundle\Manager\AdministratorManager;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -65,15 +66,45 @@ class AdministrationController extends Controller
         // retrieving all private messages with the connected user as recipient
         $messages = $this->container
             ->get('challengeme.manager.private_message')
-            ->readByRecipient($this->getUser());
+            ->readByRecipient($this->getUser())
+        ;
+
+        $admins = $this->get('challengeme.manager.administrator')->all();
 
         // retrieving categories
         $categories = $this->get('challengeme.manager.category')->all();
 
         return array(
             'messages'      => $messages,
-            'categories'    => $categories
+            'categories'    => $categories,
+            'admins'        => $admins
         );
+    }
+
+    /**
+     * @param Request $request
+     *
+     * @return JsonResponse
+     */
+    public function sendMessageAction(Request $request)
+    {
+        // retrieving parameters
+        $adminId  = $request->request->get('adminId');
+        $content  = $request->request->get('content');
+
+        // retrieving player
+        $admin = $this->get('challengeme.manager.administrator')->readById($adminId);
+
+        // sending message
+        $this->get('challengeme.manager.private_message')->create(
+            new PrivateMessage(
+                $this->getUser(),
+                $admin,
+                $content
+            )
+        );
+
+        return new JsonResponse();
     }
 
     /**
