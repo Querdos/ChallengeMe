@@ -58,6 +58,7 @@
                                 <tr>
                                     <th>File</th>
                                     <th>Date</th>
+                                    <th>Action</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -67,6 +68,7 @@
                                                 <a href="{{ vich_uploader_asset(dump, 'dumpFile') }}" target="_blank">{{ dump.dumpFileName }}</a>
                                             </td>
                                             <td>{{ dump.updatedAt|date("m/d/Y, h:i") }}</td>
+                                            <td align="center"><a href="{{ path('administration_delete_dump', {'dumpId': dump.id}) }}"><i class="fa fa-close"></i> </a> </td>
                                         </tr>
                                     {% endfor %}
                                 </tbody>
@@ -85,11 +87,6 @@
                         <div class="clearfix"></div>
                     </div>
                     <div class="x_content">
-                        <h2>Import a database</h2>
-                        <p>
-                            If you want to simply import a database
-                        </p>
-
                         <h2>Restore database</h2>
                         <p>
                             If you want to restore your database to a previous version, you can do it by specifying a dump:<br><br>
@@ -99,6 +96,11 @@
                         {{ form_end(formDump) }}
 
                         <h2>Cleaner</h2>
+                        <p>
+                            If you want to clean the database and restore default settings
+                        </p>
+
+
                     </div>
                 </div>
             </div>
@@ -118,6 +120,7 @@
 
     <script>
         var buttonDownloadDump = $("#downloadDumpButton");
+        var formRestoreDatabase = $("#formUploadDump");
 
         buttonDownloadDump.on('click', function() {
             // disabling the button
@@ -154,8 +157,27 @@
                     });
                 }
             });
-
         });
+
+        formRestoreDatabase.on('submit', function() {
+            // disabling button
+            $(this).find("button").attr("disabled", true);
+
+            // printing notice
+            new PNotify({
+                text: "Please Wait",
+                type: 'info',
+                icon: 'fa fa-spinner fa-spin',
+                hide: false,
+                buttons: {
+                    closer: false,
+                    sticker: false
+                },
+                opacity: .75,
+                shadow: false,
+                width: "170px"
+            });
+        })
     </script>
 
 {% endblock javascript %}

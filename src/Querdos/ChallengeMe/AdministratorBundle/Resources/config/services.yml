@@ -28,3 +28,4 @@ services:
             - [ setPlayerManager,             [ '@challengeme.manager.player'             ] ]
             - [ setTeamManager,               [ '@challengeme.manager.team'               ] ]
             - [ setChallengeResourceManager,  [ '@challengeme.manager.challenge_resource' ] ]
+            - [ setDatabaseDumpManager,       [ '@challengeme.manager.database_dump'      ] ]

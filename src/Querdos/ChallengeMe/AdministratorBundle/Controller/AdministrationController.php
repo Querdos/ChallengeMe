@@ -16,6 +16,7 @@ use Querdos\ChallengeMe\UserBundle\Entity\Player;
 use Querdos\ChallengeMe\UserBundle\Entity\Role;
 use Querdos\ChallengeMe\UserBundle\Manager\AdministratorManager;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\File\File;
@@ -659,12 +660,17 @@ class AdministrationController extends Controller
         $dumps = $this->get('challengeme.manager.database_dump')->all();
 
         // building the form for the upload dump
-        $dump = new DatabaseDump();
+        $dump     = new DatabaseDump();
         $formDump = $this
-            ->createForm(UploadDumpType::class, $dump)
+            ->createForm(UploadDumpType::class, $dump, array(
+                'attr' => array(
+                    'id' => 'formUploadDump'
+                ),
+            ))
             ->add('save', SubmitType::class, array(
                 'label' => 'Restore',
                 'attr' => array(
+                    'id'    => 'buttonRestoreDatabase',
                     'class' => 'btn btn-danger'
                 ),
                 'translation_domain' => 'forms'
@@ -678,11 +684,10 @@ class AdministrationController extends Controller
             $dump->getDumpFile()->move('/tmp', 'dump.sql');
 
             // retrieving container and database informations
-            $container = $this->get('service_container');
             $options   = [
-                "db_user" => $container->getParameter('database_user'),
-                "db_pwd"  => $container->getParameter("database_password"),
-                "db_name" => $container->getParameter("database_name")
+                "db_user" => $this->container->getParameter('database_user'),
+                "db_pwd"  => $this->container->getParameter("database_password"),
+                "db_name" => $this->container->getParameter("database_name")
             ];
 
             // retrieving database utils
@@ -746,5 +751,22 @@ class AdministrationController extends Controller
         // persisting
         $this->get('challengeme.manager.database_dump')->create($databaseDump);
         return new JsonResponse();
+    }
+
+    /**
+     * @param int $dumpId
+     *
+     * @return RedirectResponse
+     */
+    public function deleteDumpAction($dumpId)
+    {
+        $dumpManager = $this->get('challengeme.manager.database_dump');
+
+        // retrieving the dump
+        $dump = $dumpManager->readById($dumpId);
+
+        // deleting and redirecting
+        $dumpManager->delete($dump);
+        return $this->redirectToRoute('administration_system');
     }
 }

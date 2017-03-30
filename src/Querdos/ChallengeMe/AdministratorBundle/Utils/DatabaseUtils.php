@@ -8,6 +8,7 @@
 
 namespace Querdos\ChallengeMe\AdministratorBundle\Utils;
 
+use Querdos\ChallengeMe\AdministratorBundle\Manager\DatabaseDumpManager;
 use Querdos\ChallengeMe\ChallengesBundle\Manager\ChallengeResourceManager;
 use Querdos\ChallengeMe\UserBundle\Manager\PlayerManager;
 use Querdos\ChallengeMe\UserBundle\Manager\TeamManager;
@@ -47,6 +48,11 @@ class DatabaseUtils
 
     // TODO: Set admin manager when their avatar is implemented
     //private $adminManager;
+
+    /**
+     * @var DatabaseDumpManager
+     */
+    private $databaseDumpManager;
 
     /**
      * Function that empty the database
@@ -136,31 +142,45 @@ class DatabaseUtils
      */
     public function checkResources()
     {
+        $adminDumpsPath = $this->kernel->getRootDir() . "/../web/dumps/";
+        $adminDumpsRes  = $this->databaseDumpManager->getResourcesForAll();
+        if (is_dir($adminDumpsPath)) {
+            $adminDumpFiles = scandir($adminDumpsPath);
+            $this->compareAndUnlink(
+                $adminDumpsRes,
+                $adminDumpFiles,
+                $adminDumpsPath
+            );
+        }
+
         $teamAvatarsPath = $this->kernel->getRootDir() . "/../web/uploads/team/avatars/";
+        $teamAvatarsRes  = $this->teamManager->getResourcesForAll();
         if (is_dir($teamAvatarsPath)) {
             $teamAvatarFiles = scandir($teamAvatarsPath);
             $this->compareAndUnlink(
-                $this->teamManager->getResourcesForAll(),
+                $teamAvatarsRes,
                 $teamAvatarFiles,
                 $teamAvatarsPath
             );
         }
 
         $playerAvatarPath = $this->kernel->getRootDir() . "/../web/uploads/player/avatars/";
+        $playerAvatarRes  = $this->playerManager->getResourcesForAll();
         if (is_dir($playerAvatarPath)) {
             $playerAvatarFiles = scandir($playerAvatarPath);
             $this->compareAndUnlink(
-                $this->playerManager->getResourcesForAll(),
+                $playerAvatarRes,
                 $playerAvatarFiles,
                 $playerAvatarPath
             );
         }
 
         $challengeResourcePath = $this->kernel->getRootDir() . "/../web/uploads/challenge/resources/";
+        $challengeResourceRes  = $this->challengeResourceManager->getResourcesForAll();
         if (is_dir($challengeResourcePath)) {
             $challengeResourceFiles = scandir($challengeResourcePath);
             $this->compareAndUnlink(
-                $this->challengeResourceManager->getResourcesForAll(),
+                $challengeResourceRes,
                 $challengeResourceFiles,
                 $challengeResourcePath
             );
@@ -208,6 +228,17 @@ class DatabaseUtils
     public function setKernel($kernel)
     {
         $this->kernel = $kernel;
+        return $this;
+    }
+
+    /**
+     * @param $databaseDumpManager
+     *
+     * @return DatabaseUtils
+     */
+    public function setDatabaseDumpManager($databaseDumpManager)
+    {
+        $this->databaseDumpManager = $databaseDumpManager;
         return $this;
     }
 }

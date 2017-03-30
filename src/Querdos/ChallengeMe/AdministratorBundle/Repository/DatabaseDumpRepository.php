@@ -35,4 +35,35 @@ class DatabaseDumpRepository extends EntityRepository
             ->getResult()
         ;
     }
+
+    /**
+     * Return the list of resources for all teams
+     * (used when restoring database)
+     *
+     * @return array
+     */
+    public function resourcesForAll()
+    {
+        $query = $this
+            ->getEntityManager()
+            ->createQueryBuilder()
+
+            ->select('database_dump.dumpFileName as resource')
+            ->from('AdminBundle:DatabaseDump', 'database_dump')
+
+            ->where('database_dump.dumpFileName IS NOT NULL')
+        ;
+
+        $results = $query
+            ->getQuery()
+            ->getArrayResult()
+        ;
+
+        $data = [];
+        foreach ($results as $result) {
+            $data[] = $result['resource'];
+        }
+
+        return $data;
+    }
 }

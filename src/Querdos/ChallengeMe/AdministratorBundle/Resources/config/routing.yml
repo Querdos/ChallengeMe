@@ -123,8 +123,14 @@ administration_system:
         - GET
         - POST
 
+administration_delete_dump:
+    path:     /system/delete-dump/{dumpId}
+    defaults: { _controller: AdminBundle:Administration:deleteDump }
+    methods:
+        - GET
+
 administration_download_dump:
-    path:     /database-dump
+    path:     /system/database-dump
     defaults: { _controller: AdminBundle:Administration:dump }
     methods:
         - GET

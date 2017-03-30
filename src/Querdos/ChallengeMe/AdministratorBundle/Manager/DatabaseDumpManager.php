@@ -21,4 +21,15 @@ class DatabaseDumpManager extends BaseManager
     {
         return $this->repository->all();
     }
+
+    /**
+     * Return the list of resources for all teams
+     * (used when restoring database)
+     *
+     * @return array
+     */
+    public function getResourcesForAll()
+    {
+        return $this->repository->resourcesForAll();
+    }
 }
