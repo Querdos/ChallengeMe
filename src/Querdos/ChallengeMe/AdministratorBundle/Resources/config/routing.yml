@@ -121,6 +121,7 @@ administration_system:
     defaults: { _controller: AdminBundle:Administration:system }
     methods:
         - GET
+        - POST
 
 administration_download_dump:
     path:     /database-dump

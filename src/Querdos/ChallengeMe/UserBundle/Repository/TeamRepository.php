@@ -103,4 +103,35 @@ class TeamRepository extends EntityRepository
             ->getResult()
         ;
     }
+
+    /**
+     * Return the list of resources for all teams
+     * (used when restoring database)
+     *
+     * @return array
+     */
+    public function resourcesForAll()
+    {
+        $query = $this
+            ->getEntityManager()
+            ->createQueryBuilder()
+
+            ->select('team.avatarName as resource')
+            ->from('UserBundle:Team', 'team')
+
+            ->where('team.avatarName IS NOT NULL')
+        ;
+
+        $results = $query
+            ->getQuery()
+            ->getArrayResult()
+        ;
+
+        $array = [];
+        foreach ($results as $result) {
+            $array[] = $result['resource'];
+        }
+
+        return $array;
+    }
 }

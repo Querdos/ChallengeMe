@@ -95,6 +95,11 @@ class TeamManager extends BaseManager
         return $this->repository->teamRank($team);
     }
 
+    /**
+     * Promote a player to the leader rank
+     *
+     * @param Player $player
+     */
     public function promote(Player $player)
     {
         // retrieving the team and the leader
@@ -131,7 +136,6 @@ class TeamManager extends BaseManager
         );
     }
 
-
     /**
      * Return all teams ordered by their rank
      *
@@ -142,6 +146,17 @@ class TeamManager extends BaseManager
     public function getTeamsRanked($limit = null)
     {
         return $this->repository->allRanked($limit);
+    }
+
+    /**
+     * Return the list of resources for all teams
+     * (used when restoring database)
+     *
+     * @return array
+     */
+    public function getResourcesForAll()
+    {
+        return $this->repository->resourcesForAll();
     }
 
     /**

@@ -8,6 +8,8 @@
 namespace Querdos\ChallengeMe\AdministratorBundle\Controller;
 
 use Querdos\ChallengeMe\AdministratorBundle\Entity\DatabaseDump;
+use Querdos\ChallengeMe\AdministratorBundle\Form\UploadDumpType;
+use Querdos\ChallengeMe\AdministratorBundle\Utils\DatabaseUtils;
 use Querdos\ChallengeMe\UserBundle\Entity\Administrator;
 use Querdos\ChallengeMe\AdministratorBundle\Form\AdministratorType;
 use Querdos\ChallengeMe\UserBundle\Entity\Player;
@@ -644,9 +646,11 @@ class AdministrationController extends Controller
     /**
      * @Template("AdminBundle:content:system.html.twig")
      *
-     * @return array
+     * @param Request $request
+     *
+     * @return array|RedirectResponse
      */
-    public function systemAction()
+    public function systemAction(Request $request)
     {
         // retrieving categories
         $categories = $this->get('challengeme.manager.category')->all();
@@ -654,9 +658,56 @@ class AdministrationController extends Controller
         // retrieving dumps
         $dumps = $this->get('challengeme.manager.database_dump')->all();
 
+        // building the form for the upload dump
+        $dump = new DatabaseDump();
+        $formDump = $this
+            ->createForm(UploadDumpType::class, $dump)
+            ->add('save', SubmitType::class, array(
+                'label' => 'Restore',
+                'attr' => array(
+                    'class' => 'btn btn-danger'
+                ),
+                'translation_domain' => 'forms'
+            ))
+        ;
+
+        // handling the form
+        $formDump->handleRequest($request);
+        if ($formDump->isSubmitted()) {
+            // moving the dump to TMP folder
+            $dump->getDumpFile()->move('/tmp', 'dump.sql');
+
+            // retrieving container and database informations
+            $container = $this->get('service_container');
+            $options   = [
+                "db_user" => $container->getParameter('database_user'),
+                "db_pwd"  => $container->getParameter("database_password"),
+                "db_name" => $container->getParameter("database_name")
+            ];
+
+            // retrieving database utils
+            $dbUtils = $this->get('challengeme.utils.database');
+
+            // emptying database
+            DatabaseUtils::emptyDatabase($options);
+
+            // restoring
+            DatabaseUtils::restoreDatabase($options, "/tmp/dump.sql");
+
+            // cleaning if needed
+            $dbUtils->checkResources();
+
+            // removing the temporary dump
+            unlink("/tmp/dump.sql");
+
+            // redirecting
+            return $this->redirectToRoute('administration_system');
+        }
+
         return array(
             'categories' => $categories,
-            'dumps'      => $dumps
+            'dumps'      => $dumps,
+            'formDump'   => $formDump->createView()
         );
     }
 

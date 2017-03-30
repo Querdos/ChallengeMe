@@ -22,4 +22,15 @@ class ChallengeResourceManager extends BaseManager
     {
         return $this->repository->findByChallenge($challenge);
     }
+
+    /**
+     * Return the list of resources for all teams
+     * (used when restoring database)
+     *
+     * @return array
+     */
+    public function getResourcesForAll()
+    {
+        return $this->repository->resourcesForAll();
+    }
 }
