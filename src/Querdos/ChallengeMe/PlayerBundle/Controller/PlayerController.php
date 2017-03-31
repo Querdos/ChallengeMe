@@ -128,6 +128,7 @@ class PlayerController extends Controller
             // checking skill level
             if ($skill->getLevel() > 100 || $skill->getLevel() < 0) {
                 $data['error'] = "Invalid level value for the skill.";
+                return $this->redirectToRoute('player_profile');
             }
 
             // everything ok, adding the skill
