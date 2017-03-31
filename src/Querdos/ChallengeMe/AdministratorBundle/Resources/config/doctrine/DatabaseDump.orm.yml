@@ -14,6 +14,11 @@ Querdos\ChallengeMe\AdministratorBundle\Entity\DatabaseDump:
             length:       255
             unique:       true
             nullable:     false
+        dumpFileName:
+            type:         string
+            length:       255
+            unique:       false
+            nullable:     false
         dumpSize:
             type:         integer
             unique:       false

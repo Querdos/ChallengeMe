@@ -14,6 +14,12 @@ administration_inbox:
     methods:
         - GET
 
+administration_send_message:
+    path:     /inbox/send-message
+    defaults: { _controller: AdminBundle:Administration:sendMessage }
+    methods:
+        - POST
+
 administration_profile:
     path:     /profile
     defaults: { _controller: AdminBundle:Administration:profile }
@@ -121,9 +127,16 @@ administration_system:
     defaults: { _controller: AdminBundle:Administration:system }
     methods:
         - GET
+        - POST
+
+administration_delete_dump:
+    path:     /system/delete-dump/{dumpId}
+    defaults: { _controller: AdminBundle:Administration:deleteDump }
+    methods:
+        - GET
 
 administration_download_dump:
-    path:     /database-dump
+    path:     /system/database-dump
     defaults: { _controller: AdminBundle:Administration:dump }
     methods:
         - GET

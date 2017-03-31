@@ -236,6 +236,17 @@ class PlayerManager extends BaseManager
     }
 
     /**
+     * Return the list of resources for all teams
+     * (used when restoring database)
+     *
+     * @return array
+     */
+    public function getResourcesForAll()
+    {
+        return $this->repository->resourcesForAll();
+    }
+
+    /**
      * @param ChallengeSolvingManager $challengeSolvingManager
      */
     public function setChallengeSolvingManager($challengeSolvingManager)

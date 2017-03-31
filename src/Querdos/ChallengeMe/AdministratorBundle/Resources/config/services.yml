@@ -20,3 +20,12 @@ services:
             - [ setChallengeManager,  ['@challengeme.manager.challenge' ]]
         tags:
             - { name: form.type, alias: chall_res}
+
+    challengeme.utils.database:
+        class:  Querdos\ChallengeMe\AdministratorBundle\Utils\DatabaseUtils
+        calls:
+            - [ setKernel,                    [ '@kernel'                                 ] ]
+            - [ setPlayerManager,             [ '@challengeme.manager.player'             ] ]
+            - [ setTeamManager,               [ '@challengeme.manager.team'               ] ]
+            - [ setChallengeResourceManager,  [ '@challengeme.manager.challenge_resource' ] ]
+            - [ setDatabaseDumpManager,       [ '@challengeme.manager.database_dump'      ] ]

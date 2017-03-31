@@ -7,6 +7,15 @@
     {% stylesheets '@bootstrapWYSIWYG_css' filter='cssrewrite' %}
         <link href="{{ asset_url }}" rel="stylesheet"/>
     {% endstylesheets %}
+
+    <style>
+        .row-eq-height {
+            display: -webkit-box;
+            display: -webkit-flex;
+            display: -ms-flexbox;
+            display:         flex;
+        }
+    </style>
 {% endblock stylesheets %}
 
 {% set message_selected = 0 %}
@@ -35,8 +44,8 @@
                         <div class="row">
                             {# MAIL LIST #}
                             <div class="col-sm-3 mail_list_column">
-                                <button id="compose" class="btn btn-sm btn-success btn-block" type="button">{{ "inbox.compose" | trans | desc("COMPOSE") | meaning("Compose button") }}</button>
-                                {#<a href="#">
+                                {#<button id="compose" class="btn btn-sm btn-success btn-block" type="button">{{ "inbox.compose" | trans | desc("COMPOSE") | meaning("Compose button") }}</button>#}
+                                <a href="#">
                                     <div class="mail_list">
                                         <div class="left">
                                             <i class="fa fa-circle"></i> <i class="fa fa-edit"></i>
@@ -47,7 +56,7 @@
                                         </div>
                                     </div>
                                 </a>
-                                <a href="#">
+                                {#<a href="#">
                                     <div class="mail_list">
                                         <div class="left">
                                             <i class="fa fa-star"></i>
@@ -151,7 +160,7 @@
                             {# /MAIL LIST #}
 
                             {# CONTENT MAIL #}
-                            <div class="col-sm-9 mail_view" >
+                            <div class="row-eq-height col-sm-6 mail_view">
                                 <div class="inbox-body" id="inbox_body">
 
                                     <div class="mail_heading row" id="mail_header">
@@ -197,6 +206,31 @@
 
                             </div>
                             <!-- /CONTENT MAIL -->
+
+                            <div class="col-md-3 col-sm-3 col-xs-12 fixed_height_320" style="overflow-y: auto;" >
+                                <table class="table">
+                                    <thead>
+                                    <tr>
+                                        <th>First Name</th>
+                                        <th>Last Name</th>
+                                        <th>Username</th>
+                                        <th></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for admin in admins %}
+                                        <tr>
+                                            <td>{{ admin.infoUser.firstName }}</td>
+                                            <td>{{ admin.infoUser.lastName }}</td>
+                                            <td>{{ admin.username }}</td>
+                                            <td><a href="javascript:void(0)" onclick="showCompose({{ admin.id }}, '{{ admin.username }}')"><i class="fa fa-send"></i></a></td>
+                                        </tr>
+                                    {% endfor %}
+
+                                    </tbody>
+                                </table>
+                                </div>
+
                         </div>
                     </div>
                 </div>
@@ -217,6 +251,10 @@
 
         <div class="compose-body">
             <div id="alerts"></div>
+
+            <div>
+                <label>To: </label> <span id="username_span"></span>
+            </div>
 
             <div class="btn-toolbar editor" data-role="editor-toolbar" data-target="#editor">
                 <div class="btn-group">
@@ -291,7 +329,7 @@
         </div>
 
         <div class="compose-footer">
-            <button id="send" class="btn btn-sm btn-success" type="button">Send</button>
+            <button id="send" class="btn btn-sm btn-success" type="button" send_to="">Send</button>
         </div>
     </div>
     <!-- /compose -->
@@ -373,24 +411,35 @@
     </script>
     <!-- /bootstrap-wysiwyg -->
 
-    <!-- compose -->
     <script>
-        $('#compose, .compose-close').click(function(){
-            $('.compose').slideToggle();
-        });
-    </script>
-    <!-- /compose -->
+        var buttonSend = $("#send");
+        var editor     = $("#editor");
 
-    <script>
-        function showMessage(author, content, sent) {
-            // retrieving blocks
-            var mail_header         = $("#mail_header");
-            var mail_sender_info    = $("#mail_sender_info");
-            var mail_view           = $("#mail_view");
-            var mail_footer         = $("#mail_footer");
-            var div_inbox           = $("#inbox_body");
+        function showCompose(id, username) {
+            $(".compose").slideToggle();
+            $("#username_span").html("<b>" + username + "</b>");
 
-            div_inbox.fadeOut();
+            // setting attribute with the send button
+            buttonSend.attr("send_to", id);
         }
+
+        // listener on the send button
+        buttonSend.on('click', function() {
+            // sending message (post)
+            $.ajax({
+                url:    "{{ path('administration_send_message') }}",
+                type:   "POST",
+                data:   {
+                    'adminId': $(this).attr("send_to"),
+                    'content': editor.html()
+                },
+                success: function() {
+                    location.reload();
+                },
+                error: function() {
+                    //
+                }
+            });
+        });
     </script>
 {% endblock javascript %}

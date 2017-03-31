@@ -65,4 +65,35 @@ class PlayerRepository extends EntityRepository
             ->getSingleScalarResult()
         ;
     }
+
+    /**
+     * Return the list of resources for all teams
+     * (used when restoring database)
+     *
+     * @return array
+     */
+    public function resourcesForAll()
+    {
+        $query = $this
+            ->getEntityManager()
+            ->createQueryBuilder()
+
+            ->select('player.avatarName as resource')
+            ->from('UserBundle:Player', 'player')
+
+            ->where('player.avatarName IS NOT NULL')
+        ;
+
+        $results = $query
+            ->getQuery()
+            ->getResult()
+        ;
+
+        $data = [];
+        foreach ($results as $result) {
+            $data[] = $result['resource'];
+        }
+
+        return $data;
+    }
 }

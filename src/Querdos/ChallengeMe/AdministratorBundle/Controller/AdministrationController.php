@@ -8,12 +8,16 @@
 namespace Querdos\ChallengeMe\AdministratorBundle\Controller;
 
 use Querdos\ChallengeMe\AdministratorBundle\Entity\DatabaseDump;
+use Querdos\ChallengeMe\AdministratorBundle\Form\UploadDumpType;
+use Querdos\ChallengeMe\AdministratorBundle\Utils\DatabaseUtils;
 use Querdos\ChallengeMe\UserBundle\Entity\Administrator;
 use Querdos\ChallengeMe\AdministratorBundle\Form\AdministratorType;
 use Querdos\ChallengeMe\UserBundle\Entity\Player;
+use Querdos\ChallengeMe\UserBundle\Entity\PrivateMessage;
 use Querdos\ChallengeMe\UserBundle\Entity\Role;
 use Querdos\ChallengeMe\UserBundle\Manager\AdministratorManager;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\File\File;
@@ -62,15 +66,45 @@ class AdministrationController extends Controller
         // retrieving all private messages with the connected user as recipient
         $messages = $this->container
             ->get('challengeme.manager.private_message')
-            ->readByRecipient($this->getUser());
+            ->readByRecipient($this->getUser())
+        ;
+
+        $admins = $this->get('challengeme.manager.administrator')->all();
 
         // retrieving categories
         $categories = $this->get('challengeme.manager.category')->all();
 
         return array(
             'messages'      => $messages,
-            'categories'    => $categories
+            'categories'    => $categories,
+            'admins'        => $admins
         );
+    }
+
+    /**
+     * @param Request $request
+     *
+     * @return JsonResponse
+     */
+    public function sendMessageAction(Request $request)
+    {
+        // retrieving parameters
+        $adminId  = $request->request->get('adminId');
+        $content  = $request->request->get('content');
+
+        // retrieving player
+        $admin = $this->get('challengeme.manager.administrator')->readById($adminId);
+
+        // sending message
+        $this->get('challengeme.manager.private_message')->create(
+            new PrivateMessage(
+                $this->getUser(),
+                $admin,
+                $content
+            )
+        );
+
+        return new JsonResponse();
     }
 
     /**
@@ -644,9 +678,11 @@ class AdministrationController extends Controller
     /**
      * @Template("AdminBundle:content:system.html.twig")
      *
-     * @return array
+     * @param Request $request
+     *
+     * @return array|RedirectResponse
      */
-    public function systemAction()
+    public function systemAction(Request $request)
     {
         // retrieving categories
         $categories = $this->get('challengeme.manager.category')->all();
@@ -654,9 +690,60 @@ class AdministrationController extends Controller
         // retrieving dumps
         $dumps = $this->get('challengeme.manager.database_dump')->all();
 
+        // building the form for the upload dump
+        $dump     = new DatabaseDump();
+        $formDump = $this
+            ->createForm(UploadDumpType::class, $dump, array(
+                'attr' => array(
+                    'id' => 'formUploadDump'
+                ),
+            ))
+            ->add('save', SubmitType::class, array(
+                'label' => 'Restore',
+                'attr' => array(
+                    'id'    => 'buttonRestoreDatabase',
+                    'class' => 'btn btn-danger'
+                ),
+                'translation_domain' => 'forms'
+            ))
+        ;
+
+        // handling the form
+        $formDump->handleRequest($request);
+        if ($formDump->isSubmitted()) {
+            // moving the dump to TMP folder
+            $dump->getDumpFile()->move('/tmp', 'dump.sql');
+
+            // retrieving container and database informations
+            $options   = [
+                "db_user" => $this->container->getParameter('database_user'),
+                "db_pwd"  => $this->container->getParameter("database_password"),
+                "db_name" => $this->container->getParameter("database_name")
+            ];
+
+            // retrieving database utils
+            $dbUtils = $this->get('challengeme.utils.database');
+
+            // emptying database
+            DatabaseUtils::emptyDatabase($options);
+
+            // restoring
+            DatabaseUtils::restoreDatabase($options, "/tmp/dump.sql");
+
+            // cleaning if needed
+            $dbUtils->checkResources();
+
+            // removing the temporary dump
+            unlink("/tmp/dump.sql");
+
+            // redirecting
+            return $this->redirectToRoute('administration_system');
+        }
+
         return array(
             'categories' => $categories,
-            'dumps'      => $dumps
+            'dumps'      => $dumps,
+            'formDump'   => $formDump->createView()
         );
     }
 
@@ -681,7 +768,8 @@ class AdministrationController extends Controller
         // hydrating
         $databaseDump
             ->setDumpFile($file)
-            ->setDumpName("dump-challengeme-" . ((new \DateTime())->format("mdY")) . ".sql")
+            ->setDumpName(uniqid() . ".sql")
+            ->setDumpFileName("dump-challengeme-" . ((new \DateTime())->format("mdY")) . ".sql")
             ->setDumpSize($file->getSize())
         ;
 
@@ -694,5 +782,22 @@ class AdministrationController extends Controller
         // persisting
         $this->get('challengeme.manager.database_dump')->create($databaseDump);
         return new JsonResponse();
+    }
+
+    /**
+     * @param int $dumpId
+     *
+     * @return RedirectResponse
+     */
+    public function deleteDumpAction($dumpId)
+    {
+        $dumpManager = $this->get('challengeme.manager.database_dump');
+
+        // retrieving the dump
+        $dump = $dumpManager->readById($dumpId);
+
+        // deleting and redirecting
+        $dumpManager->delete($dump);
+        return $this->redirectToRoute('administration_system');
     }
 }
