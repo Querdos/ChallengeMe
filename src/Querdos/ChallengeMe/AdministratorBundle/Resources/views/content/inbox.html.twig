@@ -45,17 +45,6 @@
                             {# MAIL LIST #}
                             <div class="col-sm-3 mail_list_column">
                                 {#<button id="compose" class="btn btn-sm btn-success btn-block" type="button">{{ "inbox.compose" | trans | desc("COMPOSE") | meaning("Compose button") }}</button>#}
-                                <a href="#">
-                                    <div class="mail_list">
-                                        <div class="left">
-                                            <i class="fa fa-circle"></i> <i class="fa fa-edit"></i>
-                                        </div>
-                                        <div class="right">
-                                            <h3>Dennis Mugo <small>3.00 PM</small></h3>
-                                            <p>Ut enim ad minim veniam, quis nostrud exercitation enim ad minim veniam, quis nostrud exercitation...</p>
-                                        </div>
-                                    </div>
-                                </a>
                                 {#<a href="#">
                                     <div class="mail_list">
                                         <div class="left">
@@ -143,14 +132,13 @@
                                 </a>
                                 {% else %}
                                     {% for message in messages %}
-                                        <a href="javascript:void(0)" onclick="showMessage('{{ message.author.username }}', '{{ message.content }}', '{{ message.sent|date("m/d/Y, H:i") }}')">
+                                        <a href="javascript:void(0)" onclick="showMessage('{{ message.author.infoUser.firstName }} {{ message.author.infoUser.lastName }}', '{{ message.author.email }}', '{{ message.content }}', '{{ message.sent|date("m/d/Y, H:i") }}')">
                                             <div class="mail_list">
                                                 <div class="left">
-                                                    <i class="fa fa-circle"></i> <i class="fa fa-edit"></i>
+                                                    <i class="fa fa-circle"></i>
                                                 </div>
                                                 <div class="right">
                                                     <h3>{{ message.author.infoUser.firstName }} {{ message.author.infoUser.lastName }} <small>{{ message.sent | date("m/d/Y, H:i") }}</small></h3>
-                                                    <p>{{ message.preview }}</p>
                                                 </div>
                                             </div>
                                         </a>
@@ -160,30 +148,22 @@
                             {# /MAIL LIST #}
 
                             {# CONTENT MAIL #}
-                            <div class="row-eq-height col-sm-6 mail_view">
-                                <div class="inbox-body" id="inbox_body">
+                            <div class="col-sm-6 mail_view">
+                                <div class="inbox-body" id="inbox_body" style="display: none">
 
                                     <div class="mail_heading row" id="mail_header">
-                                        <div class="col-md-8">
-                                            <div class="btn-group">
-                                                <button class="btn btn-sm btn-primary" type="button"><i class="fa fa-reply"></i> Reply</button>
-                                                <button class="btn btn-sm btn-default" type="button"  data-placement="top" data-toggle="tooltip" data-original-title="Forward"><i class="fa fa-share"></i></button>
-                                                <button class="btn btn-sm btn-default" type="button" data-placement="top" data-toggle="tooltip" data-original-title="Print"><i class="fa fa-print"></i></button>
-                                                <button class="btn btn-sm btn-default" type="button" data-placement="top" data-toggle="tooltip" data-original-title="Trash"><i class="fa fa-trash-o"></i></button>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4 text-right">
-                                            <p class="date"> 8:02 PM 12 FEB 2014</p>
+                                        <div class="col-md-12 text-right">
+                                            <button class="btn btn-primary">Write</button>
                                         </div>
                                     </div>
 
                                     <div class="sender-info" id="mail_sender_info">
                                         <div class="row">
                                             <div class="col-md-12">
-                                                <strong>Jon Doe</strong>
-                                                <span>(jon.doe@gmail.com)</span> to
+                                                <strong id="sender_name">Jon Doe</strong>
+                                                <span id="sender_email">(jon.doe@gmail.com)</span> to
                                                 <strong>me</strong>
-                                                <a class="sender-dropdown"><i class="fa fa-chevron-down"></i></a>
+                                                <a class="sender-dropdown"></a>
                                             </div>
                                         </div>
                                     </div>
@@ -195,12 +175,6 @@
                                             mollit anim id est laborum.</p>
                                         <p>Modesed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
                                             velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-                                    </div>
-                                    <div class="btn-group" id="mail_footer">
-                                        <button class="btn btn-sm btn-primary" type="button"><i class="fa fa-reply"></i> Reply</button>
-                                        <button class="btn btn-sm btn-default" type="button"  data-placement="top" data-toggle="tooltip" data-original-title="Forward"><i class="fa fa-share"></i></button>
-                                        <button class="btn btn-sm btn-default" type="button" data-placement="top" data-toggle="tooltip" data-original-title="Print"><i class="fa fa-print"></i></button>
-                                        <button class="btn btn-sm btn-default" type="button" data-placement="top" data-toggle="tooltip" data-original-title="Trash"><i class="fa fa-trash-o"></i></button>
                                     </div>
                                 </div>
 
@@ -414,9 +388,12 @@
     <script>
         var buttonSend = $("#send");
         var editor     = $("#editor");
+        var compose    = $(".compose");
 
         function showCompose(id, username) {
-            $(".compose").slideToggle();
+            if (compose.is(':hidden')) {
+                compose.slideToggle();
+            }
             $("#username_span").html("<b>" + username + "</b>");
 
             // setting attribute with the send button
@@ -441,5 +418,21 @@
                 }
             });
         });
+
+        function showMessage(author, email, content, sent) {
+            // retrieving blocks
+            var mail_sender_info    = $("#mail_sender_info");
+            var mail_view           = $("#mail_view");
+            var div_inbox           = $("#inbox_body");
+
+            if (div_inbox.is(':hidden')) {
+                div_inbox.fadeIn();
+            }
+
+            mail_sender_info.find("#sender_name").html(author);
+            mail_sender_info.find("#sender_email").html('('+email+')');
+            mail_view.html(content);
+
+        }
     </script>
 {% endblock javascript %}

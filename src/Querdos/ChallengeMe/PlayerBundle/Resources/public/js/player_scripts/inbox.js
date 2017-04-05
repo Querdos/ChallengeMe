@@ -6,17 +6,6 @@ $('#compose, .compose-close').click(function(){
     $('.compose').slideToggle();
 });
 
-function showMessage(author, content, sent) {
-    // retrieving blocks
-    var mail_header         = $("#mail_header");
-    var mail_sender_info    = $("#mail_sender_info");
-    var mail_view           = $("#mail_view");
-    var mail_footer         = $("#mail_footer");
-    var div_inbox           = $("#inbox_body");
-
-    div_inbox.fadeOut();
-}
-
 $(document).ready(function() {
     function initToolbarBootstrapBindings() {
         var fonts = ['Serif', 'Sans', 'Arial', 'Arial Black', 'Courier',
