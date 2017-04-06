@@ -4,3 +4,9 @@ services:
         calls:
             - [ setRepository,    [ '@challengeme.repository.database_dump' ] ]
             - [ setEntityManager, [ '@doctrine.orm.entity_manager'          ] ]
+
+    challengeme.manager.mailer:
+        class:      Querdos\ChallengeMe\AdministratorBundle\Manager\MailerManager
+        calls:
+            - [ setMailer,        [ '@mailer'                               ] ]
+            - [ setTwig,          [ '@twig'                                 ] ]

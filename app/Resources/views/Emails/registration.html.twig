@@ -1,8 +1,10 @@
-<h3>You did it! You registered!</h3>
+Dear {{ name }},
 
-Hi {{ name }}! You're successfully registered.
+<h3>You have successfully registered for ChallengeMe</h3>
 
-{# example, assuming you have a route named "login" #}
-To login, go to: <a href="{{ url('player_login') }}">...</a>.
+<p>
+    You have to verify your email by clicking the next link and reset your password:<br>
+    <a href="{{ url('player_reset_password', {'token': token}) }}">Verify your account</a>
+</p>
 
-Thanks!
+The ChallengeMe team !

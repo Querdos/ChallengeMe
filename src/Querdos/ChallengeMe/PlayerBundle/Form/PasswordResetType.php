@@ -2,8 +2,8 @@
 /**
  * Created by Hamza ESSAYEGH
  * User: querdos
- * Date: 4/5/17
- * Time: 2:45 PM
+ * Date: 4/6/17
+ * Time: 2:20 PM
  */
 
 namespace Querdos\ChallengeMe\PlayerBundle\Form;
@@ -11,13 +11,11 @@ namespace Querdos\ChallengeMe\PlayerBundle\Form;
 
 use Querdos\ChallengeMe\UserBundle\Entity\Player;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class PlayerType extends AbstractType
+class PasswordResetType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -26,24 +24,18 @@ class PlayerType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('username', TextType::class, array(
-                'label' => 'Username',
-                'label_attr' => array(
-                    'class' => 'pf-label'
-                ),
+            ->add('password_1', PasswordType::class, array(
                 'attr' => array(
-                    'class' => 'pf-field form-control'
+                    'class' => 'form-control',
+                    'placeholder' => 'Password'
                 ),
                 'required' => true,
                 'translation_domain' => 'forms'
             ))
-            ->add('email', EmailType::class, array(
-                'label' => 'Email',
-                'label_attr' => array(
-                    'class' => 'pf-label'
-                ),
+            ->add('password_confirmation', PasswordType::class, array(
                 'attr' => array(
-                    'class' => 'pf-field form-control'
+                    'class' => 'form-control',
+                    'placeholder' => 'Password (confirmation)'
                 ),
                 'required' => true,
                 'translation_domain' => 'forms'
@@ -58,12 +50,10 @@ class PlayerType extends AbstractType
     {
         $resolver
             ->setDefaults(array(
-                'data_class'      => Player::class,
                 'csrf_protection' => true,
                 'csrf_field_name' => '_token',
                 'csrf_token_id'   => 'players_token'
             ))
         ;
     }
-
 }

@@ -52,6 +52,10 @@ security:
             pattern:    ^/players/register$
             anonymous:  ~
 
+        reset_firewall:
+            pattern:     ^/players/reset-password/*
+            anonymous:  ~
+
         # Firewall for the restricted area Administration
         administration_firewall:
             pattern:                  ^/administration

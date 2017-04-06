@@ -133,6 +133,13 @@ player_promote_player:
 ######################
 # SecurityController #
 ######################
+player_reset_password:
+    path:     /reset-password/{token}
+    defaults: { _controller: PlayerBundle:Security:resetPassword }
+    methods:
+        - GET
+        - POST
+
 player_login:
     path:     /login
     defaults: { _controller: PlayerBundle:Security:login }

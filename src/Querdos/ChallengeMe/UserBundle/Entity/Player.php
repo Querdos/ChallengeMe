@@ -10,6 +10,7 @@ namespace Querdos\ChallengeMe\UserBundle\Entity;
 
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Security\Core\User\AdvancedUserInterface;
+use Symfony\Component\Security\Core\User\EquatableInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
@@ -20,7 +21,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  *
  * @package Querdos\ChallengeMe\UserBundle\Entity
  */
-class Player extends BaseUser implements UserInterface, \Serializable, AdvancedUserInterface
+class Player extends BaseUser implements UserInterface, \Serializable, AdvancedUserInterface, EquatableInterface
 {
     /**
      * @var Team
@@ -341,5 +342,37 @@ class Player extends BaseUser implements UserInterface, \Serializable, AdvancedU
     public function setEnabled($enabled)
     {
         $this->enabled = $enabled;
+    }
+
+    /**
+     * The equality comparison should neither be done by referential equality
+     * nor by comparing identities (i.e. getId() === getId()).
+     *
+     * However, you do not need to compare every attribute, but only those that
+     * are relevant for assessing whether re-authentication is required.
+     *
+     * Also implementation should consider that $user instance may implement
+     * the extended user interface `AdvancedUserInterface`.
+     *
+     * @param UserInterface $user
+     *
+     * @return bool
+     */
+    public function isEqualTo(UserInterface $user)
+    {
+        if ($user instanceof Player) {
+            $isEqual = count($this->getRoles()) == count($user->getRoles());
+            if ($isEqual) {
+                foreach ($this->getRoles() as $role) {
+                    $isEqual = $isEqual && in_array($role, $user->getRoles());
+                }
+
+                if ($isEqual) {
+                    return $this->getPassword() === $user->getPassword();
+                }
+            }
+        }
+
+        return false;
     }
 }
