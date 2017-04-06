@@ -53,3 +53,8 @@ services:
         class:      Querdos\ChallengeMe\UserBundle\Repository\PlayerRoleRepository
         factory:    [ "@doctrine.orm.entity_manager", "getRepository" ]
         arguments:  [ "UserBundle:PlayerRole" ]
+
+    challengeme.repository.password_token_reset:
+        class:      Querdos\ChallengeMe\UserBundle\Repository\PasswordTokenResetRepository
+        factory:    [ "@doctrine.orm.entity_manager", "getRepository" ]
+        arguments:  [ "UserBundle:PasswordToken"]

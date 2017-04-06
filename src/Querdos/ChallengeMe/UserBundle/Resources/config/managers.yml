@@ -74,3 +74,10 @@ services:
         calls:
             - [ setRepository,          [ '@challengeme.repository.info_user'           ] ]
             - [ setEntityManager,       [ '@doctrine.orm.entity_manager'                ] ]
+
+    challengeme.manager.password_token_reset:
+        class:  Querdos\ChallengeMe\UserBundle\Manager\PasswordTokenResetManager
+        calls:
+            - [ setRepository,          [ '@challengeme.repository.password_token_reset'] ]
+            - [ setEntityManager,       [ '@doctrine.orm.entity_manager'                ] ]
+
