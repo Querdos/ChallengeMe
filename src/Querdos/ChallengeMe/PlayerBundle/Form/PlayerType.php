@@ -44,15 +44,6 @@ class PlayerType extends AbstractType
                     'class' => 'pf-field form-control'
                 )
             ))
-            ->add('plainPassword', PasswordType::class, array(
-                'label' => 'Password',
-                'label_attr' => array(
-                    'class' => 'pf-label'
-                ),
-                'attr' => array(
-                    'class' => 'pf-field form-control'
-                )
-            ))
         ;
     }
 

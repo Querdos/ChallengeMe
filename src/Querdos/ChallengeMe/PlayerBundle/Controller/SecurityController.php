@@ -92,14 +92,4 @@ class SecurityController extends Controller
             $request->getSession()->invalidate();
         }
     }
-
-    /**
-     * @Template("PlayerBundle:security:register.html.twig")
-     *
-     * @param Request $request
-     */
-    public function registerAction(Request $request)
-    {
-        //
-    }
 }

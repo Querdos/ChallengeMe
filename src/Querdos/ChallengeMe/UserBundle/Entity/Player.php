@@ -65,6 +65,13 @@ class Player extends BaseUser implements UserInterface, \Serializable, AdvancedU
     private $blocked;
 
     /**
+     * The user will be locked if he doesn't verify his email
+     *
+     * @var bool
+     */
+    private $enabled;
+
+    /**
      * Administrator constructor.
      *
      * @param string $username
@@ -81,6 +88,8 @@ class Player extends BaseUser implements UserInterface, \Serializable, AdvancedU
 
         $this->infoUser     = new InfoUser();
         $this->blocked      = false; // by default, the player is not blocked
+        $this->enabled      = false; // by default, the player is not enabled until he
+                                     // check his email
     }
 
     /**
@@ -323,7 +332,14 @@ class Player extends BaseUser implements UserInterface, \Serializable, AdvancedU
      */
     public function isEnabled()
     {
-        // Not Handled yet
-        return true;
+        return $this->enabled;
+    }
+
+    /**
+     * @param bool $enabled
+     */
+    public function setEnabled($enabled)
+    {
+        $this->enabled = $enabled;
     }
 }

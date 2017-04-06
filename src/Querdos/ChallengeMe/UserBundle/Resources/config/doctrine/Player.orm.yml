@@ -46,6 +46,10 @@ Querdos\ChallengeMe\UserBundle\Entity\Player:
             type:       boolean
             unique:     false
             nullable:   false
+        enabled:
+            type:       boolean
+            unique:     false
+            nullable:   false
 
     manyToOne:
         infoUser:
