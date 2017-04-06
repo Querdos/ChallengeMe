@@ -67,6 +67,7 @@ class SecurityController extends Controller
         // handling the form
         $form->handleRequest($request);
         if ($form->isSubmitted()) {
+            // persisting a basic player
             $this
                 ->get('challengeme.manager.player')
                 ->create($player)
