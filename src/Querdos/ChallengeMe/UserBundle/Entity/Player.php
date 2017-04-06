@@ -8,7 +8,6 @@
 
 namespace Querdos\ChallengeMe\UserBundle\Entity;
 
-
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Security\Core\User\AdvancedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -68,17 +67,15 @@ class Player extends BaseUser implements UserInterface, \Serializable, AdvancedU
     /**
      * Administrator constructor.
      *
-     * @param string $id
      * @param string $username
      * @param string $email
      * @param string $password
      */
-    public function __construct($id = "", $username = "", $email = "", $password = "")
+    public function __construct($username = null, $email = null, $password = null)
     {
-        $this->id           = $id;
         $this->username     = $username;
         $this->email        = $email;
-        $this->emailBack    = "";
+        $this->emailBack    = null;
         $this->password     = $password;
         $this->creationDate = new \DateTime();
 

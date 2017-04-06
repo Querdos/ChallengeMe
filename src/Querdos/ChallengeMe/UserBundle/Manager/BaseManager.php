@@ -32,7 +32,7 @@ abstract class BaseManager
     public function create($entity)
     {
         $this->entityManager->persist($entity);
-        $this->entityManager->flush($entity);
+        $this->entityManager->flush();
     }
 
     /**

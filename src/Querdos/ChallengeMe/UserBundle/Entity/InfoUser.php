@@ -53,12 +53,13 @@ class InfoUser
      * @param string    $locale
      * @param DateTime  $birthday
      */
-    public function __construct($firstname = "", $lastname = "", $locale = "en", $birthday = null)
+    public function __construct($firstname = null, $lastname = null, $locale = "en", $birthday = null)
     {
-        $this->firstName    = $firstname;
-        $this->lastName     = $lastname;
-        $this->locale       = $locale;
-        $this->birthday     = new DateTime();
+        $this->firstName           = $firstname;
+        $this->lastName            = $lastname;
+        $this->locale              = $locale;
+        $this->birthday            = $birthday;
+        $this->personalInformation = new PersonalInformation();
     }
 
     /**

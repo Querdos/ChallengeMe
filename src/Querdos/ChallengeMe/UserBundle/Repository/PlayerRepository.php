@@ -10,6 +10,7 @@ namespace Querdos\ChallengeMe\UserBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
 use Querdos\ChallengeMe\UserBundle\Entity\Player;
+use Symfony\Component\VarDumper\VarDumper;
 
 class PlayerRepository extends EntityRepository
 {

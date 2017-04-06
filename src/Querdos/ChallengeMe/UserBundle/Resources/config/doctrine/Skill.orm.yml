@@ -1,6 +1,6 @@
 Querdos\ChallengeMe\UserBundle\Entity\Skill:
     type:             entity
-    table:            cm_admin_skill
+    table:            cm_user_skill
     repositoryClass:  Querdos\ChallengeMe\UserBundle\Repository\SkillRepository
     id:
         id:

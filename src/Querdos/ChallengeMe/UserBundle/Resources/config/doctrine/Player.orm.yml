@@ -27,8 +27,8 @@ Querdos\ChallengeMe\UserBundle\Entity\Player:
         emailBack:
             type:       string
             length:     255
-            unique:     true
-            nullable:   false
+            unique:     false
+            nullable:   true
         creationDate:
             type:       date
             nullable:   false

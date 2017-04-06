@@ -48,6 +48,10 @@ security:
             pattern:    ^/(.*)/login$
             anonymous:  ~
 
+        register_firewall:
+            pattern:    ^/players/register$
+            anonymous:  ~
+
         # Firewall for the restricted area Administration
         administration_firewall:
             pattern:                  ^/administration

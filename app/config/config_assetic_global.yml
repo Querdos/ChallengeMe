@@ -193,3 +193,8 @@ assetic:
             inputs:
                 - 'assets/vendor/dropzone/dist/min/dropzone.min.css'
             output: 'assets/global/css/dropzone.css'
+
+        animate_css:
+            inputs:
+                - 'assets/vendor/animate.css/animate.min.css'
+            output: 'assets/global/css/animate.css'

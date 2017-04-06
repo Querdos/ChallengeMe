@@ -19,6 +19,7 @@ use Querdos\ChallengeMe\PlayerBundle\Manager\PlayerActivityManager;
 use Querdos\ChallengeMe\UserBundle\Entity\Player;
 use Querdos\ChallengeMe\UserBundle\Entity\Team;
 use Querdos\ChallengeMe\UserBundle\Repository\PlayerRepository;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoder;
 use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
 use Symfony\Component\Security\Core\Tests\Encoder\PasswordEncoder;
 use Symfony\Component\VarDumper\VarDumper;
@@ -26,7 +27,7 @@ use Symfony\Component\VarDumper\VarDumper;
 class PlayerManager extends BaseManager
 {
     /**
-     * @var PasswordEncoder
+     * @var UserPasswordEncoder
      */
     private $passwordEncoder;
 
@@ -61,7 +62,7 @@ class PlayerManager extends BaseManager
         // erasing credential then
         $player
             ->setPassword(
-                    $this->passwordEncoder->encodePassword(
+                $this->passwordEncoder->encodePassword(
                     $player,
                     $player->getPlainPassword()
                 )

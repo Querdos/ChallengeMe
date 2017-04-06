@@ -12,7 +12,7 @@ Querdos\ChallengeMe\UserBundle\Entity\InfoUser:
             type:       string
             length:     128
             unique:     false
-            nullable:   false
+            nullable:   true
         lastName:
             type:       string
             length:     128
@@ -20,7 +20,7 @@ Querdos\ChallengeMe\UserBundle\Entity\InfoUser:
             nullable:   true
         birthday:
             type:       date
-            nullable:   false
+            nullable:   true
         locale:
             type:       string
             length:     2

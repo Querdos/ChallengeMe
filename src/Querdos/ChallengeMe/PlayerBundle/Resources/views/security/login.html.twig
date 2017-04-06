@@ -5,9 +5,14 @@
 {% block head %}
     {{ parent() }}
 
-    {% javascripts '@jquery_js' %}
-        <script src="{{ asset_url }}"></script>
-    {% endjavascripts %}
+    {% stylesheets
+        '@pnotify_css'
+        filter='cssrewrite'
+    %}
+    <link href="{{ asset_url }}" rel="stylesheet"/>
+    {% endstylesheets %}
+
+
 {% endblock head %}
 
 {% block body %}
@@ -25,6 +30,10 @@
                             <div class="alert alert-danger alert-dismissible fade in" role="alert">
                                 {{ error }}
                             </div>
+                        {% elseif account_created %}
+                            <div class="alert alert-success alert-dismissible fade in" role="alert">
+                                Your account have been successfully created
+                            </div>
                         {% endif %}
                         <div>
                             <input type="text" class="form-control" placeholder="{{ "placeholder.username" | trans | desc("Username") | meaning("Username's placeholder") }}" required="" id="username" name="_username" value="" />
@@ -33,7 +42,7 @@
                             <input type="password" class="form-control" placeholder="{{ "placeholder.password" | trans | desc("Password") | meaning("Password's placeholder") }}" id="password" name="_password" required="" />
                         </div>
                         <div>
-                            <button type="submit">{{ "button.login" | trans | desc("Login") | meaning("Login button") }}</button>
+                            <button type="submit" class="btn btn-primary">{{ "button.login" | trans | desc("Login") | meaning("Login button") }}</button>
                             <a class="reset_pass" href="#">{{ "text.lost-password" | trans | desc("Lost your password?") | meaning("Text for lost password") }}</a>
                         </div>
 
@@ -41,7 +50,12 @@
 
                         <div class="clearfix"></div>
                         <div class="separator">
+                            <p class="change_link">
+                                <a href="javascript:void(0);" class="to_register" id="buttonNewAccount"> New account</a>
+                            </p>
+
                             <div class="clearfix"></div>
+
                             <br />
                             <div>
                                 <h1><i class="fa fa-shield" style="font-size: 26px;"></i> ChallengeMe</h1>
@@ -53,6 +67,60 @@
             </div>
         </div>
     </div>
+
+    {# Registration form #}
+    <div id="form_notice" style="display: none;">
+        {{ form_start(formRegister, {'attr': {'class': 'pf-form pform_custom'}}) }}
+            <div class="pf-element pf-heading">
+                <h3 style="margin-top: 0;">Subscribe form</h3>
+            </div>
+            <div class="pf-element">
+                <label>
+                    {{ form_label(formRegister.username) }}
+                    {{ form_widget(formRegister.username) }}
+                </label>
+            </div>
+            <div class="pf-element">
+                <label>
+                    {{ form_label(formRegister.email) }}
+                    {{ form_widget(formRegister.email) }}
+                </label>
+            </div>
+            <div class="pf-element">
+                <label>
+                    {{ form_label(formRegister.plainPassword) }}
+                    {{ form_widget(formRegister.plainPassword) }}
+                </label>
+            </div>
+            <div class="pf-element pf-buttons pf-centered">
+                <input class="pf-button btn btn-primary" type="submit" name="submit" value="Register"/>
+                <input class="pf-button btn btn-default" type="button" name="cancel" value="Cancel"/>
+            </div>
+            {{ form_end(formRegister) }}
+    </div>
+
+    {% javascripts '@jquery_js' '@pnotify_js' %}
+        <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+
+    <script>
+        $("#buttonNewAccount").on('click', function() {
+            var notice = new PNotify({
+                text: $('#form_notice').html(),
+                icon: false,
+                width: 'auto',
+                hide: false,
+                buttons: {
+                    closer: false,
+                    sticker: false
+                },
+                insert_brs: false
+            });
+            notice.get().find('form.pf-form').on('click', '[name=cancel]', function() {
+                notice.remove();
+            });
+        });
+    </script>
 
     </body>
 {% endblock body %}

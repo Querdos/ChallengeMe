@@ -133,6 +133,10 @@ player_promote_player:
 ######################
 # SecurityController #
 ######################
+player_register:
+    path:     /register
+    defaults: { _controller: PlayerBundle:Security:register }
+
 player_login:
     path:     /login
     defaults: { _controller: PlayerBundle:Security:login }
