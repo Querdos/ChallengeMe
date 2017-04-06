@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "f863f7c228574519e55d45278f6b34bb",
+    "content-hash": "3ff7db6430dd58555131f8ed184baa3c",
     "packages": [
         {
             "name": "composer/ca-bundle",
@@ -1093,12 +1093,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/FriendsOfSymfony/FOSRestBundle.git",
-                "reference": "906e84d62883debfe7b9753afc06840d05a5a9b4"
+                "reference": "d62a6c0f4bc699f899865d7e7bc7a4186aef9a86"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSRestBundle/zipball/906e84d62883debfe7b9753afc06840d05a5a9b4",
-                "reference": "906e84d62883debfe7b9753afc06840d05a5a9b4",
+                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSRestBundle/zipball/d62a6c0f4bc699f899865d7e7bc7a4186aef9a86",
+                "reference": "d62a6c0f4bc699f899865d7e7bc7a4186aef9a86",
                 "shasum": ""
             },
             "require": {
@@ -1186,7 +1186,7 @@
             "keywords": [
                 "rest"
             ],
-            "time": "2017-03-24 21:19:50"
+            "time": "2017-04-06 12:55:03"
         },
         {
             "name": "fzaninotto/faker",
@@ -1336,6 +1336,62 @@
                 "sql"
             ],
             "time": "2014-01-12T16:20:24+00:00"
+        },
+        {
+            "name": "jmose/command-scheduler-bundle",
+            "version": "v1.2.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/J-Mose/CommandSchedulerBundle.git",
+                "reference": "e7de713f712ebc651f10c496c5dc41a082a19bb6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/J-Mose/CommandSchedulerBundle/zipball/e7de713f712ebc651f10c496c5dc41a082a19bb6",
+                "reference": "e7de713f712ebc651f10c496c5dc41a082a19bb6",
+                "shasum": ""
+            },
+            "require": {
+                "doctrine/doctrine-bundle": "~1.0",
+                "doctrine/orm": "~2.2,>=2.2.3,<2.6",
+                "mtdowling/cron-expression": "~1.0",
+                "php": ">=5.5.9",
+                "sensio/framework-extra-bundle": "~2.3|~3.0",
+                "symfony/symfony": "~2.7|~3.0",
+                "twig/twig": "~1.15"
+            },
+            "require-dev": {
+                "doctrine/doctrine-fixtures-bundle": "~2.2",
+                "liip/functional-test-bundle": "1.2.2|~1.3",
+                "phpunit/phpunit": "~4.4",
+                "satooshi/php-coveralls": "~0.6"
+            },
+            "type": "symfony-bundle",
+            "autoload": {
+                "psr-4": {
+                    "JMose\\CommandSchedulerBundle\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Julien Guyon",
+                    "email": "julienguyon@hotmail.com"
+                }
+            ],
+            "description": "This Symfony2 bundle will allow you to schedule all your commands just like UNIX crontab",
+            "homepage": "https://github.com/J-Mose/CommandSchedulerBundle",
+            "keywords": [
+                "command",
+                "cron",
+                "scheduler",
+                "symfony",
+                "task"
+            ],
+            "time": "2017-03-02T08:22:11+00:00"
         },
         {
             "name": "jms/aop-bundle",
@@ -2062,6 +2118,50 @@
                 "psr-3"
             ],
             "time": "2017-03-13T07:08:03+00:00"
+        },
+        {
+            "name": "mtdowling/cron-expression",
+            "version": "v1.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mtdowling/cron-expression.git",
+                "reference": "9504fa9ea681b586028adaaa0877db4aecf32bad"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mtdowling/cron-expression/zipball/9504fa9ea681b586028adaaa0877db4aecf32bad",
+                "reference": "9504fa9ea681b586028adaaa0877db4aecf32bad",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.2"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4.0|~5.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Cron\\": "src/Cron/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Michael Dowling",
+                    "email": "mtdowling@gmail.com",
+                    "homepage": "https://github.com/mtdowling"
+                }
+            ],
+            "description": "CRON for PHP: Calculate the next or previous run date and determine if a CRON expression is due",
+            "keywords": [
+                "cron",
+                "schedule"
+            ],
+            "time": "2017-01-23T04:29:33+00:00"
         },
         {
             "name": "nelmio/api-doc-bundle",
@@ -4743,100 +4843,6 @@
         }
     ],
     "packages-dev": [
-        {
-            "name": "cron/cron",
-            "version": "1.2.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/Cron/Cron.git",
-                "reference": "11d2579771031b1eb2e6e26e6c9b21fb5420ff20"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/Cron/Cron/zipball/11d2579771031b1eb2e6e26e6c9b21fb5420ff20",
-                "reference": "11d2579771031b1eb2e6e26e6c9b21fb5420ff20",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^5.5|^7.0",
-                "symfony/process": "^2.4|^3.0"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "^4.7"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.0-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Cron\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Dries De Peuter",
-                    "email": "dries@nousefreak.be"
-                }
-            ],
-            "description": "Cronjobs",
-            "time": "2017-01-12T23:35:48+00:00"
-        },
-        {
-            "name": "cron/cron-bundle",
-            "version": "1.0.3",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/Cron/Symfony-Bundle.git",
-                "reference": "a639620a5d7c94b6f47edf02d9a4019bdd44f1fc"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/Cron/Symfony-Bundle/zipball/a639620a5d7c94b6f47edf02d9a4019bdd44f1fc",
-                "reference": "a639620a5d7c94b6f47edf02d9a4019bdd44f1fc",
-                "shasum": ""
-            },
-            "require": {
-                "cron/cron": "^1.0",
-                "doctrine/doctrine-bundle": "^1.3",
-                "doctrine/orm": "^2.4",
-                "php": ">=5.3.0",
-                "symfony/framework-bundle": "^2.4|^3.0"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "^4.0",
-                "symfony/symfony": "^2.4|^3.0"
-            },
-            "type": "symfony-bundle",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.0-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Cron\\CronBundle\\": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Dries De Peuter",
-                    "email": "dries@nousefreak.be"
-                }
-            ],
-            "description": "Symfony cron",
-            "time": "2015-12-18T08:03:02+00:00"
-        },
         {
             "name": "doctrine/data-fixtures",
             "version": "v1.2.2",

@@ -57,4 +57,31 @@ class PasswordTokenResetRepository extends EntityRepository
 
         return $result;
     }
+
+    /**
+     * Return all expired tokens
+     *
+     * @return array
+     */
+    public function expired()
+    {
+        $today = new \DateTime();
+
+        $query = $this
+            ->getEntityManager()
+            ->createQueryBuilder()
+
+            ->select('token.id')
+
+            ->from('UserBundle:PasswordTokenReset', 'token')
+            ->where('token.expiration_date < :today')
+
+            ->setParameter('today', $today)
+        ;
+
+        return $query
+            ->getQuery()
+            ->getArrayResult()
+        ;
+    }
 }

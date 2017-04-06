@@ -37,7 +37,7 @@ command -v composer > /dev/null 2>&1 || installComposer=1
 if [[ installComposer -eq 1 ]]; then
     while true; do
         read -p "Composer is not installed, do you want me to install it for you? " yn
-        case $yn in
+        case ${yn} in
             [Yy]* ) curl -sS https://getcomposer.org/installer | sudo php -- --install-dir=/usr/local/bin --filename=composer; echo; break;;
             [Nn]* ) echo "aborting."; exit;;
             * ) echo "Please answer yes or no.";echo;;
@@ -57,4 +57,7 @@ echo "Migrating the database ..."
 ./console doctrine:migration:migrate --quiet
 
 # checking if fixtures generation or not
-[[ $withFixtures -eq 1 ]] && ./console doctrine:fixtures:load --fixtures=src/Querdos/ChallengeMe/PlayerBundle/DataFixtures
+[[ ${withFixtures} -eq 1 ]] && ./console doctrine:fixtures:load --fixtures=src/Querdos/ChallengeMe/PlayerBundle/DataFixtures
+
+# Adding tasks to the cron list
+./console cron:add

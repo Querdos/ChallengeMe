@@ -19,9 +19,9 @@ class AppKernel extends Kernel
             new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
         	new Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle(),
 
-            new Cron\CronBundle\CronCronBundle(),
-
             new Symfony\Bundle\AsseticBundle\AsseticBundle(),
+
+            new JMose\CommandSchedulerBundle\JMoseCommandSchedulerBundle(),
 
             new JMS\DiExtraBundle\JMSDiExtraBundle($this),
             new JMS\AopBundle\JMSAopBundle(),

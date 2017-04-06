@@ -49,13 +49,13 @@
         "kendrick/symfony-debug-toolbar-git":   "^1.4",
         "egeloen/ckeditor-bundle":              "^5.0",
         "vich/uploader-bundle":                 "^1.4",
-        "nelmio/api-doc-bundle": "^2.13"
+        "nelmio/api-doc-bundle":                "^2.13",
+        "jmose/command-scheduler-bundle":       "^1.2"
     },
     "require-dev": {
         "sensio/generator-bundle":              "^3.0",
         "symfony/phpunit-bridge":               "^3.0",
-        "doctrine/doctrine-fixtures-bundle":    "^2.3",
-        "cron/cron-bundle":                     "1.0.*"
+        "doctrine/doctrine-fixtures-bundle":    "^2.3"
     },
     "scripts": {
         "post-install-cmd": [

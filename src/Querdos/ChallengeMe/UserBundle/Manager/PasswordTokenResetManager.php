@@ -26,4 +26,14 @@ class PasswordTokenResetManager extends BaseManager
     {
         return $this->repository->readByValue($token);
     }
+
+    /**
+     * Return all expired tokens
+     *
+     * @return PasswordTokenReset
+     */
+    public function getExpired()
+    {
+        return $this->repository->expired();
+    }
 }
