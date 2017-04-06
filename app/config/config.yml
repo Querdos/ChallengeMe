@@ -136,3 +136,17 @@ fos_rest:
         default_engine:     twig
     routing_loader:
         default_format:     json
+
+jmose_command_scheduler:
+    # Default directory where scheduler will write output files
+    #  This default value assume that php bin/console is launched from project's root and that the directory is writable
+    # if log_path is set to false, logging to files is disabled at all
+    log_path: var\logs\
+    # This default value disables timeout checking (see monitoring), set to a numeric value (seconds) to enable it
+    lock_timeout: false
+    # receivers for reporting mails
+    monitor_mail: ["hamza.essayegh@gmail.com"]
+    # to send "everything's all right" emails to receivers for reporting mails set this value to "true" (see monitoring)
+    send_ok: true
+    # Doctrine manager
+    doctrine_manager: default
