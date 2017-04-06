@@ -2,6 +2,7 @@
 
 namespace Querdos\ChallengeMe\PlayerBundle\Controller;
 
+use Doctrine\DBAL\Schema\View;
 use Ivory\CKEditorBundle\Exception\Exception;
 use Querdos\ChallengeMe\ChallengesBundle\Entity\Category;
 use Querdos\ChallengeMe\ChallengesBundle\Entity\Rating;
