@@ -1,7 +1,0 @@
-services:
-    challengeme.form.type.challenge:
-        class: Querdos\ChallengeMe\AdministratorBundle\Form\ChallengeType
-        calls:
-            - [ setCategoriesManager, [ '@challengeme.manager.category' ] ]
-        tags:
-            - { name: form.type, alias: chall }

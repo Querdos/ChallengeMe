@@ -1,0 +1,607 @@
+{% trans_default_domain "players-my-team" %}
+
+{% extends "PlayerBundle::base.html.twig" %}
+
+{% if app.user.hasTeam and app.user == team.leader %}
+    {% form_theme formPlayerRole
+        '@Player/form/form_rows_manager.html.twig'
+        '@Player/form/form_errors_manager.html.twig'
+    %}
+{% endif %}
+
+{% block stylesheets %}
+    {{ parent() }}
+
+    {% stylesheets
+            '@dropzone_css'
+            '@iCheck'
+            '@datatables_css'
+
+            filter='cssrewrite'
+    %}
+    <link href="{{ asset_url }}" rel="stylesheet"/>
+    {% endstylesheets %}
+{% endblock stylesheets %}
+
+{% block main_content %}
+    <div class="">
+
+        <div class="page-title">
+            <div class="title_left">
+                <h3>
+                    {{ "title" | trans | desc("My Team") | meaning("Title") }}
+                </h3>
+            </div>
+
+        </div>
+
+        <div class="clearfix"></div>
+
+        <div class="row">
+            {# List of administrators #}
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2>{{ "table.title" | trans | desc("Details and information about your team") | meaning("Title for the table") }}</h2>
+                        {% if app.user.hasTeam %}
+                            <ul class="nav navbar-right panel_toolbox">
+                                <li class="dropdown">
+                                    <button {% if app.user == team.leader %}disabled title="You cannot leave the team while you're the leader"{% endif %} data-toggle="modal" data-target=".modal-confirm-leaving" class="btn btn-danger">Leave the team</button>
+                                </li>
+                            </ul>
+                        {% endif %}
+                        <div class="clearfix"></div>
+                    </div>
+
+                    {# Modal for leaving confirmation #}
+                    {% if app.user.hasTeam and app.user != team.leader %}
+                        <div class="modal fade modal-confirm-leaving" tabindex="-1" role="dialog" aria-hidden="true">
+                            <div class="modal-dialog modal-sm">
+                                <div class="modal-content">
+
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span>
+                                        </button>
+                                        <h4 class="modal-title" id="myModalLabel2">Confirm your action</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <h4>You are about to leave a team</h4>
+                                        <p>Are you sure to confirm your action?</p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                        <button type="button" class="btn btn-primary" id="buttonLeaveTeam">Leave</button>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    <div class="x_content">
+                        {# If no team #}
+                        {% if app.user.team is null %}
+                            {% form_theme form
+                                    '@Player/form/form_rows_manager.html.twig'
+                                    '@Player/form/form_errors_manager.html.twig'
+                            %}
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div class="col-md-55">
+                                    <div class="thumbnail">
+                                        <div class="image view view-first">
+                                            {% image '@pic_create_team' %}
+                                                <img style="width: 100%; display: block;" src="{{ asset_url }}" alt="image" />
+                                            {% endimage %}
+                                        </div>
+                                        <div class="caption">
+                                            <p align="center"><a href="javascript:void(0);" onclick="showFormTeam()">Create a team</a></p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-55">
+                                    <div class="thumbnail">
+                                        <div class="image view view-first">
+                                            {% image '@pic_join_team' %}
+                                                <img style="width: 100%; display: block;" src="{{ asset_url }}" alt="image" />
+                                            {% endimage %}
+                                        </div>
+                                        <div class="caption">
+                                            <p align="center"><a href="{{ path('player_teams_list') }}">Join a team</a></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="form_create_team" style="display: none;">
+                                {{ form_start(form, {'id': 'demo-form2', 'attr': {'class': 'form-horizontal form-label-left'}}) }}
+                                    {{ form_row(form.name) }}
+
+                                    <div class="ln_solid"></div>
+
+                                    <div class="form-group">
+                                        <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                                            <button type="button" onclick="showFormTeam()" class="btn btn-primary">{{ "form.cancel-button" | trans | desc("Cancel") | meaning("Cancel button") }}</button>
+                                            {{ form_widget(form.save) }}
+                                        </div>
+                                    </div>
+                                {{ form_end(form) }}
+                            </div>
+                        {% else %}
+                            <div class="col-md-3 col-sm-3 col-xs-12 profile_left">
+                                <div class="profile_img">
+                                    <div id="crop-avatar">
+                                        {# Current avatar #}
+                                        {% if team.avatarName is null %}
+                                            {% image '@pic_team_base_logo' %}
+                                                <img class="img-responsive {% if app.user == team.leader %}avatar-view {% endif %}" src="{{ asset_url }}" alt="Avatar" title="Change the avatar" {% if app.user == team.leader %}data-toggle="modal" data-target=".bs-example-modal-sm"{% endif %}>
+                                            {% endimage %}
+                                        {% else %}
+                                            <img class="img-responsive {% if app.user == team.leader %}avatar-view{% endif %}" src="{{ asset(avatarPath) }}" alt="Avatar" title="Change the avatar" {% if app.user == team.leader %}data-toggle="modal" data-target=".bs-example-modal-sm"{% endif %}>
+                                        {% endif %}
+
+                                        {# Modal with the avatar upload form #}
+                                        {% if app.user == team.leader %}
+                                            <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-hidden="true">
+                                                <div class="modal-dialog modal-sm">
+                                                    <div class="modal-content">
+
+                                                        <div class="modal-header">
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span>
+                                                            </button>
+                                                            <h4 class="modal-title" id="myModalLabel2">Change the team's avatar</h4>
+                                                        </div>
+                                                        {{ form_start(formAvatar) }}
+                                                        <div class="modal-body">
+                                                            {{ form_row(formAvatar.avatar) }}
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                            {#<button type="button" class="btn btn-primary">Save changes</button>#}
+                                                            {{ form_row(formAvatar.save) }}
+                                                        </div>
+                                                        {{ form_end(formAvatar) }}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        {% endif %}
+
+                                        {# Loading state #}
+                                        <div class="loading" aria-label="Loading" role="img" tabindex="-1"></div>
+                                    </div>
+                                    {# end of image cropping #}
+
+                                </div>
+                                <h3>
+                                    {{ team.name }}
+                                </h3>
+
+                                <ul class="list-unstyled user_data">
+                                    {# Points #}
+                                    <li>
+                                        <i class="fa fa-bullseye"></i> <b>Points :</b> {{ team.points }}
+                                    </li>
+
+                                    {# Rank #}
+                                    <li>
+                                        <i class="fa fa-area-chart"></i> <b>Rank :</b> {{ rank }} / {{ totalTeam }}
+                                    </li>
+                                </ul>
+
+                                <br/>
+                                {# Top 3 #}
+                                <h4>Top 3 </h4>
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Team</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for team in top3 %}
+                                        <tr>
+                                            <th scope="row">{{ loop.index }}</th>
+                                            <td>{{ team.name }}</td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+
+
+                            </div>
+
+                            {# Team members #}
+                            <div class="col-md-5 col-sm-5 col-xs-12">
+                                <div class="x_panel">
+                                    <div class="x_title">
+                                        <h2>Team members</h2>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                    <div class="x_content">
+                                        <table class="table table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th>First Name</th>
+                                                    <th>Last Name</th>
+                                                    <th>Username</th>
+                                                    <th>Role</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for player in team.players %}
+                                                    <tr>
+                                                        <th scope="row">{{ loop.index }}</th>
+                                                        <td>{{ player.infoUser.firstname }}</td>
+                                                        <td>{{ player.infoUser.lastname }}</td>
+                                                        <td>{{ player.username }}</td>
+                                                        <td>
+                                                            {% if player.playerRole is null %}
+                                                                {% if player == team.leader %}
+                                                                    Leader
+                                                                {% else %}
+                                                                    Member
+                                                                {% endif %}
+                                                            {% else %}
+                                                                {{ player.playerRole.name }}
+                                                            {% endif %}
+                                                        </td>
+                                                    </tr>
+                                                {% endfor %}
+                                            </tbody>
+                                        </table>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            {# Recent activities for the team #}
+                            <div class="col-md-4 col-sm-4 col-xs-12">
+                                <div class="x_panel">
+                                    <div class="x_title">
+                                        <h2>Recent activities</h2>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                    <div class="x_content">
+                                        {% for activity in lastActivities %}
+                                            <article class="media event">
+                                                <a class="pull-left date">
+                                                    <p class="month">{{ activity.date|date("M") }}</p>
+                                                    <p class="day">{{ activity.date|date("d") }}</p>
+                                                </a>
+                                                <div class="media-body">
+                                                    <a class="title" href="#">{{ activity.title }}</a>
+                                                    <p>{{ activity.description }}</p>
+                                                </div>
+                                            </article>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+
+                            {# Team activity report #}
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+
+                                <div class="profile_title">
+                                    <div class="col-md-6">
+                                        <h2>Challenges completion</h2>
+                                    </div>
+                                </div>
+
+                                {# start of user-activity-graph #}
+                                <div id="graph_bar" style="width:100%; height:280px;"></div>
+                                {# end of user-activity-graph #}
+
+                                <br>
+
+                                {# Tab panels #}
+                                <div class="" role="tabpanel" data-example-id="togglable-tabs">
+                                    <ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">
+                                        <li role="presentation" class="active">
+                                            <a href="#tab_content1" title="Players that asked to join the team" role="tab" id="profile-tab" data-toggle="tab" aria-expanded="false">
+                                                Demands
+                                            </a>
+                                        </li>
+                                        {% if app.user == team.leader %}
+                                            <li role="presentation" class="">
+                                                <a href="#tab_content2" role="tab" id="profile-tab2" data-toggle="tab" aria-expanded="false">
+                                                    User management
+                                                </a>
+                                            </li>
+
+                                            <li role="presentation" class="">
+                                                <a href="#tab_content3" role="tab" id="profile-tab3" data-toggle="tab" aria-expanded="false">
+                                                    Roles management
+                                                </a>
+                                            </li>
+                                        {% endif %}
+                                    </ul>
+                                    <div id="myTabContent" class="tab-content">
+                                        {# Demands tab #}
+                                        <div role="tabpanel" class="tab-pane fade active in" id="tab_content1" aria-labelledby="profile-tab">
+                                            <table class="data table table-striped no-margin">
+                                                <thead>
+                                                    <tr>
+                                                        <th>#</th>
+                                                        <th>Firstname</th>
+                                                        <th>Lastname</th>
+                                                        <th>Username</th>
+                                                        <td>Status</td>
+                                                        <th>Date</th>
+                                                        {% if team.leader == app.user %}
+                                                            <th>Action</th>
+                                                        {% endif %}
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {% for demand in demands %}
+                                                        <tr>
+                                                            <td>{{ loop.index }}</td>
+                                                            <td>{{ demand.player.infoUser.firstName }}</td>
+                                                            <td>{{ demand.player.infoUser.lastName }}</td>
+                                                            <td>{{ demand.player.username }}</td>
+                                                            <td>
+                                                                {% if demand.status == 0 %}
+                                                                    <span class="label label-warning">Waiting</span>
+                                                                {% elseif demand.status == 1 %}
+                                                                    <span class="label label-danger">Declined</span>
+                                                                {% else %}
+                                                                    <span class="label label-success">Accepted</span>
+                                                                {% endif %}
+                                                            </td>
+                                                            <td>{{ demand.date | date("m/d/Y") }}</td>
+                                                            {% if app.user == team.leader %}
+                                                                <td class="vertical-align-mid">
+                                                                    {% if   demand.status == 0 %}
+                                                                        <button type="button" class="btn btn-success btn-xs" onclick="window.location.href='{{ path('player_edit_demand', {'demandId': demand.id, 'status': 2}) }}'">Accept</button>
+                                                                        <button type="button" class="btn btn-danger btn-xs"  onclick="window.location.href='{{ path('player_edit_demand', {'demandId': demand.id, 'status': 1}) }}'">Decline</button>
+                                                                    {% else %}
+                                                                        <button type="button" class="btn btn-info btn-xs" onclick="window.location.href='{{ path('player_clear_demand', {'demandId': demand.id }) }}'">Clear</button>
+                                                                    {% endif %}
+                                                                </td>
+                                                            {% endif %}
+                                                        </tr>
+                                                    {% endfor %}
+                                                </tbody>
+                                            </table>
+                                        </div>
+
+                                        {% if app.user == team.leader %}
+                                            {# User management tab #}
+                                            <div role="tabpanel" class="tab-pane fade" id="tab_content2" aria-labelledby="profile-tab">
+                                                <table class="data table table-striped no-margin">
+                                                    <thead>
+                                                    <tr>
+                                                        <th>#</th>
+                                                        <th>Firstname</th>
+                                                        <th>Lastname</th>
+                                                        <th>Username</th>
+                                                        <th>Role</th>
+                                                        <th>Action</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    {% for player in team.players %}
+                                                        {% if player != app.user %}
+                                                            <tr>
+                                                                <td>{{ loop.index }}</td>
+                                                                <td>{{ player.infoUser.firstName }}</td>
+                                                                <td>{{ player.infoUser.lastName }}</td>
+                                                                <td>{{ player.username }}</td>
+                                                                <td>
+                                                                    {% if player.playerRole is null %}
+                                                                        {% if team.leader == player %}
+                                                                            Leader
+                                                                        {% else %}
+                                                                            Member
+                                                                        {% endif %}
+                                                                    {% else %}
+                                                                        {{ player.playerRole.name }}
+                                                                    {% endif %}
+                                                                </td>
+                                                                <td>
+                                                                    <button type="button" class="btn btn-success btn-xs buttonPromoteLeader" data-toggle="modal" data-target=".promote-leader-modal" url_promote="{{ path('player_promote_player', {'playerId': player.id}) }}" id="buttonPromote">Promote</button>
+                                                                    <button type="button" class="btn btn-info btn-xs buttonChangeRole" data-toggle="modal" data-target=".set-role-for-player-modal" player_username="{{ player.username }}" player_id="{{ player.id }}">Change role</button>
+                                                                    <button type="button" class="btn btn-danger btn-xs" onclick="window.location.href='{{ path('player_remove_from_team', {'playerId': player.id}) }}'">Remove</button>
+                                                                </td>
+                                                            </tr>
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                    </tbody>
+                                                </table>
+
+                                                {# Modal for setting custom role #}
+                                                <div class="modal fade set-role-for-player-modal" tabindex="-1" role="dialog" aria-hidden="true">
+                                                    <div class="modal-dialog modal-sm">
+                                                        <div class="modal-content">
+
+                                                            <div class="modal-header">
+                                                                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+                                                                </button>
+                                                                <h4 class="modal-title" id="titleModalRole">Changing role for </h4>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <label for="selectRole">Choose a role:</label>
+                                                                <select id="selectRole" class="form-control">
+                                                                    {% for role in playerRoles %}
+                                                                        <option value="{{ role.id }}">{{ role.name }}</option>
+                                                                    {% endfor %}
+                                                                </select>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                                <button type="button" class="btn btn-primary" id="saveRoleForPlayer">Save</button>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                {# Modal for confirmation #}
+                                                <div class="modal fade promote-leader-modal" tabindex="-1" role="dialog" aria-hidden="true">
+                                                    <div class="modal-dialog modal-sm">
+                                                        <div class="modal-content">
+
+                                                            <div class="modal-header">
+                                                                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+                                                                </button>
+                                                                <h4 class="modal-title">Confirm promotion</h4>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <p>If you promote someone else, you won't be anymore the leader of this team, are you sure ?</p>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                                <button type="button" class="btn btn-primary" id="buttonPromoteRoleConfirm">Yes</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            {# Roles management tab #}
+                                            <div role="tabpanel" class="tab-pane fade" id="tab_content3" aria-labelledby="profile-tab">
+                                                <table class="data table table-striped no-margin">
+                                                    <thead>
+                                                    <tr>
+                                                        <th>#</th>
+                                                        <th>Role name</th>
+                                                        <th>Action</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    {% for role in playerRoles %}
+                                                        <tr>
+                                                            <td>{{ loop.index }}</td>
+                                                            <td>{{ role.name }}</td>
+                                                            <td>
+                                                                <button type="button" class="btn btn-danger btn-xs" onclick="window.location.href='{{ path('player_remove_player_role', { 'roleId': role.id }) }}'">Delete</button>
+                                                            </td>
+                                                        </tr>
+                                                    {% endfor %}
+                                                    </tbody>
+                                                </table>
+
+                                                <a class="btn btn-success" id="add_custom_role" data-toggle="modal" data-target=".modal-add-role"><i class="fa fa-edit m-right-xs"></i> Add a custom role</a>
+                                                <br />
+
+                                                <div class="modal fade modal-add-role" tabindex="-1" role="dialog" aria-hidden="true">
+                                                    <div class="modal-dialog modal-sm">
+                                                        <div class="modal-content">
+
+                                                            <div class="modal-header">
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                                                                <h4 class="modal-title" id="myModalLabel2">Adding a new custom role</h4>
+                                                            </div>
+                                                            {{ form_start(formPlayerRole,  {'id': 'demo-form2', 'attr': {'class': 'form-horizontal form-label-left'}}) }}
+                                                            <div class="modal-body">
+                                                                {{ form_row(formPlayerRole.name) }}
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <div class="col-md-6" align="center">
+                                                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                                </div>
+
+                                                                <div class="col-md-6" align="center">
+                                                                    {{ form_row(formPlayerRole.save) }}
+                                                                </div>
+                                                            </div>
+                                                            {{ form_end(formPlayerRole) }}
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+{% endblock main_content %}
+
+{% block javascript %}
+    {{ parent() }}
+
+    {% javascripts
+            '@fastclick_js'
+            '@nprogress_js'
+            '@morris_js'
+            '@bootstrap_progressbar_js'
+            '@moment_js'
+            '@bootstrapDateRangePicker_js'
+            '@dropzone_js'
+            '@customTheme_js'
+
+            '@my_team_js'
+    %}
+        <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+
+    <script>
+        $(document).ready(function() {
+            {% if app.user.team is null %}
+                notifyNoTeam();
+            {% elseif app.user.hasTeam and app.user == team.leader %}
+                setListenerOnChangeRoleButton();
+                setListenerOnSaveRole("{{ path('player_change_player_role') }}");
+            {% endif %}
+
+            datePickerInit();
+
+            {% if app.user.hasTeam and app.user != team.leader %}
+                // listener on the leave button
+                $("#buttonLeaveTeam").on('click', function() {
+                    // sending request
+                    location.href="{{ path('player_leave_team') }}";
+                });
+            {% endif %}
+
+            {% if app.user.hasTeam and app.user == team.leader %}
+                var buttonPromoteConfirm = $("#buttonPromoteRoleConfirm");
+
+                $("#buttonPromote").on('click', function() {
+                    // setting url
+                    buttonPromoteConfirm.attr("url_promote", $(this).attr("url_promote"));
+                });
+
+                buttonPromoteConfirm.on('click', function() {
+                    // redirecting
+                    location.href=$(this).attr("url_promote");
+                });
+            {% endif %}
+        });
+
+        {% if app.user.hasTeam %}
+            // Morris bar graph
+            $(function() {
+                Morris.Bar({
+                    element: 'graph_bar',
+                    data: [
+                        {% for catName, completion in challengesCompletion %}
+                            { "category": "{{ catName }}", "Challenges completed": {{ completion }} },
+                        {% endfor %}
+                    ],
+                    xkey: 'category',
+                    hideHover: 'auto',
+                    barColors: ['#26B99A', '#34495E', '#ACADAC', '#3498DB'],
+                    ykeys: ['Challenges completed'],
+                    labels: ['Completed'],
+                    xLabelAngle: 60,
+                    resize: true
+                });
+
+                $MENU_TOGGLE.on('click', function() {
+                    $(window).resize();
+                });
+            });
+        {% endif %}
+    </script>
+
+{% endblock javascript %}

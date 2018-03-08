@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:jms="urn:jms:translation" version="1.2">
+  <file date="2017-03-08T09:07:54Z" source-language="en" target-language="en" datatype="plaintext" original="not.available">
+    <header>
+      <tool tool-id="JMSTranslationBundle" tool-name="JMSTranslationBundle" tool-version="1.1.0-DEV"/>
+      <note>The source node in most cases contains the sample message as written by the developer. If it looks like a dot-delimitted string such as "form.label.firstname", then the developer has not provided a default message.</note>
+    </header>
+    <body>
+      <trans-unit id="e636f0e602aed9dc66ecd0c3bde987c74cd60ac6" resname="form.cancel-button" extradata="Meaning: Cancel button">
+        <source>Cancel</source>
+        <target>Cancel</target>
+        <jms:reference-file line="54">/../src/Querdos/ChallengeMe/AdministratorBundle/Resources/views/content-challenges/category_add.html.twig</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="7e02c4ce36d896ee7207b293557b0545df940718" resname="form.title" extradata="Meaning: Form title">
+        <source>Adding new category</source>
+        <target>Adding new category</target>
+        <jms:reference-file line="24">/../src/Querdos/ChallengeMe/AdministratorBundle/Resources/views/content-challenges/category_add.html.twig</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="3c6de1b7dd91465d437ef415f94f36afc1fbc8a8" resname="title" extradata="Meaning: Title">
+        <source>Category manager</source>
+        <target>Category manager</target>
+        <jms:reference-file line="13">/../src/Querdos/ChallengeMe/AdministratorBundle/Resources/views/content-challenges/category_add.html.twig</jms:reference-file>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

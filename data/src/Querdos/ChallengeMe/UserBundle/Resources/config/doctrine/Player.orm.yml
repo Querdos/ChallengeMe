@@ -1,0 +1,71 @@
+Querdos\ChallengeMe\UserBundle\Entity\Player:
+    type:             entity
+    table:            cm_user_player
+    repositoryClass:  Querdos\ChallengeMe\UserBundle\Repository\PlayerRepository
+    id:
+        id:
+            type:       integer
+            id:         true
+            generator:
+                strategy: AUTO
+    fields:
+        username:
+            type:       string
+            length:     128
+            unique:     true
+            nullable:   false
+        password:
+            type:       string
+            length:     255
+            unique:     false
+            nullable:   false
+        email:
+            type:       string
+            length:     255
+            unique:     true
+            nullable:   false
+        emailBack:
+            type:       string
+            length:     255
+            unique:     false
+            nullable:   true
+        creationDate:
+            type:       date
+            nullable:   false
+            unique:     false
+        avatarName:
+            type:       string
+            length:     255
+            nullable:   true
+            unique:     false
+        updatedAt:
+            type:       datetime
+            unique:     false
+            nullable:   true
+        blocked:
+            type:       boolean
+            unique:     false
+            nullable:   false
+        enabled:
+            type:       boolean
+            unique:     false
+            nullable:   false
+
+    manyToOne:
+        infoUser:
+            targetEntity: Querdos\ChallengeMe\UserBundle\Entity\InfoUser
+            cascade:      [ "persist", "remove" ]
+
+        team:
+            targetEntity: Querdos\ChallengeMe\UserBundle\Entity\Team
+            inversedBy:   players
+            joinColumn:
+                nullable: true
+
+        playerRole:
+            targetEntity: Querdos\ChallengeMe\UserBundle\Entity\PlayerRole
+            cascade:      [ "persist" ]
+            joinColumn:
+                nullable: true
+
+    lifecycleCallbacks: {  }

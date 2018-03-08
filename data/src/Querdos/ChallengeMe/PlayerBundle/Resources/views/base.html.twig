@@ -1,0 +1,92 @@
+{% trans_default_domain "players-base" %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% block head %}
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+        {# Meta, title, CSS, favicons, etc. #}
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title>ChallengeMe - {% block title %}{{ "title" | trans | desc("Member Zone") | meaning("Title") }}{% endblock title %}</title>
+
+        {% block stylesheets %}
+            {% stylesheets
+                '@bootstrap_css'
+                '@fontAwesome_css'
+                '@nprogress_css'
+                '@customTheme_css'
+                '@pnotify_css'
+
+                filter='cssrewrite'
+            %}
+                <link href="{{ asset_url }}" rel="stylesheet"/>
+            {% endstylesheets %}
+        {% endblock stylesheets %}
+    {% endblock head %}
+</head>
+{% block body %}
+    <body class="nav-md">
+        <div class="container body">
+            <div class="main_container">
+                {# Left navigation #}
+                {% include "@Player/navigation/left_nav.html.twig" %}
+
+                {# top navigation #}
+                {% include "@Player/navigation/top_nav.html.twig" %}
+
+                {# page content #}
+                <div class="right_col" role="main">
+                    {% block main_content %}{% endblock main_content %}
+                </div>
+
+                {# footer content #}
+                {% include "@Player/content/footer.html.twig" %}
+
+            </div>
+        </div>
+
+        {% block javascript %}
+
+            {# Global scripts #}
+            {% javascripts
+                '@jquery_js'
+                '@bootstrap_js'
+                '@pnotify_js'
+                '@nprogress_js'
+            %}
+                <script src="{{ asset_url }}"></script>
+            {% endjavascripts %}
+
+            {# Unread notifications for the player #}
+            <script>
+                $(document).ready(function() {
+                    {% for notification in unreadNotifications %}
+                    new PNotify({
+                        title: 'New notification',
+                        text: '{{ notification.content }}',
+                        after_close: function(notice, timer_hide) {
+                            // sending ajax request
+                            $.ajax({
+                                url:    "{{ path('player_set_notification_red') }}",
+                                type:   "POST",
+                                data:   "notificationId=" + {{ notification.id }}
+                            })
+                        },
+                        type: 'info',
+                        styling: 'bootstrap3',
+                        hide: false,
+                        buttons: {
+                            sticker: false
+                        }
+                    });
+                    {% endfor %}
+                });
+            </script>
+
+        {% endblock javascript %}
+    </body>
+{% endblock body %}
+</html>

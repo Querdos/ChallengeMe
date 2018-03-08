@@ -1,0 +1,41 @@
+Querdos\ChallengeMe\ChallengesBundle\Entity\ChallengeSolving:
+    type:             entity
+    table:            cm_chal_challenge_solving
+    repositoryClass:  Querdos\ChallengeMe\ChallengesBundle\Repository\ChallengeSolvingRepository
+    id:
+        id:
+            type:         integer
+            id:           true
+            generator:
+                strategy: AUTO
+    fields:
+        date_start:
+            type:         datetime
+            unique:       false
+            nullable:     false
+        date_end:
+            type:         datetime
+            unique:       false
+            nullable:     true
+        state:
+            type:         boolean
+            nullable:     false
+        duration:
+            type:         integer
+            nullable:     true
+            unique:       false
+
+    manyToOne:
+        team:
+            targetEntity: Querdos\ChallengeMe\UserBundle\Entity\Team
+            cascade:      [ "persist" ]
+            joinColumn:
+                nullable: false
+
+        challenge:
+            targetEntity: Querdos\ChallengeMe\ChallengesBundle\Entity\Challenge
+            cascade:      [ "persist" ]
+            joinColumn:
+                nullable: false
+
+    lifecycleCallbacks: {}

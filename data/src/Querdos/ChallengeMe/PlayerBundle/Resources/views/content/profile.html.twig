@@ -1,0 +1,437 @@
+{% trans_default_domain "players-profile" %}
+
+{% set infoUser = app.user.infoUser %}
+{% set personalInfo = infoUser.personalInformation %}
+
+{% extends "PlayerBundle::base.html.twig" %}
+
+{% block main_content %}
+    <div class="">
+        <div class="page-title">
+            <div class="title_left">
+                <h3>{{ "title" | trans | desc("User Profile") | meaning("Title") }}</h3>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2>
+                            {{ "sub-title.h2.big" | trans | desc("Profile") | meaning("Subtitle, first part") }}
+                            <small>{{ "sub-title.h2.small" | trans | desc("Personnal informations and activity report") | meaning("Subtitle, second part") }}</small>
+                        </h2>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+                        <div class="col-md-3 col-sm-3 col-xs-12 profile_left">
+                            <div class="profile_img">
+                                <div id="crop-avatar">
+                                    {# Current avatar #}
+                                    {% if app.user.avatarName is null %}
+                                        {% image "@AdminBundle/Resources/public/images/img.jpg" %}
+                                            <img class="img-responsive avatar-view" src="{{ asset_url }}" alt="Avatar" title="Change the avatar" data-toggle="modal" data-target=".bs-example-modal-sm">
+                                        {% endimage %}
+                                    {% else %}
+                                        <img class="img-responsive avatar-view" src="{{ asset(avatarPath) }}" alt="Avatar" title="Change the avatar" data-toggle="modal" data-target=".bs-example-modal-sm">
+                                    {% endif %}
+
+                                    {# Cropping modal #}
+                                    <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-hidden="true">
+                                        <div class="modal-dialog modal-sm">
+                                            <div class="modal-content">
+
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span>
+                                                    </button>
+                                                    <h4 class="modal-title" id="myModalLabel2">Change the team's avatar</h4>
+                                                </div>
+                                                {{ form_start(formUploadAvatar) }}
+                                                <div class="modal-body">
+                                                    {{ form_row(formUploadAvatar.avatar) }}
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                    {#<button type="button" class="btn btn-primary">Save changes</button>#}
+                                                    {{ form_row(formUploadAvatar.save) }}
+                                                </div>
+                                                {{ form_end(formUploadAvatar) }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {# /.modal #}
+
+                                    {# Loading state #}
+                                    <div class="loading" aria-label="Loading" role="img" tabindex="-1"></div>
+                                </div>
+                                {# end of image cropping #}
+
+                            </div>
+                            <h3>
+                                {{ infoUser.firstname }} {{ infoUser.lastname }}
+                            </h3>
+
+                            <ul class="list-unstyled user_data">
+                                {# Address (if present) #}
+                                {% if personalInfo.address is not null %}
+                                    <li>
+                                        <i class="fa fa-map-marker user-profile-icon"></i> {{ personalInfo.address }}
+                                    </li>
+                                {% endif %}
+
+                                {# Job (if present) #}
+                                {% if personalInfo.job is not null %}
+                                <li>
+                                    <i class="fa fa-briefcase user-profile-icon"></i> {{ personalInfo.job }}
+                                </li>
+                                {% endif %}
+
+                                {% if personalInfo.website is not null %}
+                                <li class="m-top-xs">
+                                    <i class="fa fa-external-link user-profile-icon"></i>
+                                    <a href="http://{{ personalInfo.website }}" target="_blank">{{ personalInfo.website }}</a>
+                                </li>
+                                {% endif %}
+                            </ul>
+
+                            <a class="btn btn-success" id="buttonEditInformation"><i class="fa fa-edit m-right-xs"></i>Edit informations</a>
+                            <br />
+
+                            {# start skills #}
+                            <h4>Skills <a href="javascript:void(0)" id="buttonSkillAdd"><i class="fa fa-plus-circle"></i> </a></h4>
+                            <ul class="list-unstyled user_data">
+                                {% for skill in app.user.infoUser.personalInformation.skills %}
+                                <li>
+                                    <p>{{ skill.name }}</p>
+                                    <div class="progress progress_sm">
+                                        <div class="progress-bar bg-green" role="progressbar" style="width: {{ skill.level }}%;"></div>
+                                    </div>
+                                </li>
+                                {% endfor %}
+                            </ul>
+                            {# end of skills #}
+
+                        </div>
+                        <div class="col-md-9 col-sm-9 col-xs-12">
+
+                            <div class="profile_title">
+                                <div class="col-md-6">
+                                    <h2>User Activity Report</h2>
+                                </div>
+                                <div class="col-md-6">
+                                    <div id="reportrange" class="pull-right" style="margin-top: 5px; background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #E6E9ED">
+                                        <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>
+                                        <span>December 30, 2014 - January 28, 2015</span> <b class="caret"></b>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {# start of user-activity-graph #}
+                            <div id="graph_bar" style="width:100%; height:280px;"></div>
+                            {# end of user-activity-graph #}
+
+                            <div class="" role="tabpanel" data-example-id="togglable-tabs">
+                                <ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">
+                                    <li role="presentation" class="active"><a href="#tab_content1" id="home-tab" role="tab" data-toggle="tab" aria-expanded="true">Recent Activity</a>
+                                    </li>
+                                    <li role="presentation" class=""><a href="#tab_content2" role="tab" id="profile-tab" data-toggle="tab" aria-expanded="false">Projects Worked on</a>
+                                    </li>
+                                    <li role="presentation" class=""><a href="#tab_content3" role="tab" id="profile-tab2" data-toggle="tab" aria-expanded="false">Profile</a>
+                                    </li>
+                                </ul>
+                                <div id="myTabContent" class="tab-content">
+                                    <div role="tabpanel" class="tab-pane fade active in" id="tab_content1" aria-labelledby="home-tab">
+
+                                        {# start recent activity #}
+                                        <ul class="messages">
+                                            <li>
+                                                <img src="images/img.jpg" class="avatar" alt="Avatar">
+                                                <div class="message_date">
+                                                    <h3 class="date text-info">24</h3>
+                                                    <p class="month">May</p>
+                                                </div>
+                                                <div class="message_wrapper">
+                                                    <h4 class="heading">Desmond Davison</h4>
+                                                    <blockquote class="message">Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua butcher retro keffiyeh dreamcatcher synth.</blockquote>
+                                                    <br />
+                                                    <p class="url">
+                                                        <span class="fs1 text-info" aria-hidden="true" data-icon=""></span>
+                                                        <a href="#"><i class="fa fa-paperclip"></i> User Acceptance Test.doc </a>
+                                                    </p>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <img src="images/img.jpg" class="avatar" alt="Avatar">
+                                                <div class="message_date">
+                                                    <h3 class="date text-error">21</h3>
+                                                    <p class="month">May</p>
+                                                </div>
+                                                <div class="message_wrapper">
+                                                    <h4 class="heading">Brian Michaels</h4>
+                                                    <blockquote class="message">Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua butcher retro keffiyeh dreamcatcher synth.</blockquote>
+                                                    <br />
+                                                    <p class="url">
+                                                        <span class="fs1" aria-hidden="true" data-icon=""></span>
+                                                        <a href="#" data-original-title="">Download</a>
+                                                    </p>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <img src="images/img.jpg" class="avatar" alt="Avatar">
+                                                <div class="message_date">
+                                                    <h3 class="date text-info">24</h3>
+                                                    <p class="month">May</p>
+                                                </div>
+                                                <div class="message_wrapper">
+                                                    <h4 class="heading">Desmond Davison</h4>
+                                                    <blockquote class="message">Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua butcher retro keffiyeh dreamcatcher synth.</blockquote>
+                                                    <br />
+                                                    <p class="url">
+                                                        <span class="fs1 text-info" aria-hidden="true" data-icon=""></span>
+                                                        <a href="#"><i class="fa fa-paperclip"></i> User Acceptance Test.doc </a>
+                                                    </p>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <img src="images/img.jpg" class="avatar" alt="Avatar">
+                                                <div class="message_date">
+                                                    <h3 class="date text-error">21</h3>
+                                                    <p class="month">May</p>
+                                                </div>
+                                                <div class="message_wrapper">
+                                                    <h4 class="heading">Brian Michaels</h4>
+                                                    <blockquote class="message">Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua butcher retro keffiyeh dreamcatcher synth.</blockquote>
+                                                    <br />
+                                                    <p class="url">
+                                                        <span class="fs1" aria-hidden="true" data-icon=""></span>
+                                                        <a href="#" data-original-title="">Download</a>
+                                                    </p>
+                                                </div>
+                                            </li>
+
+                                        </ul>
+                                        {# end recent activity #}
+
+                                    </div>
+                                    <div role="tabpanel" class="tab-pane fade" id="tab_content2" aria-labelledby="profile-tab">
+
+                                        {# start user projects #}
+                                        <table class="data table table-striped no-margin">
+                                            <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Project Name</th>
+                                                <th>Client Company</th>
+                                                <th class="hidden-phone">Hours Spent</th>
+                                                <th>Contribution</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr>
+                                                <td>1</td>
+                                                <td>New Company Takeover Review</td>
+                                                <td>Deveint Inc</td>
+                                                <td class="hidden-phone">18</td>
+                                                <td class="vertical-align-mid">
+                                                    <div class="progress">
+                                                        <div class="progress-bar progress-bar-success" data-transitiongoal="35"></div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>2</td>
+                                                <td>New Partner Contracts Consultanci</td>
+                                                <td>Deveint Inc</td>
+                                                <td class="hidden-phone">13</td>
+                                                <td class="vertical-align-mid">
+                                                    <div class="progress">
+                                                        <div class="progress-bar progress-bar-danger" data-transitiongoal="15"></div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>3</td>
+                                                <td>Partners and Inverstors report</td>
+                                                <td>Deveint Inc</td>
+                                                <td class="hidden-phone">30</td>
+                                                <td class="vertical-align-mid">
+                                                    <div class="progress">
+                                                        <div class="progress-bar progress-bar-success" data-transitiongoal="45"></div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>4</td>
+                                                <td>New Company Takeover Review</td>
+                                                <td>Deveint Inc</td>
+                                                <td class="hidden-phone">28</td>
+                                                <td class="vertical-align-mid">
+                                                    <div class="progress">
+                                                        <div class="progress-bar progress-bar-success" data-transitiongoal="75"></div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                        {# end user projects #}
+
+                                    </div>
+                                    <div role="tabpanel" class="tab-pane fade" id="tab_content3" aria-labelledby="profile-tab">
+                                        <p>xxFood truck fixie locavore, accusamus mcsweeney's marfa nulla single-origin coffee squid. Exercitation +1 labore velit, blog sartorial PBR leggings next level wes anderson artisan four loko farm-to-table craft beer twee. Qui
+                                            photo booth letterpress, commodo enim craft beer mlkshk </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock main_content %}
+
+{% block javascript %}
+    {{ parent() }}
+
+    {% javascripts
+        '@fastclick_js'
+        '@nprogress_js'
+        '@bootstrap_progressbar_js'
+        '@morris_js'
+        '@bootstrapDateRangePicker_js'
+    %}
+        <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+
+    {# New skill form #}
+    <div id="form_add_skill" style="display: none;">
+        {{ form_start(formSkill, {'attr': {'class': 'pf-form'}}) }}
+            <div class="pf-element pf-heading">
+                <h3 style="margin-top: 0;">Adding a new Skill</h3>
+            </div>
+            <div class="pf-element">
+                <label>
+                    {{ form_label(formSkill.name) }}
+                    {{ form_widget(formSkill.name) }}
+                </label>
+            </div>
+            <div class="pf-element">
+                <label>
+                    {{ form_label(formSkill.level) }}
+                    {{ form_widget(formSkill.level) }}
+                </label>
+            </div>
+            <div class="pf-element pf-buttons pf-centered">
+                <input class="pf-button btn btn-primary" type="submit" name="submit" value="Submit"/>
+                <input class="pf-button btn btn-default" type="button" name="cancel" value="Cancel"/>
+            </div>
+        {{ form_end(formSkill) }}
+    </div>
+
+    {# Information update form #}
+    <div id="form_edit_info" style="display: none;">
+        {{ form_start(formInfoUser, {'attr': {'class': 'pf-form'}}) }}
+            <div class="pf-element pf-heading">
+                <h3 style="margin-top: 0;">Adding a new Skill</h3>
+            </div>
+            <div class="pf-element">
+                <label>
+                    {{ form_label(formInfoUser.firstName) }}
+                    {{ form_widget(formInfoUser.firstName) }}
+                </label>
+            </div>
+            <div class="pf-element">
+                <label>
+                    {{ form_label(formInfoUser.lastName) }}
+                    {{ form_widget(formInfoUser.lastName) }}
+                </label>
+            </div>
+
+            <div class="pf-element">
+                <label>
+                    {{ form_label(formInfoUser.personalInformation.address) }}
+                    {{ form_widget(formInfoUser.personalInformation.address) }}
+                </label>
+            </div>
+
+
+            <div class="pf-element">
+                <label>
+                    {{ form_label(formInfoUser.personalInformation.job) }}
+                    {{ form_widget(formInfoUser.personalInformation.job) }}
+                </label>
+            </div>
+
+
+            <div class="pf-element">
+                <label>
+                    {{ form_label(formInfoUser.personalInformation.website) }}
+                    {{ form_widget(formInfoUser.personalInformation.website) }}
+                </label>
+            </div>
+
+            <div class="pf-element pf-buttons pf-centered">
+                <input class="pf-button btn btn-primary" type="submit" name="submit" value="Submit"/>
+                <input class="pf-button btn btn-default" type="button" name="cancel" value="Cancel"/>
+            </div>
+        {{ form_end(formSkill) }}
+    </div>
+
+    <script>
+        $(".progress").progressbar();
+
+        {% if error is defined %}
+            new PNotify({
+                title:      'Error',
+                text:       '{{ error }}',
+                type:       'danger',
+                styling:    'bootstrap3'
+            });
+        {% endif %}
+
+        // listener on the button skill add
+        $("#buttonSkillAdd").on('click', function() {
+            $(this).attr("disabled", true);
+            var notice = new PNotify({
+                text: $("#form_add_skill").html(),
+                icon: false,
+                width: 'auto',
+                hide: false,
+                buttons: {
+                    closer: false,
+                    sticker: false
+                },
+                insert_brs: false
+            });
+
+            // cancel button
+            notice.get().find('form.pf-form').on('click', '[name=cancel]', function () {
+                $("#buttonSkillAdd").attr("disabled", false);
+                notice.remove();
+            });
+        });
+
+        // listener on the button edit info
+        $("#buttonEditInformation").on('click', function() {
+            $(this).attr("disabled", true);
+            var notice = new PNotify({
+                text: $("#form_edit_info").html(),
+                icon: false,
+                width: 'auto',
+                hide: false,
+                buttons: {
+                    closer: false,
+                    sticker: false
+                },
+                insert_brs: false
+            });
+
+            // cancel button
+            notice.get().find('form.pf-form').on('click', '[name=cancel]', function () {
+                $("#buttonEditInformation").attr("disabled", false);
+                notice.remove();
+            });
+        });
+    </script>
+{% endblock javascript %}

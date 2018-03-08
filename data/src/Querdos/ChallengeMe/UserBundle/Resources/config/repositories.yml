@@ -1,0 +1,60 @@
+services:
+    challengeme.repository.administrator:
+        class:      Querdos\ChallengeMe\UserBundle\Repository\AdministratorRepository
+        factory:    [ "@doctrine.orm.entity_manager", "getRepository" ]
+        arguments:  [ "UserBundle:Administrator" ]
+    
+    challengeme.repository.info_user:
+        class:      Querdos\ChallengeMe\UserBundle\Repository\InfoUserRepository
+        factory:    [ "@doctrine.orm.entity_manager", "getRepository" ]
+        arguments:  [ "UserBundle:InfoUser" ]
+
+    challengeme.repository.personal_information:
+        class:      Querdos\ChallengeMe\UserBundle\Repository\PersonalInformationRepository
+        factory:    [ "@doctrine.orm.entity_manager", "getRepository" ]
+        arguments:  [ "UserBundle:PersonalInformation" ]
+
+    challengeme.repository.social:
+        class:      Querdos\ChallengeMe\UserBundle\Repository\SocialRepository
+        factory:    [ "@doctrine.orm.entity_manager", "getRepository" ]
+        arguments:  [ "UserBundle:Social" ]
+
+    challengeme.repository.skill:
+        class:      Querdos\ChallengeMe\UserBundle\Repository\SkillRepository
+        factory:    [ "@doctrine.orm.entity_manager", "getRepository" ]
+        arguments:  [ "UserBundle:Skill" ]
+
+    challengeme.repository.role:
+        class:      Querdos\ChallengeMe\UserBundle\Entity\Role
+        factory:    [ "@doctrine.orm.entity_manager", "getRepository" ]
+        arguments:  [ "UserBundle:Role" ]
+
+    challengeme.repository.private_message:
+        class:      Querdos\ChallengeMe\UserBundle\Repository\PrivateMessageRepository
+        factory:    [ "@doctrine.orm.entity_manager", "getRepository" ]
+        arguments:  [ "UserBundle:PrivateMessage" ]
+
+    challengeme.repository.player:
+        class:      Querdos\ChallengeMe\UserBundle\Repository\PlayerRepository
+        factory:    [ "@doctrine.orm.entity_manager", "getRepository" ]
+        arguments:  [ "UserBundle:Player" ]
+
+    challengeme.repository.team:
+        class:      Querdos\ChallengeMe\UserBundle\Repository\TeamRepository
+        factory:    [ "@doctrine.orm.entity_manager", "getRepository" ]
+        arguments:  [ "UserBundle:Team" ]
+
+    challengeme.repository.demand:
+        class:      Querdos\ChallengeMe\UserBundle\Repository\DemandRepository
+        factory:    [ "@doctrine.orm.entity_manager", "getRepository" ]
+        arguments:  [ "UserBundle:Demand" ]
+
+    challengeme.repository.player_role:
+        class:      Querdos\ChallengeMe\UserBundle\Repository\PlayerRoleRepository
+        factory:    [ "@doctrine.orm.entity_manager", "getRepository" ]
+        arguments:  [ "UserBundle:PlayerRole" ]
+
+    challengeme.repository.password_token_reset:
+        class:      Querdos\ChallengeMe\UserBundle\Repository\PasswordTokenResetRepository
+        factory:    [ "@doctrine.orm.entity_manager", "getRepository" ]
+        arguments:  [ "UserBundle:PasswordTokenReset"]

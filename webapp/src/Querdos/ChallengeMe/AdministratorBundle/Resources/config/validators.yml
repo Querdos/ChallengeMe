@@ -1,4 +1,0 @@
-services:
-    challengeme.validator.admin:
-        class:      Querdos\ChallengeMe\AdministratorBundle\Validator\AdminValidator
-        arguments:  ["@validator", "@challengeme.manager.administrator"]

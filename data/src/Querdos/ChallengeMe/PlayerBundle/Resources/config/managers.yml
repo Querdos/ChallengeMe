@@ -1,0 +1,18 @@
+services:
+    challengeme.manager.notification:
+        class:    Querdos\ChallengeMe\PlayerBundle\Manager\NotificationManager
+        calls:
+            - [ setEntityManager, [ '@doctrine.orm.entity_manager'            ] ]
+            - [ setRepository,    [ '@challengeme.repository.notification'    ] ]
+
+    challengeme.manager.player_activity:
+        class:    Querdos\ChallengeMe\PlayerBundle\Manager\PlayerActivityManager
+        calls:
+            - [ setEntityManager, [ '@doctrine.orm.entity_manager'             ] ]
+            - [ setRepository,    [ '@challengeme.repository.player_activity'  ] ]
+
+    challengeme.manager.team_activity:
+        class:    Querdos\ChallengeMe\PlayerBundle\Manager\TeamActivityManager
+        calls:
+            - [ setEntityManager, [ '@doctrine.orm.entity_manager'             ] ]
+            - [ setRepository,    [ '@challengeme.repository.team_activity'  ] ]
