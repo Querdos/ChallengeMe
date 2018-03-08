@@ -1,0 +1,30 @@
+services:
+    challengeme.repository.category:
+        class:      Querdos\ChallengeMe\ChallengesBundle\Entity\Category
+        factory:    [ "@doctrine.orm.entity_manager", "getRepository" ]
+        arguments:  [ "ChallengesBundle:Category" ]
+
+    challengeme.repository.challenge:
+        class:      Querdos\ChallengeMe\ChallengesBundle\Entity\Challenge
+        factory:    [ "@doctrine.orm.entity_manager", "getRepository" ]
+        arguments:  [ "ChallengesBundle:Challenge" ]
+
+    challengeme.repository.challenge_solving:
+        class:      Querdos\ChallengeMe\ChallengesBundle\Entity\ChallengeSolving
+        factory:    [ "@doctrine.orm.entity_manager", "getRepository" ]
+        arguments:  [ "ChallengesBundle:ChallengeSolving" ]
+
+    challengeme.repository.challenge_solution:
+        class:      Querdos\ChallengeMe\ChallengesBundle\Entity\ChallengeSolution
+        factory:    [ "@doctrine.orm.entity_manager", "getRepository" ]
+        arguments:  [ "ChallengesBundle:ChallengeSolution" ]
+
+    challengeme.repository.challenge_resource:
+        class:      Querdos\ChallengeMe\ChallengesBundle\Repository\ChallengeResourceRepository
+        factory:    [ "@doctrine.orm.entity_manager", "getRepository" ]
+        arguments:  [ "ChallengesBundle:ChallengeResource" ]
+
+    challengeme.repository.rating:
+        class:      Querdos\ChallengeMe\ChallengesBundle\Entity\Rating
+        factory:    [ "@doctrine.orm.entity_manager", "getRepository" ]
+        arguments:  [ "ChallengesBundle:Rating" ]

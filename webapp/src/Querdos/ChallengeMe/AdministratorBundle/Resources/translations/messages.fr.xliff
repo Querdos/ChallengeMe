@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:jms="urn:jms:translation" version="1.2">
+  <file date="2017-03-08T09:07:54Z" source-language="en" target-language="fr" datatype="plaintext" original="not.available">
+    <header>
+      <tool tool-id="JMSTranslationBundle" tool-name="JMSTranslationBundle" tool-version="1.1.0-DEV"/>
+      <note>The source node in most cases contains the sample message as written by the developer. If it looks like a dot-delimitted string such as "form.label.firstname", then the developer has not provided a default message.</note>
+    </header>
+    <body>
+      <trans-unit id="a3c686e711e4720f99b4562bb3dbaae7ab658cf2" resname="Category">
+        <source>Category</source>
+        <target>Catégorie</target>
+        <jms:reference-file line="105">/../src/Querdos/ChallengeMe/AdministratorBundle/Form/ChallengeType.php</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="a72ca256dc49e55a1a57b9a727fbde9834c9a3f7" resname="Statement">
+        <source>Statement</source>
+        <target>Énoncé</target>
+        <jms:reference-file line="98">/../src/Querdos/ChallengeMe/AdministratorBundle/Form/ChallengeType.php</jms:reference-file>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

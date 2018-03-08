@@ -1,0 +1,81 @@
+imports:
+    - { resource: security_access_control.yml }
+
+security:
+    encoders:
+        # Encoder for the administrator entity
+        Querdos\ChallengeMe\UserBundle\Entity\Administrator:
+            algorithm:  bcrypt
+            cost:       12
+
+        # Encoder for the player entity
+        Querdos\ChallengeMe\UserBundle\Entity\Player:
+            algorithm:  bcrypt
+            cost:       12
+
+        Symfony\Component\Security\Core\User\User:
+            algorithm:  bcrypt
+            cost:       12
+
+    providers:
+        # Chain provider
+        chain_provider:
+            chain:
+                providers: [ administrator_provider, player_provider ]
+
+        # administrator provider
+        administrator_provider:
+            id: challengeme.provider.admin
+
+        # player provider
+        player_provider:
+            id: challengeme.provider.player
+
+    role_hierarchy:
+        ROLE_REDACTOR:      [ ROLE_USER ]
+        ROLE_MODERATOR:     [ ROLE_USER, ROLE_REDACTOR ]
+        ROLE_ADMIN:         [ ROLE_USER, ROLE_MODERATOR, ROLE_REDACTOR ]
+        ROLE_SUPER_ADMIN:   [ ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH ]
+
+    firewalls:
+        # disables authentication for assets and the profiler, adapt it according to your needs
+        dev:
+            pattern:  ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+
+        # Firewall for the login route
+        login_firewall:
+            pattern:    ^/(.*)/login$
+            anonymous:  ~
+
+        register_firewall:
+            pattern:    ^/players/register$
+            anonymous:  ~
+
+        reset_firewall:
+            pattern:     ^/players/reset-password/*
+            anonymous:  ~
+
+        # Firewall for the restricted area Administration
+        administration_firewall:
+            pattern:                  ^/administration
+            logout:
+                path:                 /administration/logout
+                target:               /
+            guard:
+                authenticators:
+                    - challengeme.admin.form_authenticator
+
+        player_firewall:
+            pattern:                  ^/players
+            logout:
+                path:                 /players/logout
+                target:               /
+            guard:
+                authenticators:
+                    - challengeme.player.form_authenticator
+
+        # Firewall for the landing zone
+        landing_firewall:
+            pattern:                  ^/
+            anonymous:                ~

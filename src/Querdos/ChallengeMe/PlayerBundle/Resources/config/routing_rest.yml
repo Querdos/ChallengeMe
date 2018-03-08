@@ -1,4 +1,0 @@
-teams:
-    type:         rest
-    resource:     "PlayerBundle:PlayerRest"
-    name_prefix:  api_

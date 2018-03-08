@@ -1,0 +1,46 @@
+# Vich Uploader Bundle
+#
+# delete_on_remove:   should the file be deleted when the entity is removed
+# delete_on_update:   should the file be deleted when a new file is uploaded
+# inject_on_load:     should the file be injected into the uploadable entity when it is
+#                     loaded from the data store
+#
+vich_uploader:
+    db_driver: orm
+
+    mappings:
+        # Team's avatar
+        team_avatar:
+            uri_prefix:           '/uploads/team/avatars'
+            upload_destination:   '%kernel.root_dir%/../web/uploads/team/avatars'
+
+            inject_on_load:       false
+            delete_on_update:     true
+            delete_on_remove:     true
+
+        # Player's avatar
+        player_avatar:
+            uri_prefix:           '/uploads/player/avatars'
+            upload_destination:   '%kernel.root_dir%/../web/uploads/player/avatars'
+
+            inject_on_load:       false
+            delete_on_update:     true
+            delete_on_remove:     true
+
+        # Challenge's resource
+        challenge_resource:
+            uri_prefix:           '/uploads/challenge/resources'
+            upload_destination:   '%kernel.root_dir%/../web/uploads/challenge/resources'
+
+            inject_on_load:       false
+            delete_on_update:     true
+            delete_on_remove:     true
+
+        # Databases dump
+        database_dump:
+            uri_prefix:           '/dumps'
+            upload_destination:   '%kernel.root_dir%/../web/dumps'
+
+            inject_on_load:       false
+            delete_on_update:     true
+            delete_on_remove:     true

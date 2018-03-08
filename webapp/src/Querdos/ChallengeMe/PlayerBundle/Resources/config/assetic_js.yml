@@ -1,0 +1,48 @@
+assetic:
+    assets:
+        flot_plugin_js:
+            inputs:
+                - '@PlayerBundle/Resources/public/js/flot/jquery.flot.orderBars.js'
+                - '@PlayerBundle/Resources/public/js/flot/date.js'
+                - '@PlayerBundle/Resources/public/js/flot/jquery.flot.spline.js'
+                - '@PlayerBundle/Resources/public/js/flot/curvedLines.js'
+            output: 'assets/player/js/flot_plugin.js'
+
+        jVectorMap_js:
+            inputs:
+                - '@PlayerBundle/Resources/public/js/maps/jquery-jvectormap-2.0.3.min.js'
+                - '@PlayerBundle/Resources/public/js/maps/jquery-jvectormap-world-mill-en.js'
+                - '@PlayerBundle/Resources/public/js/maps/jquery-jvectormap-us-aea-en.js'
+                - '@PlayerBundle/Resources/public/js/maps/gdp-data.js'
+            output: 'assets/player/js/jvectormap.js'
+
+        bootstrapDateRangePicker_js:
+            inputs:
+                - '@PlayerBundle/Resources/public/js/moment/moment.min.js'
+                - '@PlayerBundle/Resources/public/js/datepicker/daterangepicker.js'
+            output: 'assets/player/js/bootstrapdaterangepicker.js'
+
+        customTheme_js:
+            inputs:
+                - '@PlayerBundle/Resources/public/js/custom.js'
+            output: 'assets/player/js/customTheme.js'
+
+        challenge_solving_js:
+            inputs:
+                - '@PlayerBundle/Resources/public/js/player_scripts/challenge_solving.js'
+            output: 'assets/player/js/challenge_solving.js'
+
+        challenges_by_category_js:
+            inputs:
+                - '@PlayerBundle/Resources/public/js/player_scripts/challenges_by_category.js'
+            output: 'assets/player/js/challenges_by_category.js'
+
+        my_team_js:
+            inputs:
+                - '@PlayerBundle/Resources/public/js/player_scripts/my_team.js'
+            output: 'assets/player/js/my_team.js'
+
+        inbox_js:
+            inputs:
+                - '@PlayerBundle/Resources/public/js/player_scripts/inbox.js'
+            output: 'assets/player/js/inbox.js'

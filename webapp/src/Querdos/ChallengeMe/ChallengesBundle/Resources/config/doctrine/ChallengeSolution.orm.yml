@@ -1,0 +1,16 @@
+Querdos\ChallengeMe\ChallengesBundle\Entity\ChallengeSolution:
+    type:             entity
+    table:            cm_chal_challenge_solution
+    repositoryClass:  Querdos\ChallengeMe\ChallengesBundle\Repository\ChallengeSolutionRepository
+    id:
+        id:
+            type:         integer
+            id:           true
+            generator:
+                strategy: AUTO
+    fields:
+        content:
+            type:     string
+            length:   255
+            unique:   false
+            nullable: false

@@ -1,0 +1,33 @@
+player:
+    resource: "@PlayerBundle/Resources/config/routing.yml"
+    prefix:   /players
+
+challenges:
+    resource: "@ChallengesBundle/Resources/config/routing.yml"
+    prefix:   /challenges
+
+user:
+    resource: "@UserBundle/Resources/config/routing.yml"
+    prefix:   /user
+
+landing:
+    resource: "@LandingBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+admin:
+    resource: "@AdminBundle/Resources/config/routing.yml"
+    prefix:   /administration
+
+rest:
+    type :      rest
+    resource :  "routing_rest.yml"
+    prefix :    /api
+
+NelmioApiDocBundle:
+    resource:   "@NelmioApiDocBundle/Resources/config/routing.yml"
+    prefix:     /api/doc
+
+jmose_command_scheduler:
+    resource: "@JMoseCommandSchedulerBundle/Resources/config/routing.yml"
+    prefix:   /

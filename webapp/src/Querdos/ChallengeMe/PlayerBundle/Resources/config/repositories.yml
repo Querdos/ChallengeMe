@@ -1,0 +1,15 @@
+services:
+    challengeme.repository.notification:
+        class:      Querdos\ChallengeMe\PlayerBundle\Repository\NotificationRepository
+        factory:    [ "@doctrine.orm.entity_manager", "getRepository" ]
+        arguments:  [ "PlayerBundle:Notification" ]
+
+    challengeme.repository.player_activity:
+        class:      Querdos\ChallengeMe\PlayerBundle\Repository\PlayerActivityRepository
+        factory:    [ "@doctrine.orm.entity_manager", "getRepository" ]
+        arguments:  [ "PlayerBundle:PlayerActivity" ]
+
+    challengeme.repository.team_activity:
+        class:      Querdos\ChallengeMe\PlayerBundle\Repository\TeamActivityRepository
+        factory:    [ "@doctrine.orm.entity_manager", "getRepository" ]
+        arguments:  [ "PlayerBundle:TeamActivity" ]

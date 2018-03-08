@@ -1,0 +1,5 @@
+services:
+    challengeme.repository.database_dump:
+        class:      Querdos\ChallengeMe\AdministratorBundle\Repository\DatabaseDumpRepository
+        factory:    [ '@doctrine.orm.entity_manager', "getRepository" ]
+        arguments:  [ "AdminBundle:DatabaseDump"]

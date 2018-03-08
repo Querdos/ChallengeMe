@@ -1,0 +1,27 @@
+db:
+        image: mysql:5.7
+        ports:
+                - "3306:3306"
+        environment:
+                - "MYSQL_ROOT_PASSWORD=V4JHy9Go7T7ez1xsy8Jm"
+                - "MYSQL_USER=challengeme"
+                - "MYSQL_PASSWORD=tcLxSN6tXyU6lcdVqETv"
+                - "MYSQL_DATABASE=challengeme"
+engine:
+        build: ./docker/engine/
+        volumes:
+                - ".:home/docker:rw"
+                - "./docker/engine/php.ini:/usr/local/etc/php/conf.d/custom.ini:ro"
+        links:
+                - "db:db"
+        working_dir: "/home/docker"
+
+front:
+        image: nginx
+        ports:
+                - "80:80"
+        links:
+                - "engine:engine"
+        volumes:
+                - ".:/home/docker:ro"
+                - "./docker/front/default.conf:/etc/nginx/conf.d/default.conf:ro"

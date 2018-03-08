@@ -1,0 +1,27 @@
+Querdos\ChallengeMe\UserBundle\Entity\Social:
+    type:             entity
+    table:            cm_admin_socials
+    repositoryClass:  Querdos\ChallengeMe\UserBundle\Repository\SocialRepository
+    id:
+        id:
+            type:     integer
+            id:       true
+            generator:
+                strategy: AUTO
+
+    fields:
+        name:
+            type:     string
+            length:   100
+            unique:   false
+            nullable: false
+        link:
+            type:     string
+            length:   255
+            unique:   false
+            nullable: false
+
+    manyToOne:
+        personalInformation:
+            targetEntity:   Querdos\ChallengeMe\UserBundle\Entity\PersonalInformation
+            inversedBy:     socials

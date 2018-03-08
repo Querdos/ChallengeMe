@@ -1,0 +1,153 @@
+##################
+#   Main pages   #
+##################
+player_homepage:
+    path:     /
+    defaults: { _controller: PlayerBundle:Player:index }
+    methods:
+        - GET
+
+player_profile:
+    path:     /profile
+    defaults: { _controller: PlayerBundle:Player:profile }
+    methods:
+        - GET
+        - POST
+
+player_players_list:
+    path:     /challengers
+    defaults: { _controller: PlayerBundle:Player:playersList }
+    methods:
+        - GET
+
+player_teams_list:
+    path:     /teams
+    defaults: { _controller: PlayerBundle:Player:teamsList }
+    methods:
+        - GET
+
+player_my_team:
+    path:     /my-team
+    defaults: { _controller: PlayerBundle:Player:myTeam }
+    methods:
+        - GET
+        - POST
+
+player_edit_demand:
+    path:     /my-team/edit-demand/{demandId}/status/{status}
+    defaults: { _controller: PlayerBundle:Player:editDemand }
+    methods:
+        - GET
+
+player_clear_demand:
+    path:     /my-team/clear-demand/{demandId}
+    defaults: { _controller: PlayerBundle:Player:clearDemand }
+    methods:
+        - GET
+
+player_remove_from_team:
+    path:     /my-team/remove-from-team/{playerId}
+    defaults: { _controller: PlayerBundle:Player:removePlayerFromTeam }
+    methods:
+        - GET
+
+player_ask_join_team:
+    path:     /team/{teamId}/ask-to-join
+    defaults: { _controller: PlayerBundle:Player:askJoinTeam }
+    methods:
+        - GET
+
+player_remove_player_role:
+    path:     /team/remove-custom-role/{roleId}
+    defaults: { _controller: PlayerBundle:Player:deletePlayerRole }
+    methods:
+        - GET
+
+player_change_player_role:
+    path:     /team/change-player-role
+    defaults: { _controller: PlayerBundle:Player:setPlayerRole }
+    methods:
+        - POST
+
+player_challenges:
+    path:     /challenges
+    defaults: { _controller: PlayerBundle:Player:challenges }
+    methods:
+        - GET
+
+player_challenges_category:
+    path:     /challenges/{categoryId}
+    defaults: { _controller: PlayerBundle:Player:challengesByCategory }
+    methods:
+        - GET
+
+player_challenge_start:
+    path:     /challenge/{challengeId}/start
+    defaults: { _controller: PlayerBundle:Player:startChallenge }
+    methods:
+        - GET
+
+player_challenge_solving:
+    path:     /solve-challenge
+    defaults: { _controller: PlayerBundle:Player:challengeSolving }
+    methods:
+        - GET
+        - POST
+
+player_rate_challenge:
+    path:     /challenge/rate
+    defaults: { _controller: PlayerBundle:Player:rateChallenge }
+    methods:
+        - POST
+
+player_ranking:
+    path:     /teams/ranking
+    defaults: { _controller: PlayerBundle:Player:ranking }
+    methods:
+        - GET
+
+player_set_notification_red:
+    path:     /notification/set-read
+    defaults: { _controller: PlayerBundle:Player:setNotificationRed }
+    methods:
+        - POST
+
+player_download_resource:
+    path:     /challenge/download-resource/{resourceId}
+    defaults: { _controller: PlayerBundle:Player:downloadResourceForChallenge }
+    methods:
+        - GET
+
+player_leave_team:
+    path:     /team/leave
+    defaults: { _controller: PlayerBundle:Player:leaveTeam }
+    methods:
+        - GET
+
+player_promote_player:
+    path:     /team/promote-player/{playerId}
+    defaults: { _controller: PlayerBundle:Player:promotePlayer }
+    methods:
+        - GET
+
+######################
+# SecurityController #
+######################
+player_reset_password:
+    path:     /reset-password/{token}
+    defaults: { _controller: PlayerBundle:Security:resetPassword }
+    methods:
+        - GET
+        - POST
+
+player_login:
+    path:     /login
+    defaults: { _controller: PlayerBundle:Security:login }
+
+player_login_check:
+    path:     /login_check
+    defaults: { _controller: PlayerBundle:Security:loginCheck }
+
+player_logout:
+    path:     /logout
+    defaults: { _controller: PlayerBundle:Security:logout }
