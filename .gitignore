@@ -1,4 +1,6 @@
 /.idea/
+yarn.lock
+composer.lock
 .buildpath
 .project
 /app/config/parameters.yml

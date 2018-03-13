@@ -1,0 +1,16 @@
+{
+  "name": "ChallengeMe",
+  "version": "1.0.0",
+  "description": "ChallengeMe is a platform for CTF challenges",
+  "main": "index.js",
+  "repository": "https://github.com/Querdos/ChallengeMe.git",
+  "author": {
+    "name": "Hamza ESSAYEGH",
+    "email": "hamza.essayegh@gmail.com"
+  },
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "jquery": "2.2.3"
+  }
+}
