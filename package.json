@@ -46,6 +46,7 @@
     "fullcalendar": "2.6.1",
     "gauge.js": "0.2.1",
     "highlightjs": "9.10.0",
+    "hotkeys": "^1.0.0",
     "icheck": "1.0.2",
     "inputmask": "^3.3.11",
     "jquery": "3.3.1",
@@ -60,11 +61,11 @@
     "pdfmake": "0.1.36",
     "pnotify": "3.0.0",
     "rangeslider": "1.0.0",
+    "raphael": "https://github.com/DmitryBaranovskiy/raphael.git",
     "select2": "4.0.2",
     "skycons": "https://github.com/darkskyapp/skycons.git",
     "starrr": "2.0.4",
     "switchery": "0.0.2",
-    "validator": "9.4.1",
-    "raphael": "https://github.com/DmitryBaranovskiy/raphael.git"
+    "validator": "9.4.1"
   }
 }
