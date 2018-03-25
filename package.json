@@ -60,6 +60,7 @@
     "parsleyjs": "2.3.10",
     "pdfmake": "0.1.36",
     "pnotify": "3.0.0",
+    "google-code-prettify": "https://github.com/google/code-prettify.git",
     "rangeslider": "1.0.0",
     "raphael": "https://github.com/DmitryBaranovskiy/raphael.git",
     "select2": "4.0.2",
