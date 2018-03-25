@@ -53,7 +53,7 @@ assetic:
 
         charts_js:
             inputs:
-                - 'assets/vendor/Chart.js/dist/Chart.min.js'
+                - 'assets/vendor/chartjs/chart.js'
             output: 'assets/global/js/chart.js'
 
         gauge_js:
