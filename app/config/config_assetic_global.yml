@@ -68,7 +68,7 @@ assetic:
 
         iCheck_js:
             inputs:
-                - 'assets/vendor/iCheck/icheck.min.js'
+                - 'assets/vendor/icheck/icheck.min.js'
             output: 'assets/global/js/icheck.js'
 
         skycons_js:

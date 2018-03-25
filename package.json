@@ -48,7 +48,7 @@
     "gauge.js": "0.2.1",
     "google-code-prettify": "https://github.com/google/code-prettify.git",
     "highlightjs": "9.10.0",
-    "icheck": "1.0.2",
+    "icheck": "^1.0.2",
     "inputmask": "^3.3.11",
     "jquery": "3.3.1",
     "jquery-knob": "1.2.11",
