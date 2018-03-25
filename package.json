@@ -64,6 +64,7 @@
     "skycons": "https://github.com/darkskyapp/skycons.git",
     "starrr": "2.0.4",
     "switchery": "0.0.2",
-    "validator": "9.4.1"
+    "validator": "9.4.1",
+    "raphael": "https://github.com/DmitryBaranovskiy/raphael.git"
   }
 }
