@@ -24,7 +24,6 @@ Querdos\ChallengeMe\ChallengesBundle\Entity\Challenge:
             nullable: false
         description:
             type:     text
-            length:   255
             unique:   false
             nullable: false
         statement:
