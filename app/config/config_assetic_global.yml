@@ -136,10 +136,10 @@ assetic:
                 - 'assets/vendor/bootstrap/dist/css/bootstrap.min.css'
             output: 'assets/global/css/boostrap.css'
 
-        bootstrapWYSIWYG_css:
-            inputs:
-                - 'assets/vendor/google-code-prettify/bin/prettify.min.css'
-            output: 'assets/global/css/bootstrapwysiwyg.css'
+        #bootstrapWYSIWYG_css:
+            #inputs:
+            #    - 'assets/vendor/google-code-prettify/bin/prettify.min.css'
+            #output: 'assets/global/css/bootstrapwysiwyg.css'
 
         bootstrapDateRangePicker_css:
             inputs:
