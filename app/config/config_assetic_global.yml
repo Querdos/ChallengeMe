@@ -78,11 +78,11 @@ assetic:
 
         flot_js:
             inputs:
-                - 'assets/vendor/Flot/jquery.flot.js'
-                - 'assets/vendor/Flot/jquery.flot.pie.js'
-                - 'assets/vendor/Flot/jquery.flot.time.js'
-                - 'assets/vendor/Flot/jquery.flot.stack.js'
-                - 'assets/vendor/Flot/jquery.flot.resize.js'
+                - 'assets/vendor/jquery.flot/jquery.flot.js'
+                - 'assets/vendor/jquery.flot/jquery.flot.pie.js'
+                - 'assets/vendor/jquery.flot/jquery.flot.time.js'
+                - 'assets/vendor/jquery.flot/jquery.flot.stack.js'
+                - 'assets/vendor/jquery.flot/jquery.flot.resize.js'
             output: 'assets/global/js/flot.js'
 
         morris_js:
