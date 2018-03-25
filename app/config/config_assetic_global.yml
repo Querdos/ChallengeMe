@@ -8,7 +8,7 @@ assetic:
 
         jquery_inputmask_js:
             inputs:
-                - 'assets/vendor/jquery.inputmask/dist/min/jquery.inputmask.bundle.min.js'
+                - 'assets/vendor/inputmask/dist/min/jquery.inputmask.bundle.min.js'
             output: 'assets/global/js/jquery_inputmask.js'
 
         bootstrap_js:
