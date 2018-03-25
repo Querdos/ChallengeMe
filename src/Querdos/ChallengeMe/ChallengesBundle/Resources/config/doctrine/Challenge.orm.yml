@@ -23,7 +23,7 @@ Querdos\ChallengeMe\ChallengesBundle\Entity\Challenge:
             unique:   false
             nullable: false
         description:
-            type:     string
+            type:     text
             length:   255
             unique:   false
             nullable: false
